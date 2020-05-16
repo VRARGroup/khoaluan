@@ -1,0 +1,43 @@
+.card-deck-container {
+  position: relative;
+  border-radius: 1px;
+  flex: 0 0 100%;
+  display: flex;
+  background-color: #f5f5f5;
+}
+.container-fluid-center{
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+}
+.justify-content-center{
+  justify-content: center;
+}
+.image-size{
+  margin: 0.1rem;
+}
+.card-size{
+  width: 130px;
+  height: 130px;
+}
+
+.card-bottom{
+	position:absolute;
+	bottom:0;
+	margin-top:100px;
+}
+
+.card-bottom-text{
+	position:absolute;
+	margin-bottom:100px;
+}
+
+.btn{
+	padding: 5px 5px 5px 5px;
+}
+
+.example-card {
+  border-color: #000;
+  border-style: solid;
+}
+

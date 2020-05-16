@@ -1,0 +1,27 @@
+<div class="container-fluid-center">
+	<div fxLayout="row wrap" fxLayoutWrap class="card-deck-container justify-content-start">
+		<mdb-card class="col-md-3" *ngFor="let cv of sanphams.items">
+			<mdb-card-body>
+				<mdb-card-img width=130 height=130 src="{{cv.picture}}" alt="Card image cap"></mdb-card-img>
+			</mdb-card-body>
+			<mdb-card-body>
+				<mdb-card-title>
+					<p>{{cv.sp}}</p>
+				</mdb-card-title>
+				<mdb-card-text>
+					<p style="color:red; text-align:Left">
+						<b>
+							{{cv.price}}
+						</b>
+					</p>
+				</mdb-card-text>
+			</mdb-card-body>
+			<mdb-card-body>
+				<mdb-card-text style="text-align: left" class="card-bottom">
+					<button class="btn btn-outline-danger p-1 mx-1 mb-0">Like</button>
+					<button class="btn btn-outline-info p-1 mx-1 mb-0">Coment</button>
+				</mdb-card-text>
+			</mdb-card-body>
+		</mdb-card>
+	</div>
+</div>

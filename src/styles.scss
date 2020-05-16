@@ -1,0 +1,106 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+$common-color:#0086c3;
+$white:#fff;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;  
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  padding-top: 10px;
+  font-weight: 600;
+}
+
+.container {
+  padding: 30px;
+}
+
+.mat-drawer-container {
+  height: auto !important;
+
+}
+
+.mat-drawer-inner-container {
+  width: auto !important;
+  background-color: $common-color;
+}
+
+.right-side {
+  padding: 0px !important;
+  background-color: $common-color;
+  display: flex !important;
+
+  h1 {
+    text-align: center !important;
+    padding: 0 !important;
+    margin: auto;
+  }
+}
+
+.mat-icon,
+.mat-list-item,
+h1 {
+  cursor: pointer !important;
+  color: $white !important;
+}
+
+.mat-icon {
+  font-size: 36px;
+}
+
+.mat-list-base {
+  padding-top: 30px !important;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content {
+  text-align: left !important;
+  display: block !important;
+  padding-top: 15px !important;
+}
+
+.mat-list-item-content:hover {
+  background-color: #74b9ff !important;
+}
+
+.card-height {
+  height:50px !important;
+}
+
+.material-icons.color_red { 
+    color: #ff0000 !important;
+}
+
+.backgroundwhite {
+  background-color: #ffffff !important;
+}
+
+.mat-list-item-content{
+  color: #555555;
+}
+
+.example-card {
+  margin:6px;
+  border-width: 2px;
+  border-color: #000;
+  border-style: solid;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.container{
+  flex: 0 0 100%;
+  display: flex;
+}
+
