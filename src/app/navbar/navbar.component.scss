@@ -1,52 +1,58 @@
-ngb-carousel img {
-    width: 100%;
-    outline: none;
+.warpher{
+    background:#4a90e2;
+    text-align: center;
+    padding: 1em;
 }
 
-ngb-carousel {
-    width: inherit;
-    height: inherit;
+.logo{
+    
+    width:100px;
+    height:100px;
 }
 
-.carousel-item {
-    display: flex !important;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1.2s ease-in-out, visibility 1.2s;
+.navbar{
+    background-color:#696969;
+    display:inline-block;
 }
 
-.carousel-item.active{
-    opacity: 1;
-    visibility: visible;
+.row{
+    background-color:#fff;
+    color: white;
+    box-shadow: 0px 4px #DCDCDC;
 }
 
-.carousel-control-prev {
-     z-index: 20;
+li {
+    list-style-type: none;
 }
 
-
-.carousel-control-next {
-     z-index: 20;
-}
-
-.carousel-indicators{
-    z-index: 20;
-}
-.container-fluid{
-    max-width:100%; 
-    position: relative;
+#navbarDropdown{
+    pointer-events: none;
+    cursor:not-allowed;
 
 }
-
+.dropdown-item{
+border-bottom: 1px solid #DCDCDC;
+  height:10px !important;
+}
 .dropdown-menu{
-z-index: 21;
+    display:block;
+    margin-top:0.4rem;
+    width:300px;
+
+}
+.v{
+    
+    margin:20px 20px;
+    font-size:15px;
 }
 
-.dropdown-menu a:hover {background-color: #ddd;}
-
-.dropright:hover .dropdown-menu {display: block;}
-
-.dropright:hover .dropdown-toggle {background-color: #3e8e41;}
-
+.fa-chevron-right{
+    float: right;
+    margin-top:6px;
+}
+.fa-bars{
+    color:#000 !important; 
+    margin:2px 2px; 
+}
 
 
