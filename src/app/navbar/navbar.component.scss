@@ -30,20 +30,28 @@ li {
     cursor:not-allowed;
 
 }
-.dropdown-item{
-border-bottom: 1px solid #DCDCDC;
-  height:10px !important;
-}
+
 .dropdown-menu{
     display:block;
     margin-top:0.4rem;
-    width:300px;
+    width:250px;
 
 }
+
+.dropdown-item{
+    margin:0px 0px 0px 0px;
+    padding:0px;
+    border-bottom: 1px solid #DCDCDC;
+    font-size:14px;
+}
+
+li{
+    padding:0px 0px 0px 0px !important;
+
+}
+
 .v{
     
-    margin:20px 20px;
-    font-size:15px;
 }
 
 .fa-chevron-right{
@@ -55,4 +63,6 @@ border-bottom: 1px solid #DCDCDC;
     margin:2px 2px; 
 }
 
-
+.nav-item{
+    margin-left:130px;
+}
