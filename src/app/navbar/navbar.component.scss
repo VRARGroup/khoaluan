@@ -1,68 +1,79 @@
+.header{
+    min-width: 1024px;
+    background: #4a90e2;
+    width: 100%;
+    height: 102px;
+    z-index: 999;
+    position: relative;
+}
+
 .warpher{
-    background:#4a90e2;
-    text-align: center;
-    padding: 1em;
+    max-width: 1200px;
+    min-width: 1024px;
+    width: 100%;
+    height: 50px;
+    background: #4a90e2;
+    margin: auto;
+    position: relative;
+    display: block;
 }
 
-.logo{
-    
-    width:100px;
-    height:100px;
+.main-navigation {
+    background: #FFFFFF;
+    height: 52px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.2);
+    position: relative;
+    border-bottom: 1px solid #dfdfdf;
 }
 
-.navbar{
-    background-color:#696969;
-    display:inline-block;
+.dropdown-menu{
+    margin: 10px 0px 0px 0px;
+    display: block;
+    background: #fff;
+    overflow: visible;
+    box-shadow: 2px 0 4px 0 rgba(0,0,0,.2);
+    border-left: 1px solid #ddd;
 }
 
-.row{
-    background-color:#fff;
-    color: white;
-    box-shadow: 0px 4px #DCDCDC;
+.mainmenu{
+    height:52px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.2);
+
+}
+
+.nav-link1{
+    height:52px;
+    margin:10px 20px 10px 0px;
 }
 
 li {
     list-style-type: none;
 }
 
-#navbarDropdown{
-    pointer-events: none;
-    cursor:not-allowed;
-
+.fontWeightBold {
+    font-weight: bold;
 }
 
-.dropdown-menu{
-    display:block;
-    margin-top:0.4rem;
-    width:250px;
-
+.fontVariant {
+    font-weight: 400;
 }
 
-.dropdown-item{
-    margin:0px 0px 0px 0px;
-    padding:0px;
-    border-bottom: 1px solid #DCDCDC;
-    font-size:14px;
+.logo {
+    float: left;
+    width: 174px;
+    display: block;
 }
 
-li{
-    padding:0px 0px 0px 0px !important;
-
+.icondmx-logo {
+    background-position: 0 0;
+    width: 200px;
+    height: 50px;
+    display: block;
+    background-repeat: no-repeat;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
 }
 
-.v{
     
-}
 
-.fa-chevron-right{
-    float: right;
-    margin-top:6px;
-}
-.fa-bars{
-    color:#000 !important; 
-    margin:2px 2px; 
-}
-
-.nav-item{
-    margin-left:130px;
-}

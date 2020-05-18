@@ -1,47 +1,32 @@
 <div class="header">
   <div class="warpher">
-  	<a class="logo" title="về trang chủ.com">điện máy xanh</a>
+    <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
+      <img class="icondmx-logo" src="./assets/logo.PNG">
+    </a>
   </div>
-  <div class="row">
-  <nav class="navbar">
-  <!-- Navbar content -->
-  	<div class="nav-item dropdown">
-        <a class="nav-divnk dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-bars" ></i>Danh mục
-        </a>
-        <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-        <li class="v" >
-          <a class="dropdown-item" href="#" style="text-align: left">Đồ gia dụng <i class="fa fa-chevron-right"></i></a> 
+  <div class="main-navigation">
+    <!-- Dropdown -->
+    <!--Navbar-->
+  <mdb-navbar SideClass="navbar navbar-expand-sm bg-light">
+    <!-- Collapsible content -->
+      <ul class="navbar-nav">
+        <!-- Dropdown -->
+        <li class="nav-item dropdown" dropdown>
+          <div class="mainmenu">
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light d-inline" mdbWavesEffect>
+                <span class="fontWeightBold"> <i class="fa fa-bars"></i> Danh mục</span></a>
+              <span class="d-inline">|</span>
+              <a class="d-inline fontVariant nav-link" href="#">Xem tất cả</a>
+          </div>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
+          </div>
         </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">laptop <i class="fa fa-chevron-right"></i></a> 
-        </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">Đồ gia dụng <i class="fa fa-chevron-right"></i></a> 
-        </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">laptop <i class="fa fa-chevron-right"></i></a> 
-        </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">Đồ gia dụng <i class="fa fa-chevron-right"></i></a> 
-        </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">laptop <i class="fa fa-chevron-right"></i> </a> 
-        </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">Đồ gia dụng <i class="fa fa-chevron-right"></i></a> 
-        </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">laptop <i class="fa fa-chevron-right"></i></a> 
-        </li>
-        <li class="v" >
-          <a class="dropdown-item" href="#">Đồ gia dụng <i class="fa fa-chevron-right"></i></a>
-        </li>
-        <li class="v" > 
-          <a class="dropdown-item" href="#">laptop <i class="fa fa-chevron-right"></i></a> 
-         </li>
-        </div>
-    </div>
-  </nav>
-</div>
+      </ul>
+    <!-- Collapsible content -->
+  </mdb-navbar>
+  <!--/.Navbar-->
+  </div>
 </div>
