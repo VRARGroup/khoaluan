@@ -33,6 +33,11 @@
     overflow: visible;
     box-shadow: 2px 0 4px 0 rgba(0,0,0,.2);
     border-left: 1px solid #ddd;
+    width:100%;
+}
+
+.dropdown-item{
+    height:30px;
 }
 
 .mainmenu{
@@ -75,5 +80,44 @@ li {
     vertical-align: middle;
 }
 
-    
+.icondmx-tivi {
+    background-position: 10px -156px;
+    width: 20px;
+    height: 13px;
+    margin-top: 3px;
+}
 
+[class^="icondmx-"], [class*="icondmx-"] {
+    background-image: url(https://cdn.tgdd.vn/dmx2016/Content/images/V2/global/icondesktop@1x.v202005162200.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+nav li.active i {
+    opacity: 1;
+}
+
+nav li i {
+    opacity: .5;
+    float: left;
+    margin-right: 3px;
+}
+
+.span {
+    position: relative;
+    display: block;
+    color: #333;
+    line-height: 20px;
+    margin:0px 10px 0px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+a{
+    display: inline-block;
+    font-size: 14px;
+    color: #333;
+}
