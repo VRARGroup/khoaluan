@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-.body{
-  font: 14px/18px Arial,Helvetica,sans-serif;
+body{
+  	font: 14px/18px Arial,Helvetica,sans-serif;
+	background: #f3f3f3;
 }
 
 .navbar{
@@ -19,4 +20,11 @@
     margin-left:80px;
     padding-right:0px;
     padding-left:0px;
+}
+
+a {
+    padding: 0px;
+    font-size: .9375rem;
+    font-weight: 300;
+    color: #000;
 }

@@ -8,6 +8,23 @@ import {MatSidenav} from '@angular/material'
 })
 export class NavbarComponent implements OnInit {
 
+Danhmuc: any = {
+	items: [
+		{
+			tendm:"Tivi",
+			tendm1:"Loa Karaoke"
+		},
+		{
+			tendm:"Tủ lạnh",
+			tendm1:"Tủ đông"
+		},
+		{
+			tendm:"Máy giặt",
+			tendm1:"Sấy quần áo"
+		},
+		
+	]
+};
   constructor() { }
 
   ngOnInit() {

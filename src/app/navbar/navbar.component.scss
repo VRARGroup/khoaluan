@@ -33,17 +33,19 @@
     overflow: visible;
     box-shadow: 2px 0 4px 0 rgba(0,0,0,.2);
     border-left: 1px solid #ddd;
-    width:100%;
+    width:110%;
+    padding:0px;
 }
 
 .dropdown-item{
     height:30px;
+    padding:0px;
 }
 
 .mainmenu{
     height:52px;
+    width:110%;
     box-shadow: 0 0 4px 0 rgba(0,0,0,.2);
-
 }
 
 .nav-link1{
@@ -57,10 +59,17 @@ li {
 
 .fontWeightBold {
     font-weight: bold;
+    margin-right: 5px;
 }
 
 .fontVariant {
     font-weight: 400;
+    float:right;
+    margin-right: 10px;
+}
+
+.cter {
+    margin-left:30px;
 }
 
 .logo {
@@ -87,15 +96,6 @@ li {
     margin-top: 3px;
 }
 
-[class^="icondmx-"], [class*="icondmx-"] {
-    background-image: url(https://cdn.tgdd.vn/dmx2016/Content/images/V2/global/icondesktop@1x.v202005162200.png);
-    background-repeat: no-repeat;
-    display: inline-block;
-    height: 30px;
-    width: 30px;
-    line-height: 20px;
-    vertical-align: middle;
-}
 
 nav li.active i {
     opacity: 1;
@@ -109,15 +109,49 @@ nav li i {
 
 .span {
     position: relative;
-    display: block;
     color: #333;
     line-height: 20px;
-    margin:0px 10px 0px 10px;
-    border-bottom: 1px solid #eee;
+    display: inline-block;
+    font-size: 14px;
+    color: #333;
+    width:100%;
+    float:center;
+
 }
 
 a{
     display: inline-block;
     font-size: 14px;
     color: #333;
+    padding:0px !important;
+    margin-left:2px !important;
+}
+
+.dropdown-item.active>span {
+    font-weight: bold !important;
+}
+
+nav span.active {
+    border-left: 3px solid #4a90e2;
+    padding-left: 7px;
+}
+
+li>span{
+    border-bottom: 1px solid #eee;
+    padding: 5px 0 4px 0;
+    weight:10px;
+}
+
+.dropdown-item a:hover {
+    color: #4a90e2 !important;
+    font-weight: bold !important;
+    line-height: 20px;
+}
+
+.mainmenu .moreCate {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 17px !important;
+    margin-left: 15px !important;
+    border-left: 1px solid #ddd;
 }
