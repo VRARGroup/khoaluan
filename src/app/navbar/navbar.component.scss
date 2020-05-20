@@ -27,14 +27,13 @@
 }
 
 .dropdown-menu{
-    margin: 10px 0px 0px 0px;
-    display: block;
     background: #fff;
     overflow: visible;
     box-shadow: 2px 0 4px 0 rgba(0,0,0,.2);
     border-left: 1px solid #ddd;
     width:110%;
     padding:0px;
+    display: block;
 }
 
 .dropdown-item{
@@ -131,11 +130,6 @@ a{
     font-weight: bold !important;
 }
 
-nav span.active {
-    border-left: 3px solid #4a90e2;
-    padding-left: 7px;
-}
-
 li>span{
     border-bottom: 1px solid #eee;
     padding: 5px 0 4px 0;
@@ -146,6 +140,11 @@ li>span{
     color: #4a90e2 !important;
     font-weight: bold !important;
     line-height: 20px;
+    text-decoration: none;
+}
+
+li.active>span{
+    font-weight: bold !important;
 }
 
 .mainmenu .moreCate {
@@ -154,4 +153,91 @@ li>span{
     padding-left: 17px !important;
     margin-left: 15px !important;
     border-left: 1px solid #ddd;
+}
+
+section {
+    width: 100%;
+    min-width: 980px;
+    margin: auto;
+    position: relative;
+    
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, main {
+    display: block;
+}
+
+.hm-bn {
+    float: right;
+    width: 57.5%;
+    height: 356px;
+    overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+    margin-bottom: 12px;
+    margin-right: 10px;
+}
+
+
+ngb-carousel {
+    max-width: 700px;
+    margin: auto;
+    position-top: 50px-30px !important;
+    margin-bottom:50px; 
+}
+
+ngb-carousel img {
+    width: 100%;
+    outline: none;
+}
+
+ngb-carousel {
+    width: inherit;
+    height: inherit;
+    
+}
+
+.carousel-inner {
+    overflow: visible;
+}
+
+.carousel-item {
+    display: flex !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease-in-out, visibility 1.2s;
+    z-index: -1;
+}
+
+.carousel-item.active{
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+}
+
+.carousel-control-prev {
+     z-index: 20;
+}
+
+.carousel-control-next {
+     z-index: 20;
+     
+}
+
+.carousel-caption{
+    position: absolute;
+    
+}
+
+.backgroundcarousel-caption{
+    opacity: 0.5;
+    background-color: #000;
+}
+
+.carousel-indicators{
+    z-index: 20;
+}
+
+.divcarousel{
+    margin-top:0px;
 }
