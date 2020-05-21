@@ -42,6 +42,36 @@ a {
     background-color: #000;
 }
 
+.carousel-indicators {
+    margin-bottom: 30px;
+    width:690px;
+    margin-left:0px;
+    margin-right:0px;
+    top: 336px;
+}
+
+.carousel-indicators li {
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    width: 138px;
+    height: 10px;
+    margin-right: 3px;
+    margin-left: 3px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    opacity: .5;
+    transition: opacity .6s ease;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+    background-color: #588fd0;
+}
+
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, address, del, em, img, strong, sub, sup, b, u, i, center, ol, ul, li, form, label, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, nav, section, summary, mark, video {
     margin: 0;
     padding: 0;

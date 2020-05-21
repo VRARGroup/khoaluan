@@ -56,6 +56,10 @@ li {
     list-style-type: none;
 }
 
+ul {
+    list-style-type: none;
+}
+
 .fontWeightBold {
     font-weight: bold;
     margin-right: 5px;
@@ -106,7 +110,7 @@ nav li i {
     margin-right: 3px;
 }
 
-.span {
+.span1 {
     position: relative;
     color: #333;
     line-height: 20px;
@@ -126,7 +130,7 @@ a{
     margin-left:2px !important;
 }
 
-.dropdown-item.active>span {
+li.active>span {
     font-weight: bold !important;
 }
 
@@ -167,23 +171,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     display: block;
 }
 
-.hm-bn {
-    float: right;
-    width: 57.5%;
-    height: 356px;
-    overflow: hidden;
-    position: relative;
-    background: #f0f0f0;
-    margin-bottom: 12px;
-    margin-right: 10px;
-}
-
-
 ngb-carousel {
-    max-width: 700px;
+    max-width: 690px;
+    height: 356px;
     margin: auto;
-    position-top: 50px-30px !important;
-    margin-bottom:50px; 
+    margin-bottom:30px;
+    left: -5px;
+    top:-10px;
 }
 
 ngb-carousel img {
@@ -191,11 +185,10 @@ ngb-carousel img {
     outline: none;
 }
 
-ngb-carousel {
+/*ngb-carousel {
     width: inherit;
     height: inherit;
-    
-}
+}*/
 
 .carousel-inner {
     overflow: visible;
@@ -229,6 +222,7 @@ ngb-carousel {
     
 }
 
+
 .backgroundcarousel-caption{
     opacity: 0.5;
     background-color: #000;
@@ -239,5 +233,129 @@ ngb-carousel {
 }
 
 .divcarousel{
-    margin-top:0px;
+    float: right;
+    width: 57.5%;
+    height: 356px;
+    overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+    margin-bottom: 12px;
+    margin-right: 10px;
 }
+
+/*#ngb-slide-0 .owl-item {
+    height: 55px;
+    position: relative;
+}
+
+#ngb-slide-0 .owl-item .item {
+    display: table;
+    width: 98%;
+    vertical-align: middle;
+    position: relative;
+    background: #fff;
+    color: #666;
+    text-align: center;
+    cursor: pointer;
+    height: 55px;
+    font-size: 12px;
+    padding: 0 1%;
+    border-top: 4px solid #fff;
+}
+
+#ngb-slide-0 .owl-item:after {
+    content: '';
+    float: right;
+    height: 30px;
+    border-right: 1px solid #e5e5e5;
+    position: absolute;
+    top: 13px;
+    right: 0;
+}*/
+
+.homeright {
+    float: right;
+    width: 260px;
+    height: 356px;
+    overflow: hidden;
+    position: relative;
+    margin-right: 50px;
+    top: -10px;
+}
+
+.homeright figure {
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    line-height: 42px;
+}
+
+.homeright figure h2 a {
+    padding: 10px 0;
+    font-size: 14px;
+    color: #4a90e2;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 40px;
+}
+
+.homeright figure h2 a:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid #4a90e2;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.homeright ul {
+    display: block;
+    overflow: hidden;
+    height: 100px;
+    position: relative;
+}
+
+.homeright ul li {
+    display: block;
+    padding: 7px 10px;
+    border-bottom: 1px solid #ededed;
+    background: #fff;
+}
+
+.homeright figure h2 {
+    float: left;
+    background: #fff;
+    line-height: 1.3em;
+    margin-left: 8px;
+}
+
+.backgroundhomerightbottom {
+    display: flex;
+    flex-direction: column;
+    height: 203px;
+    background-color: #fff;
+}
+
+.container{
+    margin-top:12px !important;
+    margin-left:0px !important;    
+}
+
+.backgroundhomerightbottom a:first-child {
+    padding-top: 2.5px;
+}
+
+.backgroundhomerightbottom a {
+    flex: 1;
+    color: #666;
+    text-align: right;
+    max-height: 70px;
+}
+
+a{
+    text-decoration: none;
+}
+
