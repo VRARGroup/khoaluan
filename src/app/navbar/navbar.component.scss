@@ -31,7 +31,7 @@
     overflow: visible;
     box-shadow: 2px 0 4px 0 rgba(0,0,0,.2);
     border-left: 1px solid #ddd;
-    width:110%;
+    width:100%;
     padding:0px;
     display: block;
 }
@@ -43,13 +43,17 @@
 
 .mainmenu{
     height:52px;
-    width:110%;
+    width:100%;
     box-shadow: 0 0 4px 0 rgba(0,0,0,.2);
+    vertical-align:middle;
+    display: table-cell;
 }
 
-.nav-link1{
-    height:52px;
-    margin:10px 20px 10px 0px;
+.mainmenudm{
+    min-width: 1024px;
+    background: #4a90e2;
+    width: 100%;
+    position: relative;
 }
 
 li {
@@ -147,7 +151,7 @@ li>span{
     text-decoration: none;
 }
 
-li.active>span{
+.dropdown-item:hover a{
     font-weight: bold !important;
 }
 
@@ -176,8 +180,8 @@ ngb-carousel {
     height: 356px;
     margin: auto;
     margin-bottom:30px;
-    left: -5px;
-    top:-10px;
+    left: -20px;
+    top:10px;
 }
 
 ngb-carousel img {
@@ -232,7 +236,7 @@ ngb-carousel img {
     z-index: 20;
 }
 
-.divcarousel{
+/*.divcarousel{
     float: right;
     width: 57.5%;
     height: 356px;
@@ -241,7 +245,7 @@ ngb-carousel img {
     background: #f0f0f0;
     margin-bottom: 12px;
     margin-right: 10px;
-}
+}*/
 
 /*#ngb-slide-0 .owl-item {
     height: 55px;
@@ -280,7 +284,8 @@ ngb-carousel img {
     overflow: hidden;
     position: relative;
     margin-right: 50px;
-    top: -10px;
+    top: 10px;
+    left:-10px
 }
 
 .homeright figure {
@@ -339,13 +344,11 @@ ngb-carousel img {
     background-color: #fff;
 }
 
+
 .container{
+    height:210px !important;
     margin-top:12px !important;
     margin-left:0px !important;    
-}
-
-.backgroundhomerightbottom a:first-child {
-    padding-top: 2.5px;
 }
 
 .backgroundhomerightbottom a {
@@ -359,3 +362,74 @@ a{
     text-decoration: none;
 }
 
+li .subcate {
+    display: none;
+    cursor: default;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 211px;
+    height: 344px;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 1px 0 rgba(0,0,0,.25);
+
+}
+
+.family-nav aside {
+    width: 200px;
+    padding: 5px 10px;
+    float: left;
+}
+
+
+.family-nav aside strong {
+    border-bottom: solid 1px #ddd;
+    display: block;
+    height: 25px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.family-nav aside a {
+    line-height: 25px;
+    display: -webkit-box;
+    padding:2px 0 !important;;
+}
+
+.family-nav  li aside strong a {
+    font-size: 12px;
+    color: #4a90e2;
+    font-weight: bold;
+    margin-left: 10px;
+
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.d-line{
+    margin-top:10px !important;
+}
+
+.family-nav li{
+    display: inline-block;
+}
+
+td{
+    padding:20px;
+}

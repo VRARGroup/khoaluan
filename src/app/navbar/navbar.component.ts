@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild,HostListener  } from '@angular/core';
 import {MatSidenav} from '@angular/material'
+declare var $: any;
 
 @Component({
   selector: 'app-navbar',
@@ -28,7 +29,11 @@ Danhmuc: any = {
   constructor() { }
 
   ngOnInit() {
-  
+  	$('ul.navbar-nav li div.dropdown-menu li').hover(function() {
+  	$(this).find('.subcate').stop(true, true).delay(0).fadeIn(0);
+	}, function() {
+ 	$(this).find('.subcate').stop(true, true).delay(0).fadeOut(0);
+	});
   }
 
 
