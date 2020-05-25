@@ -23,6 +23,14 @@ body{
     padding-left:0px;
 }
 
+
+@media screen and (max-width: 1319px) {
+   .container{
+        margin-right:0px !important;
+        margin-left:0px !important;
+    }
+}
+
 a {
     padding: 0px;
     font-size: .9375rem;

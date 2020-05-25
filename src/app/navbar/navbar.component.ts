@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,HostListener  } from '@angular/core';
+import { Component,ElementRef, OnInit, ViewChild,HostListener  } from '@angular/core';
 import {MatSidenav} from '@angular/material'
 declare var $: any;
 
@@ -26,6 +26,7 @@ Danhmuc: any = {
 		
 	]
 };
+
   constructor() { }
 
   ngOnInit() {
@@ -35,7 +36,5 @@ Danhmuc: any = {
  	$(this).find('.subcate').stop(true, true).delay(0).fadeOut(0);
 	});
   }
-
-
 }
 

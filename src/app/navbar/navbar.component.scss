@@ -297,7 +297,13 @@ ngb-carousel img {
         width:400px !important;
     }
 }
-
+@media screen and (max-width: 1319px) {
+   .homeright{
+        margin-right: 0px !important;
+        left: 0px !important;
+        overflow: none;
+    }
+}
 .homeright {
     float: right;
     width: 260px;
