@@ -176,11 +176,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 ngb-carousel {
-    max-width: 650px;
+    max-width: 690px;
     height: 356px;
     margin: auto;
-    margin-bottom: 30px;
-    left: -20px;
+    
     top:10px;
 }
 
@@ -236,17 +235,6 @@ ngb-carousel img {
     z-index: 20;
 }
 
-.divcarousel{
-    float: right;
-    width: 50%;
-    height: 356px;
-    position: relative;
-    background: #f0f0f0;
-    margin-bottom: 12px;
-    margin-right: 10px;
-
-}
-
 /*#ngb-slide-0 .owl-item {
     height: 55px;
     position: relative;
@@ -278,25 +266,31 @@ ngb-carousel img {
 }*/
 
 .homerightcarasoule {
-    max-width: 700px;
-    height: 356px;
-    width:690px;
-    position: relative;
-    margin-left: 310px;
-    margin-bottom:30px;
+    width: 100%;
+    padding-right: 290px;
+    padding-left: 230px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 30px;
 }
 
-@media screen and (max-width: 600px) {
+/*@media screen and (max-width: 600px) {
  .homerightcarasoule img{
       width:200px;
    }
+}*/
+
+@media all and (max-width: 1000px) {
+     section .container-fluid{
+        margin-right: -50px;
+    }
+
+    .homerightcarasoule{
+        padding-left: 180px;
+   }
+
 }
 
-@media all and (max-width: 1200px) {
-    ngb-carousel{
-        width:400px !important;
-    }
-}
 @media screen and (max-width: 1319px) {
    .homeright{
         margin-right: 0px !important;
@@ -304,15 +298,16 @@ ngb-carousel img {
         overflow: none;
     }
 }
+
 .homeright {
     float: right;
     width: 260px;
     height: 356px;
     overflow: hidden;
     position: relative;
-    margin-right: 50px;
+    margin-right:60px;
     top: 10px;
-    left:-10px
+    left:-20px
 }
 
 .homeright figure {
