@@ -16,6 +16,8 @@ body{
 }
 
 .container{
+    max-width:1200px;
+    width:100%;
     margin-right:80px;
     margin-left:80px;
     margin-top:auto;
@@ -29,7 +31,13 @@ body{
         margin-right:0px !important;
         margin-left:0px !important;
     }
+
+    .homeright{
+        right:-50px;
+    }
 }
+
+
 
 a {
     padding: 0px;

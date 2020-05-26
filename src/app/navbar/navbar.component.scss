@@ -8,7 +8,7 @@
 }
 
 .warpher{
-    max-width: 1200px;
+    max-width: 2000px;
     min-width: 1024px;
     width: 100%;
     height: 50px;
@@ -17,6 +17,7 @@
     position: relative;
     display: block;
 }
+
 
 .main-navigation {
     background: #FFFFFF;
@@ -94,6 +95,7 @@ ul {
     display: inline-block;
     line-height: 30px;
     vertical-align: middle;
+    margin-left: 80px;
 }
 
 .icondmx-tivi {
@@ -175,215 +177,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     display: block;
 }
 
-ngb-carousel {
-    max-width: 690px;
-    height: 356px;
-    margin: auto;
-    
-    top:10px;
-}
-
-ngb-carousel img {
-    width: 100%;
-    outline: none;
-}
-
-/*ngb-carousel {
-    width: inherit;
-    height: inherit;
-}*/
-
-.carousel-inner {
-    overflow: visible;
-}
-
-.carousel-item {
-    display: flex !important;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1.2s ease-in-out, visibility 1.2s;
-    z-index: -1;
-}
-
-.carousel-item.active{
-    opacity: 1;
-    visibility: visible;
-    z-index: 10;
-}
-
-.carousel-control-prev {
-     z-index: 20;
-}
-
-.carousel-control-next {
-     z-index: 20;
-     
-}
-
-.carousel-caption{
-    position: absolute;
-    
-}
-
-
-.backgroundcarousel-caption{
-    opacity: 0.5;
-    background-color: #000;
-}
-
-.carousel-indicators{
-    z-index: 20;
-}
-
-/*#ngb-slide-0 .owl-item {
-    height: 55px;
-    position: relative;
-}
-
-#ngb-slide-0 .owl-item .item {
-    display: table;
-    width: 98%;
-    vertical-align: middle;
-    position: relative;
-    background: #fff;
-    color: #666;
-    text-align: center;
-    cursor: pointer;
-    height: 55px;
-    font-size: 12px;
-    padding: 0 1%;
-    border-top: 4px solid #fff;
-}
-
-#ngb-slide-0 .owl-item:after {
-    content: '';
-    float: right;
-    height: 30px;
-    border-right: 1px solid #e5e5e5;
-    position: absolute;
-    top: 13px;
-    right: 0;
-}*/
-
-.homerightcarasoule {
-    width: 100%;
-    padding-right: 290px;
-    padding-left: 230px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 30px;
-}
-
-/*@media screen and (max-width: 600px) {
- .homerightcarasoule img{
-      width:200px;
-   }
-}*/
-
-@media all and (max-width: 1000px) {
-     section .container-fluid{
-        margin-right: -50px;
-    }
-
-    .homerightcarasoule{
-        padding-left: 180px;
-   }
-
-}
-
-@media screen and (max-width: 1319px) {
-   .homeright{
-        margin-right: 0px !important;
-        left: 0px !important;
-        overflow: none;
-    }
-}
-
-.homeright {
-    float: right;
-    width: 260px;
-    height: 356px;
-    overflow: hidden;
-    position: relative;
-    margin-right:60px;
-    top: 10px;
-    left:-20px
-}
-
-.homeright figure {
-    display: block;
-    overflow: hidden;
-    border-bottom: 1px solid #eee;
-    background: #fff;
-    line-height: 42px;
-}
-
-.homeright figure h2 a {
-    padding: 10px 0;
-    font-size: 14px;
-    color: #4a90e2;
-    text-transform: uppercase;
-    font-weight: 600;
-    line-height: 40px;
-}
-
-.homeright figure h2 a:after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 5px solid #4a90e2;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    display: inline-block;
-    margin-left: 5px;
-}
-
-.homeright ul {
-    display: block;
-    overflow: hidden;
-    height: 100px;
-    position: relative;
-}
-
-.homeright ul li {
-    display: block;
-    padding: 7px 10px;
-    border-bottom: 1px solid #ededed;
-    background: #fff;
-}
-
-.homeright figure h2 {
-    float: left;
-    background: #fff;
-    line-height: 1.3em;
-    margin-left: 8px;
-}
-
-.backgroundhomerightbottom {
-    display: flex;
-    flex-direction: column;
-    height: 203px;
-    background-color: #fff;
-}
-
-
-.container{
-    height:210px !important;
-    margin-top:12px !important;
-    margin-left:0px !important;    
-}
-
-.backgroundhomerightbottom a {
-    flex: 1;
-    color: #666;
-    text-align: right;
-    max-height: 70px;
-}
-
-a{
-    text-decoration: none;
-}
-
 li .subcate {
     display: none;
     cursor: default;
@@ -399,7 +192,7 @@ li .subcate {
 }
 
 .family-nav aside {
-    width: 200px;
+    width: 210px;
     padding: 5px 10px;
     float: left;
 }

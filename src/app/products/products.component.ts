@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Inject  } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -82,7 +82,11 @@ sanphams: any = {
 	]
 };
 
-  constructor() { }
+  constructor(@Inject(DOCUMENT) document) {
+  	 var x= document.getElementById('sw').style.width = screen.availWidth;
+  	  var y= document.getElementById('sw').style.width = screen.availHeight;
+  	 console.log(x,y);
+   }
 
   ngOnInit() {
   }
