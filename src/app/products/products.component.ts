@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject  } from '@angular/core';
+import { Component, OnInit, Inject,ViewChild,ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-products',
@@ -82,13 +82,14 @@ sanphams: any = {
 	]
 };
 
-  constructor(@Inject(DOCUMENT) document) {
-  	 var x= document.getElementById('sw').style.width = screen.availWidth;
-  	  var y= document.getElementById('sw').style.width = screen.availHeight;
-  	 console.log(x,y);
-   }
+	 @ViewChild('sw',{static:true}) sw: ElementRef;
+  	constructor(@Inject(DOCUMENT) document) {
+  	 	var x= document.getElementById('sw').style.width = screen.availWidth;
+  	  	var y= document.getElementById('sw').style.width = screen.availHeight;
+  	 	console.log(x,y);
+   	}
 
-  ngOnInit() {
-  }
+  	ngOnInit() {
+  	}
 
 }

@@ -61,13 +61,17 @@ import {
     MatLineModule, MatOptionModule
 
 } from '@angular/material';
+import { LoginComponent } from './login/login.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    ProductsComponent
+    ProductsComponent,
+    LoginComponent,
+    UserComponent
   ],
   imports: [
     NgbModule,

@@ -4,8 +4,11 @@ import { ModuleWithProviders } from '@angular/core';
 
 import { ProductsComponent } from './products/products.component';
 
+import { LoginComponent } from './login/login.component';
+
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'products' },
+  {path: '', pathMatch: 'full', redirectTo: 'login' },
+  {path: 'login', component: LoginComponent},
   {path: 'products', component: ProductsComponent}
 ];
 
