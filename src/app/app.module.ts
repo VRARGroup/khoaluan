@@ -63,6 +63,9 @@ import {
 } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { TaosanphamComponent } from './taosanpham/taosanpham.component';
+import { TaoloaisanphamComponent } from './taoloaisanpham/taoloaisanpham.component';
+import { AppmainComponent } from './appmain/appmain.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +74,10 @@ import { UserComponent } from './user/user.component';
     FooterComponent,
     ProductsComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    TaosanphamComponent,
+    TaoloaisanphamComponent,
+    AppmainComponent
   ],
   imports: [
     NgbModule,

@@ -35,6 +35,7 @@
     width:100%;
     padding:0px;
     display: block;
+    margin-top:0px;
 }
 
 .dropdown-item{
@@ -247,4 +248,13 @@ li .subcate {
 
 td{
     padding:20px;
+}
+
+.mainbox {
+    display: block;
+    width: 100%;
+    max-width: 1050px;
+    margin: auto;
+    height: 36px;
+    position: relative;
 }
