@@ -136,6 +136,128 @@
           }
         }
       }
+    },
+    "appmenu": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/appmenu",
+      "sourceRoot": "projects/appmenu/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/appmenu",
+            "index": "projects/appmenu/src/index.html",
+            "main": "projects/appmenu/src/main.ts",
+            "polyfills": "projects/appmenu/src/polyfills.ts",
+            "tsConfig": "projects/appmenu/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/appmenu/src/favicon.ico",
+              "projects/appmenu/src/assets"
+            ],
+            "styles": [
+              "projects/appmenu/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/appmenu/src/environments/environment.ts",
+                  "with": "projects/appmenu/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "appmenu:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "appmenu:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "appmenu:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/appmenu/src/test.ts",
+            "polyfills": "projects/appmenu/src/polyfills.ts",
+            "tsConfig": "projects/appmenu/tsconfig.spec.json",
+            "karmaConfig": "projects/appmenu/karma.conf.js",
+            "assets": [
+              "projects/appmenu/src/favicon.ico",
+              "projects/appmenu/src/assets"
+            ],
+            "styles": [
+              "projects/appmenu/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/appmenu/tsconfig.app.json",
+              "projects/appmenu/tsconfig.spec.json",
+              "projects/appmenu/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/appmenu/e2e/protractor.conf.js",
+            "devServerTarget": "appmenu:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "appmenu:serve:production"
+            }
+          }
+        }
+      }
     }},
   "defaultProject": "binhluansanphamdmx"
 }

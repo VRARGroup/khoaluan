@@ -12,7 +12,7 @@ sanphams: any = {
 		{
 			sp:"máy lạnh sam sung",
       		price:"500$",
-      		picture:"https://cdn.tgdd.vn/Products/Images/2002/217442/samsung-ar10tyhycwknsv-550x160.jpg"
+      		picture:"https://cdn.tgdd.vn/Products/Images/3385/204086/Slider/vi-vn-a.jpg"
 		},
 		{
 			sp:"ipad",

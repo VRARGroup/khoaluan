@@ -1,7 +1,7 @@
 
 <div class="header">
   <div class="warpher">
-    <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
+    <a class="logo" title="Về trang chủ DienmayXanh.com" routerLink="/taosanpham">
       <img class="icondmx-logo" src="./assets/logo.PNG">
     </a>
   </div>
@@ -19,7 +19,7 @@
             <a dropdownToggle type="button" class="dropdown-toggle">
               <span class="fontWeightBold"><i class="fa fa-bars"></i> Danh mục</span></a>
               
-              <a class="d-inline fontVariant nav-link moreCate" style="color: #288ad6;" href="#">Xem tất cả</a>
+              <a class="d-inline fontVariant nav-link moreCate" style="color: #288ad6;" >Xem tất cả</a>
             </div>
           </div>
           <div class="dropdown-menu dropdown dropdown-primary active" role="menu">
@@ -325,10 +325,12 @@
         </li>
       </ul>
     <!-- Collapsible content -->
+    <router-outlet></router-outlet>
   </mdb-navbar>
   <!--/.Navbar-->
   </div>
 </div>
+
 </div>
 
 
