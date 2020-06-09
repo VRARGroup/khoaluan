@@ -1,1 +1,68 @@
-<p>taoloaisanpham works!</p>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var add_btn= $(".add-more-info");
+                var warpher= $(".field-wrapper");
+                var html_field= `<div>
+                       <input  class="value1" type="text"><a href="javascript:void(0);" class="remove_button"><i class="fas fa-minus"></i></a>
+                       <br>
+                       <textarea class="value2" type="text"></textarea>
+                       <br>
+                    </div>`;
+                    var x=1;
+                    $(add_btn).click(function(e){
+                        e.preventDefault();
+                        x++;
+                        $(warpher).append(html_field);
+                    });
+                    $(warpher).onclick('click','.remove_button',function(e){
+                        e.preventDefault();
+                        $(this).parent('div').remove();
+                        x--;
+                    });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="warpher">
+            <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
+                <img class="icondmx-logo" src="./assets/logo.PNG">
+            </a>
+        </div>
+        <!-- breadcrumb -->
+        
+        <div class="body">
+            <div class="title">
+                <p>Loại Sản Phẩm</p>
+            </div>
+            <hr>
+            <div id="taoloaisanpham">
+                <label for="tensp">Tên loại sản phẩm: </label>
+                <input type="text" id="tensp">
+                <br>  <br>
+                
+                <label>Đặc trưng: </label>  <a href="javascript:void(0);" class="add-more-info"><i class="fas fa-plus"></i></a>
+                <div class="field-wrapper">
+                    <div>
+                       <input  class="value1" type="text"><a href="javascript:void(0);" class="remove_button"><i class="fas fa-minus"></i></a>
+                       <br>
+                       <textarea class="value2" type="text"></textarea>
+                       <br>
+                    </div>
+                </div>
+                <br>  <br>
+                <label>Hình ảnh: </label>
+                
+            </div>
+            <div style="text-align: center; padding-top: 30px;">
+                <button type="button" id="save_sanpham">Save</button>
+                <button type="button" id="clear_sanpham">Clear</button>
+            </div>
+        </div>
+    </body>
+</html>
+
