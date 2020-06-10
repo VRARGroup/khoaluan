@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\mongodb\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj": {}
+    "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj": {}
   },
   "projects": {
-    "E:\\mongodb\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj": {
+    "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\mongodb\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
+        "projectUniqueName": "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
         "projectName": "dienmayxanhapi",
-        "projectPath": "E:\\mongodb\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
+        "projectPath": "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
         "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "E:\\mongodb\\dienmayxanhapi\\dienmayxanhapi\\obj\\",
+        "outputPath": "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

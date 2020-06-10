@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -222,7 +222,7 @@ namespace dienmayxanhapi.Controllers
             }
 
             var document = new BsonDocument {
-                 { "_id", spdt._id},
+                 { "_id", _spdtService.Get().Count+1},
                  { "ten" , spdt.ten},
                  { "thuonghieu", spdt.thuonghieu},
                  { "hinh", arrayhinhanh},

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vr3EPwch7dSVCTeh3WnBHhN5h+IUvP3KDchxwZ1gvDRMSdd0wVS6oIZw9m3NOiJC8Ll0Es3WVv7EN+YMSguy+w==",
+  "dgSpecHash": "CjFLSk/DFmW74F0HYrjRYUCDOFiUWS6NwF+RQdtPYmBwMAbyXX8bVssS1cQaL9zrntrTWrD/tmHyPKnisGG3Gg==",
   "success": true,
-  "projectFilePath": "E:\\mongodb\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
+  "projectFilePath": "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\dnsclient\\1.3.1\\dnsclient.1.3.1.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

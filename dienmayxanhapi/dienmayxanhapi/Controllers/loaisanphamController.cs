@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,22 +9,27 @@ using MongoDB.Bson;
 
 namespace dienmayxanhapi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class loaisanphamController : ControllerBase
-    {
+  [Route("api/[controller]")]
+  [ApiController]
+  public class loaisanphamController : ControllerBase
+  {
         private readonly dienmayxanhdbcontext _lspService;
         public loaisanphamController(dienmayxanhdbcontext lspService)
         {
-            _lspService = lspService;
+          _lspService = lspService;
         }
 
         [HttpGet]
         public ActionResult<List<loaisanpham>> Get()
         {
-            return (_lspService.Getlsp());
+          return (_lspService.Getlsp());
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<List<loaisanpham>> Getdetail(int id)
+        {
+          return (_lspService.Getfillterlsp(id));
+        }
 
         [HttpPost]
         public ActionResult<BsonDocument> Create(loaisanpham lsp)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,7 +62,11 @@ namespace dienmayxanhapi
             var dl = collectionlsp.Find(x => true).ToList();
             return dl;
         }
-
+        public List<loaisanpham> Getfillterlsp(int id)
+        {
+          var dl = collectionlsp.Find(x => x._id == id).ToList();
+          return dl;
+        }
         public BsonDocument insertls(BsonDocument lsp)
         {
             var client = new MongoClient(ConnectionString);

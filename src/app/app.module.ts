@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import {A11yModule} from '@angular/cdk/a11y';
@@ -81,6 +83,9 @@ import { AppmainComponent } from './appmain/appmain.component';
   ],
   imports: [
     NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     BrowserModule,
     FlexLayoutModule,
     AppRoutingModule,

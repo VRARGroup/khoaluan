@@ -15,13 +15,11 @@
                 <p>Sản Phẩm</p>
             </div>
             <hr>
-            <div id="taosanpham">
+            <div>
                 <label for="loaisp">Loại sản phẩm:</label>
-                <select id="loaisp">
-                <option>Volvo</option>
-                <option>Saabaaaaaaaaaaaaaaaaa</option>
-                <option>VW</option>
-                <option>Audi</option>
+                <select  [(ngModel)] ="selected" (change)="valueChange($event)">
+                    <option [ngValue]="undefined" disabled selected>Select Any </option>
+                    <option *ngFor="let obj of alllsp" [ngValue]="obj._id" [selected]="obj._id == selected">{{obj.tendanhmuc}}</option>             
                 </select>
                 <br>  <br>
                 <label for="tensp">Tên sản phẩm: </label>
@@ -55,25 +53,31 @@
                 <input type="number" id="giamgia">
                 <br>  <br>
                 <label>Thông số kỹ thuật: </label>
-                <table>
+                <table  *ngFor="let obj of sp; let i = index">
+                    <ng-container *ngFor="let c of obj.dactrung ; let l=index">
                     <tr>
-                        <td class="colhead">
-                            <p>value of string</p>
+                        <td class="colhead" *ngFor="let key of keys(c)">
+                            {{key}}
                         </td>
                     </tr>
-                    <tr>
-                        <td class="col1">
-                            <p>value of string</p>
+                    <ng-container *ngFor="let key of keys(c) ">
+                    <tr *ngFor="let v of c[key]; let k=index">
+
+                        <td class="col1" >
+                            <p>{{v}}</p>
                         </td>
-                        <td class="col2"><input type="text"></td>
+                        <td class="col2"><input type="text" #maRef></td>
                     </tr>
+                    </ng-container>
+                    </ng-container>
+                  
                 </table>
                 <br>  <br>
                 <label>Hình ảnh: </label>
                 
             </div>
             <div style="text-align: center; padding-top: 30px;">
-                <button type="button" id="save_sanpham">Save</button>
+                <button type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
                 <button type="button" id="clear_sanpham">Clear</button>
             </div>
         </div>

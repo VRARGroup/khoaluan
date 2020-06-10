@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ namespace dienmayxanhapi
     public class sanphamdienthoai
     {
         
-        public int? _id { get; set; }
+        public Int32? _id { get; set; }
         public String ten { get; set; }
         public String thuonghieu { get; set; }
         public IList<hinh> hinh { get; set; }
