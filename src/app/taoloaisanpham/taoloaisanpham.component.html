@@ -1,34 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                // debugger
-                var add_btn= $(".add-more-info");
-                var warpher= $(".field-wrapper");
-                var html_field= `<div>
-                       <input  class="value1" type="text"><a href="javascript:void(0);" class="remove_button"><i class="fas fa-minus"></i></a>
-                       <br>
-                       <textarea class="value2" type="text"></textarea>
-                       <br>
-                    </div>`;
-                    var x=1;
-                    $(add_btn).click(function(e){
-                        e.preventDefault();
-                        x++;
-                        $(warpher).append(html_field);
-                    });
-                    $(warpher).onclick('click','.remove_button',function(e){
-                        e.preventDefault();
-                        $(this).parent('div').remove();
-                        x--;
-                    });
-            });
-    </script>
-    </head>
-    <body>
+
+
         <div class="warpher">
             <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
                 <img class="icondmx-logo" src="./assets/logo.PNG">
@@ -64,6 +35,4 @@
                 <button type="button" id="clear_sanpham">Clear</button>
             </div>
         </div>
-    </body>
-</html>
 

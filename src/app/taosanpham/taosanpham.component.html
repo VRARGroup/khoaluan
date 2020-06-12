@@ -9,12 +9,12 @@
             </a>
         </div>
         <!-- breadcrumb -->
-        
         <div class="body">
             <div class="title">
                 <p>Sản Phẩm</p>
             </div>
             <hr>
+
             <div>
                 <label for="loaisp">Loại sản phẩm:</label>
                 <select  [(ngModel)] ="selected" (change)="valueChange($event)">
@@ -26,21 +26,13 @@
                 <input type="text" id="tensp">
                 <br>  <br>
                 <label for="thuonghieu">Thương hiệu:</label>
-                <select id="thuonghieu">
-                <option>Iphone</option>
-                <option>Samsung</option>
-                <option>Oppo</option>
-                <option>Xiaomi</option>
-                <option>Vivo</option>
-                <option>Realme</option>
-                <option>Vsmart</option>
-                <option>Nokia</option>
-                <option>Huaway</option>
-                <option>Mobell</option>
-                <option>Itel</option>
-                <option>Coolpad</option>
-                <option>BlackBerry</option>
-                <option>Master</option>
+                <select  [(ngModel)] ="selectedthuonghieu" (change)="valueChangethuonghieu($event)">
+                    <option [ngValue]="undefined" disabled selected>Select Any </option>
+                    <ng-container *ngFor="let obj of sp ; let l=index">
+                        <option *ngFor="let c of obj.thuonghieu" [ngValue]="c" [selected]="c== selectedthuonghieu">
+                        {{c}}
+                        </option> 
+                    </ng-container>            
                 </select>
                 <br>  <br>
                 <label for="dacdiem" >Đặc điểm: </label>
@@ -53,32 +45,40 @@
                 <input type="number" id="giamgia">
                 <br>  <br>
                 <label>Thông số kỹ thuật: </label>
+                <div class="card-body" >
                 <table  *ngFor="let obj of sp; let i = index">
+                    
                     <ng-container *ngFor="let c of obj.dactrung ; let l=index">
+                    
                     <tr>
                         <td class="colhead" *ngFor="let key of keys(c)">
-                            {{key}}
+                            <p id="{{key}}" #keyname>{{key}}<p>
                         </td>
                     </tr>
                     <ng-container *ngFor="let key of keys(c) ">
                     <tr *ngFor="let v of c[key]; let k=index">
 
                         <td class="col1" >
-                            <p>{{v}}</p>
+                            <p> {{v}}</p>
                         </td>
-                        <td class="col2"><input type="text" #maRef></td>
+                        <td class="col2">
+                            <input type="text" name={{key}},{{v}} id="input{{l}}{{k}}" #maRef>
+                        </td>
                     </tr>
+                   
                     </ng-container>
                     </ng-container>
-                  
+                    
+                    
                 </table>
+                </div>
                 <br>  <br>
                 <label>Hình ảnh: </label>
                 
             </div>
             <div style="text-align: center; padding-top: 30px;">
                 <button type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
-                <button type="button" id="clear_sanpham">Clear</button>
+                <button type="button" id="clear_sanpham" (click)="reset()">Clear</button>
             </div>
         </div>
     </body>

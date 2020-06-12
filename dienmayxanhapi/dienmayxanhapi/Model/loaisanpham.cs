@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +12,7 @@ namespace dienmayxanhapi.Model
     {
         public int? _id { get; set; }
         public string tendanhmuc { get; set; }
-        public string thuonghieu { get; set; }
+        public List<string> thuonghieu { get; set; }
         public IList<dynamic> dactrung { get; set; }
     }
 }

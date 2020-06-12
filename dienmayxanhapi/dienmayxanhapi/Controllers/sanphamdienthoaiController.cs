@@ -215,12 +215,15 @@ namespace dienmayxanhapi.Controllers
             BsonArray arrayhinhanh = new BsonArray();
             for (int i = 0; i < spdt.hinh.Count; i++)
             {
-                var hinh = new BsonDocument().
-                       Add("hinhanh", spdt.hinh[i].hinhanh.ToString()).
-                       Add("mota", spdt.hinh[i].mota.ToString());
-                arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+              var hinh = new BsonDocument().
+                     Add("hinhanh", spdt.hinh[i].hinhanh.ToString()).
+                     Add("mota", spdt.hinh[i].mota.ToString());
+              arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
             }
-
+      //var hinh = new BsonDocument().
+      //                Add("hinhanh", "h1").
+      //                Add("mota", "h2");
+            //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
             var document = new BsonDocument {
                  { "_id", _spdtService.Get().Count+1},
                  { "ten" , spdt.ten},
@@ -235,15 +238,62 @@ namespace dienmayxanhapi.Controllers
 
             BsonDocument d = new BsonDocument();
             BsonArray arraythongsokythuat = new BsonArray();
+            BsonArray arrayndthongsokythuat = new BsonArray();
 
-            for (int i = 0; i < spdt.thongsokythuat.Count; i++)
+            //for (int i = 0; i < spdt.thongsokythuat.Count; i++)
+            //{
+            //    var json = spdt.thongsokythuat[i].ToString();
+            //    d = BsonDocument.Parse(json);
+            //    var documentthngsokythuattich = new BsonDocument { };
+            //    documentthngsokythuattich.Add(d);
+            //    arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(d));
+            //}
+
+            var documentthngsokythuatnd = new BsonDocument { };
+            var keytskt = new BsonDocument { };
+            for (int i = 0; i < spdt.thongsokythuat.Count; i=i+2)
             {
-                var json = spdt.thongsokythuat[i].ToString();
-                d = BsonDocument.Parse(json);
-                var documentthngsokythuattich = new BsonDocument { };
-                documentthngsokythuattich.Add(d);
-                arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(d));
+                if (i < spdt.thongsokythuat.Count-2)
+                {
+                  string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+                  string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split(',');
+                  if (keynamef[0] == keynames[0])
+                  {
+                   
+                    documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+                    arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+                    documentthngsokythuatnd = new BsonDocument { };
+                  }
+                  else
+                  {
+                    documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+                    arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+                    documentthngsokythuatnd = new BsonDocument { };
+                    
+                    keytskt.Add(keynamef[0], arrayndthongsokythuat);
+                    arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
+                    arrayndthongsokythuat = new BsonArray { };
+                    keytskt = new BsonDocument { };
+                  } 
+                }
+                else
+                {
+                  if(i == spdt.thongsokythuat.Count - 2)
+                  {
+                    arrayndthongsokythuat = new BsonArray { };
+                    string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+                    documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+                    arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+                    documentthngsokythuatnd = new BsonDocument { };
+
+                    keytskt.Add(keynamef[0], arrayndthongsokythuat);
+                    arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
+                    arrayndthongsokythuat = new BsonArray { };
+                    keytskt = new BsonDocument { };
+                  }
+                }
             }
+
             document.Add("thongsokythuat", arraythongsokythuat);
 
             _spdtService.insert(document);
