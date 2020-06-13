@@ -1,38 +1,59 @@
 
+<div class="warpher">
+    <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
+        <img class="icondmx-logo" src="./assets/logo.PNG">
+    </a>
+</div>
+<!-- breadcrumb -->
 
-        <div class="warpher">
-            <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
-                <img class="icondmx-logo" src="./assets/logo.PNG">
-            </a>
-        </div>
-        <!-- breadcrumb -->
+<div class="body">
+    <div class="title">
+        <p>Loại Sản Phẩm</p>
+    </div>
+    <hr>
+    <div id="taoloaisanpham">
+        <label for="tensp">Tên loại sản phẩm: </label>
+        <input type="text" id="tensp">
+        <br>  <br>
         
-        <div class="body">
-            <div class="title">
-                <p>Loại Sản Phẩm</p>
-            </div>
-            <hr>
-            <div id="taoloaisanpham">
-                <label for="tensp">Tên loại sản phẩm: </label>
-                <input type="text" id="tensp">
-                <br>  <br>
-                
-                <label>Đặc trưng: </label>  <a href="javascript:void(0);" class="add-more-info"><i class="fas fa-plus"></i></a>
-                <div class="field-wrapper">
-                    <div>
-                       <input  class="value1" type="text"><a href="javascript:void(0);" class="remove_button"><i class="fas fa-minus"></i></a>
-                       <br>
-                       <textarea class="value2" type="text"></textarea>
-                       <br>
-                    </div>
-                </div>
-                <br>  <br>
-                <label>Hình ảnh: </label>
-                
-            </div>
-            <div style="text-align: center; padding-top: 30px;">
-                <button type="button" id="save_sanpham">Save</button>
-                <button type="button" id="clear_sanpham">Clear</button>
+        <!-- <label>Đặc trưng: </label>  <a href="javascript:void(0);" class="add-more-info"><i class="fas fa-plus"></i></a>
+        <div id="field-wrapper">
+            <div>
+                <input  class="value1" type="text"><a href="javascript:void(0);" class="remove_button"><i class="fas fa-minus"></i></a>
+                <br>
+                <textarea class="value2" type="text"></textarea>
+                <br>
             </div>
         </div>
+        <br>  <br>
+        <label>Hình ảnh: </label> -->
+        <div>
+            <label>Thương hiệu: </label>  <i class="fas fa-plus" (click)=Addth()></i>
+        <div id="field-wrapper" *ngFor="let item of numspth,let i=index">
+            <div>
+                <input id="input{{i}}" class="value1" type="text" #monlun><i class="fas fa-minus" (click)=Removeth(item)></i>
+                <br>
+            </div>
+        </div>
+        <br>  <br>
+        </div>
+        <div>
+            <label>Đặc trưng: </label>  <i class="fas fa-plus" (click)=Add()></i>
+        <div id="field-wrapper" *ngFor="let item of numsp,let i=index">
+            <div>
+                <input id="input{{i}}" class="value1" type="text" #maRef><i class="fas fa-minus" (click)=Remove(item)></i>
+                <br>
+                <textarea id="text{{i}}"  class="value2" type="text" #maRef></textarea>
+                <br>
+            </div>
+        </div>
+        <br>  <br>
+        </div>
+        
+    </div>
+    <div style="text-align: center; padding-top: 30px;">
+        <button type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
+        <button type="button" id="clear_sanpham">Clear</button>
+    </div>
+</div>
 
