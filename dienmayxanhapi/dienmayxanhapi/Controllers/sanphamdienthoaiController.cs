@@ -223,9 +223,10 @@ namespace dienmayxanhapi.Controllers
       //var hinh = new BsonDocument().
       //                Add("hinhanh", "h1").
       //                Add("mota", "h2");
-            //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+      //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+      var g = _spdtService.Get().Count;
             var document = new BsonDocument {
-                 { "_id", _spdtService.Get().Count+1},
+                 { "_id", _spdtService.Get().Count},
                  { "ten" , spdt.ten},
                  { "thuonghieu", spdt.thuonghieu},
                  { "hinh", arrayhinhanh},

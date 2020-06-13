@@ -26,10 +26,10 @@ export class sp {
 
 export class hinh
 {
-    hinhanh: string;
+    hinhanh: object;
     mota: string;
 
-    constructor(hinhanh: string, mota: string) {
+    constructor(hinhanh: object, mota: string) {
         this.hinhanh = hinhanh;
         this.mota=mota;
     }

@@ -9,6 +9,7 @@ import { SanphamService } from '../service/sanpham.service';
 import { sp } from '../model/sanpham';
 import { hinh } from '../model/sanpham';
 import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-taosanpham',
@@ -16,6 +17,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./taosanpham.component.scss']
 })
 export class TaosanphamComponent implements OnInit {
+  public num =0;
+  urls = []; 
+  public numsp = [{
+    id:0
+  }];
+  i:number=0;
+  idinput: string;
+  valueiput:object;
 	alllsp:lsanpham[] = [];
 	sp:lsanpham[] = [];
 	selected:any =23;
@@ -27,8 +36,13 @@ export class TaosanphamComponent implements OnInit {
   tsktname: any=[];
   ktnull: number=0;
   hinhtsp: Array<hinh>=[];
+  imageError: string;
+  isImageSaved: boolean=false;
+  cardImageBase64: string;
+  imagebase64: string;
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>
   @ViewChildren('keyname') keynames: QueryList<ElementRef>
+  @ViewChildren('inputmt') inputmts: QueryList<ElementRef>
   	
 
   constructor(private formBuilder: FormBuilder,private router: Router, private loaisanphamserviceService: LoaisanphamserviceService, private sanphamService: SanphamService) { }
@@ -80,11 +94,7 @@ export class TaosanphamComponent implements OnInit {
 
         this.maRefs.forEach((maRef: ElementRef) => this.tskt.push(maRef.nativeElement.name,document.getElementById(maRef.nativeElement.id)["value"]));
 
-        const hinhsp=new hinh(
-          "hinh1",
-          "mota1"
-        );
-        this.hinhtsp.push(hinhsp);
+        
         console.log("hinh:",this.hinhtsp);
     		const tsp = new sp( 
         	200,
@@ -100,9 +110,9 @@ export class TaosanphamComponent implements OnInit {
         );
         	console.log("dskt",this.tskt);
           console.log("dskt",this.tsktname);
-          //this.Createsp(tsp);
-          this.reset();
+          console.log(tsp);
           this.Createsp(tsp);
+          this.reset();
       }
       }
       else
@@ -137,4 +147,51 @@ export class TaosanphamComponent implements OnInit {
         	}
       );
 	}
+
+    onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+        var filesAmount = event.target.files.length;
+        for (let i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = (event:any) => {
+                  console.log(event.target.result);
+                  this.urls.push(event.target.result);
+                  this.isImageSaved=true;
+                  this.valueiput=event.target.result;
+                  console.log(this.valueiput);
+                }
+                console.log(event.target.files[i]);
+                reader.readAsDataURL(event.target.files[i]);
+        }
+    }
+  }
+
+      Add(){
+        this.num ++;
+        this.numsp.push({id:this.num});
+        console.log(this.numsp)
+      }
+
+      Remove(index:{ id: number; }){
+        console.log(index);
+        //this.numsp.splice(this.numsp.indexOf(index),1);
+        this.urls.splice(this.urls.indexOf(index),1);
+        console.log("xoa",this.urls);
+      }
+
+      getvalue()
+      {
+        this.idinput="inputmt"+this.i;
+        this.inputmts.forEach((inputmt: ElementRef) => console.log(inputmt.nativeElement.id,document.getElementById(inputmt.nativeElement.id)["value"]));
+        console.log("id",this.idinput);
+        console.log("kqmt",document.getElementById(this.idinput)["value"]);
+        
+        const hinhsp=new hinh(
+          this.valueiput,
+          document.getElementById(this.idinput)["value"]
+        );
+        this.hinhtsp.push(hinhsp);
+        this.i++;
+      }
 }

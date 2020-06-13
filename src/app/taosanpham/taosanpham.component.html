@@ -26,7 +26,7 @@
                 <input type="text" id="tensp">
                 <br>  <br>
                 <label for="thuonghieu">Thương hiệu:</label>
-                <select  [(ngModel)] ="selectedthuonghieu" (change)="valueChangethuonghieu($event)">
+                <select style="margin-left:10px" [(ngModel)] ="selectedthuonghieu" (change)="valueChangethuonghieu($event)">
                     <option [ngValue]="undefined" disabled selected>Select Any </option>
                     <ng-container *ngFor="let obj of sp ; let l=index">
                         <option *ngFor="let c of obj.thuonghieu" [ngValue]="c" [selected]="c== selectedthuonghieu">
@@ -74,13 +74,37 @@
                 </div>
                 <br>  <br>
                 <label>Hình ảnh: </label>
+                <form id="files">
+                <div class="form-group" >
+                <fieldset class="form-group">
+             
+                <div class="custom-file fileInputProfileWrap" >
+                    <ng-container *ngFor='let url of urls,let i=index'>
+                    <div class="img-space">
+                        <ng-container *ngIf="isImageSaved; else elseTemplate">
+                            <img  [src]="url" height="200"> <br/>
+                        </ng-container>
+                        
+                    </div>
+                    <input *ngIf="isImageSaved; else elseTemplate" id="inputmt{{i}}" #inputmt type="text" title="mô tả" class="mto">
+                    <a class="btn btn-danger" (click)="Remove(url)" *ngIf="isImageSaved">Xóa</a>
+                    <a class="btn btn-success" (click)="getvalue()" *ngIf="isImageSaved">Hoàn Thành</a>
+                    </ng-container>                       
+                        <input type='file' (change)="onSelectFile($event)" multiple>              
+
+                </div>
+                <br> 
+                </fieldset>
+                
+                </div>
+               
+                </form>
                 
             </div>
             <div style="text-align: center; padding-top: 30px;">
-                <button type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
+                <button class="button-save " type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
                 <button type="button" id="clear_sanpham" (click)="reset()">Clear</button>
             </div>
         </div>
     </body>
 </html>
-

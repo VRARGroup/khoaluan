@@ -12,7 +12,7 @@ export class TaoloaisanphamComponent implements OnInit {
   public num =0;
   massage = null;
   dactrung: any=[];
-  thieu: Array<string>=["a","b","c","d"];
+  thieu: Array<string>=[];
   public numsp = [{
     id:0
   }];
