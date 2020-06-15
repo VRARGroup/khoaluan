@@ -75,7 +75,17 @@ namespace dienmayxanhapi
             collectionlsp.InsertOne(lsp);
             return lsp;
         }
-    }
+        public List<loaisanpham> deletels(FilterDefinition<BsonDocument> filter)
+        {
+          var client = new MongoClient(ConnectionString);
+          var database = client.GetDatabase(DatabaseName);
+          var collectionlspc = database.GetCollection<BsonDocument>(CollectionNameloaisp);
+          collectionlspc.DeleteOne(filter);
+          var dl = collectionlsp.Find(x => true).ToList();
+          return dl;
+     
+        }
+  }
 
 
 }

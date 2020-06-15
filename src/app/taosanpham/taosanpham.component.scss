@@ -92,16 +92,6 @@ input {
     width: 232px;
     margin-left: 3px;
 }
-button{
-    border-radius:  3px;
-    width: 100px;
-    background-color: #fff;
-    border: 1px solid #000;
-    margin: 0px 10px;
-}
-.button-save{
-    background-color:#007bff;
-}
 
 .image-wrap {
     padding: 10px;
@@ -141,9 +131,7 @@ button{
     pointer-events: none;
     cursor: not-allowed!important;
 }
-.mto{
-    width: 100%;
-}
+
 
 #files{
     margin-top:10px;
@@ -153,4 +141,9 @@ button{
     margin-top: 10px;
     margin-left:10px;
     margin-bottom: 10px;
+}
+
+.mta {
+    width: 500px;
+    margin-left: 3px;
 }

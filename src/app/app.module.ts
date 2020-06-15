@@ -68,6 +68,7 @@ import { UserComponent } from './user/user.component';
 import { TaosanphamComponent } from './taosanpham/taosanpham.component';
 import { TaoloaisanphamComponent } from './taoloaisanpham/taoloaisanpham.component';
 import { AppmainComponent } from './appmain/appmain.component';
+import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { AppmainComponent } from './appmain/appmain.component';
     UserComponent,
     TaosanphamComponent,
     TaoloaisanphamComponent,
-    AppmainComponent
+    AppmainComponent,
+    AppmainquanlyComponent
   ],
   imports: [
     NgbModule,

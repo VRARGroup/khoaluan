@@ -24,6 +24,7 @@ export class TaosanphamComponent implements OnInit {
   }];
   i:number=0;
   idinput: string;
+  idbuton: string;
   valueiput:object;
 	alllsp:lsanpham[] = [];
 	sp:lsanpham[] = [];
@@ -84,6 +85,16 @@ export class TaosanphamComponent implements OnInit {
     
     if(document.getElementById('tensp')["value"]!=="" && this.selectedthuonghieu1!=="" && document.getElementById('dacdiem')["value"]!=="" && document.getElementById('giasanpham')["value"]!=="" && document.getElementById('giamgia')["value"]!=="")
     {
+      this.maRefs.forEach((maRef: ElementRef) => {
+      if(document.getElementById(maRef.nativeElement.id)["value"]==="")
+      {
+        this.ktnull=1;
+      }
+      else
+      {
+        this.ktnull=0;
+      }
+      });
       if(this.ktnull==0)
       {
     		console.log("count",this.maRefs.length);
@@ -114,6 +125,11 @@ export class TaosanphamComponent implements OnInit {
           this.Createsp(tsp);
           this.reset();
       }
+      else
+      {
+        this.massage = 'vui long nhap du';
+        alert('vui long nhap du cac thong so ky thuat');
+      }
       }
       else
       {
@@ -126,24 +142,30 @@ export class TaosanphamComponent implements OnInit {
   {
     document.getElementById('tensp')["value"]="";
     this.selectedthuonghieu="";
-    for(var i=0 ; i < this.hinhtsp.length; i++)
+    for(var i=0 ; i <= this.hinhtsp.length; i++)
     {
-      this.hinhtsp=this.hinhtsp.splice(i, i);
+      this.hinhtsp.splice(i, i+1);
     }
+    
     document.getElementById('dacdiem')["value"]="";
     document.getElementById('giasanpham')["value"]=""
     document.getElementById('giamgia')["value"]="";
     this.loaddetaillsp(this.selected);
     for(var i=0 ; i < this.tskt.length; i++)
     {
-      this.tskt=this.tskt.splice(i, i);
+      this.tskt.splice(i, i+1);
     }
+    this.i=0;
+    this.Removeimgaehtml();
+    console.log("hinh",this.hinhtsp);
+    console.log(this.tskt);
   }
 
 	Createsp(tsp: sp){
 		this.sanphamService.createsp(tsp).subscribe(
         	() => {
           		this.massage = 'Lưu thành công';
+              alert(this.massage);
         	}
       );
 	}
@@ -163,7 +185,10 @@ export class TaosanphamComponent implements OnInit {
                 }
                 console.log(event.target.files[i]);
                 reader.readAsDataURL(event.target.files[i]);
+                document.getElementById("uploadCaptureInputFile")["value"] = "";
         }
+        //this.i++;
+        console.log(this.i);
     }
   }
 
@@ -180,9 +205,19 @@ export class TaosanphamComponent implements OnInit {
         console.log("xoa",this.urls);
       }
 
+
+      Removeimgaehtml(){
+        for(var i=0 ; i <= this.urls.length; i++)
+        {
+          this.urls.splice(i, 1);
+        }
+        this.urls.splice(0, 1);
+      }
+
       getvalue()
       {
         this.idinput="inputmt"+this.i;
+        this.idbuton="btn"+this.i;
         this.inputmts.forEach((inputmt: ElementRef) => console.log(inputmt.nativeElement.id,document.getElementById(inputmt.nativeElement.id)["value"]));
         console.log("id",this.idinput);
         console.log("kqmt",document.getElementById(this.idinput)["value"]);
@@ -192,6 +227,8 @@ export class TaosanphamComponent implements OnInit {
           document.getElementById(this.idinput)["value"]
         );
         this.hinhtsp.push(hinhsp);
+        (document.getElementById(this.idbuton) as HTMLInputElement).disabled = true;
+        (document.getElementById(this.idinput) as HTMLInputElement).disabled = true;
         this.i++;
       }
 }
