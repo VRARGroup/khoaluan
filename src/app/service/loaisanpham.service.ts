@@ -8,7 +8,7 @@ import { lsanpham } from '../model/loaisanpham';
 @Injectable({
   providedIn: 'root'
 })
-export class LoaisanphamserviceService {
+export class LoaisanphamService {
 	url= 'https://localhost:44309/api/loaisanpham';
   	httpOptions = {  
         headers: new HttpHeaders({  

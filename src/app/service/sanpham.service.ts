@@ -25,6 +25,10 @@ export class SanphamService {
     	return this.http.get<sp[]>(this.url+'/'+'getsp_idloaisp?tensp='+tensp);
 	}
 	  
+	gethotsp(): Observable<sp[]> {
+    	return this.http.get<sp[]>(this.url+'/hotsp');
+  	}
+
   	createsp(s: sp): Observable<sp> {
     	const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     	return this.http.post<sp>(this.url + '/', s, httpOptions);

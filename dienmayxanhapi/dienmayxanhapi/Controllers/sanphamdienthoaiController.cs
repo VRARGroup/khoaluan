@@ -28,6 +28,14 @@ namespace dienmayxanhapi.Controllers
             return (_spdtService.Get());
         }
 
+        [Route("hotsp")]
+        [HttpGet]
+        public ActionResult<List<sanphamdienthoai>> Gethotsp()
+        {
+          var dl = _spdtService.Gethotsp().Count();
+          return (_spdtService.Gethotsp());
+        }
+
         [Route("getsp")]
         [HttpGet]
         public ActionResult<List<sanphamdienthoai>> Getfillter(String tensp)

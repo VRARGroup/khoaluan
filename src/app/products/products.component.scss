@@ -45,17 +45,10 @@ ngb-carousel {
     max-width: 690px;
     height: 356px;
     margin: auto;
+    img{
+        height: 356px;
+    }
 }
-
-ngb-carousel img {
-    width: 100%;
-    outline: none;
-}
-
-/*ngb-carousel {
-    width: inherit;
-    height: inherit;
-}*/
 
 .carousel-inner {
     overflow: visible;
@@ -95,39 +88,16 @@ ngb-carousel img {
     background-color: #000;
 }
 
-.carousel-indicators{
-    z-index: 20;
-}
 
-/*#ngb-slide-0 .owl-item {
-    height: 55px;
-    position: relative;
-}
-
-#ngb-slide-0 .owl-item .item {
-    display: table;
-    width: 98%;
-    vertical-align: middle;
-    position: relative;
-    background: #fff;
-    color: #666;
-    text-align: center;
-    cursor: pointer;
-    height: 55px;
-    font-size: 12px;
-    padding: 0 1%;
-    border-top: 4px solid #fff;
-}
-
-#ngb-slide-0 .owl-item:after {
-    content: '';
-    float: right;
-    height: 30px;
-    border-right: 1px solid #e5e5e5;
-    position: absolute;
-    top: 13px;
-    right: 0;
-}*/
+// .carousel-indicators {
+//     z-index: 20; 
+//     margin-bottom: 30px;
+//     width:100%;
+//     margin-left:0px;
+//     margin-right:0px;
+//     top: 306px;
+//     // margin-top: -50px !important;
+// }
 
 .homerightcarasoule {
     width: 100%;
@@ -268,3 +238,38 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     display: block;
 }
 
+.header-home{
+    height:380px;
+}
+
+/* external css: flickity.css */
+.gallery-cell {
+    width: 199px;
+    height: 450px;
+    vertical-align: auto !important;
+    background: rgb(255, 255, 255);
+    counter-increment: gallery-cell;
+    border-right: 1px solid rgb(201, 201, 201);
+    padding: 0px 8px;
+    text-align: left;
+}
+.price-hot-month{
+    position: absolute; 
+    top: 204px;
+    font:18px Arial,Helvetica,sans-serif;
+    font-weight: 600; 
+    color: #d0021b !important;
+}
+.price-sale-hot-month{
+    position: absolute;     
+    top: 244px;
+}
+.hot_month{
+    height: auto;
+    border:10px solid #00b7ff;
+    border-top: none;
+    overflow: hidden;
+    margin-top: -5px;
+    padding: 15px 0px;
+    background-color: #fff;
+}

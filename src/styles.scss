@@ -16,11 +16,12 @@ body{
 }
 
 .container{
-    max-width:1200px;
-    width:100%;
+    min-width:1206px;
+    width:auto;
     margin-top:auto;
     padding-right:0px;
     padding-left:0px;
+    
 }
 
 
@@ -70,7 +71,7 @@ a {
     box-sizing: content-box;
     flex: 0 1 auto;
     width: 138px;
-    height: 10px;
+    height: 8px;
     margin-right: 3px;
     margin-left: 3px;
     text-indent: -999px;
@@ -94,3 +95,21 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a,
     border: 0;
     vertical-align: baseline;
 }
+.gallery{
+    height: 300px;
+    min-width: 2189px !important;
+}
+.flickity-slider{
+    margin-left: -588px;
+}
+.flickity-page-dots {
+    bottom: -22px;
+    display: none !important;
+}
+.flickity-page-dots .dot {
+    height: 4px;
+    width: 40px;
+    margin: 0;
+    border-radius: 0;
+}
+ 

@@ -17,7 +17,6 @@ const routes: Routes = [
   {path: 'taosanpham', component: TaosanphamComponent},
   {path: 'taoloaisanpham', component: TaoloaisanphamComponent},
   {path: 'appmain', component: AppmainComponent, children: [
-
           {
             path: 'products', component: ProductsComponent
           },

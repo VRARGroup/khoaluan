@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { Router } from "@angular/router";
-import { LoaisanphamserviceService } from '../service/loaisanphamservice.service';
+import { LoaisanphamService } from '../service/loaisanpham.service';
 import { lsanpham } from '../model/loaisanpham';
 
 @Component({
@@ -26,7 +26,7 @@ export class TaoloaisanphamComponent implements OnInit {
   }];
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>;
   @ViewChildren('monlun') monluns: QueryList<ElementRef>;
-  constructor(private router: Router, private loaisanphamserviceService: LoaisanphamserviceService) { }
+  constructor(private router: Router, private LoaisanphamService: LoaisanphamService) { }
 
   ngOnInit() {
   }
@@ -169,7 +169,7 @@ export class TaoloaisanphamComponent implements OnInit {
   }
 
   Createlsp(lsp: lsanpham){
-		this.loaisanphamserviceService.createlsp(lsp).subscribe(
+		this.LoaisanphamService.createlsp(lsp).subscribe(
         	() => {
           		this.massage = 'Lưu thành công';
               alert(this.massage);

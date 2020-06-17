@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from "@angular/router";
-import { LoaisanphamserviceService } from '../service/loaisanphamservice.service';
+import { LoaisanphamService } from '../service/loaisanpham.service';
 import { lsanpham } from '../model/loaisanpham';
 import { SanphamService } from '../service/sanpham.service';
 import { sp } from '../model/sanpham';
@@ -22,14 +22,14 @@ export class AppmainquanlyComponent implements OnInit {
   tensanpham:sp[] = [];
   thuhieu:Array<string>=[];
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private loaisanphamserviceService: LoaisanphamserviceService, private sanphamService: SanphamService) { }
+  constructor(private formBuilder: FormBuilder,private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService) { }
 
   ngOnInit() {
     this.loadlsp();
   }
 
   loadlsp() {
-    this.loaisanphamserviceService.getlsp().subscribe((res: lsanpham[] | null) => {
+    this.loaisanphamService.getlsp().subscribe((res: lsanpham[] | null) => {
      this.alllsp = (res) ? res : [];
     });
   }
@@ -42,7 +42,7 @@ export class AppmainquanlyComponent implements OnInit {
   }
 
   loaddetaillsp(id: number) {  
-    this.loaisanphamserviceService.getdetaillsp(id).subscribe((res: lsanpham[] | null) => {
+    this.loaisanphamService.getdetaillsp(id).subscribe((res: lsanpham[] | null) => {
     this.lspth = (res) ? res : [];
    });
    this.loadtensp(0+','+'v');

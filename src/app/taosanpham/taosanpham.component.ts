@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from "@angular/router";
-import { LoaisanphamserviceService } from '../service/loaisanphamservice.service';
+import { LoaisanphamService } from '../service/loaisanpham.service';
 import { lsanpham } from '../model/loaisanpham';
 import { SanphamService } from '../service/sanpham.service';
 import { sp } from '../model/sanpham';
@@ -46,7 +46,7 @@ export class TaosanphamComponent implements OnInit {
   @ViewChildren('inputmt') inputmts: QueryList<ElementRef>
   	
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private loaisanphamserviceService: LoaisanphamserviceService, private sanphamService: SanphamService) { }
+  constructor(private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService) { }
 
   ngOnInit() {
   	this.loadlsp();
@@ -65,13 +65,13 @@ export class TaosanphamComponent implements OnInit {
   }
 
   loadlsp() {
-    this.loaisanphamserviceService.getlsp().subscribe((res: lsanpham[] | null) => {
+    this.LoaisanphamService.getlsp().subscribe((res: lsanpham[] | null) => {
      this.alllsp = (res) ? res : [];
     });
   }
 
   loaddetaillsp(id: number) {  
-     this.loaisanphamserviceService.getdetaillsp(id).subscribe((res: lsanpham[] | null) => {
+     this.LoaisanphamService.getdetaillsp(id).subscribe((res: lsanpham[] | null) => {
      this.sp = (res) ? res : [];
     });
   }
