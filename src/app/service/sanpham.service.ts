@@ -17,7 +17,14 @@ export class SanphamService {
     }; 
   	constructor(private http: HttpClient) { }
 
-
+	getsp_idlsp(id:number): Observable<sp[]> {
+    	return this.http.get<sp[]>(this.url+'/'+'getidsploaisp?idloaisap='+id);
+  	}
+	
+	gettensp(tensp:string): Observable<sp[]> {
+    	return this.http.get<sp[]>(this.url+'/'+'getsp_idloaisp?tensp='+tensp);
+	}
+	  
   	createsp(s: sp): Observable<sp> {
     	const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     	return this.http.post<sp>(this.url + '/', s, httpOptions);

@@ -7,12 +7,13 @@ import { LoginComponent } from './login/login.component';
 import { TaosanphamComponent } from './taosanpham/taosanpham.component';
 import { TaoloaisanphamComponent } from './taoloaisanpham/taoloaisanpham.component';
 import { AppmainComponent} from './appmain/appmain.component';
+import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component'
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'login' },
   {path: 'appmain', pathMatch: 'full', redirectTo: 'appmain/products' },
   {path: 'login', component: LoginComponent},
-  {path: 'products', component: ProductsComponent},
+  {path: 'appmainquanly', component: AppmainquanlyComponent},
   {path: 'taosanpham', component: TaosanphamComponent},
   {path: 'taoloaisanpham', component: TaoloaisanphamComponent},
   {path: 'appmain', component: AppmainComponent, children: [

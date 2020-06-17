@@ -1,1 +1,69 @@
-<p>appmainquanly works!</p>
+<div class="warpher">
+	<a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
+		<img class="icondmx-logo" src="./assets/logo.PNG">
+	</a>
+</div>
+
+<div class="bak">
+
+	<div class="container-fluid">
+		<div class="d-flex justify-content-end">
+			<div class="btnright">
+				<button class="buttontl" (click)="taolsp()">Thêm loại sản phẩm</button>
+				<button class="buttontsp" (click)="taosp()">Thêm sản phẩm</button>
+			</div>
+		</div>
+		<div class="filter d-flex justify-content-center">
+			<div class="inline" *ngFor="let obj of alllsp">
+				<button class="button" (click)="loaddetaillsp(obj._id)">{{obj.tendanhmuc | uppercase}}</button>
+			</div>
+		</div>
+		<div class="filter d-flex justify-content-center">
+
+			<div class="inline" *ngFor="let obj of lspth, let i=index">
+				<ng-container *ngFor="let i of obj.thuonghieu">
+					<button class="buttonth" (click)="loadtensp(obj._id+','+i)">{{i}}</button>
+				</ng-container>
+			</div>
+
+		</div>
+		<div class="filter">
+			<div>
+				<ng-container *ngIf="!tensanpham || tensanpham.length < 1">Khong co dl</ng-container>
+				<ng-container *ngIf="tensanpham.length > 0">
+					<!--Table-->
+					<table class="table table-striped"
+						style="text-align: center; margin-left:auto;margin-right:auto; width:100%">
+
+						<!--Table head-->
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Tên sản phẩm</th>
+								<th>Thương hiệu</th>
+								<th>Giá bán</th>
+								<th>Giảm giá</th>
+								<th>Thao tác</th>
+							</tr>
+						</thead>
+						<!--Table head-->
+
+						<!--Table body-->
+						<tbody>
+							<tr *ngFor="let item of tensanpham, let i=index">
+								<th scope="row">{{i+1}}</th>
+								<td>{{item.ten}}</td>
+								<td>{{item.thuonghieu}}</td>
+								<td>{{item.giaban}}</td>
+								<td>{{item.giamgia}}</td>
+								<td>them,xoa,sua</td>
+							</tr>
+						</tbody>
+						<!--Table body-->
+					</table>
+					<!--Table-->
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

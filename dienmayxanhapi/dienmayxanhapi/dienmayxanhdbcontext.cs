@@ -38,6 +38,19 @@ namespace dienmayxanhapi
             var dl = collectionspdt.Find(x =>x.ten==tensp).ToList();
             return dl;
         }
+
+        public List<sanphamdienthoai> Gettsp_lspfillter(int id, string tensp)
+        {
+          
+          var dl = collectionspdt.Find(x => x._id_loaisanpham==id && x.thuonghieu == tensp).ToList();
+          return dl;
+        }
+
+        public List<sanphamdienthoai> Getfillterspidlsp(int idlsp)
+        {
+          var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();
+          return dl;
+        }
         public BsonDocument insert(BsonDocument sv)
         {
             var client = new MongoClient(ConnectionString);
@@ -55,8 +68,6 @@ namespace dienmayxanhapi
             var dl = collectionspdt.Find(x => true).ToList();
             return dl;
         }
-
-
         public List<loaisanpham> Getlsp()
         {
             var dl = collectionlsp.Find(x => true).ToList();
