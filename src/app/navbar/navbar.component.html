@@ -1,25 +1,41 @@
 
-<div class="header" style="background-color:#EEEEEE; " >
-  <div class="warpher">
+<div class="header">
+  <div style="width:100%;  background: #4a90e2;" >
+    <div class="warpher">
     <a class="logo" title="Về trang chủ DienmayXanh.com" routerLink="/taosanpham">
       <img class="icondmx-logo" src="./assets/logo.PNG">
     </a>
+    <input type="text" id="search_bar">
+    <i style="margin-left: -20px;" class="fas fa-search" aria-hidden="true"></i>
+    <a style="margin-left: 50px;">
+      <i class="fa fa-shopping-cart" style="color:#fff; font-size: 30px;"></i>
+    </a>
+    <a href="tel:18001061" style="vertical-align: middle; margin-left: 50px;">
+      <b style="font:18px Arial,Helvetica,sans-serif; font-weight: 600; color: #fff;">1800.1061</b>
+      <br>
+      <span style="color: #d0efff;font-size: 12px;"> Tổng đài miễn phí </span>
+    </a>
+    <a href="tel:18001061" style="vertical-align: middle; margin-left: 50px;">
+      <b style="font:18px Arial,Helvetica,sans-serif; font-weight: 600; color: #fff;">Kinh nghiệm hay</b>
+      <br>
+      <span style="color: #d0efff;font-size: 12px;"> & Tin khuyến mãi </span>
+    </a>
+    </div>
   </div>
   <div class="main-navigation">
   <div class="mainbox">
     <!-- Dropdown -->
     <!--Navbar-->
-  <mdb-navbar SideClass=" navbar-expand-sm bg-light">
+  <mdb-navbar SideClass=" navbar-expand-sm">
     <!-- Collapsible content -->
       <ul class="navbar-nav">
         <!-- Dropdown -->
         <li class="nav-item dropdown" dropdown>
           <div class="mainmenu">
-            <div style="width:100%;">
-            <a dropdownToggle type="button" class="dropdown-toggle">
+            <div style="margin:0px 8px; width:100%;">
+              <a dropdownToggle type="button" class="dropdown-toggle">
               <span class="fontWeightBold"><i class="fa fa-bars"></i> Danh mục</span></a>
-              
-              <a class="d-inline fontVariant nav-link moreCate" style="color: #288ad6;" >Xem tất cả</a>
+              <a class="d-inline fontVariant nav-link moreCate">Xem tất cả</a>
             </div>
           </div>
           <div class="dropdown-menu dropdown dropdown-primary active" role="menu">
@@ -61,7 +77,7 @@
             <li class="active">
             <span class="span1 dropdown-item">
               <a href="#">Tủ lạnh</a>,
-              <a href="#">Tủ động</a>
+              <a href="#">Tủ đông</a>
             </span>
             <div class="subcate family-nav" style="width:450px; height:100%;">
               <aside>
@@ -156,60 +172,6 @@
             </li>
             <li class="active">
             <span class="span dropdown-item" >
-              <a href="#">Lọc nước</a>,
-              <a href="#">Máy nước nóng</a>
-            </span>
-            <div class="subcate family-nav" style="width:170px; height:100%;">
-              <aside>
-                <a href="/may-loc-nuoc" class="">Máy lọc nước RO</a>
-                <a href="/loi-may-loc-nuoc" class="">Lõi máy lọc nước</a>
-                <a href="/may-nuoc-nong" class="">Máy nước nóng</a>
-                <a href="/cay-nuoc-nong-lanh" class="">Cây nước nóng lạnh</a>
-                <a href="/may-nuoc-nong-nang-luong-mat-troi" class="">Máy nước nóng <br>năng lượng mặt trời</a>
-              </aside>
-            </div>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
-              <a href="#">Điện gia dụng</a>,
-              <a href="#">Quạt</a>
-            </span>
-            <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside>
-                <strong>
-                  ĐIỆN GIA DỤNG
-                </strong>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </aside>
-              <aside>
-                <strong>
-                  QUẠT
-                </strong>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </aside>
-            </div>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
-              <a href="#">Đồ dùng điện gia đình</a>
-            </span>
-            <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside>
-                <strong>
-                  ĐỒ DÙNG ĐIỆN GIA ĐÌNH
-                </strong>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </aside>
-            </div>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
               <a href="#">Điện thoại</a>,
               <a href="#">Laptop</a>,
               <a href="#">Tablet</a>
@@ -259,68 +221,40 @@
             </div>
             </li>
             <li class="active">
-            <span class="span dropdown-item" >
-              <a href="#">Máy bộ</a>,
-              <a href="#">Màn hình</a>,
-              <a href="#">Máy In</a>
-            </span>
-            <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside>
-                <strong>
-                  MÁY BỘ
-                </strong>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </aside>
-              <aside>
-                <strong>
-                  MÀN HÌNH
-                </strong>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </aside>
-              <aside>
-                <strong>
-                  MÁY IN
-                </strong>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </aside>
-              <aside>
-                <strong>
-                  THIÊT BỊ MẠNG
-                </strong>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </aside>
-            </div>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
-              <a href="#">Phụ kiện</a>,
-              <a href="#">Đồng hồ</a>
-            </span>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
-              <a href="#">Sim số</a>,
-              <a href="#">Thẻ cào</a>,
-              <a href="#">Thu hộ</a>
-            </span>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
-              <a href="#">Máy cũ</a>,
-              <a href="#">Trưng bày</a>
-            </span>
-            </li>
+              <span class="span dropdown-item" >
+                <a href="#" class=""></a>
+              </span> 
+              </li>
+              <li class="active">
+                <span class="span dropdown-item" >
+                  <a href="#" class=""></a>
+                </span> 
+                </li>
+                <li class="active">
+                  <span class="span dropdown-item" >
+                    <a href="#" class=""></a>
+                  </span> 
+                  </li>
+                  <li class="active">
+                    <span class="span dropdown-item" >
+                      <a href="#" class=""></a>
+                    </span> 
+                    </li>
+                    <li class="active">
+                      <span class="span dropdown-item" >
+                        <a href="#" class=""></a>
+                      </span> 
+                      </li>
+                      <li class="active">
+                        <span class="span dropdown-item" >
+                          <a href="#" class=""></a>
+                        </span> 
+                        </li>
+                        <li class="active">
+                          <span class="span dropdown-item" >
+                            <a href="#" class=""></a>
+                          </span> 
+                          </li>
           </div>
         </li>
       </ul>

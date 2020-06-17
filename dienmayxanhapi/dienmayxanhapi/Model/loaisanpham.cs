@@ -14,5 +14,7 @@ namespace dienmayxanhapi.Model
         public string tendanhmuc { get; set; }
         public List<string> thuonghieu { get; set; }
         public IList<dynamic> dactrung { get; set; }
+        public List<string> tieuchidanhgia { get; set; }
+
     }
 }

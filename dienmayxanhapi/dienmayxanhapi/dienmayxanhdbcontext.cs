@@ -33,7 +33,13 @@ namespace dienmayxanhapi
             return dl;
         }
 
-        public List<sanphamdienthoai> Getfillter(string tensp)
+        public List<sanphamdienthoai> Gethotsp()
+        {
+          var dl = collectionspdt.Find(x => true).ToList();
+          return dl.Take(11).ToList();
+        }
+
+    public List<sanphamdienthoai> Getfillter(string tensp)
         {
             var dl = collectionspdt.Find(x =>x.ten==tensp).ToList();
             return dl;
