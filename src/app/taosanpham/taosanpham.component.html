@@ -1,8 +1,3 @@
-        <div class="warpher">
-            <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
-                <img class="icondmx-logo" src="./assets/logo.PNG">
-            </a>
-        </div>
         <!-- breadcrumb -->
         <div class="body">
             <div class="title">
@@ -18,7 +13,7 @@
                 </select>
                 <br>  <br>
                 <label for="tensp">Tên sản phẩm <span style="color:red;font-weight:bold">(*)</span>: </label>
-                <input type="text" id="tensp">
+                <input type="text" value="{{kitravalueundefined(this.tensp)}}" id="tensp">
                 <br>  <br>
                 <label for="thuonghieu">Thương hiệu <span style="color:red;font-weight:bold">(*)</span>:</label>
                 <select style="margin-left:10px" [(ngModel)] ="selectedthuonghieu" (change)="valueChangethuonghieu($event)">
@@ -31,33 +26,33 @@
                 </select>
                 <br>  <br>
                 <label for="dacdiem" >Đặc điểm <span style="color:red;font-weight:bold">(*)</span>: </label>
-                <input type="text" id="dacdiem">
+                <input type="text" value="{{kitravalueundefined(this.dacdiemnoibat)}}" id="dacdiem">
                 <br>  <br>
                 <label for="giasanpham">Giá sản phẩm <span style="color:red;font-weight:bold">(*)</span>: </label>
-                <input type="number" id="giasanpham">
+                <input type="number" value="{{kitravalueundefined(this.giaban)}}" id="giasanpham">
                 <br>  <br>
                 <label for="giamgia">Giảm giá: </label>
-                <input type="number" id="giamgia" value="0">
+                <input type="number" value="{{kitravalueundefined(this.giamgia)}}" id="giamgia" value="0">
                 <br>  <br>
                 <label>Thông số kỹ thuật <span style="color:red;font-weight:bold">(*)</span>: </label>
                 <div class="card-body" >
                 <table  *ngFor="let obj of sp; let i = index">
                     
-                    <ng-container *ngFor="let c of obj.dactrung ; let l=index">
+                    <ng-container *ngFor="let c of obj.dactrung , let l=index">
                     
                     <tr>
                         <td class="colhead" *ngFor="let key of keys(c)">
                             <p id="{{key}}" #keyname>{{key}}<p>
                         </td>
                     </tr>
-                    <ng-container *ngFor="let key of keys(c) ">
-                    <tr *ngFor="let v of c[key]; let k=index">
+                    <ng-container *ngFor="let key of keys(c), let h=index ">
+                    <tr *ngFor="let v of c[key], let k=index">
 
                         <td class="col1" >
                             <p> {{v}} <span style="color:red;font-weight:bold">(*)</span> </p>
                         </td>
                         <td class="col2">
-                            <input type="text" name={{key}},{{v}} id="input{{l}}{{k}}" #maRef>
+                            <input type="text" name="{{key}},{{v}}" value="{{kitraundefined(h,l,key,v)}}" id="input{{l}}{{k}}" #maRef>
                         </td>
                     </tr>
                    
@@ -74,12 +69,12 @@
                 <div class="custom-file" >
                     <ng-container *ngFor='let url of urls,let i=index'>
                     <div class="img-space">
-                        <ng-container *ngIf="isImageSaved; else elseTemplate">
+                        <ng-container *ngIf="isImageSaved">
                             <img  [src]="url" height="200"> <br/>
                         </ng-container>
                         
                     </div>
-                    <input *ngIf="isImageSaved; else elseTemplate" class="mta" id="inputmt{{i}}" #inputmt type="text" title="mô tả">
+                    <input *ngIf="isImageSaved" class="mta" id="inputmt{{i}}" #inputmt type="text" title="mô tả">
                     <br>
                     <button class="btn btn-danger" (click)="Remove(url)" *ngIf="isImageSaved">Xóa</button>
                     <button class="btn btn-success" id="btn{{i}}" (click)="getvalue()" *ngIf="isImageSaved">Hoàn Thành</button>

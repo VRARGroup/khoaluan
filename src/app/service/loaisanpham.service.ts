@@ -23,11 +23,17 @@ export class LoaisanphamService {
 
   	getdetaillsp(id: any): Observable<lsanpham[]> {
     	return this.http.get<lsanpham[]>(this.url+ '/' + id);
-	  }
+	}
 	  
 	createlsp(lsp: lsanpham): Observable<lsanpham> {
     	const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     	return this.http.post<lsanpham>(this.url + '/', lsp, httpOptions);
-  	}
+	}
+
+	deletelsp(idlsp: number): Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.delete<number>(this.url + '/'+ idlsp, httpOptions);
+	}
+	  
 
 }

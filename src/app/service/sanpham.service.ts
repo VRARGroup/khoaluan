@@ -21,6 +21,10 @@ export class SanphamService {
     	return this.http.get<sp[]>(this.url+'/'+'getidsploaisp?idloaisap='+id);
   	}
 	
+	getctsp(id:number): Observable<sp[]> {
+    	return this.http.get<sp[]>(this.url+'/'+id);
+	}
+	  
 	gettensp(tensp:string): Observable<sp[]> {
     	return this.http.get<sp[]>(this.url+'/'+'getsp_idloaisp?tensp='+tensp);
 	}

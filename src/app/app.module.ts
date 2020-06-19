@@ -69,6 +69,7 @@ import { TaosanphamComponent } from './taosanpham/taosanpham.component';
 import { TaoloaisanphamComponent } from './taoloaisanpham/taoloaisanpham.component';
 import { AppmainComponent } from './appmain/appmain.component';
 import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component';
+import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component'
     TaosanphamComponent,
     TaoloaisanphamComponent,
     AppmainComponent,
-    AppmainquanlyComponent
+    AppmainquanlyComponent,
+    AppmainnhanvienComponent
   ],
   imports: [
     NgbModule,

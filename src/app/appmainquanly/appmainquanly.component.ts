@@ -48,15 +48,37 @@ export class AppmainquanlyComponent implements OnInit {
    this.loadtensp(0+','+'v');
  }
  
- loadtensp(tensp: string) {  
-  this.sanphamService.gettensp(tensp).subscribe((res: sp[] | null) => {
-  this.tensanpham = (res) ? res : [];
- });
-}
-taosp(): void {
-  this.router.navigate(['taosanpham']);
-};
-taolsp(): void {
-  this.router.navigate(['taoloaisanpham']);
-};
+  loadtensp(tensp: string) {  
+      this.sanphamService.gettensp(tensp).subscribe((res: sp[] | null) => {
+      this.tensanpham = (res) ? res : [];
+      console.log("tensanpham", res);
+    });
+  }
+  taosp(): void {
+    let cv="";
+    window.localStorage.removeItem("editspid");
+    window.localStorage.setItem("editspid", cv.toString());
+    this.router.navigate(['appmainnv/taosanpham']);
+  };
+
+  chitietsp(cv: number): void {
+    window.localStorage.removeItem("editspid");
+    window.localStorage.setItem("editspid", cv.toString());
+    console.log(cv.toString());
+    this.router.navigate(['appmainnv/taosanpham']);
+  };
+
+  taolsp(): void {
+    let cv=0;
+    window.localStorage.removeItem("editspid");
+    window.localStorage.setItem("editspid", cv.toString());
+    this.router.navigate(['appmainnv/taoloaisanpham']);
+  };
+
+  detailsp(cv: number): void {
+    window.localStorage.removeItem("editspid");
+    window.localStorage.setItem("editspid", cv.toString());
+    console.log(cv.toString());
+    this.router.navigate(['appmainnv/taoloaisanpham']);
+  };
 }

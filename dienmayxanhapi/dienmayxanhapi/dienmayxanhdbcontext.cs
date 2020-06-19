@@ -39,7 +39,7 @@ namespace dienmayxanhapi
           return dl.Take(11).ToList();
         }
 
-    public List<sanphamdienthoai> Getfillter(string tensp)
+        public List<sanphamdienthoai> Getfillter(string tensp)
         {
             var dl = collectionspdt.Find(x =>x.ten==tensp).ToList();
             return dl;
@@ -55,6 +55,12 @@ namespace dienmayxanhapi
         public List<sanphamdienthoai> Getfillterspidlsp(int idlsp)
         {
           var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();
+          return dl;
+        }
+
+        public List<sanphamdienthoai> Getdetailsp(int id)
+        {
+          var dl = collectionspdt.Find(x => x._id == id).ToList();
           return dl;
         }
         public BsonDocument insert(BsonDocument sv)

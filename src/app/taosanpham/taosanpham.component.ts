@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren,ViewChild, ElementRef, QueryList  } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, QueryList  } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -22,16 +22,22 @@ export class TaosanphamComponent implements OnInit {
   public numsp = [{
     id:0
   }];
+  tensp: string;
+  giaban:number;
+  giamgia:number;
+  dacdiemnoibat:string;
   i:number=0;
   idinput: string;
   idbuton: string;
   valueiput:object;
-	alllsp:lsanpham[] = [];
+  alllsp:lsanpham[] = [];
+  arrsp:sp[]=[];
 	sp:lsanpham[] = [];
 	selected:any =23;
   selectedthuonghieu:string ='';
   selectedthuonghieu1:string ='';
-	massage = null;
+  massage = null;
+  idlsp:number;
 	divList : any[];
 	tskt: any=[];
   tsktname: any=[];
@@ -40,6 +46,7 @@ export class TaosanphamComponent implements OnInit {
   imageError: string;
   isImageSaved: boolean=false;
   cardImageBase64: string;
+  khoa:string="";
   imagebase64: string;
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>
   @ViewChildren('keyname') keynames: QueryList<ElementRef>
@@ -49,25 +56,51 @@ export class TaosanphamComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService) { }
 
   ngOnInit() {
-  	this.loadlsp();
+    this.loadlsp();
+    this.idlsp = parseInt(window.localStorage.getItem("editspid"));
+    if(this.idlsp!==null)
+    {
+      this.loadctsp(this.idlsp);
+    }
+    else
+    {
+      
+    }
   	//console.log(this.alllsp);
   }
 
   valueChange(event){
-  	console.log("selected value",event.target.value ,'value of selected',this.selected);
+  	//console.log("selected value",event.target.value ,'value of selected',this.selected);
   	this.loaddetaillsp(this.selected);
   
   }
 
   valueChangethuonghieu(event){
-    console.log("selected value",event.target.value ,'value of selected',this.selectedthuonghieu);
+    //console.log("selected value",event.target.value ,'value of selected',this.selectedthuonghieu);
     this.selectedthuonghieu1=this.selectedthuonghieu;
   }
 
   loadlsp() {
     this.LoaisanphamService.getlsp().subscribe((res: lsanpham[] | null) => {
-     this.alllsp = (res) ? res : [];
+    this.alllsp = (res) ? res : [];
     });
+  }
+
+  loadctsp(id: number) {  
+    this.sanphamService.getctsp(id).subscribe((res: sp[] | null) => {
+    this.arrsp = (res) ? res : [];
+    console.log(res);
+    console.log("thuonghieu",res[0].thuonghieu);
+    this.selected=res[0]._id_loaisanpham;
+    this.valueChange(this.selected);
+    this.selectedthuonghieu=res[0].thuonghieu;
+    this.valueChangethuonghieu(this.selectedthuonghieu);
+    this.tensp=res[0].ten;
+    this.giaban=res[0].giaban;
+    this.giamgia=res[0].giamgia;
+    this.dacdiemnoibat=res[0].dacdiemnoibat;
+   });
+   
   }
 
   loaddetaillsp(id: number) {  
@@ -138,6 +171,36 @@ export class TaosanphamComponent implements OnInit {
       }
 	}
 
+  kitravalueundefined(h:string)
+  {
+    return h;
+  }
+  kitraundefined(h:number, l:number, key: string, v: string)
+  {
+    if(this.khoa=="")
+    {
+      this.khoa=key;
+    }
+    if(this.khoa!=key)
+    {
+      this.khoa=key;
+      this.i=0;
+    }
+    if(this.arrsp[0].thongsokythuat[l][key][this.i][v]==undefined)
+    {
+      return "";
+    }
+    else
+    {
+      const vh=this.i;
+      this.i++;
+      console.log(v);
+      return this.arrsp[0].thongsokythuat[l][key][vh][v];
+    }
+      
+    
+    
+  }
   reset()
   {
     document.getElementById('tensp')["value"]="";

@@ -28,6 +28,12 @@ namespace dienmayxanhapi.Controllers
             return (_spdtService.Get());
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<List<sanphamdienthoai>> Getdetallsp(int id)
+        {
+          return (_spdtService.Getdetailsp(id));
+        }
+
         [Route("hotsp")]
         [HttpGet]
         public ActionResult<List<sanphamdienthoai>> Gethotsp()
@@ -243,11 +249,11 @@ namespace dienmayxanhapi.Controllers
                      Add("mota", spdt.hinh[i].mota.ToString());
               arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
             }
-      //var hinh = new BsonDocument().
-      //                Add("hinhanh", "h1").
-      //                Add("mota", "h2");
-      //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
-      var g = _spdtService.Get().Count;
+            //var hinh = new BsonDocument().
+            //                Add("hinhanh", "h1").
+            //                Add("mota", "h2");
+            //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+            var g = _spdtService.Get().Count;
             var document = new BsonDocument {
                  { "_id", _spdtService.Get().Count},
                  { "ten" , spdt.ten},

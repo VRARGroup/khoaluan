@@ -36,7 +36,7 @@ namespace dienmayxanhapi.Controllers
         public ActionResult<BsonDocument> Create(loaisanpham lsp)
         {
             var document = new BsonDocument {
-                 { "_id", _lspService.Get().Count},
+                 { "_id", _lspService.Getlsp().Count},
                  { "tendanhmuc" , lsp.tendanhmuc},
                  };
             BsonArray arraythuonghieu = new BsonArray();
@@ -45,6 +45,12 @@ namespace dienmayxanhapi.Controllers
                 arraythuonghieu.Add(lsp.thuonghieu[i]);
             }
             document.Add("thuonghieu", arraythuonghieu);
+            arraythuonghieu = new BsonArray();
+            for (int i = 0; i < lsp.tieuchidanhgia.Count; i++)
+            {
+              arraythuonghieu.Add(lsp.tieuchidanhgia[i]);
+            }
+            document.Add("tieuchidanhgia", arraythuonghieu);
             BsonDocument d = new BsonDocument();
             BsonArray arraydactrung = new BsonArray();
             for (int i = 0; i < lsp.dactrung.Count; i=i+2)

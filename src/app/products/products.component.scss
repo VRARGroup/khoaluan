@@ -1,3 +1,6 @@
+.pro{
+    min-width: 1224px;
+}
 .card-deck-container {
   position: relative;
   border-radius: 1px;
@@ -240,6 +243,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .header-home{
     height:380px;
+    width: fit-content;
 }
 
 /* external css: flickity.css */
