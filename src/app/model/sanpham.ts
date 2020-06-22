@@ -12,15 +12,15 @@ export class sp {
    
     constructor( _id: number,  ten: string, thuonghieu: string, hinh: Array<hinh>, dacdiemnoibat: string,  giaban: number, giamgia: number, sosao: number, _id_loaisanpham: number, thongsokythuat:Array<object>) {
     	this._id = _id;
-        this.ten=ten;
-    	this.thuonghieu=thuonghieu;
-        this.hinh=hinh;
+        this.ten = ten;
+    	this.thuonghieu = thuonghieu;
+        this.hinh = hinh;
         this.dacdiemnoibat = dacdiemnoibat;
-        this.giaban=giaban;
-        this.giamgia=giamgia;
-        this.sosao=sosao;
-        this._id_loaisanpham=_id_loaisanpham;
-        this.thongsokythuat=thongsokythuat;
+        this.giaban = giaban;
+        this.giamgia = giamgia;
+        this.sosao = sosao;
+        this._id_loaisanpham = _id_loaisanpham;
+        this.thongsokythuat = thongsokythuat;
     }
 }
 

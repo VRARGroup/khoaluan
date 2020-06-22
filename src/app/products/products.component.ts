@@ -4,6 +4,9 @@ import { Router } from "@angular/router";
 import { SanphamService } from '../service/sanpham.service';
 import { sp } from '../model/sanpham';
 import { DomSanitizer } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr');
 
 @Component({
   selector: 'app-products',
@@ -13,13 +16,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ProductsComponent implements OnInit {
 	allhotsp:sp[] =[];
 	imagePath: any;
-	
+	sanphams:sp[] =[];
   	constructor(private router: Router, private sanphamService: SanphamService, private _sanitizer: DomSanitizer) {
   	 	
    	}
 
   	ngOnInit() {
 		this.loadhotsp();
+		this.load_sp_noi_bat();
 	}
 	  
 	loadhotsp() {
@@ -28,7 +32,15 @@ export class ProductsComponent implements OnInit {
 		
 	});
 	}
+	loadkmhotsp(id: number) {
+		this.sanphamService.getkmhotsp_idlsp(id).subscribe((res: sp[] | null) => {
+			this.sanphams = (res) ? res : [];
+	});
+	}
 	
-	
-	
+	load_sp_noi_bat() {
+		this.sanphamService.get_sp_noi_bat().subscribe((res: sp[] | null) => {
+			this.sanphams = (res) ? res : [];
+	});
+	}
 }

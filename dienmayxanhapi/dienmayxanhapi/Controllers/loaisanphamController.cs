@@ -10,10 +10,10 @@ using MongoDB.Driver;
 
 namespace dienmayxanhapi.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class loaisanphamController : ControllerBase
-  {
+    [Route("api/[controller]")]
+    [ApiController]
+    public class loaisanphamController : ControllerBase
+    {
         private readonly dienmayxanhdbcontext _lspService;
         public loaisanphamController(dienmayxanhdbcontext lspService)
         {
@@ -36,9 +36,9 @@ namespace dienmayxanhapi.Controllers
         public ActionResult<BsonDocument> Create(loaisanpham lsp)
         {
             var document = new BsonDocument {
-                 { "_id", _lspService.Getlsp().Count},
-                 { "tendanhmuc" , lsp.tendanhmuc},
-                 };
+                  { "_id", _lspService.Get().Count},
+                  { "tendanhmuc" , lsp.tendanhmuc},
+                  };
             BsonArray arraythuonghieu = new BsonArray();
             for(int i=0;i<lsp.thuonghieu.Count;i++)
             {
@@ -79,9 +79,9 @@ namespace dienmayxanhapi.Controllers
         [HttpDelete("{id}")]
         public IActionResult deleteloaisanpham(int id)
         {
-          var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
-          _lspService.deletels(deletefilter);
-          return NoContent();
+            var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            _lspService.deletels(deletefilter);
+            return NoContent();
         }
-  }
+    }
 }

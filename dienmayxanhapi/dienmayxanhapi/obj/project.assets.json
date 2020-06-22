@@ -9246,29 +9246,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {},
+    "C:\\Users\\Hoan\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
+      "projectUniqueName": "C:\\Users\\Hoan\\Documents\\GitHub\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
       "projectName": "dienmayxanhapi",
-      "projectPath": "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "E:\\khoaluan\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\obj\\",
+      "projectPath": "C:\\Users\\Hoan\\Documents\\GitHub\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\dienmayxanhapi.csproj",
+      "packagesPath": "C:\\Users\\Hoan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Hoan\\Documents\\GitHub\\khoaluan\\dienmayxanhapi\\dienmayxanhapi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Hoan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.2.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\DevExpress 18.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -9341,7 +9343,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
