@@ -6,8 +6,10 @@ import { Router } from "@angular/router";
 import { LoaisanphamService } from '../service/loaisanpham.service';
 import { lsanpham } from '../model/loaisanpham';
 import { SanphamService } from '../service/sanpham.service';
+import { SaveimgfolderService } from '../service/saveimgfolder.service';
 import { sp } from '../model/sanpham';
 import { hinh } from '../model/sanpham';
+import {imgfolder} from '../model/image';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
@@ -48,17 +50,18 @@ export class TaosanphamComponent implements OnInit {
   cardImageBase64: string;
   khoa:string="";
   imagebase64: string;
+  nameimage: string;
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>
   @ViewChildren('keyname') keynames: QueryList<ElementRef>
   @ViewChildren('inputmt') inputmts: QueryList<ElementRef>
   	
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService) { }
+  constructor(private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private saveimgfolderService: SaveimgfolderService) { }
 
-  ngOnInit() {
-    this.loadlsp();
+  ngOnInit() {   
+    this.loadlsp(); 
     this.idlsp = parseInt(window.localStorage.getItem("editspid"));
-    if(this.idlsp!==null)
+    if(!isNaN(this.idlsp))
     {
       this.loadctsp(this.idlsp);
     }
@@ -177,29 +180,33 @@ export class TaosanphamComponent implements OnInit {
   }
   kitraundefined(h:number, l:number, key: string, v: string)
   {
-    if(this.khoa=="")
+    if(!isNaN(this.idlsp))
     {
-      this.khoa=key;
-    }
-    if(this.khoa!=key)
-    {
-      this.khoa=key;
-      this.i=0;
-    }
-    if(this.arrsp[0].thongsokythuat[l][key][this.i][v]==undefined)
-    {
-      return "";
+      if(this.khoa=="")
+      {
+        this.khoa=key;
+      }
+      if(this.khoa!=key)
+      {
+        this.khoa=key;
+        this.i=0;
+      }
+      if(this.arrsp[0].thongsokythuat[l][key][this.i][v]==undefined || this.arrsp[0].thongsokythuat[l][key][this.i][v]==null)
+      {
+        return "";
+      }
+      else
+      {
+        const vh=this.i;
+        this.i++;
+        console.log(v);
+        return this.arrsp[0].thongsokythuat[l][key][vh][v];
+      }
     }
     else
     {
-      const vh=this.i;
-      this.i++;
-      console.log(v);
-      return this.arrsp[0].thongsokythuat[l][key][vh][v];
-    }
-      
-    
-    
+      return null;
+    }   
   }
   reset()
   {
@@ -244,15 +251,30 @@ export class TaosanphamComponent implements OnInit {
                   this.urls.push(event.target.result);
                   this.isImageSaved=true;
                   this.valueiput=event.target.result;
-                  console.log(this.valueiput);
+                  this.imagebase64=event.target.result;
                 }
-                console.log(event.target.files[i]);
+                this.nameimage=document.getElementById("uploadCaptureInputFile")["value"];
                 reader.readAsDataURL(event.target.files[i]);
                 document.getElementById("uploadCaptureInputFile")["value"] = "";
         }
         //this.i++;
+        console.log(this.nameimage);
         console.log(this.i);
+        console.log("imgname",document.getElementById("uploadCaptureInputFile")["value"]);
     }
+    console.log(event);
+    
+  }
+
+  saveimageinfolder(v: imgfolder)
+  {
+    
+    this.saveimgfolderService.saveimagefolder(v).subscribe(
+      () => {
+          this.massage = 'Lưu thành công';
+          alert(this.massage);
+      }
+    );
   }
 
       Add(){
@@ -284,7 +306,13 @@ export class TaosanphamComponent implements OnInit {
         this.inputmts.forEach((inputmt: ElementRef) => console.log(inputmt.nativeElement.id,document.getElementById(inputmt.nativeElement.id)["value"]));
         console.log("id",this.idinput);
         console.log("kqmt",document.getElementById(this.idinput)["value"]);
-        
+        var tendd=this.nameimage.replace("C:\\fakepath\\","");
+
+        const hinhsavefolder= new imgfolder(
+          this.valueiput,
+          tendd.toString()
+        );
+        this.saveimageinfolder(hinhsavefolder);
         const hinhsp=new hinh(
           this.valueiput,
           document.getElementById(this.idinput)["value"]

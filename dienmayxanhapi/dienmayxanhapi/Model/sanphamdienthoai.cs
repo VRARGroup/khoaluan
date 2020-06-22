@@ -23,7 +23,8 @@ namespace dienmayxanhapi
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int? sosao { get; set; }
         public int? _id_loaisanpham { get; set; }
-        
+        public String hinhdaidien { get; set; }
+        public IList<hinh> gioithieu { get; set; }
         [BsonElement("thongsokythuat")]
         public IList<dynamic> thongsokythuat { get; set; }
 

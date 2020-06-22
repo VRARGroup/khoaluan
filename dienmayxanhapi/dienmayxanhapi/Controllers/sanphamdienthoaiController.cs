@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -244,11 +247,13 @@ namespace dienmayxanhapi.Controllers
             BsonArray arrayhinhanh = new BsonArray();
             for (int i = 0; i < spdt.hinh.Count; i++)
             {
-              var hinh = new BsonDocument().
-                     Add("hinhanh", spdt.hinh[i].hinhanh.ToString()).
-                     Add("mota", spdt.hinh[i].mota.ToString());
-              arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+               
+                var hinh = new BsonDocument().
+                             Add("hinhanh", spdt.hinh[i].hinhanh.ToString()).
+                             Add("mota", spdt.hinh[i].mota.ToString());
+                      arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
             }
+            
             //var hinh = new BsonDocument().
             //                Add("hinhanh", "h1").
             //                Add("mota", "h2");
@@ -333,17 +338,17 @@ namespace dienmayxanhapi.Controllers
         //[HttpPut("{_id}")]
         //public IActionResult update(int _id, sanphamdienthoai spdt)
         //{
-        //    var filter = Builders<BsonDocument>.Filter.Eq("MSSV", _id.ToString());
-        //    var update = Builders<BsonDocument>.Update.Combine(
-        //                 Builders<BsonDocument>.Update.Set("username", sv.username),
-        //                 Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
-        //                 Builders<BsonDocument>.Update.Set("dtb_tichluy", sv.dtb_tichluy),
-        //                 Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
-        //                 Builders<BsonDocument>.Update.Set("contanct.$.phone", p),
-        //                 Builders<BsonDocument>.Update.Set("contanct.$.email", e)
-        //        );
-        //    _spdtService.Update(filter, update);
-        //    return NoContent();
+        //  var filter = Builders<BsonDocument>.Filter.Eq("_id", _id.ToString());
+        //  var update = Builders<BsonDocument>.Update.Combine(
+        //               Builders<BsonDocument>.Update.Set("username", sv.username),
+        //               Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
+        //               Builders<BsonDocument>.Update.Set("dtb_tichluy", sv.dtb_tichluy),
+        //               Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
+        //               Builders<BsonDocument>.Update.Set("contanct.$.phone", p),
+        //               Builders<BsonDocument>.Update.Set("contanct.$.email", e)
+        //      );
+        //  _spdtService.Update(filter, update);
+        //  return NoContent();
         //}
-    }
+  }
 }

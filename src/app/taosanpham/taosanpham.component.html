@@ -71,10 +71,11 @@
                     <div class="img-space">
                         <ng-container *ngIf="isImageSaved">
                             <img  [src]="url" height="200"> <br/>
+                           
                         </ng-container>
                         
                     </div>
-                    <input *ngIf="isImageSaved" class="mta" id="inputmt{{i}}" #inputmt type="text" title="mô tả">
+                    <input *ngIf="isImageSaved" download class="mta" id="inputmt{{i}}" #inputmt type="text" title="mô tả">
                     <br>
                     <button class="btn btn-danger" (click)="Remove(url)" *ngIf="isImageSaved">Xóa</button>
                     <button class="btn btn-success" id="btn{{i}}" (click)="getvalue()" *ngIf="isImageSaved">Hoàn Thành</button>
@@ -89,5 +90,6 @@
             <div class="container d-flex justify-content-center">
                 <button class="btn btn-primary" type="button" (click)="onSubmit()">Save</button>
                 <button type="button" class="btn btn-warning" (click)="reset()">Clear</button>
+               
             </div>
         </div>

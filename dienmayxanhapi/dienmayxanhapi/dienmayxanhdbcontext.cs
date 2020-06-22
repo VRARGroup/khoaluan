@@ -13,6 +13,7 @@ namespace dienmayxanhapi
     {
         public virtual DbSet<sanphamdienthoai> sanphamdienthoai { get; set; }
         public virtual DbSet<loaisanpham> loaisanpham { get; set; }
+        public virtual DbSet<hinhanhfolder> hinhanhfolder { get; set; }
         private string ConnectionString = "mongodb://localhost:27017";
         private string DatabaseName = "dienmayxanh";
         private string CollectionNamesp = "sanpham";
