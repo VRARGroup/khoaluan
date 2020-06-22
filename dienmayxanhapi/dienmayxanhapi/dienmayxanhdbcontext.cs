@@ -36,8 +36,8 @@ namespace dienmayxanhapi
 
         public List<sanphamdienthoai> Gethotsp()
         {
-          var dl = collectionspdt.Find(x => true).ToList();
-          return dl.Take(11).ToList();
+            var dl = collectionspdt.Find(x => true && (x.giamgia != 0 || x.giamgia != null)).ToList().OrderByDescending(t=>t.giamgia);
+            return dl.Take(11).ToList();
         }
 
         public List<sanphamdienthoai> Getfillter(string tensp)
@@ -55,7 +55,17 @@ namespace dienmayxanhapi
 
         public List<sanphamdienthoai> Getfillterspidlsp(int idlsp)
         {
-          var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();
+            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();
+            return dl;
+        }
+        public List<sanphamdienthoai> Getfillterspkmhotidlsp(int idlsp)
+        {
+            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp && (x.giamgia != 0 || x.giamgia !=null)).ToList().Take(10).ToList();
+            return dl;
+        }
+        public List<sanphamdienthoai> Getfillter_get_sp_noi_bat()
+        {
+          var dl = collectionspdt.Find(x => (x.giamgia != 0 || x.giamgia != null)).ToList().Take(10).ToList();
           return dl;
         }
 

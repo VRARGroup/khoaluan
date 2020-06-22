@@ -15,57 +15,72 @@ using Newtonsoft.Json.Serialization;
 
 namespace dienmayxanhapi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class sanphamdienthoaiController : ControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class sanphamdienthoaiController : ControllerBase
+  {
+    private readonly dienmayxanhdbcontext _spdtService;
+    public sanphamdienthoaiController(dienmayxanhdbcontext spdtService)
     {
-        private readonly dienmayxanhdbcontext _spdtService;
-        public sanphamdienthoaiController(dienmayxanhdbcontext spdtService)
-        {
-            _spdtService = spdtService;
-        }
+      _spdtService = spdtService;
+    }
 
-        [HttpGet]
-        public ActionResult<List<sanphamdienthoai>> Get()
-        {
-            return (_spdtService.Get());
-        }
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Get()
+    {
+      return (_spdtService.Get());
+    }
 
-        [HttpGet("{id}")]
-        public ActionResult<List<sanphamdienthoai>> Getdetallsp(int id)
-        {
-          return (_spdtService.Getdetailsp(id));
-        }
+    [HttpGet("{id}")]
+    public ActionResult<List<sanphamdienthoai>> Getdetallsp(int id)
+    {
+      return (_spdtService.Getdetailsp(id));
+    }
 
-        [Route("hotsp")]
-        [HttpGet]
-        public ActionResult<List<sanphamdienthoai>> Gethotsp()
-        {
-          var dl = _spdtService.Gethotsp().Count();
-          return (_spdtService.Gethotsp());
-        }
+    [Route("hotsp")]
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Gethotsp()
+    {
+      var dl = _spdtService.Gethotsp().Count();
+      return (_spdtService.Gethotsp());
+    }
 
-        [Route("getsp")]
-        [HttpGet]
-        public ActionResult<List<sanphamdienthoai>> Getfillter(String tensp)
-        {
-            return (_spdtService.Getfillter(tensp));
-        }
+    [Route("getsp")]
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Getfillter(String tensp)
+    {
+      return (_spdtService.Getfillter(tensp));
+    }
 
-        [Route("getsp_idloaisp")]
-        [HttpGet]
-        public ActionResult<List<sanphamdienthoai>> Getsp_lspfillter(string tensp)
-        {
-          string[] arrstring = tensp.Split(',');
-          return (_spdtService.Gettsp_lspfillter(Convert.ToInt32(arrstring[0]), arrstring[1]));
-        }
+    [Route("getsp_idloaisp")]
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Getsp_lspfillter(string tensp)
+    {
+      string[] arrstring = tensp.Split(',');
+      return (_spdtService.Gettsp_lspfillter(Convert.ToInt32(arrstring[0]), arrstring[1]));
+    }
 
-        [Route("getidsploaisp")]
-        [HttpGet]
-        public ActionResult<List<sanphamdienthoai>> Getfillterid_loaisp(int idloaisap)
-        {
-          return (_spdtService.Getfillterspidlsp(idloaisap));
-        }
+    [Route("getidsploaisp")]
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Getfillterid_loaisp(int idloaisap)
+    {
+      return (_spdtService.Getfillterspidlsp(idloaisap));
+    }
+    [Route("getidspkmhotloaisp")]
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Getfillteridspkmhot_loaisp(int idloaisap)
+    {
+      return (_spdtService.Getfillterspkmhotidlsp(idloaisap));
+    }
+
+    [Route("get_sp_noi_bat")]
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Getfillter_get_sp_noi_bat(int idloaisap)
+    {
+      return (_spdtService.Getfillter_get_sp_noi_bat());
+    }
+
+
 
     //[HttpPost]
     //public ActionResult<BsonDocument> Create(sanphamdienthoai spdt)
@@ -241,114 +256,113 @@ namespace dienmayxanhapi.Controllers
     //    return NoContent();
     //}
 
-        [HttpPost]
-        public ActionResult<BsonDocument> Create(sanphamdienthoai spdt)
+    [HttpPost]
+    public ActionResult<BsonDocument> Create(sanphamdienthoai spdt)
+    {
+      BsonArray arrayhinhanh = new BsonArray();
+      for (int i = 0; i < spdt.hinh.Count; i++)
+      {
+        var hinh = new BsonDocument().
+               Add("hinhanh", spdt.hinh[i].hinhanh.ToString()).
+               Add("mota", spdt.hinh[i].mota.ToString());
+        arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+      }
+      //var hinh = new BsonDocument().
+      //                Add("hinhanh", "h1").
+      //                Add("mota", "h2");
+      //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+      var g = _spdtService.Get().Count;
+      var document = new BsonDocument {
+                     { "_id", _spdtService.Get().Count},
+                     { "ten" , spdt.ten},
+                     { "thuonghieu", spdt.thuonghieu},
+                     { "hinh", arrayhinhanh},
+                     { "dacdiemnoibat",spdt.dacdiemnoibat},
+                     { "giaban", spdt.giaban},
+                     { "giamgia", spdt.giamgia},
+                     { "sosao", spdt.sosao},
+                     { "_id_loaisanpham", spdt._id_loaisanpham}
+                     };
+
+      BsonDocument d = new BsonDocument();
+      BsonArray arraythongsokythuat = new BsonArray();
+      BsonArray arrayndthongsokythuat = new BsonArray();
+
+      //for (int i = 0; i < spdt.thongsokythuat.Count; i++)
+      //{
+      //    var json = spdt.thongsokythuat[i].ToString();
+      //    d = BsonDocument.Parse(json);
+      //    var documentthngsokythuattich = new BsonDocument { };
+      //    documentthngsokythuattich.Add(d);
+      //    arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(d));
+      //}
+
+      var documentthngsokythuatnd = new BsonDocument { };
+      var keytskt = new BsonDocument { };
+
+      for (int i = 0; i < spdt.thongsokythuat.Count; i = i + 2)
+      {
+        if (i < spdt.thongsokythuat.Count - 2)
         {
-            BsonArray arrayhinhanh = new BsonArray();
-            for (int i = 0; i < spdt.hinh.Count; i++)
-            {
-               
-                var hinh = new BsonDocument().
-                             Add("hinhanh", spdt.hinh[i].hinhanh.ToString()).
-                             Add("mota", spdt.hinh[i].mota.ToString());
-                      arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
-            }
-            
-            //var hinh = new BsonDocument().
-            //                Add("hinhanh", "h1").
-            //                Add("mota", "h2");
-            //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
-            var g = _spdtService.Get().Count;
-            var document = new BsonDocument {
-                 { "_id", _spdtService.Get().Count},
-                 { "ten" , spdt.ten},
-                 { "thuonghieu", spdt.thuonghieu},
-                 { "hinh", arrayhinhanh},
-                 { "dacdiemnoibat",spdt.dacdiemnoibat},
-                 { "giaban", spdt.giaban},
-                 { "giamgia", spdt.giamgia},
-                 { "sosao", spdt.sosao},
-                 { "_id_loaisanpham", spdt._id_loaisanpham}
-                 };
+          string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+          string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split(',');
+          if (keynamef[0] == keynames[0])
+          {
 
-            BsonDocument d = new BsonDocument();
-            BsonArray arraythongsokythuat = new BsonArray();
-            BsonArray arrayndthongsokythuat = new BsonArray();
+            documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+            arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+            documentthngsokythuatnd = new BsonDocument { };
+          }
+          else
+          {
+            documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+            arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+            documentthngsokythuatnd = new BsonDocument { };
 
-            //for (int i = 0; i < spdt.thongsokythuat.Count; i++)
-            //{
-            //    var json = spdt.thongsokythuat[i].ToString();
-            //    d = BsonDocument.Parse(json);
-            //    var documentthngsokythuattich = new BsonDocument { };
-            //    documentthngsokythuattich.Add(d);
-            //    arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(d));
-            //}
-
-            var documentthngsokythuatnd = new BsonDocument { };
-            var keytskt = new BsonDocument { };
-            for (int i = 0; i < spdt.thongsokythuat.Count; i=i+2)
-            {
-                if (i < spdt.thongsokythuat.Count-2)
-                {
-                  string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
-                  string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split(',');
-                  if (keynamef[0] == keynames[0])
-                  {
-                   
-                    documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
-                    arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
-                    documentthngsokythuatnd = new BsonDocument { };
-                  }
-                  else
-                  {
-                    documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
-                    arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
-                    documentthngsokythuatnd = new BsonDocument { };
-                    
-                    keytskt.Add(keynamef[0], arrayndthongsokythuat);
-                    arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
-                    arrayndthongsokythuat = new BsonArray { };
-                    keytskt = new BsonDocument { };
-                  } 
-                }
-                else
-                {
-                  if(i == spdt.thongsokythuat.Count - 2)
-                  {
-                    arrayndthongsokythuat = new BsonArray { };
-                    string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
-                    documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
-                    arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
-                    documentthngsokythuatnd = new BsonDocument { };
-
-                    keytskt.Add(keynamef[0], arrayndthongsokythuat);
-                    arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
-                    arrayndthongsokythuat = new BsonArray { };
-                    keytskt = new BsonDocument { };
-                  }
-                }
-            }
-
-            document.Add("thongsokythuat", arraythongsokythuat);
-
-            _spdtService.insert(document);
-            return NoContent();
+            keytskt.Add(keynamef[0], arrayndthongsokythuat);
+            arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
+            arrayndthongsokythuat = new BsonArray { };
+            keytskt = new BsonDocument { };
+          }
         }
+        else
+        {
+          if (i == spdt.thongsokythuat.Count - 2)
+          {
+            arrayndthongsokythuat = new BsonArray { };
+            string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+            documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+            arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+            documentthngsokythuatnd = new BsonDocument { };
 
-        //[HttpPut("{_id}")]
-        //public IActionResult update(int _id, sanphamdienthoai spdt)
-        //{
-        //  var filter = Builders<BsonDocument>.Filter.Eq("_id", _id.ToString());
-        //  var update = Builders<BsonDocument>.Update.Combine(
-        //               Builders<BsonDocument>.Update.Set("username", sv.username),
-        //               Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
-        //               Builders<BsonDocument>.Update.Set("dtb_tichluy", sv.dtb_tichluy),
-        //               Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
-        //               Builders<BsonDocument>.Update.Set("contanct.$.phone", p),
-        //               Builders<BsonDocument>.Update.Set("contanct.$.email", e)
-        //      );
-        //  _spdtService.Update(filter, update);
-        //  return NoContent();
-        //}
+            keytskt.Add(keynamef[0], arrayndthongsokythuat);
+            arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
+            arrayndthongsokythuat = new BsonArray { };
+            keytskt = new BsonDocument { };
+          }
+        }
+      }
+
+      document.Add("thongsokythuat", arraythongsokythuat);
+
+      _spdtService.insert(document);
+      return NoContent();
+    }
+
+    //[HttpPut("{_id}")]
+    //public IActionResult update(int _id, sanphamdienthoai spdt)
+    //{
+    //  var filter = Builders<BsonDocument>.Filter.Eq("_id", _id.ToString());
+    //  var update = Builders<BsonDocument>.Update.Combine(
+    //               Builders<BsonDocument>.Update.Set("username", sv.username),
+    //               Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
+    //               Builders<BsonDocument>.Update.Set("dtb_tichluy", sv.dtb_tichluy),
+    //               Builders<BsonDocument>.Update.Set("chuyennganh", sv.chuyennganh),
+    //               Builders<BsonDocument>.Update.Set("contanct.$.phone", p),
+    //               Builders<BsonDocument>.Update.Set("contanct.$.email", e)
+    //      );
+    //  _spdtService.Update(filter, update);
+    //  return NoContent();
+    //}
   }
 }

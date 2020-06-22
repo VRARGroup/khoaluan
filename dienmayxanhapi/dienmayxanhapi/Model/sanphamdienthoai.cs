@@ -28,6 +28,7 @@ namespace dienmayxanhapi
         [BsonElement("thongsokythuat")]
         public IList<dynamic> thongsokythuat { get; set; }
 
+
     }
     public class hinh
     {

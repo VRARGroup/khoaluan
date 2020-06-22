@@ -1,4 +1,9 @@
-<div class="pro">
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
 <div style="background-color: #EEEEEE; height:10px;">
 </div>
 <div  style="width:min-content; background-color: #EEEEEE; ">
@@ -47,7 +52,6 @@
             <div class="picsum-img-wrapper">
               <img src="./assets/maylanh.png" alt="Delhi Metro">
             </div>
-           
           </ng-template>  
           <ng-template ngbSlide>
             <div class="picsum-img-wrapper">  
@@ -58,92 +62,133 @@
             <div class="picsum-img-wrapper">  
               <img src="./assets/maylocnuoc.png" alt="Channai Metro">
             </div> 
-              <!-- <div class="carousel-caption">  
-                  <h3 style="color: gray; background-color:alpha(opacity=30);">Khuyến mãi mùa hè</h3>  
-              </div> -->  
           </ng-template>  
           <ng-template ngbSlide>
             <div class="picsum-img-wrapper">    
               <img src="./assets/quatdieuhoa.png" alt="Jaipur Metro">
             </div>
-              <!-- <div class="carousel-caption">  
-                  <h3 style="color: gray">Khuyến mãi mùa hè</h3>  
-              </div>   -->
           </ng-template>
           <ng-template ngbSlide>
             <div class="picsum-img-wrapper">  
               <img src="./assets/TulanhMaylanh.png" alt="Mumbai Metro">
             </div>  
-              <!-- <div class="carousel-caption">  
-                  <h3 style="color: gray">Khuyến mãi mùa hè</h3>  
-              </div>   -->
           </ng-template>  
           <ng-template ngbSlide>
             <div class="picsum-img-wrapper">  
               <img src="./assets/tivi.png" alt="Mumbai Metro">
             </div>  
-              <!-- <div class="carousel-caption">  
-                  <h3 style="color: gray">Khuyến mãi 10%</h3>  
-              </div> -->
           </ng-template>
           <ng-template ngbSlide>
             <div class="picsum-img-wrapper">    
               <img src="./assets/tudong.png" alt="Mumbai Metro">
             </div>  
-              <!-- <div class="carousel-caption">  
-                  <h3 style="color: gray">Khuyến mãi mùa hè</h3>  
-              </div>  --> 
           </ng-template>
           <ng-template ngbSlide>
             <div class="picsum-img-wrapper">    
               <img src="./assets/tudong.png" alt="Mumbai Metro">
             </div>  
-              <!-- <div class="carousel-caption">  
-                  <h3 style="color: gray">Khuyến mãi mùa hè</h3>  
-              </div>  --> 
           </ng-template>
       </ngb-carousel>
     </div>
   </div>
   <img src="https://cdn.tgdd.vn/2020/06/banner/desk-1176x50.png" style="width:100%; height:50px">
- 
   <div class="hot_month js-flickity">
     <p></p>
     <div class="gallery" data-flickity-options='{ "wrapAround": true }'>
-      <div style="display: inline-flex;" *ngFor="let item of allhotsp">
+      <div style="display: inline-flex; vertical-align: top;" *ngFor="let item of allhotsp">
         <div class="gallery-cell">
-          <img style="height: 140px; width: 190px; padding: 0; margin-left: -8px;" src="{{'data:image/jpg;base64,' + allhotsp[8].hinh[0].hinhanh}}">
-          {{item.ten}}
-          <p class="price-hot-month">{{item.giaban}}</p>
-          <p class="price-sale-hot-month">Giảm {{item.giaban}}</p>
+          <label class="tra-gop"> Trả góp 0% </label>
+          <div class="box-image"><img src="{{item.hinhdaidien}}"></div>
+          <p class="name-hot-month">{{item.ten}}</p>
+          <p class="price-hot-month">{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+          <p class="price-sale-hot-month">Giảm {{item.giamgia| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
+          <div class="star">{{item.sosao}}/5<i class="fa fa-star" aria-hidden="true"></i></div>
         </div>
       </div>
     </div>
   </div>
-	<!-- <div fxLayout="row wrap" fxLayoutWrap class="card-deck-container justify-content-start">
-		<mdb-card class="col-md-3" *ngFor="let cv of sanphams.items">
-			<mdb-card-body>
-				<mdb-card-img width=130 height=130 src="{{cv.picture}}" alt="Card image cap"></mdb-card-img>
-			</mdb-card-body>
-			<mdb-card-body>
-				<mdb-card-title>
-					<p>{{cv.sp}}</p>
-				</mdb-card-title>
-				<mdb-card-text>
-					<p style="color:red; text-align:Left">
-						<b>
-							{{cv.price}}
-						</b>
-					</p>
-				</mdb-card-text>
-			</mdb-card-body>
-			<mdb-card-body>
-				<mdb-card-text style="text-align: left" class="card-bottom">
-					<button class="btn btn-outline-danger p-1 mx-1 mb-0">Like</button>
-					<button class="btn btn-outline-info p-1 mx-1 mb-0">Coment</button>
-				</mdb-card-text>
-			</mdb-card-body>
-		</mdb-card>
-	</div> -->
+  <strong style="color: #cf1717; font-size: 22px; line-height: 80px;  font-weight: 600;">Khuyến mãi Hot mổi ngày</strong>
+	<div fxLayout="row wrap" fxLayoutWrap class="card-deck-container justify-content-start">
+    <table style="width:100%;">
+      <tr class="tr-sp-km-hot">
+        <td><button (click)="load_sp_noi_bat()">Nổi bật</button></td>
+        <td><button (click)="loadkmhotsp(50000)">Máy lạnh</button></td>
+        <td><button (click)="loadkmhotsp(10000)">Điện thoại</button></td>
+        <td><button>Laptop</button></td>
+        <td><button (click)="loadkmhotsp(20000)">Tivi</button></td>
+        <td><button (click)="loadkmhotsp(60000)">Loa</button></td>
+        <td><button>Tủ lạnh</button></td>
+        <td><button>Tủ đông</button></td>
+        <td style="width:9% !important"><button (click)="loadkmhotsp(40000)">Máy giặt</button></td>
+        <td style="width:11% !important"><button>Máy lọc nước</button></td>
+      </tr>
+    </table>
+    <table class="table-sp-km-hot"style="width:100%;">
+        <td class="td-sp-km-hot" *ngFor="let sanpham of sanphams">
+          <div style="width: 100%;height: 100%;">
+            <div class="box-image-hot"><img src="{{sanpham.hinhdaidien}}"></div>
+            <p class="name-product">{{sanpham.ten}}<span></span></p>
+            <p class="price-km-hot-month">{{sanpham.giaban| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
+            <p class="price-sale-km-hot-month">Giảm {{sanpham.giamgia| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
+            <div class="star-hot">{{sanpham.sosao}}/5<i class="fa fa-star" aria-hidden="true"></i></div>
+          </div>
+        </td>
+    </table>
+  </div>
+  <div style="margin: 30px 0px; display:inline-block;background-color: #fff; text-align: center;">
+    <img src="https://cdn.tgdd.vn/2020/06/banner/kangdesk-394x76.png" style="width:fit-content;height:80px">
+    <img src="https://cdn.tgdd.vn/2020/06/banner/MideaDesk-394x76.png" style="margin-left: 10px;margin-right: 10px; width:fit-content;height:80px">
+    <img src="https://cdn.tgdd.vn/2020/06/banner/GDdesk-394x76.png" style="width:fit-content;height:80px">
+  </div>
+
+
+  <strong style="font-size: 22px; line-height: 80px; font-weight: 600;">Kinh nghiệm hay, mẹo vặt, nấu ăn</strong>
+  <div class="youtube">
+    <div class="youtube-left">
+      <a href="javascript:void(0)">
+        <div>
+          <img src="https://img.youtube.com/vi/-1a5Elsf-lg/maxresdefault.jpg">
+          <i class="fa fa-youtube-play" aria-hidden="true" style="color: #cf1717; display: inline-block; position: absolute; font-size: 46px; top: 37%; left: 26%; "></i>
+        </div>
+        <span style="font-size: 16px; line-height: 35px; font-weight: 600; ">Tư vấn cách chọn mua máy đánh trứng phù hợp nhu cầu, túi tiền, chất lượng tốt</span>
+      </a>
+    </div>  
+    <div class="youtube-right">
+      <a href="javascript:void(0)">
+        <div>
+          <img src="https://img.youtube.com/vi/Sa0Zdcjh-jA/hqdefault.jpg">
+           </div>
+        <span>Top 10 máy lạnh inverter bán chạy nhất Điện máy XANH năm 2019</span>
+      </a>
+      <a href="javascript:void(0)">
+        <div>
+          <img src="https://cdn.tgdd.vn/Files/2020/05/06/1253842/top-6-may-loc-khong-khi-thang-4-2020-tai-dien-may-1-665x320.jpg">
+           </div>
+        <span>Top 5 máy lọc không khí bán chạy nhất Điện máy XANH năm 2019</span>
+      </a>
+      <a href="javascript:void(0)">
+        <div>
+          <img src="https://cdn.tgdd.vn/Files/2020/05/12/1255034/top-5-quat-dien-ban-chay-nhat-thang-4-2020-tai-di-665x320.jpg">
+            </div>
+        <span>Top 5 Máy lọc không khí bán chạy nhất tháng 4/2020 tại Điện máy XANH</span>
+      </a>
+      <a href="javascript:void(0)">
+        <div>
+          <img src="https://cdn.tgdd.vn/Files/2020/05/06/1253843/top-10-quat-dieu-hoa-thang-4-2020-tai-dien-may-xan-1-665x320.jpg">
+           </div>
+        <span>Top 5 Quạt điện bán chạy nhất tháng 4/2020 tại Điện máy XANH</span>
+      </a>
+      <a href="javascript:void(0)">
+        <div>
+          <img src="https://img.youtube.com/vi/-1a5Elsf-lg/maxresdefault.jpg">
+          </div>
+        <span>
+          Top 10 quạt điều hòa bán chạy nhất tháng 4/2020 tại Điện máy XANH</span>
+      </a>
+    </div>  
+  </div>
+  <div style="margin-bottom: 10px;">
+    <img src="https://cdn.tgdd.vn/2019/12/banner/03-1200x140.jpg" style="width:100%; height:120px;">
+  </div>
 </div>
-</div>
+</body>
