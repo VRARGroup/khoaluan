@@ -9,7 +9,9 @@ import { SanphamService } from '../service/sanpham.service';
 import { sp } from '../model/sanpham';
 import { hinh } from '../model/sanpham';
 import { Subscription } from 'rxjs';
+import { MatMenuTrigger } from '@angular/material';
 import * as _ from 'lodash';
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-appmainquanly',
   templateUrl: './appmainquanly.component.html',
@@ -18,6 +20,7 @@ import * as _ from 'lodash';
 export class AppmainquanlyComponent implements OnInit {
   alllsp:lsanpham[] = [];
   spidlsp:sp[] = [];
+  limitsp:sp[] = [];
   lspth:lsanpham[] = [];
   tensanpham:sp[] = [];
   thuhieu:Array<string>=[];
@@ -69,9 +72,7 @@ export class AppmainquanlyComponent implements OnInit {
   };
 
   taolsp(): void {
-    let cv=0;
     window.localStorage.removeItem("editspid");
-    window.localStorage.setItem("editspid", cv.toString());
     this.router.navigate(['appmainnv/taoloaisanpham']);
   };
 
@@ -81,4 +82,13 @@ export class AppmainquanlyComponent implements OnInit {
     console.log(cv.toString());
     this.router.navigate(['appmainnv/taoloaisanpham']);
   };
+  p: number = 1;
+
+  gtsp(cv: number): void {
+    window.localStorage.removeItem("editspid");
+    window.localStorage.setItem("editspid", cv.toString());
+    console.log(cv.toString());
+    this.router.navigate(['appmainnv/reviewsp']);
+  };
+
 }

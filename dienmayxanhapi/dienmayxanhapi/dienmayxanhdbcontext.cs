@@ -82,14 +82,22 @@ namespace dienmayxanhapi
             collectionspdt.InsertOne(sv);
             return sv;
         }
-        public List<sanphamdienthoai> Update(FilterDefinition<BsonDocument> filter, UpdateDefinition<BsonDocument> update)
+        public List<sanphamdienthoai> Update(FilterDefinition<sanphamdienthoai> filter, UpdateDefinition<sanphamdienthoai> update)
         {
-            var client = new MongoClient(ConnectionString);
-            var database = client.GetDatabase(DatabaseName);
-            var collectionsvupdate = database.GetCollection<BsonDocument>(CollectionNamesp);
-            collectionsvupdate.UpdateOne(filter, update);
+            collectionspdt.UpdateOne(filter, update);
             var dl = collectionspdt.Find(x => true).ToList();
             return dl;
+        }
+
+        public List<loaisanpham> deletesp(FilterDefinition<BsonDocument> filter)
+        {
+          var client = new MongoClient(ConnectionString);
+          var database = client.GetDatabase(DatabaseName);
+          var collectionspdt = database.GetCollection<BsonDocument>(CollectionNamesp);
+          collectionspdt.DeleteOne(filter);
+          var dl = collectionlsp.Find(x => true).ToList();
+          return dl;
+
         }
         public List<loaisanpham> Getlsp()
         {

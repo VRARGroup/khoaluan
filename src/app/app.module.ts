@@ -56,6 +56,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './footer/footer.component';
 import { ProductsComponent } from './products/products.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import {
     MatCommonModule, 
@@ -70,6 +71,7 @@ import { TaoloaisanphamComponent } from './taoloaisanpham/taoloaisanpham.compone
 import { AppmainComponent } from './appmain/appmain.component';
 import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component';
 import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.component';
+import { ReviewspComponent } from './reviewsp/reviewsp.component';
 
 @NgModule({
   declarations: [
@@ -83,15 +85,18 @@ import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.comp
     TaoloaisanphamComponent,
     AppmainComponent,
     AppmainquanlyComponent,
-    AppmainnhanvienComponent
+    AppmainnhanvienComponent,
+    ReviewspComponent
   ],
   imports: [
+    
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     FlexLayoutModule,
+    NgxPaginationModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     A11yModule,

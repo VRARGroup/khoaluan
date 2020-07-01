@@ -12,6 +12,8 @@ using System.Drawing.Imaging;
 using System.Buffers.Text;
 using MongoDB.Bson;
 using dienmayxanhapi.Model;
+using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace dienmayxanhapi.Controllers
 {
@@ -25,27 +27,44 @@ namespace dienmayxanhapi.Controllers
           _spdtService = spdtService;
         }
         
-        [HttpPost]
-        public ActionResult<List<hinhanhfolder>> saveimage(hinhanhfolder b)
+        [HttpPost, DisableRequestSizeLimit]
+        public IActionResult saveimage()
         {
-            string[] arryb = b.hinhluuvaofolder.ToString().Split(',');
-            var s = arryb[1];
-            using (WebClient client = new WebClient())
-            {
-              byte[] data = System.Convert.FromBase64String(s);
-              using (MemoryStream mem = new MemoryStream(data))
-              {
-                using (var yourImage = System.Drawing.Image.FromStream(mem))
-                {
-                  // If you want it as Png
-                  yourImage.Save(@"E:\khoaluan\khoaluan\src\assets\"+b.tendinhdanh.ToLower().Trim()+".png", ImageFormat.Png);
+          try
+          {
+            var file = Request.Form.Files[0];
+            var folderName = Path.Combine("Resources", "Images");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
-                  //// If you want it as Jpeg
-                  //yourImage.Save("path_to_your_file.jpg", ImageFormat.Jpeg);
-                }
+            if (file.Length > 0)
+            {
+              var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+              var fullPath = Path.Combine(pathToSave, fileName);
+              var dbPath = Path.Combine(folderName, fileName);
+
+              using (var stream = new FileStream(fullPath, FileMode.Create))
+              {
+                file.CopyTo(stream);
               }
+
+              return Ok(new { dbPath });
             }
-            return null;
+            else
+            {
+              return BadRequest();
+            }
+          }
+          catch (Exception ex)
+          {
+            return StatusCode(500, $"Internal server error: {ex}");
+          }
         }
-    }
+
+        [HttpDelete]
+        public ActionResult<List<string>> deleteimage(hinhanhfolder b)
+        {
+          System.IO.File.Delete(@"E:/khoaluan/khoaluan/src/assets/dt_1_2.png");
+          return NoContent();
+        }
+  }
 }

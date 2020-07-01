@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef, QueryList  } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, QueryList, Output, EventEmitter  } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -12,6 +12,8 @@ import { hinh } from '../model/sanpham';
 import {imgfolder} from '../model/image';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
+import { HttpEventType, HttpClient } from '@angular/common/http';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-taosanpham',
@@ -20,7 +22,9 @@ import * as _ from 'lodash';
 })
 export class TaosanphamComponent implements OnInit {
   public num =0;
-  urls = []; 
+  urls = [];
+  mota = [];
+  urlimagedd: object;
   public numsp = [{
     id:0
   }];
@@ -31,7 +35,7 @@ export class TaosanphamComponent implements OnInit {
   i:number=0;
   idinput: string;
   idbuton: string;
-  valueiput:object;
+  valueiput:object[]=[];
   alllsp:lsanpham[] = [];
   arrsp:sp[]=[];
 	sp:lsanpham[] = [];
@@ -47,39 +51,53 @@ export class TaosanphamComponent implements OnInit {
   hinhtsp: Array<hinh>=[];
   imageError: string;
   isImageSaved: boolean=false;
-  cardImageBase64: string;
+  isImageSaveddd: boolean=false;
+  ktsavedhinhsanpham: boolean=true;
+  ktthaotacdelete:boolean=true;
+  ktthaotacsave:boolean=true;
   khoa:string="";
   imagebase64: string;
-  nameimage: string;
+  nameimage: string[]=[];
+  nameimagedd: string;
+  hinhdaidiensanpham:string;
+  public progress: number;
+  serverPath: string="";
+  alldacdiemnoibat:Array<any>=[];
+  valuedacdiem:string="";
+  @Output() public onUploadFinished = new EventEmitter();
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>
   @ViewChildren('keyname') keynames: QueryList<ElementRef>
   @ViewChildren('inputmt') inputmts: QueryList<ElementRef>
+ 
   	
 
-  constructor(private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private saveimgfolderService: SaveimgfolderService) { }
+  constructor(private http: HttpClient,private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private saveimgfolderService: SaveimgfolderService) { }
 
-  ngOnInit() {   
+  ngOnInit() {
+  
     this.loadlsp(); 
+    
     this.idlsp = parseInt(window.localStorage.getItem("editspid"));
     if(!isNaN(this.idlsp))
     {
       this.loadctsp(this.idlsp);
+
+      this.ktthaotacdelete=true;
+      this.ktthaotacsave=false;
     }
     else
     {
-      
+      this.alldacdiemnoibat.push("");
+      this.ktthaotacdelete=false;
     }
-  	//console.log(this.alllsp);
   }
 
   valueChange(event){
-  	//console.log("selected value",event.target.value ,'value of selected',this.selected);
   	this.loaddetaillsp(this.selected);
   
   }
 
   valueChangethuonghieu(event){
-    //console.log("selected value",event.target.value ,'value of selected',this.selectedthuonghieu);
     this.selectedthuonghieu1=this.selectedthuonghieu;
   }
 
@@ -102,6 +120,24 @@ export class TaosanphamComponent implements OnInit {
     this.giaban=res[0].giaban;
     this.giamgia=res[0].giamgia;
     this.dacdiemnoibat=res[0].dacdiemnoibat;
+    var sa=this.dacdiemnoibat.split(",");
+    for(let i=0;i<sa.length;i++)
+    {
+      this.alldacdiemnoibat.push(sa[i]);
+    }
+    console.log(sa)
+    var s=res[0].hinhdaidien;
+    this.urlimagedd=Object(res[0].hinhdaidien);
+    this.isImageSaveddd=true;
+    
+    for(let i=0;i<res[0].hinh.length;i++)
+    {
+      this.urls.push(res[0].hinh[i].hinhanh);
+      var s=res[0].hinh[i].mota;
+      this.mota.push(res[0].hinh[i].mota);
+    }
+    this.isImageSaved=true;
+         
    });
    
   }
@@ -113,13 +149,26 @@ export class TaosanphamComponent implements OnInit {
   }
 
    keys(obj){
-   	//console.log(obj);
     return Object.keys(obj);
 	}
 
 	onSubmit() {
+    this.getvalueimagedd();
+    for(let i=0;i<this.urls.length;i++)
+    {
+      this.getvalue(i);
+    }
     
-    if(document.getElementById('tensp')["value"]!=="" && this.selectedthuonghieu1!=="" && document.getElementById('dacdiem')["value"]!=="" && document.getElementById('giasanpham')["value"]!=="" && document.getElementById('giamgia')["value"]!=="")
+    if(this.alldacdiemnoibat!=undefined && this.alldacdiemnoibat!=null)
+    {
+      this.valuedacdiem= document.getElementById("dacdiem0")["value"];
+      for(let i=1;i<this.alldacdiemnoibat.length;i++)
+      {
+        this.valuedacdiem=this.valuedacdiem+","+document.getElementById("dacdiem"+i)["value"];
+      }
+      console.log("dd",this.valuedacdiem);
+    }
+    if(document.getElementById('tensp')["value"]!=="" && this.selectedthuonghieu1!=="" && document.getElementById('giasanpham')["value"]!=="" && document.getElementById('giamgia')["value"]!=="")
     {
       this.maRefs.forEach((maRef: ElementRef) => {
       if(document.getElementById(maRef.nativeElement.id)["value"]==="")
@@ -140,7 +189,11 @@ export class TaosanphamComponent implements OnInit {
     		this.keynames.forEach((keyname: ElementRef) => this.tsktname.push(keyname.nativeElement.id));	
 
         this.maRefs.forEach((maRef: ElementRef) => this.tskt.push(maRef.nativeElement.name,document.getElementById(maRef.nativeElement.id)["value"]));
-
+        let giamgiasanpham:number=0;
+        if(document.getElementById('giamgia')["value"]!=="")
+        {
+          giamgiasanpham=parseInt(document.getElementById('giamgia')["value"]);
+        }
         
         console.log("hinh:",this.hinhtsp);
     		const tsp = new sp( 
@@ -148,10 +201,12 @@ export class TaosanphamComponent implements OnInit {
         	document.getElementById('tensp')["value"],
         	this.selectedthuonghieu1,
           this.hinhtsp,
-        	document.getElementById('dacdiem')["value"],
+        	this.valuedacdiem,
         	parseInt(document.getElementById('giasanpham')["value"]),
-        	parseInt(document.getElementById('giamgia')["value"]),
-        	0,
+        	giamgiasanpham,
+          0,
+          null,
+          this.hinhdaidiensanpham,
         	this.selected,
         	this.tskt,
         );
@@ -172,6 +227,7 @@ export class TaosanphamComponent implements OnInit {
         this.massage = 'vui long nhap du';
         alert('vui long nhap du');
       }
+      return false;
 	}
 
   kitravalueundefined(h:string)
@@ -180,34 +236,42 @@ export class TaosanphamComponent implements OnInit {
   }
   kitraundefined(h:number, l:number, key: string, v: string)
   {
-    if(!isNaN(this.idlsp))
+    try
     {
-      if(this.khoa=="")
+      if(!isNaN(this.idlsp))
       {
-        this.khoa=key;
-      }
-      if(this.khoa!=key)
-      {
-        this.khoa=key;
-        this.i=0;
-      }
-      if(this.arrsp[0].thongsokythuat[l][key][this.i][v]==undefined || this.arrsp[0].thongsokythuat[l][key][this.i][v]==null)
-      {
-        return "";
+        if(this.khoa=="")
+        {
+          this.khoa=key;
+        }
+        if(this.khoa!=key)
+        {
+          this.khoa=key;
+          this.i=0;
+        }
+        
+        if(this.arrsp[0].thongsokythuat[l][key][this.i][v]===undefined || this.arrsp[0].thongsokythuat[l][key][this.i][v]==null)
+        {
+          return "";
+        }
+        else
+        {
+          const vh=this.i;
+          this.i++;
+          console.log(v);
+          return this.arrsp[0].thongsokythuat[l][key][vh][v];
+        }
       }
       else
       {
-        const vh=this.i;
-        this.i++;
-        console.log(v);
-        return this.arrsp[0].thongsokythuat[l][key][vh][v];
+        return null;
       }
     }
-    else
-    {
+    catch{
       return null;
-    }   
+    }
   }
+
   reset()
   {
     document.getElementById('tensp')["value"]="";
@@ -227,6 +291,8 @@ export class TaosanphamComponent implements OnInit {
     }
     this.i=0;
     this.Removeimgaehtml();
+    this.Removeurlimagedd();
+
     console.log("hinh",this.hinhtsp);
     console.log(this.tskt);
   }
@@ -240,42 +306,56 @@ export class TaosanphamComponent implements OnInit {
       );
 	}
 
-    onSelectFile(event) {
-    if (event.target.files && event.target.files[0]) {
-        var filesAmount = event.target.files.length;
-        for (let i = 0; i < filesAmount; i++) {
-                var reader = new FileReader();
+  //   onSelectFile(event) {
+  //   if (event.target.files && event.target.files[0]) {
+  //       var filesAmount = event.target.files.length;
+  //       for (let i = 0; i < filesAmount; i++) {
+  //               var reader = new FileReader();
 
-                reader.onload = (event:any) => {
-                  console.log(event.target.result);
-                  this.urls.push(event.target.result);
-                  this.isImageSaved=true;
-                  this.valueiput=event.target.result;
-                  this.imagebase64=event.target.result;
-                }
-                this.nameimage=document.getElementById("uploadCaptureInputFile")["value"];
-                reader.readAsDataURL(event.target.files[i]);
-                document.getElementById("uploadCaptureInputFile")["value"] = "";
-        }
-        //this.i++;
-        console.log(this.nameimage);
-        console.log(this.i);
-        console.log("imgname",document.getElementById("uploadCaptureInputFile")["value"]);
-    }
-    console.log(event);
+  //               reader.onload = (event:any) => {
+  //                 console.log(event.target.result);
+  //                 this.urls.push(event.target.result);
+  //                 this.isImageSaved=true;
+  //                 this.valueiput.push(event.target.result);
+  //                 this.imagebase64=event.target.result;
+  //               }
+  //               this.nameimage.push(document.getElementById("uploadCaptureInputFile")["value"]);
+  //               reader.readAsDataURL(event.target.files[i]);
+  //               document.getElementById("uploadCaptureInputFile")["value"] = "";
+  //       }
+  //       //this.i++;
+  //       console.log(this.nameimage);
+  //       console.log(this.i);
+  //       console.log("imgname",document.getElementById("uploadCaptureInputFile")["value"]);
+  //   }
+  //   console.log(event);
     
-  }
+    
+  // }
 
-  saveimageinfolder(v: imgfolder)
-  {
+  // onSelectFileimagedd(event) {
+  //   if (event.target.files && event.target.files[0]) {
+  //       var filesAmount = event.target.files.length;
+  //       for (let i = 0; i < filesAmount; i++) {
+  //               var reader = new FileReader();
+
+  //               reader.onload = (event:any) => {
+  //                 console.log(event.target.result);
+  //                 this.urlimagedd=event.target.result;
+  //                 this.isImageSaveddd=true;
+  //               }
+  //               this.nameimagedd=document.getElementById("uploadimagedd")["value"];
+  //               reader.readAsDataURL(event.target.files[i]);
+  //               document.getElementById("uploadimagedd")["value"] = "";
+  //       }
+  //       //this.i++;
+  //       console.log(this.nameimagedd);
+  //       console.log(this.i);
+  //       console.log("imgname",document.getElementById("uploadimagedd")["value"]);
+  //   }
+  //   console.log(event);
     
-    this.saveimgfolderService.saveimagefolder(v).subscribe(
-      () => {
-          this.massage = 'Lưu thành công';
-          alert(this.massage);
-      }
-    );
-  }
+  // }
 
       Add(){
         this.num ++;
@@ -285,9 +365,14 @@ export class TaosanphamComponent implements OnInit {
 
       Remove(index:{ id: number; }){
         console.log(index);
-        //this.numsp.splice(this.numsp.indexOf(index),1);
         this.urls.splice(this.urls.indexOf(index),1);
         console.log("xoa",this.urls);
+      }
+
+      Removeurlimagedd(){
+        this.urlimagedd=null;
+        this.isImageSaveddd=false;
+        this.hinhdaidiensanpham="";
       }
 
 
@@ -295,31 +380,133 @@ export class TaosanphamComponent implements OnInit {
         for(var i=0 ; i <= this.urls.length; i++)
         {
           this.urls.splice(i, 1);
+          this.responseimage.splice(i,1);
         }
         this.urls.splice(0, 1);
+        console.log("xoa", this.responseimage)
       }
 
-      getvalue()
+      getvalueimagedd()
       {
-        this.idinput="inputmt"+this.i;
-        this.idbuton="btn"+this.i;
+        if(this.nameimagedd!==undefined && this.nameimagedd!==null && this.nameimagedd!=="")
+        {
+          var tendd=this.nameimagedd.replace("C:\\fakepath\\","");
+          this.hinhdaidiensanpham="https://localhost:44309/Resources/Images/"+tendd.toString();
+        }
+      }
+
+      getvalue(v: number)
+      {
+        this.idinput="inputmt"+v;
+        this.idbuton="btn"+v;
         this.inputmts.forEach((inputmt: ElementRef) => console.log(inputmt.nativeElement.id,document.getElementById(inputmt.nativeElement.id)["value"]));
         console.log("id",this.idinput);
-        console.log("kqmt",document.getElementById(this.idinput)["value"]);
-        var tendd=this.nameimage.replace("C:\\fakepath\\","");
-
-        const hinhsavefolder= new imgfolder(
-          this.valueiput,
-          tendd.toString()
-        );
-        this.saveimageinfolder(hinhsavefolder);
         const hinhsp=new hinh(
-          this.valueiput,
+          "https://localhost:44309/Resources/Images/"+this.urls[v],
           document.getElementById(this.idinput)["value"]
         );
         this.hinhtsp.push(hinhsp);
-        (document.getElementById(this.idbuton) as HTMLInputElement).disabled = true;
         (document.getElementById(this.idinput) as HTMLInputElement).disabled = true;
-        this.i++;
+        this.ktsavedhinhsanpham=true;
+      }
+
+      Deletesp(){
+        if (confirm("Bạn có muốn xóa sản phẩm này ?")) {  
+            this.sanphamService.deletesp(this.idlsp).subscribe(() => {
+            this.massage = 'Xóa thành công';
+            alert(this.massage);
+            this.router.navigate(['appmainnv/appmainquanly']);
+          });
+        }
+      }
+
+      kiemtrakey(key: string)
+      {
+        
+        if(key=="Thẻ nhớ ngoài")
+        {
+          return false;
+        }
+        else
+          return true;
+      }
+
+      responsedd: any="";
+      responseimage: any=[];
+
+      public uploadFiledd = (files) => {
+        if (files.length === 0) {
+          return;
+        }
+       
+        let fileToUpload = <File>files[0];
+        this.urlimagedd=Object(fileToUpload.name);
+        this.nameimagedd=fileToUpload.name;
+        this.isImageSaveddd=true;
+        const formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+        this.http.post('https://localhost:44309/api/saveimagefolder', formData, {reportProgress: true, observe: 'events'})
+          .subscribe(event => {
+            if (event.type === HttpEventType.UploadProgress)
+              this.progress = Math.round(100 * event.loaded / event.total);
+            else if (event.type === HttpEventType.Response) {
+              this.massage = 'Upload success.';
+              this.responsedd=event.body;
+              
+              console.log(this.responsedd)
+            }
+          });
+          document.getElementById("uploadimagedd")["value"] = "";
+      }
+
+      public uploadFileimage = (files) => {
+        if (files.length === 0) {
+          return;
+        }
+        this.idinput="inputmt"+this.i;
+        let fileToUpload = <File>files[0];
+        this.urls.push(fileToUpload.name);
+        this.isImageSaved=true;
+        const formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+        this.http.post('https://localhost:44309/api/saveimagefolder', formData, {reportProgress: true, observe: 'events'})
+          .subscribe(event => {
+            if (event.type === HttpEventType.UploadProgress)
+              this.progress = Math.round(100 * event.loaded / event.total);
+            else if (event.type === HttpEventType.Response) {
+              this.massage = 'Upload success.';
+              this.responseimage.push(event.body);
+              console.log(this.responseimage)
+            }
+          });
+          document.getElementById("uploadCaptureInputFile")["value"] = "";
+          console.log("h",this.urls);
+         
+      }
+
+      public createImgPath = (s:string) => {
+        if(s==undefined)
+        {
+          this.serverPath="https://localhost:44309/Resources/Images/"+this.serverPath;
+        }
+        else
+        {
+          if(!isNaN(this.idlsp))
+          {
+            this.serverPath=s;
+          }
+          else
+          {
+            this.serverPath="https://localhost:44309/Resources/Images/"+s;
+          }
+        }
+        
+        return this.serverPath;
+      }
+
+      Adddacdiemnoibat()
+      {
+        this.alldacdiemnoibat.push("");
+        console.log(this.alldacdiemnoibat);
       }
 }

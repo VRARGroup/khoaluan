@@ -7,10 +7,12 @@ export class sp {
     giaban: number;
     giamgia: number;
     sosao: number;
+    gioithieu: Array<hinh>;
+    hinhdaidien: string;
     _id_loaisanpham: number;
     thongsokythuat:Array<object>;
    
-    constructor( _id: number,  ten: string, thuonghieu: string, hinh: Array<hinh>, dacdiemnoibat: string,  giaban: number, giamgia: number, sosao: number, _id_loaisanpham: number, thongsokythuat:Array<object>) {
+    constructor( _id: number,  ten: string, thuonghieu: string, hinh: Array<hinh>, dacdiemnoibat: string,  giaban: number, giamgia: number, sosao: number, gioithieu:Array<hinh> ,hinhdaidien: string, _id_loaisanpham: number, thongsokythuat:Array<object>) {
     	this._id = _id;
         this.ten = ten;
     	this.thuonghieu = thuonghieu;
@@ -19,6 +21,8 @@ export class sp {
         this.giaban = giaban;
         this.giamgia = giamgia;
         this.sosao = sosao;
+        this.gioithieu = gioithieu;
+        this.hinhdaidien=hinhdaidien;
         this._id_loaisanpham = _id_loaisanpham;
         this.thongsokythuat = thongsokythuat;
     }
@@ -26,10 +30,10 @@ export class sp {
 
 export class hinh
 {
-    hinhanh: object;
+    hinhanh: string;
     mota: string;
 
-    constructor(hinhanh: object, mota: string) {
+    constructor(hinhanh: string, mota: string) {
         this.hinhanh = hinhanh;
         this.mota=mota;
     }

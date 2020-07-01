@@ -35,8 +35,9 @@ namespace dienmayxanhapi.Controllers
         [HttpPost]
         public ActionResult<BsonDocument> Create(loaisanpham lsp)
         {
+            var s = _lspService.Getlsp().LastOrDefault()._id+10000;
             var document = new BsonDocument {
-                  { "_id", _lspService.Get().Count},
+                  { "_id", _lspService.Getlsp().LastOrDefault()._id+10000},
                   { "tendanhmuc" , lsp.tendanhmuc},
                   };
             BsonArray arraythuonghieu = new BsonArray();
@@ -62,7 +63,7 @@ namespace dienmayxanhapi.Controllers
                   string[] arrstringdactrung = lsp.dactrung[i + 1].ToString().Split(',');
                   for (int j = 0; j < arrstringdactrung.Length; j++)
                   {
-                    arrayctdactrung.Add(arrstringdactrung[i]);
+                    arrayctdactrung.Add(arrstringdactrung[j]);
                   }
                   //var json = lsp.dactrung[1].ToString();
                   //d = BsonDocument.Parse(json);

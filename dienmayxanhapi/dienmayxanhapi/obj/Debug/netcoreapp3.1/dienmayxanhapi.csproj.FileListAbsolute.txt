@@ -253,8 +253,6 @@ E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\bin\Debug\netcoreapp3.1\runti
 E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.csprojAssemblyReference.cache
-E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.csproj.CoreCompileInputs.cache
-E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.MvcApplicationPartsAssemblyInfo.cache
 E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.AssemblyInfoInputs.cache
 E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.AssemblyInfo.cs
 E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.RazorTargetAssemblyInfo.cache
@@ -397,3 +395,5 @@ C:\Users\Hoan\Documents\GitHub\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\
 C:\Users\Hoan\Documents\GitHub\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\staticwebassets\dienmayxanhapi.StaticWebAssets.Manifest.cache
 C:\Users\Hoan\Documents\GitHub\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\staticwebassets\dienmayxanhapi.StaticWebAssets.xml
 C:\Users\Hoan\Documents\GitHub\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.genruntimeconfig.cache
+E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.csproj.CoreCompileInputs.cache
+E:\khoaluan\khoaluan\dienmayxanhapi\dienmayxanhapi\obj\Debug\netcoreapp3.1\dienmayxanhapi.MvcApplicationPartsAssemblyInfo.cache

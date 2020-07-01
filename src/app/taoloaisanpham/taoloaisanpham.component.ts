@@ -2,6 +2,10 @@ import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular
 import { Router } from "@angular/router";
 import { LoaisanphamService } from '../service/loaisanpham.service';
 import { lsanpham } from '../model/loaisanpham';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { Key } from 'protractor';
+import { KeyValuePipe } from '@angular/common';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 @Component({
   selector: 'app-taoloaisanpham',
@@ -16,6 +20,7 @@ export class TaoloaisanphamComponent implements OnInit {
   input:string;
   text:string;
   ktthaotacdelete:boolean=true;
+  ktthaotacsave:boolean=true;
   ktnulldactrung:number=0;
   ktnullthuonghieu:number=0;
   ktnulltcdg:number=0;
@@ -25,6 +30,8 @@ export class TaoloaisanphamComponent implements OnInit {
   ls:lsanpham[]=[];
   allth: Array<any>=[];
   alldt: Array<any>=[];
+  allctdt: Array<any>=[];
+  allslctdt: Array<any>=[];
   alltcdg: Array<any>=[];
   idlsp:number;
   public numsp = [{
@@ -43,14 +50,16 @@ export class TaoloaisanphamComponent implements OnInit {
     this.idlsp = parseInt(window.localStorage.getItem("editspid"));
     if(this.idlsp>0)
     { 
-      this.ktthaotacdelete=false;
+      this.ktthaotacdelete=true;
+      this.ktthaotacsave=false;
       this.loaddetaillsp(this.idlsp);
     }
     else
     {
-      this.ktthaotacdelete=true;
+      this.ktthaotacdelete=false;
       this.alldt.push("");
       this.allth.push("");
+      this.alltcdg.push("");
     }
   }
 
@@ -120,12 +129,7 @@ export class TaoloaisanphamComponent implements OnInit {
     }
   }
   
-  Add(){
-    // this.num ++;
-    // this.numsp.push({id:this.num});
-    // console.log(this.numsp)
-    this.alldt.push("");console.log(this.alldt)
-  }
+  
 
   reset()
   {
@@ -202,6 +206,13 @@ export class TaoloaisanphamComponent implements OnInit {
     this.num=0;
   }
 
+  Add(){
+    // this.num ++;
+    // this.numsp.push({id:this.num});
+    // console.log(this.numsp)
+    this.alldt.push("");console.log(this.alldt)
+  }
+
   Remove(index:{ id: number; }){
     console.log(index);
     this.alldt.splice(this.alldt.indexOf(index),1);
@@ -231,6 +242,21 @@ export class TaoloaisanphamComponent implements OnInit {
     this.alltcdg.splice(this.alltcdg.indexOf(index),1);
   }
 
+  // Addctdactrung(i:number){
+   
+  //   this.allctdt.push(i,1);
+  //   console.log(this.allctdt);
+  //   const all:Array<any>=[];
+  //   all.push(i,1);
+  //   this.allslctdt.push(all);
+  //   console.log(this.allctdt.length);
+  //   console.log("sl",this.allslctdt);
+  // }
+
+  // arrayOne(n: number): any[] {
+  //   return Array(n);
+  // }
+
   Createlsp(lsp: lsanpham){
 		this.LoaisanphamService.createlsp(lsp).subscribe(
         	() => {
@@ -241,7 +267,7 @@ export class TaoloaisanphamComponent implements OnInit {
   }
 
   Deletelsp(){
-    if (confirm("Bạn có muốn xóa sự kiện này ?")) {  
+    if (confirm("Bạn có muốn xóa loại sản phẩm này ?")) {  
         this.LoaisanphamService.deletelsp(this.idlsp).subscribe(() => {
         this.massage = 'Xóa thành công';
         alert(this.massage);
@@ -257,7 +283,10 @@ export class TaoloaisanphamComponent implements OnInit {
       this.allth=res[0].thuonghieu;
       this.tenloaisp=res[0].tendanhmuc;
       this.alldt=res[0].dactrung;
-      this.alltcdg=res[0].tieuchidanhgia;
+      if(res[0].dactrung.length>0)
+      {
+        this.alltcdg=res[0].tieuchidanhgia;
+      }
       console.log("th",this.allth);
       console.log(res);
     });
@@ -267,5 +296,72 @@ export class TaoloaisanphamComponent implements OnInit {
     //console.log(obj);
    return Object.keys(obj);
  }
+  
+  ktu: number=0;
+  t:string;
+  t0:string;
+  keydb(i:number)
+  {
+    if(this.ktu==0)
+    {
+      let regex = /^[*:?$!@#^%&"]/; // Chỉ chấp nhận ký tự alphabet thường hoặc ký tự hoa
+      let regex1 = /^[\n \t \r]+$/
+      let regex2 = /^[,]/;
+      this.t=document.getElementById("text"+i)["value"];
+      var s=this.t.charAt(this.t.length-1);
+      if(regex2.test(this.t.charAt(this.t.length-1)))
+      {
+        if(this.t0===undefined || this.t0==="")
+        {
+          alert("lỗi ký tự"+""+(document.getElementById("text"+i)["value"]));
+          document.getElementById("text"+i)["value"]="";
+        }
+        else
+        {
+          if(this.t.charAt(this.t.length-2)==" ")
+          {
+            alert("lỗi ký tự"+""+(document.getElementById("text"+i)["value"]));
+            document.getElementById("text"+i)["value"]=this.t0.trim();
+          }
+        }
+      }
+      if( regex1.test(this.t.charAt(this.t.length-1)))
+      {
+        console.log("space");
+      }
+      if (regex.test(this.t.charAt(this.t.length-1))) { // true nếu text chỉ chứa ký tự alphabet thường hoặc hoa, false trong trường hợp còn lại. 
+        alert("lỗi ký tự"+""+(document.getElementById("text"+i)["value"]));
+        if(this.t0!=null)
+        {
+          document.getElementById("text"+i)["value"]=this.t0.trim();
+        }
+        else
+        {
+          document.getElementById("text"+i)["value"]="";
+        }
+      } else {
+        this.t0=document.getElementById("text"+i)["value"];
+      }
+    }
+  }
+
+  // get()
+  // {
+  //   this.maRefs.forEach((maRef: ElementRef) => this.dactrung.push(maRef.nativeElement.id,document.getElementById(maRef.nativeElement.id)["value"]));
+  //   console.log(this.dactrung)
+  // }
+
+  hiddenwarbutton(i:number)
+  {
+    
+    if(this.ktu==i)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
   
 }

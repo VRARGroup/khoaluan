@@ -7,8 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { TaosanphamComponent } from './taosanpham/taosanpham.component';
 import { TaoloaisanphamComponent } from './taoloaisanpham/taoloaisanpham.component';
 import { AppmainComponent} from './appmain/appmain.component';
-import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component'
-import { AppmainnhanvienComponent} from './appmainnhanvien/appmainnhanvien.component'
+import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component';
+import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.component';
+import { ReviewspComponent } from './reviewsp/reviewsp.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'appmainnv/login' },
@@ -26,6 +27,9 @@ const routes: Routes = [
     },
     {
       path: 'taoloaisanpham', component: TaoloaisanphamComponent
+    },
+    {
+      path: 'reviewsp', component: ReviewspComponent
     },
   ]
   },

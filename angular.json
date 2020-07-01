@@ -23,10 +23,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": false,
+           
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/hinhanhsanpham"
             ],
+           
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",

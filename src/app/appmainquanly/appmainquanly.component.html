@@ -8,12 +8,19 @@
 				<button class="buttontsp" (click)="taosp()">Thêm sản phẩm</button>
 			</div>
 		</div>
-		<div class="filter d-flex justify-content-center">
-			<div class="inline" *ngFor="let obj of alllsp">
+		<div class="filter ">
+			<div class="d-flex justify-content-center">
+			<div class="inline" >
+				<ng-container *ngFor="let obj of alllsp">
 				<div class="btn-group">
 					<button class="button" (click)="loaddetaillsp(obj._id)">{{obj.tendanhmuc | uppercase}}</button>
-					<button type="button" (click)="detailsp(obj._id)" class="btninbtnlsp"><i class="fa fa-pen-nib" aria-hidden="true"></i></button>
+					<div class="btn-group-vertical btninbtnlsp">
+						<button type="button" class="buttonct" (click)="detailsp(obj._id)"><i class="fas fa-plus fa-1x" aria-hidden="true"></i></button>
+						<button type="button" class="buttonct" (click)="detailsp(obj._id)"><i class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
+					</div>
 				</div>
+				</ng-container>
+			</div>
 			</div>
 		</div>
 		<div class="filter ">
@@ -31,32 +38,33 @@
 		<div class="filter">
 			<div>
 				<ng-container *ngIf="tensanpham.length > 0">
-					<table class="table table-striped"
-						style="text-align: center; margin-left:auto;margin-right:auto; width:100%">
+					<table class="table table-striped" style="text-align: center">
 
-						<thead>
+						<thead >
 							<tr>
 								<th>#</th>
 								<th>Tên sản phẩm</th>
 								<th>Thương hiệu</th>
 								<th>Giá bán</th>
 								<th>Giảm giá</th>
-								
+								<th>Thêm bài giới thiệu sản phẩm</th>
 							</tr>
 						</thead>
 
 						<tbody>
-							<tr *ngFor="let item of tensanpham, let i=index">
-								<th scope="row">{{i+1}}</th>
+							<tr *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
+								<td>{{i+1}}</td>
 								<td><a (click)="chitietsp(item._id)">{{item.ten}}</a></td>
 								<td>{{item.thuonghieu}}</td>
 								<td>{{item.giaban}}</td>
 								<td>{{item.giamgia}}</td>
-								
+								<td><i class="far fa-newspaper fa-2x" (click)="gtsp(item._id)"></i></td>
 							</tr>
 						</tbody>
 						
+						
 					</table>
+					<pagination-controls (pageChange)="p = $event"></pagination-controls>
 				</ng-container>
 			</div>
 		</div>

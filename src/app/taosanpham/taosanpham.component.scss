@@ -1,6 +1,7 @@
 .body {
     padding: 20px 20px;
     margin-left: 80px;
+    background:#eeeeeecc;
     width: auto;
 }
 .title> p {
@@ -91,6 +92,22 @@ input {
     cursor: pointer;
 }
 
+.img-spacedd {
+    border: dashed 1px #d3d3d3;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    width: 400px;
+    padding: 8px;
+}
+
+.img-spacedd img {
+    display: block;
+    width: 380px;
+    max-height: 350px;
+    margin: auto;
+    cursor: pointer;
+}
+
 .fileInputProfileWrap {
     width:400px;
     height: 340px;
@@ -122,4 +139,12 @@ input {
 .mta {
     width: 500px;
     margin-left: 3px;
+}
+
+.bak{
+    background-image: url("/assets/logonguoi.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-position-y: 250px;
+    min-height: 500px;
 }

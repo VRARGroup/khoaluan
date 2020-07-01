@@ -18,9 +18,9 @@ export class SaveimgfolderService {
         })  
     };
   constructor(private http: HttpClient) { }
-  
-  saveimagefolder(s:imgfolder): Observable<imgfolder> {
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<imgfolder>(this.url + '/', s, httpOptions);
-  }
+
+  deleteimagefolder(nameimage: string): Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.delete<number>(this.url + '/'+ nameimage, httpOptions);
+	}
 }

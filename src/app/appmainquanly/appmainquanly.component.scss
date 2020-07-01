@@ -5,6 +5,7 @@
     margin-bottom: 10px;
     margin-right: 80px;
     background-color: #ffffffe7;
+    max-width: 1159px;
 }
 
 .inline{
@@ -32,7 +33,6 @@
 }
 .btn-group:hover .btninbtnlsp{
     display: block !important;
-   
 }
 // .button:hover {
 // 	 background-color: rgb(20, 163, 220);
@@ -135,7 +135,45 @@ div.transbox {
     z-index: 2;
 }
 .btninbtnlsp:hover{
+    color: white;
+    width: auto;
+    max-height: 40px;
+}
+.buttonct {
+    width: 5px; 
+    height: 5px;
+}
+
+.fa-1x {
+    font-size: 8px !important;
+}
+
+.fas {
+    vertical-align: middle !important;
+    margin-top: -4px;
+}
+
+.buttonct{
+    padding-right: 2px !important;
+	padding-left: 2px !important;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	height: 19px !important;
+    width: 22px !important;
+    background-color: white;
+  	color: black;
+ 	border: 1px solid #fbda00;
+}
+
+.btn-group-vertical .buttonct:hover {
     background-color: #87e24afa;
     color: white;
-    max-width: 50px;
+}
+
+.buttonct:hover {
+    height: 19px !important;
+    width: 100% !important;
+}
+.fa-2x{
+    font-size: 30px !important;
 }

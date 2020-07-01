@@ -1,5 +1,5 @@
 <!-- breadcrumb -->
-
+<div class="bak">
 <div class="body">
     <div class="title">
         <p>Loại Sản Phẩm</p>
@@ -35,21 +35,40 @@
         <div>
         <label class="valuend">Đặc trưng: </label>  <i class="fas fa-plus" (click)=Add()></i>
         <div id="field-wrapper" *ngFor="let item of alldt,let i=index">
-           
             <div class="titlediv">
                 <label>Tên đăc trưng {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
                 <input id="input{{i}}" value={{keys(item)}} class="value1" type="text" #maRef><i class="fas fa-minus" (click)=Remove(item)></i>
                 <br>
-                <label>Chi tiết đăc trưng {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
+                <label>Danh sách đăc trưng {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
                 <br>
-                <label class="text-danger" style="font-size:13"><span >Nhập theo quy định</span>
+            <!-- <div *ngFor="let itemct of allslctdt[0], let k=index">
+                <ng-container *ngFor="let items of arrayOne(allctdt[1])">
+                <div class="card">
+                    <div class="card-header">
+                        <span>Đặc trưng <span>{{i+1}}</span> <span style="color:red;font-weight:bold">(*)</span>:</span>
+                    </div>
+                    <div class="card-body">
+                        <p>{{k}}</p>
+                        <input id="text{{k}}" (keyup)="keydb(k)" value={{item[keys(item)]}} type="text" #maRef>
+                    </div>
+                    <div class="card-footer">
+                        <button  (click)="get()">vss</button>
+                    </div>
+                </div>
+                </ng-container>
+            </div> -->
+            <div class="value2">
+                <div id="wmd-button-bar">
+                    <ul id="wmd-button-row" class="wmd-button-row">
+                        <li class="wmd-button" id="wmd-quote-button" title="Nhập ký tự đặc biệt" style="left: 100px;">
+                            <span style="background-position: -60px 0px; margin-left: 10px;"><i class="fab fa-acquisitions-incorporated" *ngIf="hiddenwarbutton(1)" (click)="this.ktu=0"></i><i class="fas fa-ban" *ngIf="hiddenwarbutton(0)" (click)="this.ktu=1"></i></span>
+                        </li>
+                    </ul>
+                        <textarea id="text{{i}}" (keyup)="keydb(i)" value={{item[keys(item)]}} class="value2" type="text" #maRef></textarea>
+                    
+                </div>
                 <br>
-                <span class="text-danger" style="font-size:13">Chi tiết đăc trưng {{i+1}}: Công nghệ màn hình, Độ phân giải, Màn hình rộng, Mặt kính cảm ứng, ...vv</span></label>
-                <br>
-                <textarea id="text{{i}}" value={{item[keys(item)]}} class="value2" type="text" #maRef></textarea>
-                <br>
-            
-         
+            </div>
         </div>
         <br>  <br>
         </div>
@@ -67,9 +86,10 @@
         </div>
     </div>
     <div class="container d-flex justify-content-center">
-        <button class="btn btn-primary" type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
-        <button [hidden]="ktthaotacdelete"  class="btn btn-primary" type="button" id="save_sanpham" (click)="Deletelsp()">Delete</button>
+        <button *ngIf="ktthaotacsave" class="btn btn-primary" type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
+        <button *ngIf="ktthaotacdelete"  class="btn btn-primary" type="button" id="save_sanpham" (click)="Deletelsp()">Delete</button>
         <button type="button" class="btn btn-warning" id="clear_sanpham" (click)="reset()">Clear</button>
     </div>
+</div>
 </div>
 

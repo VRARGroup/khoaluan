@@ -1,4 +1,5 @@
         <!-- breadcrumb -->
+        <div class="bak">
         <div class="body">
             <div class="title">
                 <p>Sản Phẩm</p>
@@ -25,9 +26,13 @@
                     </ng-container>            
                 </select>
                 <br>  <br>
-                <label for="dacdiem" >Đặc điểm <span style="color:red;font-weight:bold">(*)</span>: </label>
-                <input type="text" value="{{kitravalueundefined(this.dacdiemnoibat)}}" id="dacdiem">
-                <br>  <br>
+                <label for="dacdiem" >Đặc điểm <span style="color:red;font-weight:bold">(*)</span>: </label> <i class="fas fa-plus" (click)=Adddacdiemnoibat()></i>
+                <br> <br>
+                <ng-container *ngFor="let itemdacdiemnoibat of alldacdiemnoibat, let i=index">
+                    <label><i class="fas fa-circle"></i> Đặc điểm nổi bật {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label> <input type="text" value="{{kitravalueundefined(itemdacdiemnoibat)}}" id="dacdiem{{i}}">
+                    <br> <br>
+                </ng-container>
+                
                 <label for="giasanpham">Giá sản phẩm <span style="color:red;font-weight:bold">(*)</span>: </label>
                 <input type="number" value="{{kitravalueundefined(this.giaban)}}" id="giasanpham">
                 <br>  <br>
@@ -49,7 +54,7 @@
                     <tr *ngFor="let v of c[key], let k=index">
 
                         <td class="col1" >
-                            <p> {{v}} <span style="color:red;font-weight:bold">(*)</span> </p>
+                            <p> {{v}}{{l}} <span *ngIf="kiemtrakey(v)" style="color:red;font-weight:bold">(*)</span> </p>
                         </td>
                         <td class="col2">
                             <input type="text" name="{{key}},{{v}}" value="{{kitraundefined(h,l,key,v)}}" id="input{{l}}{{k}}" #maRef>
@@ -63,24 +68,39 @@
                 </table>
                 </div>
                 <br>  <br>
+                <label>Hình đại diện: </label>
+                <div class="container">
+                    <div class="custom-file" >
+                        <ng-container>
+                        <div class="img-spacedd">
+                            <ng-container *ngIf="isImageSaveddd">
+                                <img  [src]="createImgPath(urlimagedd)" height="200"> <br/>
+                            </ng-container>
+                                
+                        </div>
+                        <br>
+                        <button class="btn btn-danger" (click)="Removeurlimagedd()" *ngIf="isImageSaveddd">Xóa</button>
+                        </ng-container>                       
+                        <input type='file' #file id="uploadimagedd" (change)="uploadFiledd(file.files)">
+                    </div>
+                </div>
+                <br>
                 <label>Hình ảnh: </label>
                 <div class="container">
-                           
                 <div class="custom-file" >
                     <ng-container *ngFor='let url of urls,let i=index'>
                     <div class="img-space">
                         <ng-container *ngIf="isImageSaved">
-                            <img  [src]="url" height="200"> <br/>
+                            <img  [src]="createImgPath(url)" height="200"> <br/>
                            
                         </ng-container>
                         
                     </div>
-                    <input *ngIf="isImageSaved" download class="mta" id="inputmt{{i}}" #inputmt type="text" title="mô tả">
+                    <input *ngIf="isImageSaved" value="{{this.mota[i]}}" class="mta" id="inputmt{{i}}" #inputmt type="text" title="mô tả">
                     <br>
                     <button class="btn btn-danger" (click)="Remove(url)" *ngIf="isImageSaved">Xóa</button>
-                    <button class="btn btn-success" id="btn{{i}}" (click)="getvalue()" *ngIf="isImageSaved">Hoàn Thành</button>
                     </ng-container>                       
-                        <input type='file' id="uploadCaptureInputFile" (change)="onSelectFile($event)" multiple>
+                        <input type='file' #fileh *ngIf="ktsavedhinhsanpham" id="uploadCaptureInputFile" (change)="uploadFileimage(fileh.files)" multiple>
                 </div>
                 <br> 
 
@@ -88,8 +108,9 @@
                 
             </div>
             <div class="container d-flex justify-content-center">
-                <button class="btn btn-primary" type="button" (click)="onSubmit()">Save</button>
+                <button *ngIf="ktthaotacsave" class="btn btn-primary" type="button" (click)="onSubmit()">Save</button>
+                <button *ngIf="ktthaotacdelete"  class="btn btn-primary" type="button" id="save_sanpham" (click)="Deletesp()">Delete</button>
                 <button type="button" class="btn btn-warning" (click)="reset()">Clear</button>
-               
             </div>
         </div>
+    </div>

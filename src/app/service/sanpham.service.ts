@@ -42,5 +42,15 @@ export class SanphamService {
   	createsp(s: sp): Observable<sp> {
     	const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     	return this.http.post<sp>(this.url + '/', s, httpOptions);
-  	}
+	}
+	  
+	deletesp(idsp: number): Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.delete<number>(this.url + '/'+ idsp, httpOptions);
+	}
+
+	creategtsp(s: sp): Observable<sp> {
+    	const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    	return this.http.put<sp>(this.url + '/'+ 'gt?_id='+s._id, s, httpOptions);
+	}
 }
