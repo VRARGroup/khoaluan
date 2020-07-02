@@ -1,0 +1,16 @@
+<div class="thong-so-ky-thuat" style="background-color: #fff;">
+    <p style="font-size: 22px; color: rgba(0, 0, 0, 0.87);">Thông số kỹ thuật chi tiết {{name}}</p>
+    <ul style="padding-top:20px;list-style-type:none; width: auto; max-width: 66vw;">
+        <ng-container *ngFor="let k of thongsokythuat"> 
+            <ng-container *ngFor="let key of keys(k)">
+            <li style="color:rgba(83, 82, 82, 0.404); font-size: 18px;">{{key}}</li>
+                <ng-container *ngFor="let l of k[key]">
+                    <li *ngIf="l!=null && l!=''">
+                        <span style="font-weight: 600;" class="special-name">{{keys(l)}}</span>
+                        <span class="non-special-name">: {{l[keys(l)]}}</span>
+                    </li>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </ul>
+</div>

@@ -58,4 +58,24 @@ export class SanphamService {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     	return this.http.put<sp>(this.url + '/'+ 'updatesp?_id='+s._id, s, httpOptions);
 	}
+
+	get_product_details(id:number): Observable<sp[]> {
+    	return this.http.get<sp[]>(this.url+'/'+'get_product_details?idsp='+id);
+	}
+	
+	get_same_products(id:number): Observable<sp[]> {
+    	return this.http.get<sp[]>(this.url+'/'+'get_same_products?idsp='+id);
+	}
+
+	get_same_price_products(id:number): Observable<sp[]> {
+		return this.http.get<sp[]>(this.url+'/'+'get_same_price_products?idsp='+id);
+	}
+
+	get_list_product(idlsp: number){
+		return this.http.get<sp[]>(this.url+'/'+'get_list_product?idlsp='+ idlsp);
+	}
+	get_list_product2(idlsp: number){
+		return this.http.get<sp[]>(this.url+'/'+'get_list_product2?idlsp='+ idlsp);
+	}
+
 }

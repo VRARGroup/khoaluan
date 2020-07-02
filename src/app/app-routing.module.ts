@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
+import { ListproductComponent } from './listproduct/listproduct.component';
+import { ProductdetailsComponent } from './productdetails/productdetails.component';
 import { ProductsComponent } from './products/products.component';
 import { LoginComponent } from './login/login.component';
 import { TaosanphamComponent } from './taosanpham/taosanpham.component';
@@ -33,12 +35,18 @@ const routes: Routes = [
     },
   ]
   },
-  {
-    path: 'products', component: ProductsComponent
-  },
+  {path: 'products', component: ProductsComponent},
+  {path: 'productdetails', component: ProductdetailsComponent},
+  {path: 'listproduct', component: ListproductComponent},
   {path: 'appmain', component: AppmainComponent, children: [
     {
       path: 'products', component: ProductsComponent
+    },
+    {
+      path: 'productdetails', component: ProductdetailsComponent
+    },
+    {
+      path: 'listproduct', component: ListproductComponent
     },
   ]
   }

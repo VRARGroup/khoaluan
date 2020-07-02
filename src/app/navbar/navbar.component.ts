@@ -27,14 +27,20 @@ Danhmuc: any = {
 	]
 };
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit() {
-  	$('ul.navbar-nav li div.dropdown-menu li').hover(function() {
-  	$(this).find('.subcate').stop(true, true).delay(0).fadeIn(0);
-	}, function() {
- 	$(this).find('.subcate').stop(true, true).delay(0).fadeOut(0);
-	});
-  }
+	ngOnInit() {
+		$('ul.navbar-nav li div.dropdown-menu li').hover(function() {
+		$(this).find('.subcate').stop(true, true).delay(0).fadeIn(0);
+		}, function() {
+		$(this).find('.subcate').stop(true, true).delay(0).fadeOut(0);
+		});
+	}
+  	render_loai_sp(id_loai_sanpham: any):void {
+		window.localStorage.removeItem("loai_sp");
+		window.localStorage.setItem("loai_sp",id_loai_sanpham.toString());
+
+		window.location.href="appmain/listproduct";
+	}
 }
 

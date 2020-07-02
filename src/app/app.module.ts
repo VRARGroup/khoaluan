@@ -57,6 +57,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './footer/footer.component';
 import { ProductsComponent } from './products/products.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ProductdetailsComponent } from './productdetails/productdetails.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ListproductComponent } from './listproduct/listproduct.component';
 
 import {
     MatCommonModule, 
@@ -73,6 +76,7 @@ import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component'
 import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.component';
 import { ReviewspComponent } from './reviewsp/reviewsp.component';
 import { extendPrototype } from 'localforage-startswith';
+import { ModalThongsokythuatComponent } from './modal/modal-thongsokythuat/modal-thongsokythuat.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +91,10 @@ import { extendPrototype } from 'localforage-startswith';
     AppmainComponent,
     AppmainquanlyComponent,
     AppmainnhanvienComponent,
-    ReviewspComponent
+    ReviewspComponent,
+    ProductdetailsComponent,
+    ModalThongsokythuatComponent,
+    ListproductComponent
   ],
   imports: [
     
@@ -146,8 +153,10 @@ import { extendPrototype } from 'localforage-startswith';
     MatCommonModule, 
     MatFormFieldModule, 
     MatLineModule, MatOptionModule,
+    CarouselModule,
     MDBBootstrapModule.forRoot()
   ],
+  entryComponents: [ ModalThongsokythuatComponent ],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

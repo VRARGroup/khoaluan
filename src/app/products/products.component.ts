@@ -6,6 +6,7 @@ import { sp } from '../model/sanpham';
 import { DomSanitizer } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { $ } from 'protractor';
 registerLocaleData(localeFr, 'fr');
 
 @Component({
@@ -24,8 +25,14 @@ export class ProductsComponent implements OnInit {
   	ngOnInit() {
 		this.loadhotsp();
 		this.load_sp_noi_bat();
+		this.display_block_dropdown_menu();
 	}
-	  
+	display_block_dropdown_menu(){
+		// styles: ['.dropdown-menu { display: block; }']
+		// debugger
+		document.getElementById('dropdown-menu').style.display = "inline-block";
+		document.getElementById('html').style.backgroundColor = "#f3f3f3";
+	}
 	loadhotsp() {
 		this.sanphamService.gethotsp().subscribe((res: sp[] | null) => {
 		 this.allhotsp = (res) ? res : [];
@@ -43,4 +50,11 @@ export class ProductsComponent implements OnInit {
 			this.sanphams = (res) ? res : [];
 	});
 	}
+	render_sp(id_sanpham: any):void {
+		window.localStorage.removeItem("sp");
+		window.localStorage.setItem("sp",id_sanpham.toString());
+
+		window.location.href="appmain/productdetails";
+	}
+	
 }

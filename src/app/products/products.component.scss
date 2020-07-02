@@ -289,6 +289,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     top: 304px;
 }
 .hot_month{
+    width: 1210px;
     height: auto;
     border:10px solid #00b7ff;
     border-top: none;
@@ -441,4 +442,9 @@ td{
     span{
         padding: 0px 20px;
     }
+}
+
+.flickity-viewport{
+    height: 60px !important;
+    min-width: 2189px !important;
 }

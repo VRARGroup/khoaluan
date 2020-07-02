@@ -1,0 +1,42 @@
+<div id="list_product">
+    <img class="banner" src="https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png">
+    <div class="title-head">   
+        <div class="title-head-info">
+            4 LỢI ÍCH CHỈ CÓ TẠI ĐIỆN MÁY XANH 
+            <div id="triangle-right"> </div> 
+        </div>
+        <i class="fas fa-truck" aria-hidden="true"></i>Giao hàng miễn phí
+        <i class="fa fa-cogs" aria-hidden="true"></i>Miễn phí công lắp đặt
+        <i class="fa fa-retweet" aria-hidden="true"></i>1 đổi 1 trong 1 tháng (Nếu lỗi)
+        <i class="fa fa-shield" aria-hidden="true"></i>Bảo hành chính hãng
+    </div>
+    <div class="body-list">
+        <div class="radio-filter">
+            <label style="margin-top: 8px; height: 24px;">
+                <input type="checkbox" checked="checked">Mới 2020
+            </label>
+            <span>
+         
+                <label><input type="radio" name="select" /><span class="span-radio-filter">Bán chạy</span></label>
+                <label><input type="radio" name="select" /><span class="span-radio-filter">Giá cao đến thấp</span></label>
+                <label><input type="radio" name="select" /><span class="span-radio-filter">Giá thấp đến cao</span></label>
+            </span>
+        </div>
+        <div class="list">
+            <ng-container id="list_1" *ngFor="let item of items">
+                <a (click)="render_sp(item._id)">
+                    <div class="box-image-same-price">
+                        <div ><label class="tra-gop"> Trả góp 0% </label><img src="{{item.hinhdaidien}}"></div>
+                        <p style="padding: 2px 25px; height: 37px;">{{item.ten}}</p>
+                        <p *ngIf="item.giamgia!=0 && item.giamgia!=null" style="color: #d0021b;">{{item.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                        <p>{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                        <p style="color: #fc9639;" *ngIf="item.sosao !=0 && item.sosao !=null"> <i class="fa fa-star" aria-hidden="true"></i>{{item.sosao}}/5</p>
+                    </div>
+                </a>
+            </ng-container>
+            <div>
+                <a (click)="show_dacdiemnoibat_image()">Đọc thêm <i style=" font-size: 23px;" class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+</div>  
