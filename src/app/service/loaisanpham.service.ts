@@ -34,6 +34,11 @@ export class LoaisanphamService {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 		return this.http.delete<number>(this.url + '/'+ idlsp, httpOptions);
 	}
+
+	updatelsp(lsp:lsanpham): Observable<lsanpham> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    	return this.http.put<lsanpham>(this.url + '/'+ 'updatelsp?_id='+lsp._id, lsp, httpOptions);
+	}
 	  
 
 }

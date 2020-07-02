@@ -148,3 +148,19 @@ input {
     background-position-y: 250px;
     min-height: 500px;
 }
+
+a:hover>p{
+    text-decoration: underline;
+}
+
+.buttonpanel {
+    background-color: transparent;
+    color: black;
+    border: 1px solid transparent;
+}
+
+.fa-2x {
+    font-size: 16px !important;
+    color: #f50909;
+}
+

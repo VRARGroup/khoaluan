@@ -53,4 +53,9 @@ export class SanphamService {
     	const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     	return this.http.put<sp>(this.url + '/'+ 'gt?_id='+s._id, s, httpOptions);
 	}
+
+	updatesp(s:sp): Observable<sp> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    	return this.http.put<sp>(this.url + '/'+ 'updatesp?_id='+s._id, s, httpOptions);
+	}
 }

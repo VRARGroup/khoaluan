@@ -41,7 +41,8 @@ export class ReviewspComponent implements OnInit {
   responseimage: any=[];
   idlsp:number;
   ktsavedhinhsanpham: boolean=true;
-
+  arrsp:sp[]=[];
+  mota:Array<any>=[];
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>;
 
   Addtextnd()
@@ -55,12 +56,18 @@ export class ReviewspComponent implements OnInit {
     console.log(id);
     if(id<this.addtext.length-1)
     {
-      let i=id+1;
-      document.getElementById("text"+id)["value"]=document.getElementById("text"+i)["value"];
-      this.urls[id]=this.urls[i];
+      for(let i=id;i<this.addtext.length;i++)
+      {
+        if(i<this.addtext.length-1)
+        {
+          let j=i+1;
+          document.getElementById("text"+i)["value"]=document.getElementById("text"+j)["value"];
+        }
+      }
     }
     this.addtext.splice(id,1);
     this.urls.splice(id,1);
+    console.log(this.urls);
   }
 
   public uploadFileimage = (files) => {
@@ -82,7 +89,6 @@ export class ReviewspComponent implements OnInit {
           console.log(this.responseimage)
         }
       });
-      document.getElementById("uploadCaptureInputFile")["value"] = "";
       console.log("h",this.urls);
      
   }
@@ -96,15 +102,20 @@ export class ReviewspComponent implements OnInit {
     }
     if(s==undefined)
     {
-      
-      this.serverPath=null;
+      this.serverPath="./assets/upanh.png";
     }
     else
     {
       if(!isNaN(this.idlsp))
       {
-        
-        this.serverPath="https://localhost:44309/Resources/Images/"+s;
+        if(s!="")
+        {
+          this.serverPath=s;
+        }
+        else
+        {
+          this.serverPath="./assets/upanh.png";
+        }
       }
       else
       {
@@ -112,7 +123,6 @@ export class ReviewspComponent implements OnInit {
         this.serverPath="https://localhost:44309/Resources/Images/"+s;
       }
     }
-    console.log("h",this.urls);
     return this.serverPath;
   }
 
@@ -128,7 +138,7 @@ export class ReviewspComponent implements OnInit {
     this.idlsp=parseInt(window.localStorage.getItem("editspid"));
     if(!isNaN(this.idlsp))
     {
-      this.addtext.push("");
+      this.loadctsp(this.idlsp);
     }
     else
     {
@@ -138,7 +148,6 @@ export class ReviewspComponent implements OnInit {
 
   gt: Array<hinh>=[];
   onSubmit() {
-    debugger
   this.maRefs.forEach((maRef: ElementRef) => {
     this.valuegt.push(
       document.getElementById(maRef.nativeElement.id)["id"],
@@ -184,4 +193,24 @@ export class ReviewspComponent implements OnInit {
   );
   }
   
+  loadctsp(id: number) {  
+    this.sanphamService.getctsp(id).subscribe((res: sp[] | null) => {
+    this.arrsp = (res) ? res : [];
+    console.log(res);
+    if(res[0].gioithieu.length==0 || res[0].gioithieu.length<0)
+    {
+      this.urls.push("");
+    }
+    for(let i=0;i<res[0].gioithieu.length;i++)
+    {
+      this.urls.push(res[0].gioithieu[i].hinhanh);
+      var s=res[0].gioithieu[i].mota;
+      this.addtext.push(res[0].gioithieu[i].mota);
+    }
+    this.isImageSaved=true;
+         
+   });
+   console.log(this.addtext)
+   
+  }
 }

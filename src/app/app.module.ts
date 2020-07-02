@@ -72,6 +72,7 @@ import { AppmainComponent } from './appmain/appmain.component';
 import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component';
 import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.component';
 import { ReviewspComponent } from './reviewsp/reviewsp.component';
+import { extendPrototype } from 'localforage-startswith';
 
 @NgModule({
   declarations: [

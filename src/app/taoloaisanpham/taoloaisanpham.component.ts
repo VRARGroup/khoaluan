@@ -53,6 +53,7 @@ export class TaoloaisanphamComponent implements OnInit {
       this.ktthaotacdelete=true;
       this.ktthaotacsave=false;
       this.loaddetaillsp(this.idlsp);
+      
     }
     else
     {
@@ -78,7 +79,7 @@ export class TaoloaisanphamComponent implements OnInit {
          this.ktnullthuonghieu=0;
       }
       });
-
+      
       this.maRefs.forEach((maRef: ElementRef) => 
       {
       if(document.getElementById(maRef.nativeElement.id)["value"]!=="")
@@ -94,23 +95,43 @@ export class TaoloaisanphamComponent implements OnInit {
       {
         if(this.ktnulldactrung==1)
         {
-         
-            console.log("count",this.maRefs.length);
-            
-            this.maRefs.forEach((maRef: ElementRef) => this.dactrung.push(document.getElementById(maRef.nativeElement.id)["value"]));
-            this.monluns.forEach((monlun: ElementRef) => this.thieu.push(document.getElementById(monlun.nativeElement.id)["value"]));
-            this.tieuchigs.forEach((tieuchig: ElementRef) => this.tieuchidanhgia.push(document.getElementById(tieuchig.nativeElement.id)["value"]));
-            const lsp=new lsanpham(
-              200,
-              document.getElementById('tensp')["value"],
-              this.thieu,
-              this.dactrung,
-              this.tieuchidanhgia
-            );
-            console.log(this.dactrung);
-            console.log(lsp);
-            this.Createlsp(lsp);
-            this.reset();
+            if(this.ktthaotacdelete==false)
+            {
+              console.log("count",this.maRefs.length);           
+              this.maRefs.forEach((maRef: ElementRef) => this.dactrung.push(document.getElementById(maRef.nativeElement.id)["value"]));
+              this.monluns.forEach((monlun: ElementRef) => this.thieu.push(document.getElementById(monlun.nativeElement.id)["value"]));
+              this.tieuchigs.forEach((tieuchig: ElementRef) => this.tieuchidanhgia.push(document.getElementById(tieuchig.nativeElement.id)["value"]));
+              const lsp=new lsanpham(
+                200,
+                document.getElementById('tensp')["value"],
+                this.thieu,
+                this.dactrung,
+                this.tieuchidanhgia
+              );
+              console.log(this.dactrung);
+              console.log(lsp);
+              this.Createlsp(lsp);
+              this.reset();
+            }
+            else
+            {
+              console.log("count",this.maRefs.length);           
+              this.maRefs.forEach((maRef: ElementRef) => this.dactrung.push(document.getElementById(maRef.nativeElement.id)["value"]));
+              this.monluns.forEach((monlun: ElementRef) => this.thieu.push(document.getElementById(monlun.nativeElement.id)["value"]));
+              this.tieuchigs.forEach((tieuchig: ElementRef) => this.tieuchidanhgia.push(document.getElementById(tieuchig.nativeElement.id)["value"]));
+              const lsp=new lsanpham(
+                this.idlsp,
+                document.getElementById('tensp')["value"],
+                this.thieu,
+                this.dactrung,
+                this.tieuchidanhgia
+              );
+              console.log(this.dactrung);
+              console.log(lsp);
+              this.Updatelsp(lsp);
+              this.reset();
+              this.ktthaotacdelete=false;
+            }
          
         }
         else
@@ -133,14 +154,22 @@ export class TaoloaisanphamComponent implements OnInit {
 
   reset()
   {
+    console.log("t",this.allth);
+    console.log("t",this.alltcdg);
+    console.log("t",this.alldt);
     document.getElementById('tensp')["value"]="";
     if(this.allth.length > 1)
     {
-      const i=0;
-      while(i<this.allth.length)
+      for(let i=0;i<this.thieu.length;i++)
       {
-        this.allth.splice(0, 1);
+        document.getElementById('inputth'+i)["value"]="";
+        this.thieu.splice(0, 1);
       }
+      if(this.allth.length>0)
+      {
+        document.getElementById('inputth0')["value"]="";
+      }
+      
     }
     else
     {
@@ -148,19 +177,32 @@ export class TaoloaisanphamComponent implements OnInit {
       {
         this.inputth='inputth'+0;
         document.getElementById(this.inputth)["value"]="";
+        const i=1;
+        while(i<this.allth.length)
+        {
+          this.allth.splice(0, 1);
+          this.allth.length--;
+        }
       }
       else
       {
         this.inputth='inputth'+this.allth.length;
         document.getElementById(this.inputth)["value"]="";
+        this.allth.splice(0, 1);
       }
     }
     if(this.alldt.length > 1)
     {
-      const i=0;
-      while(i<this.alldt.length)
+     
+      for(let i=0;i<this.alldt.length;i++)
       {
         this.alldt.splice(0, 1);
+        document.getElementById('input'+i)["value"]="";
+      }
+     
+      if(this.alldt.length>0)
+      {
+        document.getElementById('input0')["value"]="";
       }
     }
     else
@@ -171,7 +213,11 @@ export class TaoloaisanphamComponent implements OnInit {
         document.getElementById(this.input)["value"]="";
         this.text='text'+0;
         document.getElementById(this.text)["value"]="";
-        
+        const i=1;
+        while(i<this.alldt.length)
+        {
+          this.alldt.splice(0, 1);
+        }
       }
       else
       {
@@ -179,15 +225,22 @@ export class TaoloaisanphamComponent implements OnInit {
         document.getElementById(this.input)["value"]="";
         this.text='text'+this.alldt.length;
         document.getElementById(this.text)["value"]="";
+        this.alldt.splice(0, 1);
       }
     }
     if(this.alltcdg.length > 1)
     {
-      const i=0;
-      while(i<this.alltcdg.length)
+      for(let i=0;i<this.alltcdg.length;i++)
       {
         this.alltcdg.splice(0, 1);
+        document.getElementById('inputtcdg'+i)["value"]="";
       }
+      if(this.alltcdg.length>0)
+      {
+        document.getElementById('inputtcdg0')["value"]="";
+        document.getElementById('text0')["value"]="";
+      }
+     
     }
     else
     {
@@ -195,15 +248,31 @@ export class TaoloaisanphamComponent implements OnInit {
       {
         this.input='inputtcdg'+0;
         document.getElementById(this.input)["value"]="";
+        const i=1;
+        while(i<this.alltcdg.length)
+        {
+          this.alltcdg.splice(0, 1);
+          this.alltcdg.length--;
+        }
         
       }
       else
       {
         this.input='inputtcdg'+this.alltcdg.length;
         document.getElementById(this.input)["value"]="";
+        this.alltcdg.splice(0, 1);
       }
     }
     this.num=0;
+    this.dactrung=[];
+    this.thieu=[];
+    this.tieuchidanhgia=[]
+    console.log(this.allth);
+    console.log(this.alltcdg);
+    console.log(this.alldt);
+    console.log(this.thieu);
+    console.log(this.dactrung);
+    console.log(this.tieuchidanhgia);
   }
 
   Add(){
@@ -213,9 +282,38 @@ export class TaoloaisanphamComponent implements OnInit {
     this.alldt.push("");console.log(this.alldt)
   }
 
-  Remove(index:{ id: number; }){
-    console.log(index);
-    this.alldt.splice(this.alldt.indexOf(index),1);
+  Remove(id: number){
+    console.log(id);
+    for(let i=id; i<this.alldt.length; i++)
+    {
+      if(i<this.alldt.length-1)
+      {
+        let j=i+1;
+        document.getElementById("text"+i)["value"]=document.getElementById("text"+j)["value"];
+      }
+    }
+    this.xoamanginput(this.alldt,"input",id);
+   
+  }
+
+  xoamanginput(arr:Array<any>,idinput:string, id: number)
+  {
+    if(this.idlsp==0)
+    {
+      if(id<arr.length-1)
+      {
+        for(let i=id; i<arr.length; i++)
+        {
+          if(i<arr.length-1)
+          {
+            let j=i+1;
+            document.getElementById(idinput+i)["value"]=document.getElementById(idinput+j)["value"];
+          }
+        }
+      }
+    }
+    arr.splice(id,1);
+    
   }
 
   Addth(){
@@ -225,21 +323,18 @@ export class TaoloaisanphamComponent implements OnInit {
     this.allth.push("");console.log(this.allth)
   }
 
-  Removeth(index:{ id: number; }){
-    console.log(index);
-    this.allth.splice(this.allth.indexOf(index),1);
+  Removeth(id: number){
+    console.log(id);
+    this.xoamanginput(this.allth,"inputth",id);
   }
 
   Addtcdg(){
-    // this.num ++;
-    // this.numspth.push({id:this.num});
-    // console.log(this.numspth)
     this.alltcdg.push("");console.log(this.alltcdg)
   }
 
-  Removetcdg(index:{ id: number; }){
-    console.log(index);
-    this.alltcdg.splice(this.alltcdg.indexOf(index),1);
+  Removetcdg(id: number){
+    console.log(id);
+    this.xoamanginput(this.alltcdg,"inputtcdg",id);
   }
 
   // Addctdactrung(i:number){
@@ -275,6 +370,15 @@ export class TaoloaisanphamComponent implements OnInit {
       });
     }
   }
+
+  Updatelsp(lsp: lsanpham){
+		this.LoaisanphamService.updatelsp(lsp).subscribe(
+        	() => {
+          		this.massage = 'Lưu thành công';
+              alert(this.massage);
+        	}
+      );
+  }
   
   loaddetaillsp(i: number) {  
       this.LoaisanphamService.getdetaillsp(i).subscribe((res: lsanpham[] | null) => {
@@ -283,9 +387,12 @@ export class TaoloaisanphamComponent implements OnInit {
       this.allth=res[0].thuonghieu;
       this.tenloaisp=res[0].tendanhmuc;
       this.alldt=res[0].dactrung;
-      if(res[0].dactrung.length>0)
+      if(res[0].tieuchidanhgia!=null)
       {
-        this.alltcdg=res[0].tieuchidanhgia;
+        for(let i=0;i<res[0].tieuchidanhgia.toString().split(",").length-1;i++)
+        {
+          this.alltcdg.push(res[0].tieuchidanhgia[i]);
+        }
       }
       console.log("th",this.allth);
       console.log(res);
@@ -361,6 +468,14 @@ export class TaoloaisanphamComponent implements OnInit {
     else
     {
       return false;
+    }
+  }
+
+  kiemtravaluenull(s:string)
+  {
+    if(s==null||s!=null)
+    {
+      return true;
     }
   }
   

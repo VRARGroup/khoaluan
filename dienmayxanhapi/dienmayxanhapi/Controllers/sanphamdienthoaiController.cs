@@ -290,7 +290,7 @@ namespace dienmayxanhapi.Controllers
         document.Add("gioithieu", arraygioithieu);
         if (spdt.hinhdaidien == null)
         {
-          document.Add("hinhdaidien", "null");
+          document.Add("hinhdaidien", "");
         }
         else
         {
@@ -394,6 +394,101 @@ namespace dienmayxanhapi.Controllers
           );
       _spdtService.Update(filter, update);
       return NoContent();
+    }
+
+    [Route("updatesp")]
+    [HttpPut]
+    public IActionResult updatesp(int _id, sanphamdienthoai spdt)
+    {
+      try
+      {
+        var filter = Builders<sanphamdienthoai>.Filter.Eq("_id", _id);
+        BsonArray arraygt = new BsonArray();
+        if(spdt.gioithieu!=null)
+        { 
+        for (int i = 0; i < spdt.gioithieu.Count; i++)
+        {
+          var hinh = new BsonDocument().
+                 Add("hinhanh", spdt.gioithieu[i].hinhanh.ToString()).
+                 Add("mota", spdt.gioithieu[i].mota.ToString());
+          arraygt.AsBsonArray.Add(BsonValue.Create(hinh));
+        }
+        }
+        BsonArray arrayhinh = new BsonArray();
+        for (int i = 0; i < spdt.hinh.Count; i++)
+        {
+          var hinh = new BsonDocument().
+                 Add("hinhanh", spdt.hinh[i].hinhanh.ToString()).
+                 Add("mota", spdt.hinh[i].mota.ToString());
+          arrayhinh.AsBsonArray.Add(BsonValue.Create(hinh));
+        }
+        var documentthngsokythuatnd = new BsonDocument { };
+        var keytskt = new BsonDocument { };
+
+        BsonArray arraythongsokythuat = new BsonArray();
+        BsonArray arrayndthongsokythuat = new BsonArray();
+        for (int i = 0; i < spdt.thongsokythuat.Count; i = i + 2)
+        {
+          if (i < spdt.thongsokythuat.Count - 2)
+          {
+            string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+            string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split(',');
+            if (keynamef[0] == keynames[0])
+            {
+
+              documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+              arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+              documentthngsokythuatnd = new BsonDocument { };
+            }
+            else
+            {
+              documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+              arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+              documentthngsokythuatnd = new BsonDocument { };
+
+              keytskt.Add(keynamef[0], arrayndthongsokythuat);
+              arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
+              arrayndthongsokythuat = new BsonArray { };
+              keytskt = new BsonDocument { };
+            }
+          }
+          else
+          {
+            if (i == spdt.thongsokythuat.Count - 2)
+            {
+              arrayndthongsokythuat = new BsonArray { };
+              string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+              documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
+              arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
+              documentthngsokythuatnd = new BsonDocument { };
+
+              keytskt.Add(keynamef[0], arrayndthongsokythuat);
+              arraythongsokythuat.AsBsonArray.Add(BsonValue.Create(keytskt));
+              arrayndthongsokythuat = new BsonArray { };
+              keytskt = new BsonDocument { };
+            }
+          }
+        }
+        var update = Builders<sanphamdienthoai>.Update.Combine(
+                     Builders<sanphamdienthoai>.Update.Set("ten", spdt.ten),
+                     Builders<sanphamdienthoai>.Update.Set("thuonghieu", spdt.thuonghieu),
+                     Builders<sanphamdienthoai>.Update.Set("hinh", arrayhinh),
+                     Builders<sanphamdienthoai>.Update.Set("dacdiemnoibat", spdt.dacdiemnoibat),
+                     Builders<sanphamdienthoai>.Update.Set("giaban", spdt.giaban),
+                     Builders<sanphamdienthoai>.Update.Set("giamgia", spdt.giamgia),
+                     Builders<sanphamdienthoai>.Update.Set("sosao", spdt.sosao),
+                     Builders<sanphamdienthoai>.Update.Set("gioithieu", arraygt),
+                     Builders<sanphamdienthoai>.Update.Set("hinhdaidien", spdt.hinhdaidien),
+                     Builders<sanphamdienthoai>.Update.Set("_id_loaisanpham", spdt._id_loaisanpham),
+                     Builders<sanphamdienthoai>.Update.Set("thongsokythuat", arraythongsokythuat)
+        );
+        _spdtService.Update(filter, update);
+        return NoContent();
+      }
+      catch(Exception e)
+      {
+        throw;
+      }
     }
   }
 }

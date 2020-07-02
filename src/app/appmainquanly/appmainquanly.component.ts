@@ -10,8 +10,7 @@ import { sp } from '../model/sanpham';
 import { hinh } from '../model/sanpham';
 import { Subscription } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material';
-import * as _ from 'lodash';
-import { take } from 'rxjs/operators';
+
 @Component({
   selector: 'app-appmainquanly',
   templateUrl: './appmainquanly.component.html',

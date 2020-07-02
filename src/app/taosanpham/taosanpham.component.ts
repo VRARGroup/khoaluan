@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import { HttpEventType, HttpClient } from '@angular/common/http';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-taosanpham',
@@ -54,16 +55,16 @@ export class TaosanphamComponent implements OnInit {
   isImageSaveddd: boolean=false;
   ktsavedhinhsanpham: boolean=true;
   ktthaotacdelete:boolean=true;
-  ktthaotacsave:boolean=true;
   khoa:string="";
   imagebase64: string;
   nameimage: string[]=[];
   nameimagedd: string;
   hinhdaidiensanpham:string;
   public progress: number;
-  serverPath: string="";
+  serverPath: String="";
   alldacdiemnoibat:Array<any>=[];
   valuedacdiem:string="";
+  gtsp: Array<any>=[];
   @Output() public onUploadFinished = new EventEmitter();
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>
   @ViewChildren('keyname') keynames: QueryList<ElementRef>
@@ -71,19 +72,17 @@ export class TaosanphamComponent implements OnInit {
  
   	
 
-  constructor(private http: HttpClient,private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private saveimgfolderService: SaveimgfolderService) { }
+  constructor(private location: Location, private http: HttpClient,private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private saveimgfolderService: SaveimgfolderService) { }
 
   ngOnInit() {
   
     this.loadlsp(); 
-    
     this.idlsp = parseInt(window.localStorage.getItem("editspid"));
     if(!isNaN(this.idlsp))
     {
       this.loadctsp(this.idlsp);
-
       this.ktthaotacdelete=true;
-      this.ktthaotacsave=false;
+      console.log(this.urls);
     }
     else
     {
@@ -121,6 +120,8 @@ export class TaosanphamComponent implements OnInit {
     this.giamgia=res[0].giamgia;
     this.dacdiemnoibat=res[0].dacdiemnoibat;
     var sa=this.dacdiemnoibat.split(",");
+    this.gtsp.push(res[0].gioithieu);
+    console.log("lenghtgt", this.gtsp)
     for(let i=0;i<sa.length;i++)
     {
       this.alldacdiemnoibat.push(sa[i]);
@@ -153,6 +154,7 @@ export class TaosanphamComponent implements OnInit {
 	}
 
 	onSubmit() {
+    this.maRefs.forEach((maRef: ElementRef) => (console.log(document.getElementById(maRef.nativeElement.id)["name"])));
     this.getvalueimagedd();
     for(let i=0;i<this.urls.length;i++)
     {
@@ -164,23 +166,41 @@ export class TaosanphamComponent implements OnInit {
       this.valuedacdiem= document.getElementById("dacdiem0")["value"];
       for(let i=1;i<this.alldacdiemnoibat.length;i++)
       {
-        this.valuedacdiem=this.valuedacdiem+","+document.getElementById("dacdiem"+i)["value"];
+        this.valuedacdiem=this.valuedacdiem+"."+document.getElementById("dacdiem"+i)["value"];
       }
       console.log("dd",this.valuedacdiem);
     }
     if(document.getElementById('tensp')["value"]!=="" && this.selectedthuonghieu1!=="" && document.getElementById('giasanpham')["value"]!=="" && document.getElementById('giamgia')["value"]!=="")
     {
-      this.maRefs.forEach((maRef: ElementRef) => {
-      if(document.getElementById(maRef.nativeElement.id)["value"]==="")
+      if(this.idlsp==null || isNaN(this.idlsp))
       {
-        this.ktnull=1;
+        this.maRefs.forEach((maRef: ElementRef) => {
+        if(document.getElementById(maRef.nativeElement.id)["value"]==="")
+        {
+          for(let i=0;i<this.valueidinput.length;i++)
+          {
+            if(maRef.nativeElement.id==this.valueidinput[i])
+            {
+              this.ktnull=null;
+            }
+            else
+            {
+              this.ktnull=1;
+            }
+          }
+          
+        }
+        else
+        {
+          this.ktnull=null;
+        }
+        });
       }
       else
       {
-        this.ktnull=0;
+        this.ktnull=null;
       }
-      });
-      if(this.ktnull==0)
+      if(this.ktnull==null)
       {
     		console.log("count",this.maRefs.length);
 
@@ -196,25 +216,52 @@ export class TaosanphamComponent implements OnInit {
         }
         
         console.log("hinh:",this.hinhtsp);
-    		const tsp = new sp( 
-        	200,
-        	document.getElementById('tensp')["value"],
-        	this.selectedthuonghieu1,
-          this.hinhtsp,
-        	this.valuedacdiem,
-        	parseInt(document.getElementById('giasanpham')["value"]),
-        	giamgiasanpham,
-          0,
-          null,
-          this.hinhdaidiensanpham,
-        	this.selected,
-        	this.tskt,
-        );
-        	console.log("dskt",this.tskt);
-          console.log("dskt",this.tsktname);
-          console.log(tsp);
-          this.Createsp(tsp);
-          this.reset();
+        if(this.idlsp==null || isNaN(this.idlsp))
+        {
+          const tsp = new sp( 
+            200,
+            document.getElementById('tensp')["value"],
+            this.selectedthuonghieu1,
+            this.hinhtsp,
+            this.valuedacdiem,
+            parseInt(document.getElementById('giasanpham')["value"]),
+            giamgiasanpham,
+            0,
+            null,
+            this.hinhdaidiensanpham,
+            this.selected,
+            this.tskt,
+          );
+            console.log("dskt",this.tskt);
+            console.log("dskt",this.tsktname);
+            console.log(tsp);
+            this.Createsp(tsp);
+            this.reset();
+        }
+        else
+        {
+          const tsp = new sp( 
+            this.idlsp,
+            document.getElementById('tensp')["value"],
+            this.selectedthuonghieu1,
+            this.hinhtsp,
+            this.valuedacdiem,
+            parseInt(document.getElementById('giasanpham')["value"]),
+            giamgiasanpham,
+            0,
+            null,
+            this.hinhdaidiensanpham,
+            this.selected,
+            this.tskt,
+          );
+            console.log("dskt",this.tskt);
+            console.log("dskt",this.tsktname);
+            console.log(tsp);
+            this.Updatesp(tsp);
+            this.idlsp=null;
+            this.router.navigate(['appmainnv/appmainquanly']);
+
+        }
       }
       else
       {
@@ -278,33 +325,65 @@ export class TaosanphamComponent implements OnInit {
     this.selectedthuonghieu="";
     for(var i=0 ; i <= this.hinhtsp.length; i++)
     {
-      this.hinhtsp.splice(i, i+1);
+      this.hinhtsp.splice(0, 1);
     }
-    
-    document.getElementById('dacdiem')["value"]="";
+    this.hinhdaidiensanpham=null;
+    this.valuedacdiem=null;
+    for(let i=0;i<this.alldacdiemnoibat.length;i++)
+    {
+      this.alldacdiemnoibat.splice(0,1);
+    }
     document.getElementById('giasanpham')["value"]=""
     document.getElementById('giamgia')["value"]="";
     this.loaddetaillsp(this.selected);
     for(var i=0 ; i < this.tskt.length; i++)
     {
-      this.tskt.splice(i, i+1);
+      this.tskt.splice(0, 1);
     }
     this.i=0;
     this.Removeimgaehtml();
     this.Removeurlimagedd();
-
+    this.maRefs.forEach((maRef: ElementRef) => (document.getElementById(maRef.nativeElement.id)["value"]==""));
     console.log("hinh",this.hinhtsp);
     console.log(this.tskt);
+    console.log(this.alldacdiemnoibat);
   }
 
 	Createsp(tsp: sp){
-		this.sanphamService.createsp(tsp).subscribe(
-        	() => {
-          		this.massage = 'Lưu thành công';
-              alert(this.massage);
-        	}
-      );
-	}
+    try
+    {
+      this.sanphamService.createsp(tsp).subscribe(
+            () => {
+                this.massage = 'Lưu thành công';
+                alert(this.massage);
+            }
+        );
+    }
+    catch
+    {
+      alert("Error");
+      this.router.navigate(['appmainnv/appmainquanly']);
+    }
+  }
+
+  Updatesp(tsp: sp){
+    try
+    {
+      this.sanphamService.updatesp(tsp).subscribe(
+            () => {
+                this.massage = 'Lưu thành công';
+                alert(this.massage);
+            }
+        );
+    }
+    catch
+    {
+      alert("Error");
+      this.router.navigate(['appmainnv/appmainquanly']);
+    }
+  }
+  
+
 
   //   onSelectFile(event) {
   //   if (event.target.files && event.target.files[0]) {
@@ -363,9 +442,19 @@ export class TaosanphamComponent implements OnInit {
         console.log(this.numsp)
       }
 
-      Remove(index:{ id: number; }){
-        console.log(index);
+      Remove(index:{ id: number; },id:number){
+        console.log("s",id);
+        console.log("s",this.urls.length);
         this.urls.splice(this.urls.indexOf(index),1);
+        for(let i=id;i<this.urls.length;i++)
+        {
+          if(i<this.urls.length-1)
+          {
+            const j=i+1
+            document.getElementById('inputmt'+i)["value"]=document.getElementById("inputmt"+j)["value"];
+          }
+          
+        }
         console.log("xoa",this.urls);
       }
 
@@ -377,6 +466,7 @@ export class TaosanphamComponent implements OnInit {
 
 
       Removeimgaehtml(){
+        
         for(var i=0 ; i <= this.urls.length; i++)
         {
           this.urls.splice(i, 1);
@@ -393,21 +483,43 @@ export class TaosanphamComponent implements OnInit {
           var tendd=this.nameimagedd.replace("C:\\fakepath\\","");
           this.hinhdaidiensanpham="https://localhost:44309/Resources/Images/"+tendd.toString();
         }
+        else
+        {
+          if(this.idlsp!=null && !isNaN(this.idlsp))
+          {
+            this.hinhdaidiensanpham=document.getElementById("hinhdaidien")["src"];
+          }
+        }
       }
 
+      kthttp:string="https://";
       getvalue(v: number)
       {
         this.idinput="inputmt"+v;
         this.idbuton="btn"+v;
         this.inputmts.forEach((inputmt: ElementRef) => console.log(inputmt.nativeElement.id,document.getElementById(inputmt.nativeElement.id)["value"]));
         console.log("id",this.idinput);
-        const hinhsp=new hinh(
-          "https://localhost:44309/Resources/Images/"+this.urls[v],
-          document.getElementById(this.idinput)["value"]
-        );
-        this.hinhtsp.push(hinhsp);
-        (document.getElementById(this.idinput) as HTMLInputElement).disabled = true;
-        this.ktsavedhinhsanpham=true;
+        this.kthttp=this.urls[v];
+        if(this.kthttp.startsWith("https://")==false)
+        {
+          const hinhsp=new hinh(
+            "https://localhost:44309/Resources/Images/"+this.urls[v],
+            document.getElementById(this.idinput)["value"]
+          );
+          this.hinhtsp.push(hinhsp);
+          (document.getElementById(this.idinput) as HTMLInputElement).disabled = true;
+          this.ktsavedhinhsanpham=true;
+        }
+        else
+        {
+          const hinhsp=new hinh(
+            this.urls[v],
+            document.getElementById(this.idinput)["value"]
+          );
+          this.hinhtsp.push(hinhsp);
+          (document.getElementById(this.idinput) as HTMLInputElement).disabled = true;
+          this.ktsavedhinhsanpham=true;
+        }
       }
 
       Deletesp(){
@@ -415,16 +527,19 @@ export class TaosanphamComponent implements OnInit {
             this.sanphamService.deletesp(this.idlsp).subscribe(() => {
             this.massage = 'Xóa thành công';
             alert(this.massage);
-            this.router.navigate(['appmainnv/appmainquanly']);
+            this.location.back();
           });
         }
+        this.idlsp=null;
       }
 
-      kiemtrakey(key: string)
+      valueidinput:Array<string>=[];
+      kiemtrakey(key: string, l:number, k:number)
       {
         
-        if(key=="Thẻ nhớ ngoài")
+        if(key=="Thẻ nhớ ngoài" || key=="HOT")
         {
+          this.valueidinput.push("input"+l.toString()+k.toString());
           return false;
         }
         else
@@ -484,20 +599,37 @@ export class TaosanphamComponent implements OnInit {
          
       }
 
-      public createImgPath = (s:string) => {
-        if(s==undefined)
+      createImgPath = (s:string) => {
+        
+        if(s===undefined)
         {
           this.serverPath="https://localhost:44309/Resources/Images/"+this.serverPath;
         }
+        if(s=="")
+        { 
+          this.serverPath="./assets/upanh.png";
+        }
         else
         {
-          if(!isNaN(this.idlsp))
+          
+          if(this.idlsp!=null)
           {
-            this.serverPath=s;
+            var s1=s.toString().startsWith("https://");
+            if(s1==true)
+            {
+              this.serverPath=s;
+            }
+            else
+            {
+              this.serverPath="https://localhost:44309/Resources/Images/"+s;
+            }
           }
           else
           {
-            this.serverPath="https://localhost:44309/Resources/Images/"+s;
+            if(s!=null)
+            {
+              this.serverPath="https://localhost:44309/Resources/Images/"+s;
+            }
           }
         }
         
@@ -509,4 +641,27 @@ export class TaosanphamComponent implements OnInit {
         this.alldacdiemnoibat.push("");
         console.log(this.alldacdiemnoibat);
       }
+
+      removedacdiemnoibat(id:number)
+      {
+        if(id<this.alldacdiemnoibat.length-1)
+        {
+          for(let i=id; i<this.alldacdiemnoibat.length; i++)
+          {
+            if(i<this.alldacdiemnoibat.length-1)
+            {
+              let j=i+1;
+              document.getElementById("dacdiem"+i)["value"]=document.getElementById("dacdiem"+j)["value"]
+            }
+          }
+        }
+        this.alldacdiemnoibat.splice(id,1);
+      }
+
+      review(): void {
+        window.localStorage.removeItem("editspid");
+        window.localStorage.setItem("editspid", this.idlsp.toString());
+        console.log(this.idlsp.toString());
+        this.router.navigate(['appmainnv/reviewsp']);
+      };
 }

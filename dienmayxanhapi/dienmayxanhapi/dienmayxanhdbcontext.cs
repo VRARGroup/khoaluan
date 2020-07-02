@@ -127,6 +127,13 @@ namespace dienmayxanhapi
           return dl;
      
         }
+
+        public List<loaisanpham> Updatelsp(FilterDefinition<loaisanpham> filter, UpdateDefinition<loaisanpham> update)
+        {
+          collectionlsp.UpdateOne(filter, update);
+          var dl = collectionlsp.Find(x => true).ToList();
+          return dl;
+        }
   }
 
 

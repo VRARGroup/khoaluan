@@ -28,14 +28,14 @@
             <div class="d-flex justify-content-start"><button class="buttonpanel"><i class="fas fa-times-circle fa-2x" (click)="Removeaddtext(i)"></i></button></div>
             <div class="editpanel"><b>NỘI DUNG {{i}}</b></div>
             <div class="edittext">
-                <textarea id="text{{i}}" class="editor" #maRef></textarea>
+                <textarea id="text{{i}}" value="{{item}}" class="editor" #maRef></textarea>
             </div>
             <label style="margin-left: 80px;">Hình ảnh: </label>
             <div class="container">
             <div class="custom-file" >
                 <ng-container>
                     <div class="img-space">
-                        <ng-container *ngIf="isImageSaved">
+                        <ng-container>
                             <img [src]="createImgPath(urls[i])" height="200" #maRef id="img{{i}}"> <br/>
                         </ng-container>
                 
@@ -49,6 +49,7 @@
             <br> 
 
         </div>
+        <br><br>
         </div>
         <div>
             <div class="d-flex justify-content-md-end"><button class="button"><i class="fas fa-plus-circle fa-1x" (click)="Addtextnd()"></i></button></div>

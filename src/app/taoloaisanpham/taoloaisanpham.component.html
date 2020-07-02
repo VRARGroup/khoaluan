@@ -22,22 +22,23 @@
         <br>  <br>
         <label>Hình ảnh: </label> -->
         <div>
-        <label class="valuend">Thương hiệu: </label>  <i class="fas fa-plus" (click)=Addth()></i>
+        <label class="valuend">Thương hiệu: </label> 
         <div id="field-wrapper" *ngFor="let item of allth,let i=index">
             <div class="titlediv">
                 <label>Tên thương hiệu {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
-                <input id="inputth{{i}}" class="value1" value={{item}} type="text" #monlun><i class="fas fa-minus" (click)=Removeth(item)></i>
+                <input id="inputth{{i}}" class="value1" value={{item}} type="text" #monlun><i class="fas fa-minus" (click)=Removeth(i)></i>
                 <br>
             </div>
         </div>
+        <i class="fas fa-plus" (click)=Addth()></i>
         <br>  <br>
         </div>
         <div>
-        <label class="valuend">Đặc trưng: </label>  <i class="fas fa-plus" (click)=Add()></i>
+        <label class="valuend">Đặc trưng: </label>  
         <div id="field-wrapper" *ngFor="let item of alldt,let i=index">
             <div class="titlediv">
                 <label>Tên đăc trưng {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
-                <input id="input{{i}}" value={{keys(item)}} class="value1" type="text" #maRef><i class="fas fa-minus" (click)=Remove(item)></i>
+                <input id="input{{i}}" value={{keys(item)}} class="value1" type="text" #maRef><i class="fas fa-minus" (click)=Remove(i)></i>
                 <br>
                 <label>Danh sách đăc trưng {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
                 <br>
@@ -70,23 +71,28 @@
                 <br>
             </div>
         </div>
+        
         <br>  <br>
         </div>
+        <i class="fas fa-plus" (click)=Add()></i>
         <br>  <br>
         <div>
-            <label class="valuend">Tiêu chí đánh giá: </label>  <i class="fas fa-plus" (click)=Addtcdg()></i>
+            <label class="valuend">Tiêu chí đánh giá: </label>  
             <div id="field-wrapper" *ngFor="let item of alltcdg,let i=index">
                 <div class="titlediv">
                     <label>Tiêu chí đánh giá {{i+1}} :</label>
-                    <input id="inputtcdg{{i}}" class="value1" value={{item}} type="text" #tieuchig><i class="fas fa-minus" (click)=Removetcdg(item)></i>
+                    <input id="inputtcdg{{i}}" class="value1" value="{{item}}" type="text" #tieuchig><i class="fas fa-minus" (click)=Removetcdg(i)></i>
                     <br>
                 </div>
             </div>
+            
             <br>  <br>
         </div>
+        <i class="fas fa-plus" (click)=Addtcdg()></i>
+        
     </div>
     <div class="container d-flex justify-content-center">
-        <button *ngIf="ktthaotacsave" class="btn btn-primary" type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
+        <button class="btn btn-primary" type="button" id="save_sanpham" (click)="onSubmit()">Save</button>
         <button *ngIf="ktthaotacdelete"  class="btn btn-primary" type="button" id="save_sanpham" (click)="Deletelsp()">Delete</button>
         <button type="button" class="btn btn-warning" id="clear_sanpham" (click)="reset()">Clear</button>
     </div>
