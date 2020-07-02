@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-<div style="background-color: #EEEEEE; height:10px;">
+<div style="background-color: #f3f3f3; height:10px;">
 </div>
-<div  style="width:min-content; background-color: #EEEEEE; ">
+<div  style="width:min-content; background-color: #f3f3f3; ">
   <div class="header-home">
     <aside class="homeright">
       <figure>
@@ -96,14 +90,16 @@
     <p></p>
     <div class="gallery" data-flickity-options='{ "wrapAround": true }'>
       <div style="display: inline-flex; vertical-align: top;" *ngFor="let item of allhotsp">
-        <div class="gallery-cell">
-          <label class="tra-gop"> Trả góp 0% </label>
-          <div class="box-image"><img src="{{item.hinhdaidien}}"></div>
-          <p class="name-hot-month">{{item.ten}}</p>
-          <p class="price-hot-month">{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
-          <p class="price-sale-hot-month">Giảm {{item.giamgia| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
-          <div class="star">{{item.sosao}}/5<i class="fa fa-star" aria-hidden="true"></i></div>
-        </div>
+        <a (click)="render_sp(item._id)">
+          <div class="gallery-cell">
+            <label class="tra-gop"> Trả góp 0% </label>
+            <div class="box-image"><img src="{{item.hinhdaidien}}"></div>
+            <p class="name-hot-month">{{item.ten}}</p>
+            <p class="price-hot-month">{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+            <p class="price-sale-hot-month">Giảm {{item.giamgia| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
+            <div class="star">{{item.sosao}}/5<i class="fa fa-star" aria-hidden="true"></i></div>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -117,7 +113,7 @@
         <td><button>Laptop</button></td>
         <td><button (click)="loadkmhotsp(20000)">Tivi</button></td>
         <td><button (click)="loadkmhotsp(60000)">Loa</button></td>
-        <td><button>Tủ lạnh</button></td>
+        <td><button (click)="loadkmhotsp(30000)">Tủ lạnh</button></td>
         <td><button>Tủ đông</button></td>
         <td style="width:9% !important"><button (click)="loadkmhotsp(40000)">Máy giặt</button></td>
         <td style="width:11% !important"><button>Máy lọc nước</button></td>
@@ -126,11 +122,13 @@
     <table class="table-sp-km-hot"style="width:100%;">
         <td class="td-sp-km-hot" *ngFor="let sanpham of sanphams">
           <div style="width: 100%;height: 100%;">
-            <div class="box-image-hot"><img src="{{sanpham.hinhdaidien}}"></div>
-            <p class="name-product">{{sanpham.ten}}<span></span></p>
-            <p class="price-km-hot-month">{{sanpham.giaban| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
-            <p class="price-sale-km-hot-month">Giảm {{sanpham.giamgia| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
-            <div class="star-hot">{{sanpham.sosao}}/5<i class="fa fa-star" aria-hidden="true"></i></div>
+            <a (click)="render_sp(sanpham._id)">
+              <div class="box-image-hot"><img src="{{sanpham.hinhdaidien}}"></div>
+              <p class="name-product">{{sanpham.ten}}<span></span></p>
+              <p class="price-km-hot-month">{{sanpham.giaban| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
+              <p class="price-sale-km-hot-month">Giảm {{sanpham.giamgia| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
+              <div class="star-hot">{{sanpham.sosao}}/5<i class="fa fa-star" aria-hidden="true"></i></div>
+            </a>
           </div>
         </td>
     </table>
@@ -191,4 +189,3 @@
     <img src="https://cdn.tgdd.vn/2019/12/banner/03-1200x140.jpg" style="width:100%; height:120px;">
   </div>
 </div>
-</body>

@@ -33,14 +33,18 @@
     border-left: 1px solid #ddd;
     width:100%;
     padding:0px;
-    display: block;
     margin-top:0px;
 }
 
 .dropdown-item{
     height:30px;
-    padding:0px;
+    width: 213px !important;
     margin-left: 8px;
+    margin-right: 8px;
+}
+
+.dropdown:hover .dropdown-menu{
+    display: inline-block;
 }
 
 .mainmenu{
@@ -125,7 +129,7 @@ nav li i {
     font-size: 14px;
     color: #333;
     width:100%;
-    float:center;
+    // float:center;
 
 }
 
@@ -147,7 +151,7 @@ li.active>span {
 li>span{
     border-bottom: 1px solid #eee;
     padding: 5px 0 4px 0;
-    weight:10px;
+    // weight:10px;
 }
 
 .dropdown-item a:hover {
@@ -188,7 +192,7 @@ li .subcate {
     overflow: hidden;
     position: absolute;
     top: 0;
-    left: 211px;
+    left: 229px;
     height: 344px;
     background: #fff;
     padding: 10px;
@@ -274,4 +278,15 @@ td{
 
 .mnav{
     width: unset;
+}
+.dropdown-item img{
+    padding: 0px 6px;
+    position: absolute;
+}
+.dropdown-menu>li>span:after {
+    content: '›';
+    color:rgba(0, 0, 0, 0.212);
+    position: absolute;
+    margin-right: 2px;
+    right: 0;
 }

@@ -1,0 +1,252 @@
+<div class="breadcrumb"></div>
+<div id="product_details">
+   <div *ngFor="let item of items">
+        <div style="white-space: nowrap;width: 100%;  height: 1px;" >
+            <span style="float: left; font-size: 28px; padding-right: 10px; line-height: 14px;">{{item.ten}}</span>
+            <div style="float: left;" *ngFor='let i of arrayOne(item.sosao)'>
+                <i style="color: #fc9639; font-size:22px !important; margin-top: -20px;" class="fa fa-star" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="item.sosao!=0 && item.sosao!=null" >
+                <div style="float: left;" *ngFor='let i of arrayTwo(item.sosao)'>
+                    <i style="color: #41404062; font-size:22px !important; margin-top: -20px;" class="fa fa-star" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:30px !important;border-top: 1px solid rgba(0, 0, 0, 0.637); padding-top: 20px;" class="container">
+            <div class="">
+                <div class="row">
+                    <div class="col-4">
+                        <div style="text-align: center;">
+                            <img style="width: 100%;"src="{{item.hinhdaidien}}">
+                            <div class="wrapper-owl-carousel">
+                                <owl-carousel-o [options]="customOptions">
+                                    <ng-container *ngFor="let k of arrayOne(item.hinh.length); let i=index">
+                                    <ng-template class="slide" carouselSlide >
+                                        <div class="box-image"><img src="{{item.hinh[i].hinhanh}}">{{item.hinh[i].mota}}</div>
+                                    </ng-template>
+                                    </ng-container>
+                                </owl-carousel-o>  
+                            </div>
+                            <div  class="special-box">
+                                <div *ngIf="item.dacdiemnoibat.trim().length >= 1" class="special"><p> Đặc điểm nổi bật </p></div>
+                                <div id="info_dacdiemnoibat" style="height: 100px;display: block; overflow: hidden; line-height: 23px; padding-bottom: 12px;">
+                                    <ul *ngFor="let special of item.dacdiemnoibat.trim().split('.')">
+                                        <li *ngIf="special.trim().length >=1">{{special}}</li>
+                                    </ul>
+                                </div>
+                                <div id="more_info_dacdiemnoibat">
+                                    <a (click)="show_dacdiemnoibat_image()">Đọc thêm <i style=" font-size: 23px;" class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="price">
+                            <p>{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                        </div>
+                        <div *ngIf="item.giamgia!=0 && item.giamgia!=null" class="price-sale-title">Giảm giá cực sốc chỉ còn:</div>
+                        <div *ngIf="item.giamgia!=0 && item.giamgia!=null" class="price-sale">{{item.giaban-item.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</div>
+                        <div class="same-product">
+                            <ng-container *ngFor="let same_product of same_products">
+                                <div style="flex: 1; padding: 5px;">
+                                    <a (click)="render_sp(same_product._id)">
+                                        <div class="box-same-product">
+                                            <span>
+                                                <sub class="icondetail-check"></sub>
+                                                <label></label>
+                                            </span>
+                                            <p style="color: #bf081f;">{{same_product.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </ng-container>
+                        </div>
+                    
+                        <div class="buy">
+                            <p>Còn hàng</p>
+                            <button>
+                                Mua Ngay
+                                <br>
+                                <span style="font-style: 14px;">Giao hàng tận nơi, không mua không sao</span>
+                            </button>
+                        </div>
+                        <div class="buy-two">
+                            <button style="margin-right: 5px;" href="javascript:void(0)">
+                                Mua trả góp 0%
+                                <br>
+                                <span style="font-style: 14px;">Thủ tục online đơn giản</span>
+                            </button>
+                            <button style="margin-left: 5px;" >
+                                Trả góp 0% qua thẻ
+                                <br>
+                                <span style="font-style: 14px;">Visa, Master, JCB</span>
+                            </button>
+                        </div>
+                        <div style="border-top: 1px solid rgba(105, 104, 104, 0.253);padding:10px; margin-top: 20px;">
+                            Gọi đặt mua: <a style="color: blue; margin: 0px 5px;" href="tel:18001061"><i class="fa fa-phone" aria-hidden="true"></i>1800.1061</a> (7:30-22:00)
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="info">
+                            <h4>MUA NHƯ VUA - CHĂM SÓC NHƯ VIP</h4>
+                            <ul class="ul1">
+                                <li><i class="fa fa-cogs" aria-hidden="true"></i>Miễn phí công lắp đặt</li>
+                                <li><i class="fa fa-retweet" aria-hidden="true"></i>Lỗi là đổi mới trong 1 tháng tận nhà</li>
+                                <li><i class="fa fa-mobile" aria-hidden="true"></i>Đổi trả và bảo hành cực dễ chỉ cần số điện thoại</li>
+                                <li style="border: 0px;"><i class="fa fa-shield" aria-hidden="true"></i>Bảo hành chính hãng tivi 2 năm, có người đến lấy tận nhà</li>
+                            </ul>
+                            <ul class="ul2">
+                                <li><i class="fa fa-check" aria-hidden="true"></i>Thùng tivi có: Chân đế, Remote thông minh, Sách hướng dẫn</li>
+                                <li style="border: 0px;"><i class="fa fa-check" aria-hidden="true"></i>Bảo hành Remote 1 năm - Xem điểm bảo hành</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:30px !important;border-top: 1px solid rgba(105, 104, 104, 0.253); padding-top: 20px; height: 397px;">
+            <p style="font-size: 25px;">Tivi tương tự cùng phân khúc giá</p>
+            <div>
+                <div class="wrapper-owl-carousel">
+                    <owl-carousel-o [options]="customOptions_same">
+                        <ng-container *ngFor="let same_price of same_price_products">
+                        <ng-template class="slide" carouselSlide >
+                            <a (click)="render_sp(same_price._id)">
+                                <div class="box-image-same-price">
+                                    <div style="text-align: center; height: 257px; padding-top: 10px;"><label class="tra-gop"> Trả góp 0% </label><img src="{{same_price.hinhdaidien}}"></div>
+                                    <p style="padding: 2px 25px; min-height: 37px;">{{same_price.ten}}</p>
+                                    <p *ngIf="same_price.giamgia!=0 && same_price.giamgia!=null" style="color: #d0021b;">{{same_price.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                                    <p>{{same_price.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                                    <p style="color: #fc9639;" *ngIf="same_price.sosao !=0 && same_price.sosao !=null"> <i class="fa fa-star" aria-hidden="true"></i>{{same_price.sosao}}/5</p>
+                                </div>
+                            </a>
+                        </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>  
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:30px !important;border-top: 1px solid rgba(105, 104, 104, 0.253); padding-top: 20px; font-size: 20px;">
+            <div class="row">
+                <div class="col-8">
+                    <article id="article_image" style="height: 482.594px;display: block; overflow: hidden; line-height: 23px; padding-bottom: 12px;">
+                        <ng-container *ngFor="let k of item.gioithieu">
+                            <div style="width: 100%;">
+                                <p style="padding: 10px 0px;">{{k.mota}}</p>
+                                <img style="max-width: 799px;" src="{{k.hinhanh}}">
+                            </div>
+                        </ng-container>
+                    </article>
+                    <p id="more_info_gioithieu">
+                        <a (click)="show_article_image()">Đọc thêm <i style="color: rgb(255, 255, 255); font-size: 23px;" class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+                    </p>
+                </div>
+                <div class="col-4">
+                    <div class="thong-so-ky-thuat">
+                        <h2 style="font-size: 18px;">Thông số kỹ thuật</h2>
+                        <ul style="margin-top: 10px; list-style-type:none">
+                            <ng-container *ngFor="let k of item.thongsokythuat, let i=index">
+                                <ng-container *ngFor="let key of keys(k)">
+                                    <li>
+                                        <span style="font-weight: 600;" class="special-name">{{key}}</span>
+                                        <span class="non-special-name">: {{k[key][0][keys(k[key][0])]}}</span>
+                                    </li>
+                                </ng-container>
+                            </ng-container> 
+                        </ul>
+                        <p id="more_info_thongsokythuat">
+                            <a (click)="show_thongsokythuat(item.ten,item.thongsokythuat)">Xem chi tiết thông số kỹ thuật</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div style="margin-top:30px !important; border-top: 1px solid rgba(105, 104, 104, 0.253); padding-top: 20px; font-size: 20px;">
+                    <p> đánh giá {{item.ten}}</p>
+                    <div id="comment_1" class="row">
+                        <div style="font-size: 87px !important;color: #fc9639; padding: 49px 0 10px 15px; border-right: 1px solid rgba(22, 20, 20, 0.342);"class="col-3">
+                            {{item.sosao}}
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-6">
+                            <ul style="list-style-type:none">
+                                <li><a>5 sao</a><mat-progress-bar mode="determinate" value="40"></mat-progress-bar> <a> đánh giá</a></li>
+                                <li><a>4 sao</a><mat-progress-bar mode="determinate" value="30"></mat-progress-bar> <a> đánh giá</a></li>
+                                <li><a>3 sao</a><mat-progress-bar mode="determinate" value="20"></mat-progress-bar> <a> đánh giá</a></li>
+                                <li><a>2 sao</a><mat-progress-bar mode="determinate" value="10"></mat-progress-bar> <a> đánh giá</a></li>
+                                <li><a>1 sao</a><mat-progress-bar mode="determinate" value="0"></mat-progress-bar> <a> đánh giá</a></li>
+                            </ul>
+                        </div>
+                        <div style="margin-top: 30px;text-align: center;" id="show_hide_comment_1"class="col-3">
+                            <a (click)="show_hide_danhgiasosao()">
+                                <div id="show_hide_danhgiasosao" style="padding: 10px; border: 1px solid #288ad6; background: #288ad6; font-size: 13px; color: #fff;">
+                                    Đánh giá ngay
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12">
+                            <br>
+                            <h6 style="display: inline;">Chọn đánh giá của bạn</h6>
+                            <i class="fa fa-star" aria-hidden="true" id="star_1" (mouseover)="mouseover_star_1()"></i>
+                            <i class="fa fa-star" aria-hidden="true" id="star_2" (mouseover)="mouseover_star_2()"></i>
+                            <i class="fa fa-star" aria-hidden="true" id="star_3" (mouseover)="mouseover_star_3()"></i>
+                            <i class="fa fa-star" aria-hidden="true" id="star_4" (mouseover)="mouseover_star_4()"></i>
+                            <i class="fa fa-star" aria-hidden="true" id="star_5" (mouseover)="mouseover_star_5()"></i>
+                            <br>
+                            <br>
+                            <textarea (keyup)="textarea_text_change($event)" style="font-size: 16px; width: 100%; color: rgba(177, 174, 174, 0.664); padding: 5px;" id="textarea_danhgiasosao" cols="30" rows="10" placeholder="Nhập đánh giá về sản phẩm (Tối thiểu 80 ký tự). Quý khách có thể đánh giá về thiết kế, tính năng, sự tiện lợi, độ bền... của sản phẩm"></textarea>
+                            <div style="display: block; overflow: hidden; position: relative; color: rgba(79, 248, 130, 0.815); border: 0;background: #e4dadab2; width: 100%; height: 40px; padding: 6px; margin-top: -4px;margin-bottom: 14px;">
+                                <i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
+                                Đính kèm ảnh
+                                <p style="float: right; margin-top: 14px;">{{textarea_count}} /80 kí tự.</p>
+                            </div>
+                            <div class="custom-file" >
+                                <input type='file' id="uploadCaptureInputFile" (change)="onSelectFile($event)" multiple>
+                            </div>
+                            <div class="comment-1-input">
+                                <input placeholder="Họ tên(Bắc buộc)" type="text">
+                                <input style="margin: 0 8px; font-size: 14px;" placeholder="Số điện thoại (Bắt buộc)" type="number">
+                                <input placeholder="Email (Không bắt buộc)" type="text">
+                            </div>
+                            <a>
+                                <div style="border:1px solid #fff; background: #288ad6; border-radius: 6px; color: #fff; font-size: 14; padding: 15px 5px; margin: 20px auto; width: 46%; box-sizing: border-box; display: block; text-align: center; clear: both;">
+                                    GỬI ĐÁNH GIÁ NGAY
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="comment-2">
+                        <ng-container >
+                            <div style="float:left">
+                                <span style="font-weight: 500;"></span>
+                                <!-- <div *ngFor="let tieuchi of tieuchis">
+
+                                </div> -->
+                            </div>
+                            <div style="float:left">
+                                <div style="float: left;" *ngFor='let i of arrayOne(item.sosao)'>
+                                    <i style="color: #fc9639; font-size:22px !important; margin-top: -20px;" class="fa fa-star" aria-hidden="true"></i>
+                                </div>
+                                <p></p>
+                            </div>
+                            <div style="color: #999; margin: 5px 0 15px 0; display: block; clear: both;">
+                            <a>thảo luận</a>
+                            <span> • </span>
+                            <a>thích</a>
+                            </div>
+                        </ng-container>
+                        <p id="more_info_danhgia">
+                            <a (click)="show_danhgia()">Xem chi tiết đánh giá</a>
+                        </p>
+                    </div>
+                    <div class="comment-3">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
