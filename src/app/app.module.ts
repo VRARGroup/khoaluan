@@ -81,6 +81,7 @@ import { QuanlyquyenTaikhoanComponent } from './quanlyquyen-taikhoan/quanlyquyen
 import { ThemtaikhoanComponent } from './themtaikhoan/themtaikhoan.component';
 import { AddquyengroupComponent } from './addquyengroup/addquyengroup.component';
 import { ModalthemuseComponent } from './modalthemuse/modalthemuse.component';
+import { ModalDanhgiaComponent } from './modal/modal-danhgia/modal-danhgia.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { ModalthemuseComponent } from './modalthemuse/modalthemuse.component';
     QuanlyquyenTaikhoanComponent,
     ThemtaikhoanComponent,
     AddquyengroupComponent,
-    ModalthemuseComponent
+    ModalthemuseComponent,
+    ModalDanhgiaComponent,
   ],
   imports: [
     
@@ -164,7 +166,7 @@ import { ModalthemuseComponent } from './modalthemuse/modalthemuse.component';
     CarouselModule,
     MDBBootstrapModule.forRoot()
   ],
-  entryComponents: [ ModalThongsokythuatComponent,  ModalthemuseComponent],
+  entryComponents: [ ModalThongsokythuatComponent,  ModalthemuseComponent, ModalDanhgiaComponent],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject,ViewChild,ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { SanphamService } from '../service/sanpham.service';
 import { sp } from '../model/sanpham';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,7 +18,7 @@ export class ProductsComponent implements OnInit {
 	allhotsp:sp[] =[];
 	imagePath: any;
 	sanphams:sp[] =[];
-  	constructor(private router: Router, private sanphamService: SanphamService, private _sanitizer: DomSanitizer) {
+  	constructor(public route: ActivatedRoute,private router: Router, private sanphamService: SanphamService, private _sanitizer: DomSanitizer) {
   	 	
    	}
 
@@ -28,8 +28,6 @@ export class ProductsComponent implements OnInit {
 		this.display_block_dropdown_menu();
 	}
 	display_block_dropdown_menu(){
-		// styles: ['.dropdown-menu { display: block; }']
-		// debugger
 		document.getElementById('dropdown-menu').style.display = "inline-block";
 		document.getElementById('html').style.backgroundColor = "#f3f3f3";
 	}
@@ -50,11 +48,13 @@ export class ProductsComponent implements OnInit {
 			this.sanphams = (res) ? res : [];
 	});
 	}
-	render_sp(id_sanpham: any):void {
-		window.localStorage.removeItem("sp");
-		window.localStorage.setItem("sp",id_sanpham.toString());
+	// render_sp(id_sanpham: any):void {
+	// 	// window.localStorage.removeItem("sp");
+	// 	// window.localStorage.setItem("sp",id_sanpham.toString());
 
-		window.location.href="appmain/productdetails";
-	}
+	// 	// window.location.href="appmain/productdetails";
+	// 	this.id=this.route.snapshot.paramMap.get("5");
+	// 	this.router.navigate(["appmain/productdetails"]);
+	// }
 	
 }

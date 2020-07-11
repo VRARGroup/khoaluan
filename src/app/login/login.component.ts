@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
       (res) ? res : [];
       if(res==null)
       {
-        alert("tài khoản không tồ tại");
+        alert("Tài khoản không tồn tại !!!");
         return false;
       }
       if(res[0].giayphep==false)

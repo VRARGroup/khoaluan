@@ -216,10 +216,13 @@ namespace dienmayxanhapi
             var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList().Take(20).ToList();
             return dl;
         }
-        public List<sanphamdienthoai> Getfillter_list_product2(int idlsp)
+        public List<sanphamdienthoai> Getfillter_more_list_product(int idlsp)
         {
-          var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList().Skip(20).ToList();
-          return dl;
+            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();
+            if(dl.Skip(20).ToList() != null)
+                return dl.Skip(20).ToList();
+            else
+                return null;
         }
 
         public List<danhsachquyen> Getdsq()
@@ -329,5 +332,18 @@ namespace dienmayxanhapi
           collectiondg.InsertOne(dg);
           return dg;
         }
-  }
+    
+        public List<string> check_tieuchidanhgia(int id)
+        {
+            try
+            {
+              var dl = collectionlsp.Find(x => x._id == id).ToList().Select(t => t.tieuchidanhgia).First();
+              return dl;
+            }
+            catch
+            {
+              return null;
+            }
+        }   
+    }
 }

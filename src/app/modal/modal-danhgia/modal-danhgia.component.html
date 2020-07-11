@@ -1,0 +1,43 @@
+<div id="modal_danhgia">
+    <h4>{{name}}</h4>
+
+    <div class="row slot-danhgia" *ngFor="let slot_danh_gia of resulf_danhgia">
+        <div class="col-10" *ngIf="!slot_danh_gia.includes('?')" style="width: 80%;">{{slot_danh_gia}} ?</div>
+        <div class="col-10" *ngIf="slot_danh_gia.includes('?')" style="width: 80%;">{{slot_danh_gia}}</div>
+        <a class="col-1"><div style="border: 1px solid rgb(1, 255, 35); border-radius: 5px; text-align: center;background-color: #c7ffa0;">yes</div></a>
+        <a class="col-1"><div style="border: 1px solid rgb(255, 1, 1); border-radius: 5px; text-align: center;background-color: #f77;">no</div></a>
+    </div>
+
+    <textarea (keyup)="textarea_text_change($event)" id="textarea_danhgiasosao_modal" cols="30" rows="10" placeholder="Mời bạn chia sẻ thêm một số cảm nhận..."></textarea>
+    <div class="bar-danhkemanh">
+        <i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
+        Đính kèm ảnh
+        <p style="float: right; margin-top: 14px;">{{textarea_count}} /15 kí tự.</p>
+    </div>
+    <div class="custom-file">
+        <input type='file' id="upload_file" (change)="onSelectFile($event)" multiple>
+    </div>
+    <div class="row" style="padding: 10px 0;">
+        <div class="col-3"> 
+            <h6>Bạn cảm thấy sản phẩm như thế nào?(chọn sao nhé)</h6>
+        </div>
+        <div class="col-9 danh-gia-star">
+            <a (click)="choose_star(1)"><div (mouseover)="mouseover_star(1)" (mouseleave)="mouseleave_star()"><i class="fa fa-star" aria-hidden="true" id="star_11"></i><br>Rất tệ</div></a>
+            <a (click)="choose_star(2)"><div (mouseover)="mouseover_star(2)" (mouseleave)="mouseleave_star()"><i class="fa fa-star" aria-hidden="true" id="star_22" ></i><br>Tệ</div></a>
+            <a (click)="choose_star(3)"><div (mouseover)="mouseover_star(3)" (mouseleave)="mouseleave_star()"><i class="fa fa-star" aria-hidden="true" id="star_33" ></i><br>Bình thường</div></a>
+            <a (click)="choose_star(4)"><div (mouseover)="mouseover_star(4)" (mouseleave)="mouseleave_star()"><i class="fa fa-star" aria-hidden="true" id="star_44" ></i><br>Tốt</div></a>
+            <a (click)="choose_star(5)"><div (mouseover)="mouseover_star(5)" (mouseleave)="mouseleave_star()"><i class="fa fa-star" aria-hidden="true" id="star_55" ></i><br>Rất tốt</div></a>
+        </div> 
+    </div>
+    
+    <div class="comment-1-input">
+        <input placeholder="Họ tên(Bắc buộc)" type="text">
+        <input style="margin: 0 8px;" placeholder="Số điện thoại (Bắt buộc)" type="number">
+        <input placeholder="Email (Không bắt buộc)" type="text">
+    </div>
+    <a>
+        <div class="btn-guidanhgiangay">
+            GỬI ĐÁNH GIÁ NGAY
+        </div>
+    </a>
+</div>

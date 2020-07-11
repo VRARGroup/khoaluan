@@ -40,5 +40,9 @@ export class LoaisanphamService {
     	return this.http.put<lsanpham>(this.url + '/'+ 'updatelsp?_id='+lsp._id, lsp, httpOptions);
 	}
 	  
-
+	check_tieuchidanhgia(idsp): Observable<Boolean>
+	{
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    	return this.http.get<Boolean>(this.url + '/'+ 'check_tieuchidanhgia?_id='+idsp);
+	}	
 }

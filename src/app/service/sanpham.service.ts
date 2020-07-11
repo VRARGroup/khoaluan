@@ -74,8 +74,8 @@ export class SanphamService {
 	get_list_product(idlsp: number){
 		return this.http.get<sp[]>(this.url+'/'+'get_list_product?idlsp='+ idlsp);
 	}
-	get_list_product2(idlsp: number){
-		return this.http.get<sp[]>(this.url+'/'+'get_list_product2?idlsp='+ idlsp);
+	get_more_list_product(idlsp: number){
+		return this.http.get<sp[]>(this.url+'/'+'get_more_list_product?idlsp='+ idlsp);
 	}
 
 }

@@ -97,66 +97,71 @@ namespace dienmayxanhapi.Controllers
             return NoContent();
         }
 
-      [Route("updatelsp")]
-      [HttpPut]
-      public IActionResult updatesp(int _id, loaisanpham lsp)
-      {
-        try
+        [Route("updatelsp")]
+        [HttpPut]
+        public IActionResult updatesp(int _id, loaisanpham lsp)
         {
-          var filter = Builders<loaisanpham>.Filter.Eq("_id", _id);
-          BsonArray arraythuonghieu = new BsonArray();
-          for (int i = 0; i < lsp.thuonghieu.Count; i++)
-          {
-            arraythuonghieu.Add(lsp.thuonghieu[i]);
-          }
-       
-          BsonArray arraydactrung = new BsonArray();
-          for (int i = 0; i < lsp.dactrung.Count; i = i + 2)
-          {
-            BsonArray arrayctdactrung = new BsonArray();
-            if (i < lsp.dactrung.Count)
+            try
             {
-              string[] arrstringdactrung = lsp.dactrung[i + 1].ToString().Split(',');
-              for (int j = 0; j < arrstringdactrung.Length; j++)
-              {
-                arrayctdactrung.Add(arrstringdactrung[j]);
-              }
-            }
-            var documentnddactrung = new BsonDocument { };
-            documentnddactrung.Add(lsp.dactrung[i].ToString(), arrayctdactrung);
-            arraydactrung.AsBsonArray.Add(BsonValue.Create(documentnddactrung));
-          }
+                var filter = Builders<loaisanpham>.Filter.Eq("_id", _id);
+                BsonArray arraythuonghieu = new BsonArray();
+                for (int i = 0; i < lsp.thuonghieu.Count; i++)
+                {
+                  arraythuonghieu.Add(lsp.thuonghieu[i]);
+                }
 
-          if (lsp.tieuchidanhgia==null || lsp.tieuchidanhgia.Count==0)
-          {
-            var update = Builders<loaisanpham>.Update.Combine(
-                           Builders<loaisanpham>.Update.Set("tendanhmuc", lsp.tendanhmuc),
-                           Builders<loaisanpham>.Update.Set("thuonghieu", arraythuonghieu),
-                           Builders<loaisanpham>.Update.Set("dactrung", arraydactrung)
-              );
-            _lspService.Updatelsp(filter, update);
-          }
-          else
-          {
-            BsonArray arraytieuchidanhgia = new BsonArray();
-            for (int i = 0; i < lsp.tieuchidanhgia.Count; i++)
-            {
-              arraytieuchidanhgia.Add(lsp.tieuchidanhgia[i]);
+                BsonArray arraydactrung = new BsonArray();
+                for (int i = 0; i < lsp.dactrung.Count; i = i + 2)
+                {
+                    BsonArray arrayctdactrung = new BsonArray();
+                    if (i < lsp.dactrung.Count)
+                    {
+                      string[] arrstringdactrung = lsp.dactrung[i + 1].ToString().Split(',');
+                      for (int j = 0; j < arrstringdactrung.Length; j++)
+                      {
+                        arrayctdactrung.Add(arrstringdactrung[j]);
+                      }
+                    }
+                  var documentnddactrung = new BsonDocument { };
+                  documentnddactrung.Add(lsp.dactrung[i].ToString(), arrayctdactrung);
+                  arraydactrung.AsBsonArray.Add(BsonValue.Create(documentnddactrung));
+                }
+
+                if (lsp.tieuchidanhgia == null || lsp.tieuchidanhgia.Count == 0)
+                {
+                  var update = Builders<loaisanpham>.Update.Combine(
+                                 Builders<loaisanpham>.Update.Set("tendanhmuc", lsp.tendanhmuc),
+                                 Builders<loaisanpham>.Update.Set("thuonghieu", arraythuonghieu),
+                                 Builders<loaisanpham>.Update.Set("dactrung", arraydactrung)
+                    );
+                  _lspService.Updatelsp(filter, update);
+                }
+                else
+                {
+                  BsonArray arraytieuchidanhgia = new BsonArray();
+                  for (int i = 0; i < lsp.tieuchidanhgia.Count; i++)
+                  {
+                    arraytieuchidanhgia.Add(lsp.tieuchidanhgia[i]);
+                  }
+                  var update = Builders<loaisanpham>.Update.Combine(
+                                 Builders<loaisanpham>.Update.Set("tendanhmuc", lsp.tendanhmuc),
+                                 Builders<loaisanpham>.Update.Set("thuonghieu", arraythuonghieu),
+                                 Builders<loaisanpham>.Update.Set("dactrung", arraydactrung)
+                    );
+                  _lspService.Updatelsp(filter, update);
+                }
+
+              return NoContent();
             }
-            var update = Builders<loaisanpham>.Update.Combine(
-                           Builders<loaisanpham>.Update.Set("tendanhmuc", lsp.tendanhmuc),
-                           Builders<loaisanpham>.Update.Set("thuonghieu", arraythuonghieu),
-                           Builders<loaisanpham>.Update.Set("dactrung", arraydactrung)
-              );
-            _lspService.Updatelsp(filter, update);
-          }
-          
-          return NoContent();
+            catch (Exception e)
+            {
+              throw;
+            }
         }
-        catch (Exception e)
+        [Route("check_tieuchidanhgia")]
+        public List<string> check_tieuchidanhgia(int _id)
         {
-          throw;
+            return _lspService.check_tieuchidanhgia(_id);
         }
-      }
-  }
+    }
 }

@@ -19,11 +19,12 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class ListproductComponent implements OnInit {
 
   items:sp[] = [];
+  id_loai_sanpham:number;
   constructor(private router: Router, private sanphamService: SanphamService, private _sanitizer: DomSanitizer,public dialog: MatDialog) { }
 
   ngOnInit() {
-    let id_loai_sanpham = parseInt(window.localStorage.getItem("loai_sp"));
-    if(id_loai_sanpham==null)
+    let id_loai_sanpham = this.id_loai_sanpham = parseInt(window.localStorage.getItem("loai_sp"));
+    if(isNaN(id_loai_sanpham))
       window.location.href="appmain/products";
     this.get_list_product(id_loai_sanpham);
     
@@ -39,19 +40,18 @@ export class ListproductComponent implements OnInit {
       this.items = (res) ? res : [];
     });
   }
-  get_list_product2(id: number){
-    // this.sanphamService.get_list_product2(id).subscribe((res: sp[] | null) => {
-    //   let skip_20= (res) ? res : [];
-    //   skip_20.forEach(element => {
-    //     this.items.push(element);
-    //   });
-    // });
+  show_more_list_product()
+  {
+    this.sanphamService.get_more_list_product(this.id_loai_sanpham).subscribe((res: sp[] | null) => {
+      Array.prototype.push.apply(this.items,res);
+    });
+    $('.show-more-list-product').css("display","none");
   }
-  render_sp(id_sanpham: any):void {
-		window.localStorage.removeItem("sp");
-		window.localStorage.setItem("sp",id_sanpham.toString());
+  // render_sp(id_sanpham: any):void {
+	// 	// window.localStorage.removeItem("sp");
+	// 	// window.localStorage.setItem("sp",id_sanpham.toString());
 
-    // this.router.navigate(["appmain/productdetails"]);
-    window.location.href="appmain/productdetails";
-  }
+  //   this.router.navigate(["appmain/productdetails",5]);
+  //   // window.location.href="appmain/productdetails";
+  // }
 }

@@ -109,11 +109,11 @@ namespace dienmayxanhapi.Controllers
     {
       return (_spdtService.Getfillter_list_product(idlsp));
     }
-    [Route("get_list_product2")]
+    [Route("get_more_list_product")]
     [HttpGet]
-    public ActionResult<List<sanphamdienthoai>> Getfillter_list_product2(int idlsp)
+    public ActionResult<List<sanphamdienthoai>> Getfillter_more_list_product(int idlsp)
     {
-      return (_spdtService.Getfillter_list_product2(idlsp));
+      return (_spdtService.Getfillter_more_list_product(idlsp));
     }
     //[HttpPost]
     //public ActionResult<BsonDocument> Create(sanphamdienthoai spdt)

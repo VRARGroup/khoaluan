@@ -85,12 +85,12 @@
       </ngb-carousel>
     </div>
   </div>
-  <img src="https://cdn.tgdd.vn/2020/06/banner/desk-1176x50.png" style="width:100%; height:50px">
+  <img src="https://cdn.tgdd.vn/2020/07/banner/vunggiasocdesk-1200x80.png" style="width:100%; height:50px">
   <div class="hot_month js-flickity">
     <p></p>
     <div class="gallery" data-flickity-options='{ "wrapAround": true }'>
       <div style="display: inline-flex; vertical-align: top;" *ngFor="let item of allhotsp">
-        <a (click)="render_sp(item._id)">
+        <a [routerLink]="['/appmain/productdetails', item._id]">
           <div class="gallery-cell">
             <label class="tra-gop"> Trả góp 0% </label>
             <div class="box-image"><img src="{{item.hinhdaidien}}"></div>
@@ -122,7 +122,7 @@
     <table class="table-sp-km-hot"style="width:100%;">
         <td class="td-sp-km-hot" *ngFor="let sanpham of sanphams">
           <div style="width: 100%;height: 100%;">
-            <a (click)="render_sp(sanpham._id)">
+            <a [routerLink]="['/appmain/productdetails', sanpham._id]">
               <div class="box-image-hot"><img src="{{sanpham.hinhdaidien}}"></div>
               <p class="name-product">{{sanpham.ten}}<span></span></p>
               <p class="price-km-hot-month">{{sanpham.giaban| currency: 'VND' :'symbol':'3.0':'fr'}}</p>
