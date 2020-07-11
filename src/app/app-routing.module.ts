@@ -12,6 +12,9 @@ import { AppmainComponent} from './appmain/appmain.component';
 import { AppmainquanlyComponent } from './appmainquanly/appmainquanly.component';
 import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.component';
 import { ReviewspComponent } from './reviewsp/reviewsp.component';
+import { QuanlyquyenTaikhoanComponent } from './quanlyquyen-taikhoan/quanlyquyen-taikhoan.component';
+import { ThemtaikhoanComponent } from './themtaikhoan/themtaikhoan.component';
+import { AddquyengroupComponent } from './addquyengroup/addquyengroup.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'appmainnv/login' },
@@ -20,6 +23,15 @@ const routes: Routes = [
   {path: 'appmainnv', component: AppmainnhanvienComponent, children: [
     {
       path: 'login', component: LoginComponent
+    },
+    {
+      path: 'quyentk', component: QuanlyquyenTaikhoanComponent
+    },
+    {
+      path: 'addgroupquyen', component: AddquyengroupComponent
+    },
+    {
+      path: 'taotk', component: ThemtaikhoanComponent
     },
     {
       path: 'appmainquanly', component: AppmainquanlyComponent

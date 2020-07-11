@@ -4,6 +4,8 @@ import { HttpEventType, HttpClient } from '@angular/common/http';
 import { hinh } from '../model/sanpham';
 import { sp } from '../model/sanpham';
 import { SanphamService } from '../service/sanpham.service';
+import { Router } from "@angular/router";
+import {Location} from '@angular/common';
 @Component({
   selector: 'app-reviewsp',
   templateUrl: './reviewsp.component.html',
@@ -132,17 +134,32 @@ export class ReviewspComponent implements OnInit {
     console.log("xoa",this.urls);
   }
 
-  constructor(private http: HttpClient, private sanphamService: SanphamService) { }
+  constructor(private location:Location, private router: Router, private http: HttpClient, private sanphamService: SanphamService) { }
 
+  hoatdong:boolean=false;
   ngOnInit() {
-    this.idlsp=parseInt(window.localStorage.getItem("editspid"));
+    this.hoatdong=JSON.parse(window.localStorage.getItem("editid1"));
+    console.log(this.hoatdong);
+    document.getElementById("btndx").style.display="block";
+    if(this.hoatdong==false|| this.hoatdong==null)
+    {
+      this.router.navigate(['appmainnv/login']);
+    }
+    this.idlsp=parseInt(window.localStorage.getItem("gtsp"));
     if(!isNaN(this.idlsp))
     {
       this.loadctsp(this.idlsp);
     }
     else
     {
-      this.addtext.push("");
+      if(window.localStorage.getItem("gtnewsp")=="new")
+      {
+        this.addtext.push("");
+      }
+      else
+      {
+        this.location.back();
+      }
     }
   }
 
@@ -212,5 +229,14 @@ export class ReviewspComponent implements OnInit {
    });
    console.log(this.addtext)
    
+  }
+
+  reset()
+  {
+    this.gt=[];
+    this.addtext=[];
+    this.addtext.push("");
+    this.urls=[];
+    console.log(this.gt,this.urls);
   }
 }

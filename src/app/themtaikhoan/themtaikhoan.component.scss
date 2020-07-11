@@ -1,0 +1,153 @@
+.editControls {
+    padding-top: 1em; 
+    padding-bottom: 1em;
+    margin-left: 80px; 
+    margin-right: 80px;
+}
+.editpanel {
+    padding-top: 1em; 
+    padding-bottom: 1em;
+    padding-left: 2rem;
+    border: 1px solid #464645;
+    border-radius: 7px;
+    margin-left: 80px; 
+    margin-right: 80px;
+    margin-bottom: 2px;
+    background-color:#979795;
+    font-size: 13px;
+}
+.edittext {
+    margin-left: 80px; 
+    margin-right: 80px;
+    margin-bottom: 2px;
+    background-color:white;
+    font-size: 13px;
+    min-height: 100px;
+}
+.editor {
+    resize: vertical;
+    overflow: auto;
+    border: 1px solid silver;
+    border-radius: 5px;
+    min-height: 100px;
+    padding: 1em;
+    background: white;
+    margin: 0 auto;
+    //max-width: 1185px;
+    width: 100%;
+    // margin-left: 80px; 
+    // margin-right: 80px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 10);
+}
+
+.btn-group {
+    background-color: rgba(255, 255, 255, 0.212);;
+    border: 1px solid #464645;
+    border-radius: 20px;
+}
+
+.btn:hover:first-child {
+    color: #333333;
+    background-color: #4a90e2;
+    border: 2px solid #fbda00;
+    border-radius: 20px 0 0 20px;
+}
+
+.btn:hover:last-child {
+    color: #333333;
+    background-color: #4a90e2;
+    border: 2px solid #fbda00;
+    border-radius: 0 20px 20px 0;
+}
+.btn:hover{
+    color: #333333;
+    background-color: #4a90e2;
+    border: 2px solid #fbda00;
+}
+
+.button {
+    background-color: white;
+    color: black;
+    border: 1px solid white;
+    margin-top: 30px;
+    margin-right: 30px;
+}
+
+.buttonpanel {
+    background-color: white;
+    color: black;
+    border: 1px solid white;
+    margin-left: 80px;
+}
+.buttonpanelclose {
+    background-color: white;
+    color: black;
+    border: 1px solid white;
+}
+
+.fa-1x {
+    font-size: 50px !important;
+}
+
+
+.fa-2x {
+    font-size: 20px !important;
+    color: #f50909;
+}
+.inline{
+    display: block;
+}
+
+.inputtext {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #4a90e2;
+    border-radius: 4px;
+}
+
+.inputtext1 {
+    width: 151px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #4a90e2;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.fa-3x{
+    font-size: 22px;
+}
+
+
+.fa-check-circle{
+    color: rgb(19, 216, 51);
+}
+.fa-times-circle{
+    color: rgb(224, 39, 14);
+}
+
+.button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    padding:0px 20px;
+    min-width: 135px; 
+    min-height: 40px;
+}
+
+.button {
+    background-color: white;
+    color: black;
+    border: 1px solid #4a90e2;
+}
+
+.button:hover{
+    background-color: #4a90e2;
+    color: white;
+}
+
+.card{
+    min-width: 90% !important;
+}

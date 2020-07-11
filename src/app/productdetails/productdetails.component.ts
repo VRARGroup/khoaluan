@@ -10,6 +10,12 @@ import * as $ from "jquery";
 import { debug } from 'console';
 import { ModalThongsokythuatComponent } from '../modal/modal-thongsokythuat/modal-thongsokythuat.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import * as _ from 'lodash';
+import { HttpEventType, HttpClient } from '@angular/common/http';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { Location } from '@angular/common';
+import { dg } from '../model/danhgia';
+import { DanhgiaService } from '../service/danhgia.service';
 
 @Component({
   selector: 'app-productdetails',
@@ -26,7 +32,19 @@ export class ProductdetailsComponent implements OnInit {
   giamgia:number;
   same_price_products:sp[] = [];
   textarea_count:number = 0;
-  constructor(private router: Router, private sanphamService: SanphamService, private _sanitizer: DomSanitizer,public dialog: MatDialog) {
+  sosao:number=0;
+  valuetext:string=null;
+  serverPath: String="";
+  urls = [];
+  isImageSaved: boolean=false;
+  public progress: number;
+  responseimage: any=[];
+  kthttp:string="https://";
+  hinhthuctesp:Array<any>=[];
+  ktsavedhinhthuctesanpham:boolean=false;
+  idsp:number=null;
+
+  constructor(private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer,public dialog: MatDialog) {
   	 	
   }
 
@@ -42,6 +60,7 @@ export class ProductdetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.idsp=parseInt(window.localStorage.getItem("sp"));
     let id_sanpham = parseInt(window.localStorage.getItem("sp"));
     if(id_sanpham==null)
       window.location.href="appmain/products";
@@ -153,6 +172,8 @@ export class ProductdetailsComponent implements OnInit {
   }
   textarea_text_change(value:string){
     this.textarea_count = $('#textarea_danhgiasosao').val().toString().length;
+    this.valuetext = $('#textarea_danhgiasosao').val().toString();
+    console.log(this.valuetext);
   }
   mouseover_star_1(){
     document.getElementById('star_1').style.color = '#fc9639';
@@ -160,6 +181,8 @@ export class ProductdetailsComponent implements OnInit {
     document.getElementById('star_3').style.color = '#000';
     document.getElementById('star_4').style.color = '#000';
     document.getElementById('star_5').style.color = '#000';
+    this.sosao=1;
+    console.log("ss",this.sosao);
   }
   mouseover_star_2(){
     document.getElementById('star_1').style.color = '#fc9639';
@@ -167,6 +190,8 @@ export class ProductdetailsComponent implements OnInit {
     document.getElementById('star_3').style.color = '#000';
     document.getElementById('star_4').style.color = '#000';
     document.getElementById('star_5').style.color = '#000';
+    this.sosao=2;
+    console.log("ss",this.sosao);
   }
   mouseover_star_3(){
     document.getElementById('star_1').style.color = '#fc9639';
@@ -174,6 +199,8 @@ export class ProductdetailsComponent implements OnInit {
     document.getElementById('star_3').style.color = '#fc9639';
     document.getElementById('star_4').style.color = '#000';
     document.getElementById('star_5').style.color = '#000';
+    this.sosao=3;
+    console.log("ss",this.sosao);
   }
   mouseover_star_4(){
     document.getElementById('star_1').style.color = '#fc9639';
@@ -181,6 +208,8 @@ export class ProductdetailsComponent implements OnInit {
     document.getElementById('star_3').style.color = '#fc9639';
     document.getElementById('star_4').style.color = '#fc9639';
     document.getElementById('star_5').style.color = '#000';
+    this.sosao=4;
+    console.log("ss",this.sosao);
   }
   mouseover_star_5(){
     document.getElementById('star_1').style.color = '#fc9639';
@@ -188,5 +217,138 @@ export class ProductdetailsComponent implements OnInit {
     document.getElementById('star_3').style.color = '#fc9639';
     document.getElementById('star_4').style.color = '#fc9639';
     document.getElementById('star_5').style.color = '#fc9639';
+    this.sosao=5;
+    console.log("ss",this.sosao);
   }
+
+  openFile(){
+    console.log('hell')
+    document.getElementById('uploadCaptureInputFile').click();
+  }
+
+  getvalue(v: number)
+  {
+    this.kthttp=this.urls[v];
+    if(this.kthttp.startsWith("https://")==false)
+    {
+      this.hinhthuctesp.push("https://localhost:44309/Resources/Images/"+this.urls[v]);
+      this.ktsavedhinhthuctesanpham=true;
+    }
+    else
+    {
+      this.hinhthuctesp.push(this.urls[v]);
+      this.ktsavedhinhthuctesanpham=true;
+    }
+  }
+
+  public uploadFileimage = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+    if(this.urls.length<4)
+    {
+      let fileToUpload = <File>files[0];
+      this.urls.push(fileToUpload.name);
+      this.isImageSaved=true;
+      const formData = new FormData();
+      formData.append('file', fileToUpload, fileToUpload.name);
+      this.http.post('https://localhost:44309/api/saveimagefolder', formData, {reportProgress: true, observe: 'events'})
+        .subscribe(event => {
+          if (event.type === HttpEventType.UploadProgress)
+            this.progress = Math.round(100 * event.loaded / event.total);
+          else if (event.type === HttpEventType.Response) {
+            this.responseimage.push(event.body);
+            console.log(this.responseimage)
+          }
+        });
+        document.getElementById("uploadCaptureInputFile")["value"] = "";
+        console.log("h",this.urls);
+    }
+  }
+
+  createImgPath = (s:string) => {
+        
+    if(s===undefined)
+    {
+      this.serverPath="https://localhost:44309/Resources/Images/"+this.serverPath;
+    }
+    if(s=="")
+    { 
+      this.serverPath="./assets/upanh.png";
+    }
+    else
+    {
+      
+      if(this.idsp!=null && !isNaN(this.idsp))
+      {
+        var s1=s.toString().startsWith("https://");
+        if(s1==true)
+        {
+          this.serverPath=s;
+        }
+        else
+        {
+          this.serverPath="https://localhost:44309/Resources/Images/"+s;
+        }
+      }
+      else
+      {
+        if(s!=null)
+        {
+          this.serverPath="https://localhost:44309/Resources/Images/"+s;
+        }
+      }
+    }
+    
+    return this.serverPath;
+  }
+
+  guidanhgiangay()
+  {
+    for(let i=0;i<this.urls.length;i++)
+    {
+      this.getvalue(i);
+    }
+    const d=new dg(
+      0,
+      this.sosao,
+      document.getElementById("hoten")["value"],
+      document.getElementById("sdt")["value"],
+      document.getElementById("email")["value"],
+      this.valuetext,
+      this.hinhthuctesp,
+      0,
+      null,
+      null,
+      this.idsp
+    );
+    console.log("danhgia",d);
+    this.Createdg(d);
+    this.hinhthuctesp=[];
+  }
+
+  Remove(id:number){
+    console.log("s",id);
+    console.log("s",this.urls.length);
+    this.urls.splice(id,1);
+    console.log("xoa",this.urls);
+  }
+
+  Createdg(d: dg){
+    try
+    {
+      this.danhgiaService.creatdg(d).subscribe(
+            () => {
+                alert('Lưu thành công');
+            }
+        );
+    }
+    catch
+    {
+      alert("Error");
+      this.router.navigate(['appmain']);
+    }
+  }
+
+
 }

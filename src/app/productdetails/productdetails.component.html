@@ -198,21 +198,33 @@
                             <br>
                             <br>
                             <textarea (keyup)="textarea_text_change($event)" style="font-size: 16px; width: 100%; color: rgba(177, 174, 174, 0.664); padding: 5px;" id="textarea_danhgiasosao" cols="30" rows="10" placeholder="Nhập đánh giá về sản phẩm (Tối thiểu 80 ký tự). Quý khách có thể đánh giá về thiết kế, tính năng, sự tiện lợi, độ bền... của sản phẩm"></textarea>
-                            <div style="display: block; overflow: hidden; position: relative; color: rgba(79, 248, 130, 0.815); border: 0;background: #e4dadab2; width: 100%; height: 40px; padding: 6px; margin-top: -4px;margin-bottom: 14px;">
-                                <i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
-                                Đính kèm ảnh
-                                <p style="float: right; margin-top: 14px;">{{textarea_count}} /80 kí tự.</p>
+                            <div (click)="openFile()" style="display: block; overflow: hidden; position: relative; color: rgba(79, 248, 130, 0.815); border: 0;background: #e4dadab2; width: 100%; height: 40px; padding: 6px; margin-top: -4px;margin-bottom: 14px; cursor: pointer;">
+                                    <i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
+                                    Đính kèm ảnh
+                                    <p style="float: right; margin-top: 14px;">{{textarea_count}} /80 kí tự.</p>
+                            </div>
+                            <div class="filter">
+                                <div class="inline" *ngFor='let url of urls,let i=index'>
+                                <ng-container >
+                                <div class="img-space">
+                                    <ng-container *ngIf="isImageSaved">
+                                        <img  [src]="createImgPath(url)" height="100"> <br/>
+                                    </ng-container>
+                                </div>
+                                <button class="btn btn-danger" (click)="Remove(i)" *ngIf="isImageSaved">Xóa</button>
+                                </ng-container>
+                                </div>
                             </div>
                             <div class="custom-file" >
-                                <input type='file' id="uploadCaptureInputFile" (change)="onSelectFile($event)" multiple>
+                                <input type='file' #file (change)="uploadFileimage(file.files)" style="display:none" id="uploadCaptureInputFile" multiple>
                             </div>
                             <div class="comment-1-input">
-                                <input placeholder="Họ tên(Bắc buộc)" type="text">
-                                <input style="margin: 0 8px; font-size: 14px;" placeholder="Số điện thoại (Bắt buộc)" type="number">
-                                <input placeholder="Email (Không bắt buộc)" type="text">
+                                <input id="hoten"placeholder="Họ tên(Bắc buộc)" type="text">
+                                <input id="sdt" style="margin: 0 8px; font-size: 14px;" placeholder="Số điện thoại (Bắt buộc)" type="number">
+                                <input id="email" placeholder="Email (Không bắt buộc)" type="text">
                             </div>
                             <a>
-                                <div style="border:1px solid #fff; background: #288ad6; border-radius: 6px; color: #fff; font-size: 14; padding: 15px 5px; margin: 20px auto; width: 46%; box-sizing: border-box; display: block; text-align: center; clear: both;">
+                                <div (click)="guidanhgiangay()" style="border:1px solid #fff; background: #288ad6; border-radius: 6px; color: #fff; font-size: 14; padding: 15px 5px; margin: 20px auto; width: 46%; box-sizing: border-box; display: block; text-align: center; clear: both; cursor: pointer;">
                                     GỬI ĐÁNH GIÁ NGAY
                                 </div>
                             </a>
@@ -239,7 +251,7 @@
                             </div>
                         </ng-container>
                         <p id="more_info_danhgia">
-                            <a (click)="show_danhgia()">Xem chi tiết đánh giá</a>
+                            <a>Xem chi tiết đánh giá</a>
                         </p>
                     </div>
                     <div class="comment-3">

@@ -77,6 +77,10 @@ import { AppmainnhanvienComponent } from './appmainnhanvien/appmainnhanvien.comp
 import { ReviewspComponent } from './reviewsp/reviewsp.component';
 import { extendPrototype } from 'localforage-startswith';
 import { ModalThongsokythuatComponent } from './modal/modal-thongsokythuat/modal-thongsokythuat.component';
+import { QuanlyquyenTaikhoanComponent } from './quanlyquyen-taikhoan/quanlyquyen-taikhoan.component';
+import { ThemtaikhoanComponent } from './themtaikhoan/themtaikhoan.component';
+import { AddquyengroupComponent } from './addquyengroup/addquyengroup.component';
+import { ModalthemuseComponent } from './modalthemuse/modalthemuse.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +98,11 @@ import { ModalThongsokythuatComponent } from './modal/modal-thongsokythuat/modal
     ReviewspComponent,
     ProductdetailsComponent,
     ModalThongsokythuatComponent,
-    ListproductComponent
+    ListproductComponent,
+    QuanlyquyenTaikhoanComponent,
+    ThemtaikhoanComponent,
+    AddquyengroupComponent,
+    ModalthemuseComponent
   ],
   imports: [
     
@@ -156,7 +164,7 @@ import { ModalThongsokythuatComponent } from './modal/modal-thongsokythuat/modal
     CarouselModule,
     MDBBootstrapModule.forRoot()
   ],
-  entryComponents: [ ModalThongsokythuatComponent ],
+  entryComponents: [ ModalThongsokythuatComponent,  ModalthemuseComponent],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -4,8 +4,8 @@
 	<div class="container-fluid">
 		<div class="d-flex justify-content-end">
 			<div class="btnright">
-				<button class="buttontl" (click)="taolsp()">Thêm loại sản phẩm</button>
-				<button class="buttontsp" (click)="taosp()">Thêm sản phẩm</button>
+				<button class="buttontl" *ngIf="quanlysp" (click)="taolsp()">Thêm loại sản phẩm</button>
+				<button class="buttontsp" *ngIf="quanlylsp" (click)="taosp()">Thêm sản phẩm</button>
 			</div>
 		</div>
 		<div class="filter ">
@@ -14,9 +14,9 @@
 				<ng-container *ngFor="let obj of alllsp">
 				<div class="btn-group">
 					<button class="button" (click)="loaddetaillsp(obj._id)">{{obj.tendanhmuc | uppercase}}</button>
-					<div class="btn-group-vertical btninbtnlsp">
-						<button type="button" class="buttonct" (click)="detailsp(obj._id)"><i class="fas fa-plus fa-1x" aria-hidden="true"></i></button>
-						<button type="button" class="buttonct" (click)="detailsp(obj._id)"><i class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
+					<div  class="btn-group-vertical btninbtnlsp">
+						<button *ngIf="quanlysp" type="button" class="buttonct" (click)="detaitaosp(obj._id)"><i class="fas fa-plus fa-1x" aria-hidden="true"></i></button>
+						<button *ngIf="quanlylsp" type="button" class="buttonct" (click)="detailsp(obj._id)"><i class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
 					</div>
 				</div>
 				</ng-container>
@@ -57,8 +57,7 @@
 								<td><a (click)="chitietsp(item._id)">{{item.ten}}</a></td>
 								<td>{{item.thuonghieu}}</td>
 								<td>{{item.giaban}}</td>
-								<td>{{item.giamgia}}</td>
-								
+								<td>{{item.giamgia}}</td>								
 							</tr>
 						</tbody>
 						

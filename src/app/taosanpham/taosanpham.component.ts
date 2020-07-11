@@ -45,6 +45,7 @@ export class TaosanphamComponent implements OnInit {
   selectedthuonghieu1:string ='';
   massage = null;
   idlsp:number;
+  idtaolsp:number;
 	divList : any[];
 	tskt: any=[];
   tsktname: any=[];
@@ -69,15 +70,24 @@ export class TaosanphamComponent implements OnInit {
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>
   @ViewChildren('keyname') keynames: QueryList<ElementRef>
   @ViewChildren('inputmt') inputmts: QueryList<ElementRef>
- 
-  	
+  hoatdong:boolean=false;
+  hdappmain:string=null;
 
   constructor(private location: Location, private http: HttpClient,private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private saveimgfolderService: SaveimgfolderService) { }
 
   ngOnInit() {
-  
+    this.hdappmain=window.localStorage.getItem("tspid")
+    this.hoatdong=JSON.parse(window.localStorage.getItem("editid1"));
+    console.log(this.hoatdong);
+    document.getElementById("btndx").style.display="block";
+    if(this.hoatdong==false|| this.hoatdong==null)
+    {
+      this.router.navigate(['appmainnv/login']);
+    }
     this.loadlsp(); 
     this.idlsp = parseInt(window.localStorage.getItem("editspid"));
+    this.idtaolsp = parseInt(window.localStorage.getItem("themsp"));
+   
     if(!isNaN(this.idlsp))
     {
       this.loadctsp(this.idlsp);
@@ -86,14 +96,29 @@ export class TaosanphamComponent implements OnInit {
     }
     else
     {
-      this.alldacdiemnoibat.push("");
-      this.ktthaotacdelete=false;
+      if(this.hdappmain!=null)
+      {
+        this.alldacdiemnoibat.push("");
+        this.ktthaotacdelete=false;
+      }
+      else
+      {
+        if(!isNaN(this.idtaolsp))
+        {
+          this.selected=this.idtaolsp;
+          this.valueChange(event);
+          this.alldacdiemnoibat.push("");
+        }
+        else{
+          this.location.back();
+        }
+        
+      }
     }
   }
 
   valueChange(event){
   	this.loaddetaillsp(this.selected);
-  
   }
 
   valueChangethuonghieu(event){
@@ -237,6 +262,10 @@ export class TaosanphamComponent implements OnInit {
             console.log(tsp);
             this.Createsp(tsp);
             this.reset();
+            if(!isNaN(this.idtaolsp))
+            {
+              this.valueChange(0);
+            }
         }
         else
         {
@@ -283,6 +312,7 @@ export class TaosanphamComponent implements OnInit {
   }
   kitraundefined(h:number, l:number, key: string, v: string)
   {
+    
     try
     {
       if(!isNaN(this.idlsp))
@@ -305,7 +335,6 @@ export class TaosanphamComponent implements OnInit {
         {
           const vh=this.i;
           this.i++;
-          console.log(v);
           return this.arrsp[0].thongsokythuat[l][key][vh][v];
         }
       }
@@ -323,30 +352,23 @@ export class TaosanphamComponent implements OnInit {
   {
     document.getElementById('tensp')["value"]="";
     this.selectedthuonghieu="";
-    for(var i=0 ; i <= this.hinhtsp.length; i++)
-    {
-      this.hinhtsp.splice(0, 1);
-    }
+    this.hinhtsp=[];
     this.hinhdaidiensanpham=null;
     this.valuedacdiem=null;
-    for(let i=0;i<this.alldacdiemnoibat.length;i++)
-    {
-      this.alldacdiemnoibat.splice(0,1);
-    }
+    this.alldacdiemnoibat=null;
+    this.alldacdiemnoibat=[];
+    this.alldacdiemnoibat.push("");
     document.getElementById('giasanpham')["value"]=""
     document.getElementById('giamgia')["value"]="";
     this.loaddetaillsp(this.selected);
-    for(var i=0 ; i < this.tskt.length; i++)
-    {
-      this.tskt.splice(0, 1);
-    }
+    this.tskt=[];
     this.i=0;
     this.Removeimgaehtml();
     this.Removeurlimagedd();
     this.maRefs.forEach((maRef: ElementRef) => (document.getElementById(maRef.nativeElement.id)["value"]==""));
-    console.log("hinh",this.hinhtsp);
-    console.log(this.tskt);
-    console.log(this.alldacdiemnoibat);
+    this.maRefs.forEach((maRef: ElementRef) => (console.log("giatri",document.getElementById(maRef.nativeElement.id)["value"]=="")));
+    console.log("hinhtsp",this.hinhtsp);
+    console.log("tskt",this.tskt);
   }
 
 	Createsp(tsp: sp){
@@ -442,19 +464,15 @@ export class TaosanphamComponent implements OnInit {
         console.log(this.numsp)
       }
 
-      Remove(index:{ id: number; },id:number){
+      Remove(id:number){
         console.log("s",id);
         console.log("s",this.urls.length);
-        this.urls.splice(this.urls.indexOf(index),1);
-        for(let i=id;i<this.urls.length;i++)
+        if(!isNaN(this.idlsp))
         {
-          if(i<this.urls.length-1)
-          {
-            const j=i+1
-            document.getElementById('inputmt'+i)["value"]=document.getElementById("inputmt"+j)["value"];
-          }
-          
+          this.mota.splice(id,1);
         }
+        this.urls.splice(id,1);
+       
         console.log("xoa",this.urls);
       }
 
@@ -659,9 +677,15 @@ export class TaosanphamComponent implements OnInit {
       }
 
       review(): void {
-        window.localStorage.removeItem("editspid");
-        window.localStorage.setItem("editspid", this.idlsp.toString());
+        window.localStorage.removeItem("gtsp");
+        window.localStorage.setItem("gtsp", this.idlsp.toString());
         console.log(this.idlsp.toString());
+        if(isNaN(this.idlsp))
+        {
+          window.localStorage.setItem("gtsp", null);
+          window.localStorage.removeItem("gtnewsp");
+          window.localStorage.setItem("gtnewsp", "new");
+        }
         this.router.navigate(['appmainnv/reviewsp']);
       };
 }

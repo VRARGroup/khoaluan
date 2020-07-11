@@ -326,3 +326,32 @@ mat-progress-bar{
     color: blue;
     margin-top: 20px;
 }
+
+.inline{
+    display: inline-block;
+}
+
+.filter{
+    max-width: 1220px;
+}
+
+.img-space {
+    border: dashed 1px #d3d3d3;
+    border-radius: 8px;
+    background-color: transparent;
+    min-width: 123px;
+    padding: 8px;
+}
+
+.img-space img {
+    display: block;
+    max-width: 123px;
+    margin: auto;
+    cursor: pointer;
+}
+
+.btn{
+    margin-top: 10px;
+    margin-left:10px;
+    margin-bottom: 10px;
+}

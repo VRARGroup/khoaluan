@@ -6,6 +6,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Key } from 'protractor';
 import { KeyValuePipe } from '@angular/common';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-taoloaisanpham',
@@ -43,12 +44,19 @@ export class TaoloaisanphamComponent implements OnInit {
   @ViewChildren('maRef') maRefs: QueryList<ElementRef>;
   @ViewChildren('monlun') monluns: QueryList<ElementRef>;
   @ViewChildren('tieuchig') tieuchigs: QueryList<ElementRef>;
-  
-  constructor(private router: Router, private LoaisanphamService: LoaisanphamService) { }
+  hoatdong:boolean=false;
+  constructor(private location:Location, private router: Router, private LoaisanphamService: LoaisanphamService) { }
 
   ngOnInit() {
+    this.hoatdong=JSON.parse(window.localStorage.getItem("editid1"));
+    console.log(this.hoatdong);
+    document.getElementById("btndx").style.display="block";
+    if(this.hoatdong==false|| this.hoatdong==null)
+    {
+      this.router.navigate(['appmainnv/login']);
+    }
     this.idlsp = parseInt(window.localStorage.getItem("editspid"));
-    if(this.idlsp>0)
+    if(this.idlsp>0 && !isNaN(this.idlsp))
     { 
       this.ktthaotacdelete=true;
       this.ktthaotacsave=false;
@@ -57,10 +65,18 @@ export class TaoloaisanphamComponent implements OnInit {
     }
     else
     {
-      this.ktthaotacdelete=false;
-      this.alldt.push("");
-      this.allth.push("");
-      this.alltcdg.push("");
+      if(window.localStorage.getItem("tlspid")!=null)
+      {
+        console.log(window.localStorage.getItem("tlspid"));
+        this.ktthaotacdelete=false;
+        this.alldt.push("");
+        this.allth.push("");
+        this.alltcdg.push("");
+      }
+      else
+      {
+        this.location.back();
+      }
     }
   }
 

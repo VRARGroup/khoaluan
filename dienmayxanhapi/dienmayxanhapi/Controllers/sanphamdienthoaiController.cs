@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -305,9 +306,15 @@ namespace dienmayxanhapi.Controllers
         //                Add("hinhanh", "h1").
         //                Add("mota", "h2");
         //arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
-        var g = _spdtService.Get().Count;
+        int id = 0;
+        if (_spdtService.Get() != null && _spdtService.Get().Count != 0)
+        {
+          id = Convert.ToInt32(_spdtService.Get().LastOrDefault()._id);
+        }
+        var v = id;
+        var g = v + 1;
         var document = new BsonDocument {
-                     { "_id", _spdtService.Get().Count},
+                     { "_id",g},
                      { "ten" , spdt.ten},
                      { "thuonghieu", spdt.thuonghieu},
                      { "hinh", arrayhinhanh},
@@ -349,8 +356,16 @@ namespace dienmayxanhapi.Controllers
         {
           if (i < spdt.thongsokythuat.Count - 2)
           {
-            string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
-            string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split(',');
+            string[] keynamef = spdt.thongsokythuat[i].ToString().Split('+');
+            //if (keynamef.Length > 2)
+            //{
+            //  string s = spdt.thongsokythuat[i].ToString();
+            //  StringBuilder sb = new StringBuilder(s);
+            //  sb[s.IndexOf(',')] = '~';
+            //  keynamef = sb.ToString().Split('~');
+
+            //}
+            string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split('+');
             if (keynamef[0] == keynames[0])
             {
 
@@ -374,8 +389,7 @@ namespace dienmayxanhapi.Controllers
           {
             if (i == spdt.thongsokythuat.Count - 2)
             {
-              arrayndthongsokythuat = new BsonArray { };
-              string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+              string[] keynamef = spdt.thongsokythuat[i].ToString().Split('+');
               documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
               arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
               documentthngsokythuatnd = new BsonDocument { };
@@ -462,8 +476,16 @@ namespace dienmayxanhapi.Controllers
         {
           if (i < spdt.thongsokythuat.Count - 2)
           {
-            string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
-            string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split(',');
+            string[] keynamef = spdt.thongsokythuat[i].ToString().Split('+');
+            //if(keynamef.Length>2)
+            //{
+            //  string s = spdt.thongsokythuat[i].ToString();
+            //  StringBuilder sb = new StringBuilder(s);
+            //  sb[s.IndexOf(',')] = '~';
+            //  keynamef = sb.ToString().Split('~');
+
+            //}
+            string[] keynames = spdt.thongsokythuat[i + 2].ToString().Split('+');
             if (keynamef[0] == keynames[0])
             {
 
@@ -488,7 +510,7 @@ namespace dienmayxanhapi.Controllers
             if (i == spdt.thongsokythuat.Count - 2)
             {
               arrayndthongsokythuat = new BsonArray { };
-              string[] keynamef = spdt.thongsokythuat[i].ToString().Split(',');
+              string[] keynamef = spdt.thongsokythuat[i].ToString().Split('+');
               documentthngsokythuatnd.Add(keynamef[1], spdt.thongsokythuat[i + 1].ToString());
               arrayndthongsokythuat.AsBsonArray.Add(BsonValue.Create(documentthngsokythuatnd));
               documentthngsokythuatnd = new BsonDocument { };

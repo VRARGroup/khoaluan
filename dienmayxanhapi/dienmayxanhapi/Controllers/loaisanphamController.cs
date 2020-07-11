@@ -35,31 +35,37 @@ namespace dienmayxanhapi.Controllers
         [HttpPost]
         public ActionResult<BsonDocument> Create(loaisanpham lsp)
         {
-            var s = _lspService.Getlsp().LastOrDefault()._id+10000;
-            var document = new BsonDocument {
-                  { "_id", _lspService.Getlsp().LastOrDefault()._id+10000},
-                  { "tendanhmuc" , lsp.tendanhmuc},
-                  };
-            BsonArray arraythuonghieu = new BsonArray();
-            for(int i=0;i<lsp.thuonghieu.Count;i++)
+            try
             {
+              int id = 0;
+              if (_lspService.Getlsp() != null && _lspService.Getlsp().Count != 0)
+              {
+                id = Convert.ToInt32(_lspService.Getlsp().LastOrDefault()._id + 10000);
+              }
+              var document = new BsonDocument {
+                        { "_id", id},
+                        { "tendanhmuc" , lsp.tendanhmuc},
+                        };
+              BsonArray arraythuonghieu = new BsonArray();
+              for (int i = 0; i < lsp.thuonghieu.Count; i++)
+              {
                 arraythuonghieu.Add(lsp.thuonghieu[i]);
-            }
-            document.Add("thuonghieu", arraythuonghieu);
-            arraythuonghieu = new BsonArray();
-            for (int i = 0; i < lsp.tieuchidanhgia.Count; i++)
-            {
-              arraythuonghieu.Add(lsp.tieuchidanhgia[i]);
-            }
-           
-            BsonDocument d = new BsonDocument();
-            BsonArray arraydactrung = new BsonArray();
-            for (int i = 0; i < lsp.dactrung.Count; i=i+2)
-            {
+              }
+              document.Add("thuonghieu", arraythuonghieu);
+              arraythuonghieu = new BsonArray();
+              for (int i = 0; i < lsp.tieuchidanhgia.Count; i++)
+              {
+                arraythuonghieu.Add(lsp.tieuchidanhgia[i]);
+              }
+
+              BsonDocument d = new BsonDocument();
+              BsonArray arraydactrung = new BsonArray();
+              for (int i = 0; i < lsp.dactrung.Count; i = i + 2)
+              {
                 BsonArray arrayctdactrung = new BsonArray();
                 if (i < lsp.dactrung.Count)
                 {
-                  
+
                   string[] arrstringdactrung = lsp.dactrung[i + 1].ToString().Split(',');
                   for (int j = 0; j < arrstringdactrung.Length; j++)
                   {
@@ -71,11 +77,16 @@ namespace dienmayxanhapi.Controllers
                 var documentnddactrung = new BsonDocument { };
                 documentnddactrung.Add(lsp.dactrung[i].ToString(), arrayctdactrung);
                 arraydactrung.AsBsonArray.Add(BsonValue.Create(documentnddactrung));
+              }
+              document.Add("dactrung", arraydactrung);
+              document.Add("tieuchidanhgia", arraythuonghieu);
+              _lspService.insertls(document);
+              return NoContent();
             }
-            document.Add("dactrung", arraydactrung);
-            document.Add("tieuchidanhgia", arraythuonghieu);
-            _lspService.insertls(document);
-            return NoContent();
+            catch(Exception e)
+            {
+              return NoContent();
+            }
         }
 
         [HttpDelete("{id}")]

@@ -1,0 +1,47 @@
+<div style="background-color: white; min-width: 100vh; min-height: 100vh; ">
+    <div style="height:30px;"></div>
+    <div class="d-flex justify-content-center">
+    <div class="card">
+        <div class="card-header">
+          
+        </div>
+        <div class="card-body ">
+            <label for="lname">Username</label>
+            <input class="inputtext" type="text" value="{{this.alltk[0].username}}" id="username">
+            <label for="lname">Password</label>
+            <input class="inputtext" type="text" value="{{this.alltk[0].password}}" id="pass">
+            <label class="inline" for="lname">Tình trạng</label>
+            <ng-container class="inline" *ngIf="hdt">
+                <a class="spanfar"><span>Đang hoạt động</span><i id="hq"class="far fa-check-circle fa-3x" ></i></a>
+            </ng-container>
+            <ng-container class="inline" *ngIf="hdf">
+                <a class="spanfar"><span>Không hoạt động</span><i class="far fa-times-circle fa-3x"  ></i></a>
+            </ng-container>
+            <br><br>
+            <label class="inline" for="lname">Cấp phép</label>
+            <ng-container *ngIf="gpt">
+                <a id="ctk1" class="spanfar"><span>Được phép đăng nhập</span><i id="hq"class="far fa-check-circle fa-3x" ></i></a>
+            </ng-container>
+            <ng-container *ngIf="gpf">
+                <a id="ctk2" class="spanfar"><span>Chưa cấp phép đăng nhập</span><i class="far fa-times-circle fa-3x"  ></i></a>
+            </ng-container>
+            <br>
+            <ng-container class="inline">
+               <button class="button" *ngIf="gpt" (click)="chantk()">Chặn truy cập</button>
+               <button class="button" *ngIf="gpf" (click)="chantk()">cấp phép truy cập</button>
+            </ng-container>
+            <br><br>
+        </div>
+        <div class="card-footer text-muted">
+         
+        </div>
+        </div>
+    </div>
+    <div style="margin-bottom: 50px; margin-top: 50px;">
+        <div class="container d-flex justify-content-center">
+            <button class="btn btn-primary" type="button" id="save_tk" (click)="onSubmit()">Save</button>
+            <button class="btn btn-primary" type="button" id="delete_tk" (click)="Deletetk()">Delete</button>
+            <button type="button" class="btn btn-warning" id="clear_tk" (click)="reset()">Clear</button>
+        </div>
+    </div>
+</div>

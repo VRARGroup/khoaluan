@@ -15,19 +15,34 @@ namespace dienmayxanhapi
         public virtual DbSet<sanphamdienthoai> sanphamdienthoai { get; set; }
         public virtual DbSet<loaisanpham> loaisanpham { get; set; }
         public virtual DbSet<hinhanhfolder> hinhanhfolder { get; set; }
+        public virtual DbSet<danhsachquyen> danhsachquyen { get; set; }
+        public virtual DbSet<taikhoan> taikhoan { get; set; }
+        public virtual DbSet<group> group { get; set; }
+        public virtual DbSet<danhgia> danhgia { get; set; }
         private string ConnectionString = "mongodb://localhost:27017";
         private string DatabaseName = "dienmayxanh";
         private string CollectionNamesp = "sanpham";
         private string CollectionNameloaisp = "loaisanpham";
+        private string CollectionNamedanhsachquyen = "danhsachquyen";
+        private string CollectionNametaikhoan = "taikhoan";
+        private string CollectionNametgroup = "group";
+        private string CollectionNamedanhgia = "danhgia";
         private readonly IMongoCollection<sanphamdienthoai> collectionspdt;
         private readonly IMongoCollection<loaisanpham> collectionlsp;
-
+        private readonly IMongoCollection<danhsachquyen> collectiondsq;
+        private readonly IMongoCollection<taikhoan> collectiontk;
+        private readonly IMongoCollection<group> collectiongroup;
+        private readonly IMongoCollection<danhgia> collectiondanhgia;
         public dienmayxanhdbcontext()
         {
             var client = new MongoClient(ConnectionString);
             var database = client.GetDatabase(DatabaseName);
             collectionspdt = database.GetCollection<sanphamdienthoai>(CollectionNamesp);
             collectionlsp = database.GetCollection<loaisanpham>(CollectionNameloaisp);
+            collectiondsq = database.GetCollection<danhsachquyen>(CollectionNamedanhsachquyen);
+            collectiontk = database.GetCollection<taikhoan>(CollectionNametaikhoan);
+            collectiongroup = database.GetCollection<group>(CollectionNametgroup);
+            collectiondanhgia = database.GetCollection<danhgia>(CollectionNamedanhgia);
         }
         public List<sanphamdienthoai> Get()
         {
@@ -206,5 +221,113 @@ namespace dienmayxanhapi
           var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList().Skip(20).ToList();
           return dl;
         }
-    }
+
+        public List<danhsachquyen> Getdsq()
+        {
+          var dl = collectiondsq.Find(x => true).ToList();
+          return dl;
+        }
+
+        public List<danhsachquyen> Getdetaildsq(int id)
+        {
+          var dl = collectiondsq.Find(x =>x._id==id).ToList();
+          return dl;
+        }
+
+        public List<danhsachquyen> deletedsq(FilterDefinition<BsonDocument> filter)
+        {
+          var client = new MongoClient(ConnectionString);
+          var database = client.GetDatabase(DatabaseName);
+          var collectiondeletedsq = database.GetCollection<BsonDocument>(CollectionNamedanhsachquyen);
+          collectiondeletedsq.DeleteOne(filter);
+          var dl = collectiondsq.Find(x => true).ToList();
+          return dl;
+        }
+        public BsonDocument insertdsq(BsonDocument dsq)
+        {
+          var client = new MongoClient(ConnectionString);
+          var database = client.GetDatabase(DatabaseName);
+          var collectiondeletedsq = database.GetCollection<BsonDocument>(CollectionNamedanhsachquyen);
+          collectiondeletedsq.InsertOne(dsq);
+          return dsq;
+        }
+
+        public List<taikhoan> Gettk()
+        {
+          var dl = collectiontk.Find(x => true).ToList();
+          return dl;
+        }
+
+        public List<taikhoan> Getgrouptk()
+        {
+          var dl = collectiontk.Find(x =>x._id_group==9999).ToList();
+          return dl;
+        }
+        public List<taikhoan> Getdetailtk(string u, string p)
+        {
+          var dl = collectiontk.Find(x =>x.username==u && x.password==p).ToList();
+          return dl;
+        }
+
+        public List<taikhoan> Getdetailtk_id(int id)
+        {
+          var dl = collectiontk.Find(x =>x._id==id).ToList();
+          return dl;
+        }
+
+        public Boolean Updatetk(FilterDefinition<taikhoan> filter, UpdateDefinition<taikhoan> update)
+        {
+          collectiontk.UpdateOne(filter, update);
+          return true;
+        }
+        public BsonDocument inserttk(BsonDocument tk)
+        {
+            var client = new MongoClient(ConnectionString);
+            var database = client.GetDatabase(DatabaseName);
+            var collectiontk = database.GetCollection<BsonDocument>(CollectionNametaikhoan);
+            collectiontk.InsertOne(tk);
+            return tk;
+        }
+        public List<taikhoan> deletetk(FilterDefinition<BsonDocument> filter)
+        {
+          var client = new MongoClient(ConnectionString);
+          var database = client.GetDatabase(DatabaseName);
+          var collectiondeletetk = database.GetCollection<BsonDocument>(CollectionNametaikhoan);
+          collectiondeletetk.DeleteOne(filter);
+          var dl = collectiontk.Find(x => true).ToList();
+          return dl;
+        }
+        public List<group> Getgroup()
+        {
+          var dl = collectiongroup.Find(x => true).ToList();
+          return dl;
+        }
+
+        public List<group> Getdetailgroup(int id)
+        {
+          var dl = collectiongroup.Find(x =>x._id==id).ToList();
+          return dl;
+        }
+
+        public Boolean Updategroup(FilterDefinition<group> filter, UpdateDefinition<group> update)
+        {
+          collectiongroup.UpdateOne(filter, update);
+          return true;
+        }
+
+        public List<danhgia> Getdg()
+        {
+          var dl = collectiondanhgia.Find(x => true).ToList();
+          return dl;
+        }
+
+        public BsonDocument insertdg(BsonDocument dg)
+        {
+          var client = new MongoClient(ConnectionString);
+          var database = client.GetDatabase(DatabaseName);
+          var collectiondg = database.GetCollection<BsonDocument>(CollectionNamedanhgia);
+          collectiondg.InsertOne(dg);
+          return dg;
+        }
+  }
 }
