@@ -161,7 +161,7 @@
         <div class="col-4">
           <div class="thong-so-ky-thuat">
             <h2 style="font-size: 18px;">Thông số kỹ thuật</h2>
-            <ul style="margin-top: 10px; list-style-type:none">
+            <ul style="margin-top: 10px;">
               <ng-container *ngFor="let k of item.thongsokythuat, let i=index">
                 <ng-container *ngFor="let key of keys(k)">
                   <li>
@@ -191,7 +191,7 @@
                 <i class="fa fa-star" aria-hidden="true"></i>
               </div>
               <div class="col-6">
-                <ul style="list-style-type:none">
+                <ul>
                   <li><a>5 sao</a>
                     <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> <a> đánh giá</a>
                   </li>
@@ -223,7 +223,7 @@
                   {{item.sosao}}
                   <i class="fa fa-star" aria-hidden="true"></i>
                 </div>
-                <ul style="list-style-type:none">
+                <ul>
                   <li><a>5 sao</a>
                     <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> <a> đánh giá</a>
                   </li>
@@ -344,7 +344,7 @@
 
                                 </div> -->
               </div>
-              <div style="float:left">
+              <!-- <div style="float:left">
                 <div style="float: left;" *ngFor='let i of arrayOne(item.sosao)'>
                   <i style="color: #fc9639;" class="fa fa-star" aria-hidden="true"></i>
                 </div>
@@ -357,7 +357,79 @@
                 <a>thảo luận</a>
                 <span> • </span>
                 <a>thích</a>
-              </div>
+              </div> -->
+              <ul style="list-style-type: none;">
+                <div *ngFor="let item_danhgia of items_danhgia">
+                  <li class="danhgia-list">
+                    <div>
+                      <span class="danhgia-name"> Nguyễn Ngọc Phương </span>
+                    </div>
+                    <div class="danhgia-info">
+                      <p>
+                        <span>
+                          <div style="float:left">
+                            <div style="float: left;" *ngFor='let i of arrayOne(item.sosao)'>
+                              <i style="color: #fc9639;" class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <div style="float: left;" *ngFor='let i of arrayTwo(item.sosao)'>
+                              <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <p></p>
+                          </div>
+                        </span>
+                        <i>Vừa mua Xiaomi 2C.
+                          <br>Đắng đo làm gì, không khí là thứ không nhìn thấy được, chỉ cảm nhận được bằng mũi, khi mũi
+                          cảm
+                          nhận được thì không khí đã nặng lắm rồi; ..... tiền kiếm lại được, sức khỏe thì không;
+                          <br>Thế hệ mình ..... ừ thì bình thường thôi, không sao (kệ đi), quan trọng thế hệ sau của
+                          mình
+                          kìa, khỏe mạnh là "hạnh phúc" rồi;
+                          <br>:))
+                          <br>Ahihi ..... đang lúc convịt-19 đang đi chơi khắp nơi, không khí ở nhà ổn tí cho
+                          lành.
+                          <br>Đang
+                          sử dụng Xiaomi 3H, và Sharp FP-GM50E-B.
+                          <br>Sản phẩm ok !
+                        </i>
+                      </p>
+                    </div>
+                    <div class="reply-danhgia">
+                      <a href="javascript:void()" (click)="show_danhgia_thaoluan(item_danhgia.id)">
+                        Thảo luận
+                      </a>
+                      <span> • </span>
+                      <a href="javascript:void()">
+                        <i class="fa fa-thumbs-up"></i>
+                        Hữu ích
+                      </a>
+                    </div>
+                  </li>
+                  <!-- <div class="list-rep-comment-info"+{{item_danhgia.id}} *ngFor="let item_phu of arrayOne(item_danhgia.danhgiaphu.length)"> -->
+                    <li class="rep-comment-info">
+                      <div>
+                        <span> Xong Lê
+                          <label class="qtv">QTV</label>
+                        </span>
+                      </div>
+                      <div>
+                        <p>
+                          <i>Điện máy Xanh đã ghi nhận và chuyển bộ phận liên quan hỗ trợ quý khách</i>
+                        </p>
+                      </div>
+                      <div>
+                        <a href="javascript:void()" class="cmtl">
+                          <i class="fa fa-thumbs-up"></i>
+                          Hữu ích
+                        </a>
+                      </div>
+                    </li>
+                  <!-- </div> -->
+                  <li class="reply" id="reply_"+{{item_danhgia.id}}>
+                    <input placeholder="Nhập thảo luận của bạn">
+                    <a href="javascript:void()" class="reply-send">GỬI</a>
+                  </li>
+                </div>
+              </ul>
             </ng-container>
             <p id="more_info_danhgia">
               <a>Xem thêm đánh giá</a>
@@ -397,41 +469,58 @@
             </div>
             <div class="list-comment">
               <!-- <ng-container *ngFor="let item_comment of item_comments"> -->
-              <div class="comment_ask" id="42243451">
+              <div class="comment_ask">
                 <i class="iconcom-user">C</i>
                 <strong onclick="selCmt(42243451)">Cường</strong>
-                <div class="infocom_ask">ảnh hưởng gì tới kt o.</div>
-                <div class="relate_infocom" data-cl="0">
-                  <span class="reply" onclick="cmtaddreplyclick(42243451)">Trả lời </span>
+                <div class="infocom_ask">Hiện tại e thấy sp giảm 10% e ở tp châu đốc vậy có được giảm bà giảm giá khi e
+                  mua tiền mặt bao nhiêi cho chiếu tivi này ạ</div>
+                <div class="relate_infocom">
+                  <a href="javascript:void()">
+                    <span class="reply-comment">Trả lời </span>
+                  </a>
                   <b class="dot">●</b>
-                  <span class="numlike">
-                    <i class="iconcom-like"></i>
-                    <span class="like" onclick="likeCmt(42243451);"> Thích</span>
-                  </span>
+                  <a href="javascript:void()">
+                    <i class="fa fa-thumbs-up"></i>
+                    <span class="like"> Thích</span>
+                  </a>
                   <span>
-                    <b class="dot">●</b> 19 giờ trước
+                    <b class="dot">●</b>
                   </span>
                 </div>
               </div>
-              <div class="comment_reply" id="r42243451"><i class="arrow_box"></i>
-                <div class="comment_ask " id="42245237" data-parent="42243451">
-                  <div class="avt-qtv"><i class="iconcom-avactv"></i></div><strong onclick="selCmt(42245237)">Kim
-                    Ngân</strong><b class="qtv">Quản trị viên</b>
+              <div class="comment_reply">
+                <i class="arrow_box"></i>
+                <div class="comment_ask">
+                  <div class="avt-qtv">
+                    <img style="width: 30px;" src="/assets/ic_dmx_blue.jpg">
+                  </div>
+                  <strong> Kim Ngân</strong>
+                  <b class="qtv">Quản trị viên</b>
                   <div class="infocom_ask">
                     <div class="conticon">
-                      <div class="cmtcontent">Chào anh,&nbsp;<br>Dạ anh có thể sử dụng ống 10 nhưng sẽ có thể ảnh hưởng
-                        đến tuổi thọ của máy anh nhé. Anh nên tham khảo các máy có ống đồng 6/12 anh nhé.&nbsp;<br>Thông
-                        tin đến anh.&nbsp;</div>
-                      <div class="relate_infocom" data-cl="0"><span class="btnreply"
-                          onclick="cmtChildAddReplyClick(42245237,42243451)">Trả lời </span><b class="dot">●</b><a
-                          onclick="satisfiedCmt(42245237)" href="javascript:void(null)" class="favor satis"><i
-                            class="iconcom-like"></i> Hài lòng<span></span></a><b class="dot">●</b><a
-                          onclick="unsatisfiedCmt(42245237)" href="javascript:void(null)" class="favor satis"><i
-                            class="iconcom-unlike"></i> Không hài lòng<span></span></a><span class="&quot;date&quot;"><b
-                            class="dot">●</b> 11 giờ trước</span>
-                        <div id="wrs42245237" class="wrapsatis" style="display: none;">
+                      <div class="cmtcontent">Chào anh,&nbsp;
+                        <br>
+                        Dạ anh có thể sử dụng ống 10 nhưng sẽ có thể ảnh hưởng
+                        đến tuổi thọ của máy anh nhé. Anh nên tham khảo các máy có ống đồng 6/12 anh nhé.&nbsp;
+                        <br>Thông tin đến anh.&nbsp;
+                      </div>
+                      <div class="relate_infocom">
+                        <a href="javascript:void()"><span class="btnreply">Trả lời </span></a>
+                        <b class="dot">●</b>
+                        <a href="javascript:void()" class="favor satis">
+                          <i class="fa fa-thumbs-up"></i>
+                          Hài lòng
+                          <span></span>
+                        </a>
+                        <b class="dot">●</b>
+                        <a href="javascript:void()" class="favor satis">
+                          <i class="fa fa-thumbs-down"></i>
+                          Không hài lòng
+                          <span></span>
+                        </a>
+                        <div class="wrapsatis" style="display: none;">
                           <div class="wrsct">
-                            <i class="iconcom-close" onclick="closeSatis();"></i>
+                            <i class="iconcom-close"></i>
                             <span>Điện máy XANH rất tiếc đã làm bạn chưa hài lòng. Mời bạn góp ý để
                               <b>QTV Kim Ngân</b> phục vụ tốt hơn:
                             </span>
@@ -440,13 +529,12 @@
                               bắt buộc):</span>
                             <input placeholder="Họ tên" type="text" class="ustName">
                             <input placeholder="Số điện thoại" type="text" class="ustPhone">
-                            <a href="javascript:sendUnSatisfied(42245237)">GỬI</a>
+                            <a href="javascript:void()">GỬI</a>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="clr"></div>
                 </div>
               </div>
               <!-- </ng-container> -->

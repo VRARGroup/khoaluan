@@ -47,6 +47,7 @@ export class ProductdetailsComponent implements OnInit {
   idsp: number = null;
   resulf_danhgia: any[] = [];
   star: number = 0;
+  items_danhgia: any;
   constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService) {
   }
   ngOnInit() {
@@ -279,7 +280,10 @@ export class ProductdetailsComponent implements OnInit {
     this.loaisanphamService.check_tieuchidanhgia(_id_loaisanpham).subscribe((res: any | null) => {
       this.resulf_danhgia = (res) ? res : [];
 
-      if (this.resulf_danhgia.length > 0) {
+      if (this.resulf_danhgia.length > 0 && this.resulf_danhgia.length <5) {
+        $("#comment_1_1").css("display", "none");
+        $("#comment_1").css("height", "235px");
+      }else if (this.resulf_danhgia.length > 0) {
         $("#comment_1_1").css("display", "none");
         $("#comment_1").css("height", this.resulf_danhgia.length * 36 + 60 + "px");
       }
@@ -411,5 +415,8 @@ export class ProductdetailsComponent implements OnInit {
     }
   }
 
-
+  show_danhgia_thaoluan(id){
+    $('.list-rep-comment-info'+id).css("display","");
+    $('#reply_'+id).css("display","");
+  }
 }

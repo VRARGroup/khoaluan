@@ -320,12 +320,20 @@ li {
   border-radius: 5px;
   margin: 0;
   margin-top: 20px;
+
+  a {
+    color: #288ad6;
+  }
 }
 
 .comment-2 {
   height: 800px;
   margin-top: 20px;
   font-size: 16px;
+
+  a {
+    color: #288ad6;
+  }
 }
 
 .comment-3 {
@@ -333,6 +341,17 @@ li {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid rgba(122, 120, 120, 0.664);
+
+  textarea {
+    font-size: 16px;
+    width: 100%;
+    color: rgba(37, 36, 36, 0.664);
+    border-radius: 5px;
+  }
+
+  a {
+    color: #288ad6;
+  }
 }
 
 #comment_1_1 li {
@@ -399,13 +418,6 @@ mat-progress-bar {
   font-size: 13px;
   color: #fff;
   min-width: 107px;
-}
-
-.comment-3 textarea {
-  font-size: 16px;
-  width: 100%;
-  color: rgba(37, 36, 36, 0.664);
-  border-radius: 5px;
 }
 
 .footer-textarea-danhgia {
@@ -539,8 +551,22 @@ textarea {
     text-transform: capitalize;
   }
 
-  .comment_ask .relate_infocom {
+  .relate_infocom {
     margin-left: 30px;
+  }
+
+  .qtv {
+    background: #eebc49;
+    padding: 2px 6px;
+    line-height: 18px;
+    height: 18px;
+    border-radius: 3px;
+    margin-left: 10px;
+    text-transform: uppercase;
+    margin-right: 10px;
+    color: #000;
+    font-weight: normal;
+    font-size: 10px;
   }
 }
 
@@ -581,4 +607,94 @@ textarea {
   margin-top: -15px;
   z-index: 9;
   background: #f1f1f1;
+}
+
+.iconcom-user {
+  padding: 8px 12px;
+}
+
+.avt-qtv {
+  float: left;
+  width: 27px;
+  height: 27px;
+  margin-right: 7px;
+  text-align: center;
+  color: #666;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 26px;
+  font-weight: 600;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, .2);
+}
+
+.danhgia-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+  display: inline-block;
+  text-transform: capitalize;
+}
+
+.reply {
+  display: none;
+
+  input {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #999;
+    padding: 8px;
+    width: 385px;
+    margin-right: 8px;
+  }
+}
+
+.reply-send {
+  padding: 9px 10px;
+  border: 1px solid #288ad6;
+  background: #fff;
+  font-size: 13px;
+  color: #288ad6;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 36px;
+  display: inline-block;
+}
+
+.danhgia-info {
+  font-style: normal;
+  line-height: 21px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.rep-comment-info {
+  border-radius: 4px;
+  background: #4a90e22e;
+  padding: 10px 10px 1px 10px;
+  margin-left: 10px;
+  border-left: 4px solid #efefef;
+  .qtv {
+    color: #000;
+    background: #ecb340;
+    padding: 3px;
+    border-radius: 2px;
+  }
+  span {
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: inline-block;
+    text-transform: capitalize;
+  }
+}
+
+.fa-thumbs-up,
+.fa-thumbs-down {
+  color: rgb(207, 204, 204) !important;
+  background-color: initial !important;
+}
+
+.reply-danhgia{
+  display: none;
 }
