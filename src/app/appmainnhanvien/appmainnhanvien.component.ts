@@ -13,6 +13,7 @@ import { tk } from '../model/taikhoan'
 export class AppmainnhanvienComponent implements OnInit {
 
   idtk:number;
+  hoatdong:string;
   constructor(private router: Router, private taikhoanService: TaikhoanService) { }
 
   ngOnInit() {

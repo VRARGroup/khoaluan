@@ -2,8 +2,8 @@
 <div class="login-box">
     <h1>login</h1>
     <div>
-        <input id="u" type="text" name="username" placeholder="Username">
-        <input id="p" type="password" name="password" placeholder="Password">
+        <input id="u" type="text" (keyup)="input_text($event)" name="username" placeholder="Username">
+        <input id="p" type="password" (keyup)="input_text($event)" name="password" placeholder="Password" (keyup.enter)="getResult()">
         
     </div>
     <input type="submit" value="Log in" (click)="getResult()">

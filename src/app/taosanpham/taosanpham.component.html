@@ -113,6 +113,7 @@
                     <button class="btn btn-primary" title="giới thiệu sản phẩm"><i class="fas fa-book-open fa-3x" (click)="review()"></i></button>
             </div>
             <div class="container d-flex justify-content-center">
+                <button class="btn btn-outline-dark" type="button" id="save_tk" (click)="back()"><i class="fas fa-caret-square-left"></i></button>
                 <button class="btn btn-primary" type="button" (click)="onSubmit()">Save</button>
                 <button *ngIf="ktthaotacdelete"  class="btn btn-primary" type="button" id="save_sanpham" (click)="Deletesp()">Delete</button>
                 <button type="button" class="btn btn-warning" (click)="reset()">Clear</button>

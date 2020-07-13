@@ -494,5 +494,10 @@ export class TaoloaisanphamComponent implements OnInit {
       return true;
     }
   }
+
+  back()
+  {
+    this.location.back();
+  }
   
 }

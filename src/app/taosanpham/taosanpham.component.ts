@@ -12,6 +12,7 @@ import { hinh } from '../model/sanpham';
 import {imgfolder} from '../model/image';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
+
 import { HttpEventType, HttpClient } from '@angular/common/http';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import {Location} from '@angular/common';
@@ -76,6 +77,7 @@ export class TaosanphamComponent implements OnInit {
   constructor(private location: Location, private http: HttpClient,private formBuilder: FormBuilder,private router: Router, private LoaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private saveimgfolderService: SaveimgfolderService) { }
 
   ngOnInit() {
+   
     this.hdappmain=window.localStorage.getItem("tspid")
     this.hoatdong=JSON.parse(window.localStorage.getItem("editid1"));
     console.log(this.hoatdong);
@@ -688,4 +690,10 @@ export class TaosanphamComponent implements OnInit {
         }
         this.router.navigate(['appmainnv/reviewsp']);
       };
+
+      back()
+      {
+        this.location.back();
+      }
+      
 }

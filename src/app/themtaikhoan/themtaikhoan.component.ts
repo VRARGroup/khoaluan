@@ -12,7 +12,7 @@ import { GroupService } from '../service/group.service';
 import { grp } from '../model/group'; 
 import { quyentruycap } from '../model/group'; 
 import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
-
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-themtaikhoan',
@@ -43,6 +43,8 @@ export class ThemtaikhoanComponent implements OnInit {
   constructor(@Inject(DOCUMENT) private document: Document,private location: Location, private router: Router, private taikhoanService: TaikhoanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService ) { }
 
   ngOnInit() {
+    $(".bak").css("height",($(".card").height()+10));
+    $(".bak").css("width",($(".card").width()));
     this.hoatdong=JSON.parse(window.localStorage.getItem("editid1"));
     console.log(this.hoatdong);
     document.getElementById("btndx").style.display="block";
@@ -243,4 +245,10 @@ export class ThemtaikhoanComponent implements OnInit {
       this.router.navigate(['appmainnv/quyentk']);
     }
   }
+
+  back()
+  {
+    this.location.back();
+  }
+  
 }

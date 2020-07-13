@@ -15,6 +15,7 @@ import { ReviewspComponent } from './reviewsp/reviewsp.component';
 import { QuanlyquyenTaikhoanComponent } from './quanlyquyen-taikhoan/quanlyquyen-taikhoan.component';
 import { ThemtaikhoanComponent } from './themtaikhoan/themtaikhoan.component';
 import { AddquyengroupComponent } from './addquyengroup/addquyengroup.component';
+import { RepbinhluanComponent } from './repbinhluan/repbinhluan.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'appmainnv/login' },
@@ -44,6 +45,9 @@ const routes: Routes = [
     },
     {
       path: 'reviewsp', component: ReviewspComponent
+    },
+    {
+      path: 'repbinhluan', component: RepbinhluanComponent
     },
   ]
   },

@@ -28,12 +28,13 @@
                             </select>
                             <br><br>
                         </ng-container>
-                        <button class="buttonpanel"><i class="fas fa-plus fa-3x" (click)="Add()"></i></button>
+                        <div class="buttonpanel"><i class="fas fa-plus fa-3x" (click)="Add()"></i></div>
                     </ng-container>
                 </div>
             </div>
-            <div style="margin-bottom: 50px; margin-top: 50px;">
+            <div style="margin-bottom: 50px; margin-top: 20px;">
                 <div class="container d-flex justify-content-center">
+                    <button class="btn btn-outline-dark" type="button" id="save_tk" (click)="back()"><i class="fas fa-caret-square-left"></i></button>
                     <button class="btn btn-primary" type="button" id="save_tk" (click)="onSubmit()">Save</button>
                 </div>
             </div>

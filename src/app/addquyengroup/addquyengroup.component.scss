@@ -186,12 +186,13 @@ div.transbox {
 
 .buttonpanel {
     background-color: transparent;
-    text-align: center;
     border: transparent;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 10px;
+    margin-left: 10px;
     border: 1px solid transparent;
+    cursor: pointer;
 }
 
 .buttonplusquyen{
@@ -239,4 +240,8 @@ div.transbox {
     background-color: white;
     color: black;
     border: 1px solid white;
+}
+
+.btn:first-child{
+    margin-right: 10px;
 }

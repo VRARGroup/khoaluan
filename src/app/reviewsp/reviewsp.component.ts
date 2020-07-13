@@ -239,4 +239,9 @@ export class ReviewspComponent implements OnInit {
     this.urls=[];
     console.log(this.gt,this.urls);
   }
+  back()
+  {
+    this.location.back();
+  }
+  
 }

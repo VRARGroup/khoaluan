@@ -6,6 +6,7 @@ import { from } from 'rxjs';
 import { tk } from '../model/taikhoan';
 import { GroupService } from '../service/group.service';
 import { grp } from '../model/group'; 
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-login',
@@ -19,14 +20,16 @@ export class LoginComponent implements OnInit {
   constructor(private location: Location, private router: Router, private taikhoanService: TaikhoanService, private groupService: GroupService) { }
 
   ngOnInit() {
-    this.th=window.localStorage.getItem("thoihan");
-    if(this.th!=null)
-    {
-      alert(this.th);
-    }
     document.getElementById("btndx").style.display="none";
     var s=(window.localStorage.getItem("truycaptraiphep"));
-    if(s=="out")
+    this.th=window.localStorage.getItem("thoihan");
+    if(this.th!=null && s=="out")
+    {
+      alert(this.th);
+      window.localStorage.removeItem("truycaptraiphep");
+      window.localStorage.removeItem("thoihan");
+    }
+    if(this.th!=null)
     {
       var f=parseInt(window.localStorage.getItem("idtk"));
       const tkh=new tk(
@@ -38,12 +41,11 @@ export class LoginComponent implements OnInit {
         0
       );
       this.Updatetk(tkh);
-      window.localStorage.removeItem("truycaptraiphep");
-      window.localStorage.removeItem("idtk");
-      s=null;
-      f=null;
+      window.localStorage.removeItem("thoihan");
     }
-  }
+    
+    window.localStorage.removeItem("idtk");
+    }
 
   Updatetk(t: tk){
     try
@@ -69,6 +71,8 @@ export class LoginComponent implements OnInit {
       if(res==null)
       {
         alert("Tài khoản không tồn tại !!!");
+        $('#u').val($('#u').val().toString().replace($('#u').val().toString(),""));
+        $('#p').val($('#p').val().toString().replace($('#p').val().toString(),""));
         return false;
       }
       if(res[0].giayphep==false)
@@ -92,7 +96,7 @@ export class LoginComponent implements OnInit {
           (res) ? res : [];
             if(res[0].tengroup.toUpperCase()=="NHÂN VIÊN")
             {
-              this.router.navigate(['appmain']);
+              this.router.navigate(['appmainnv/repbinhluan']);
             }
             else
             {
@@ -128,16 +132,59 @@ export class LoginComponent implements OnInit {
   dangnhap()
   {
     this.Getdetailtk(document.getElementById("u")["value"],document.getElementById("p")["value"]);
+    
   }
   results: any;
   error: any;
   isLoading: boolean;
+  s:string;
   getResult() {
     this.error = null;
     this.results = '';
     this.isLoading = true;
-    this.dangnhap();
+    var s=$('#p').val().toString().length;
+    console.log(s);
+    if($('#u').val().toString().length>0 && $('#p').val().toString().length>0)
+    {
+      this.dangnhap();
+    }
+    else
+    {
+      if($('#u').val().toString().length==0 && $('#p').val().toString().length==0)
+      {
+        alert("Vui lòng nhập username và password !!!");
+        $("#u").css("border","1px solid red");
+        $("#p").css("border","1px solid red");
+      }
+      else
+      {
+        if($('#u').val().toString().length==0)
+        {
+          alert("Vui lòng nhập username !!!");
+          $("#u").focus();
+        }
+        else
+        {
+          if($('#p').val().toString().length==0)
+          {
+            alert("Vui lòng nhập password !!!");
+            $("#p").focus();
+          }
+        }
+      }
+    }
   }
-
+  
+  input_text(value)
+  {
+    if($('#u').val().toString().length>0)
+    {
+      $("#u").css("border","0px solid red");
+    }
+    if($('#p').val().toString().length>0)
+    {
+      $("#p").css("border","0px solid red");
+    }
+  }
 
 }

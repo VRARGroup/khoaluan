@@ -64,9 +64,16 @@ namespace dienmayxanhapi
 
         public List<sanphamdienthoai> Gettsp_lspfillter(int id, string tensp)
         {
-          
-          var dl = collectionspdt.Find(x => x._id_loaisanpham==id && x.thuonghieu == tensp).ToList();
-          return dl;
+          if (tensp!="v")
+          {
+            var dl = collectionspdt.Find(x => x._id_loaisanpham == id && x.thuonghieu == tensp).ToList();
+            return dl;
+          }
+          else
+          {
+              var dl = collectionspdt.Find(x => x._id_loaisanpham == id).ToList();
+              return dl;
+          }
         }
 
         public List<sanphamdienthoai> Getfillterspidlsp(int idlsp)

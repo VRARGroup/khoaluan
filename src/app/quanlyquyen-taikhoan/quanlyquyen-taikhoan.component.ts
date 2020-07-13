@@ -47,23 +47,26 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
     
     if(this.hoatdong==false|| this.hoatdong==null)
     {
+      window.localStorage.removeItem("truycaptraiphep");
+      window.localStorage.setItem("truycaptraiphep", "out");
       this.router.navigate(['appmainnv/login']);
     }
     else
     {
       this.loaddetaildsq();
+      if(window.localStorage.getItem("teng").toUpperCase()=="ADMIN" || window.localStorage.getItem("teng").toUpperCase()=="QUẢN LÝ")
+      {
+        this.loadtaikhoan();
+        this.loadgroup();
+      }
+      else
+      {
+        window.localStorage.removeItem("truycaptraiphep");
+        window.localStorage.setItem("truycaptraiphep", "out");
+        this.location.back();
+      }
     }
-    if(window.localStorage.getItem("teng").toUpperCase()=="ADMIN" || window.localStorage.getItem("teng").toUpperCase()=="QUẢN LÝ")
-    {
-      this.loadtaikhoan();
-      this.loadgroup();
-    }
-    else
-    {
-      window.localStorage.removeItem("truycaptraiphep");
-      window.localStorage.setItem("truycaptraiphep", "out");
-      this.location.back();
-    }
+   
   }
 
   quanlytk=false;

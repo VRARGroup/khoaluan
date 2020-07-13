@@ -46,23 +46,27 @@
     border-radius: 20px;
 }
 
-.btn:hover:first-child {
-    color: #333333;
-    background-color: #4a90e2;
-    border: 2px solid #fbda00;
-    border-radius: 20px 0 0 20px;
+.btn:first-child {
+    margin-right: 10px;
 }
 
-.btn:hover:last-child {
-    color: #333333;
-    background-color: #4a90e2;
-    border: 2px solid #fbda00;
-    border-radius: 0 20px 20px 0;
+.btn:last-child {
+    margin-left: 10px;
 }
-.btn:hover{
-    color: #333333;
-    background-color: #4a90e2;
+.btn-primar:hover{
+    color: white;
+    background-color: #295c96;
     border: 2px solid #fbda00;
+}
+
+.btn-warning{
+    color: white;
+}
+
+.btn-warning:hover{
+    color: white;
+    background-color: #e0d067;
+    border: 2px solid #4a90e2;
 }
 
 .button {

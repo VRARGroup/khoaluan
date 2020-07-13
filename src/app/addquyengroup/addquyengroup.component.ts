@@ -116,5 +116,9 @@ export class AddquyengroupComponent implements OnInit {
     }
   }
 
+  back()
+  {
+    this.location.back();
+  }
 
 }
