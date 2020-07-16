@@ -20,6 +20,7 @@ import { dgphu } from '../model/danhgia';
 
 import { ModalThongsokythuatComponent } from '../modal/modal-thongsokythuat/modal-thongsokythuat.component';
 import { ModalDanhgiaComponent } from '../modal/modal-danhgia/modal-danhgia.component';
+import { ModalDanhGiaPhuComponent } from '../modal/modal-danhgiaphu/modal-danhgiaphu.component';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -48,13 +49,13 @@ export class ProductdetailsComponent implements OnInit {
   idsp: number = null;
   resulf_danhgia: any[] = [];
   star: number = 0;
-  items_danhgia:dg[];
-  items_danhgiaphu:dgphu[];
+  items_danhgia: dg[];
+  items_danhgiaphu: dgphu[];
   constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService) {
   }
   ngOnInit() {
     let id_sanpham = this.route.snapshot.params.id;
-    this.idsp=id_sanpham;
+    this.idsp = id_sanpham;
     console.log(this.idsp);
     if (isNaN(id_sanpham))
       this.router.navigate(["appmain/products"]);
@@ -62,6 +63,7 @@ export class ProductdetailsComponent implements OnInit {
     document.getElementById('dropdown-menu').style.display = "";
     document.getElementById('html').style.backgroundColor = "#fff";
     document.getElementById('html').style.backgroundImage = "none";
+    document.getElementById('html').style.backgroundColor = "#fff";
     window.scroll(0, 0);
     this.loaddanhgia()
     console.log(this.idsp);
@@ -285,10 +287,10 @@ export class ProductdetailsComponent implements OnInit {
     this.loaisanphamService.check_tieuchidanhgia(_id_loaisanpham).subscribe((res: any | null) => {
       this.resulf_danhgia = (res) ? res : [];
 
-      if (this.resulf_danhgia.length > 0 && this.resulf_danhgia.length <5) {
+      if (this.resulf_danhgia.length > 0 && this.resulf_danhgia.length < 5) {
         $("#comment_1_1").css("display", "none");
         $("#comment_1").css("height", "235px");
-      }else if (this.resulf_danhgia.length > 0) {
+      } else if (this.resulf_danhgia.length > 0) {
         $("#comment_1_1").css("display", "none");
         $("#comment_1").css("height", this.resulf_danhgia.length * 36 + 60 + "px");
       }
@@ -309,6 +311,7 @@ export class ProductdetailsComponent implements OnInit {
     $(".comment-3-textarea").css("display", "none");
     $(".comment-3-textarea-show").css("display", "");
     $(".comment-3-textarea-show")[0].scrollIntoView();
+    $(".textarea_danhgia").focus();
   }
 
   getvalue(v: number) {
@@ -377,8 +380,7 @@ export class ProductdetailsComponent implements OnInit {
   }
 
   guidanhgiangay() {
-    if( $("#hoten").val().toString().trim()!=null && $('#sdt').val().toString().trim()!=null && $('#email').val().toString().trim()!=null)
-    {
+    if ($("#hoten").val().toString().trim() != null && $('#sdt').val().toString().trim() != null && $('#email').val().toString().trim() != null) {
       for (let i = 0; i < this.urls.length; i++) {
         this.getvalue(i);
       }
@@ -399,7 +401,7 @@ export class ProductdetailsComponent implements OnInit {
       this.Createdg(d);
       this.hinhthuctesp = [];
       this.show_hide_danhgiasosao();
-      }
+    }
   }
 
   Remove(id: number) {
@@ -424,55 +426,38 @@ export class ProductdetailsComponent implements OnInit {
     }
   }
 
-  show_danhgia_thaoluan(id:number){
+  show_danhgia_thaoluan(id: number) {
     // $('.list-rep-comment-info'+id).css("display","");
-    $('#rep-comment-info'+id).css("display","block");
-    $('#rep-comment-info-input'+id).css("display","block");
+    $('#rep-comment-info' + id).css("display", "block");
+    $('#rep-comment-info-input' + id).css("display", "block");
     console.log(this.show(id));
   }
 
-  show(id:number)
-  {
-    let items_danhgiaphu:dgphu[]=this.items_danhgia.find(x=>x._id==id).danhgiaphu;
+  show(id: number) {
+    let items_danhgiaphu: dgphu[] = this.items_danhgia.find(x => x._id == id).danhgiaphu;
     return items_danhgiaphu;
   }
 
-  loaddanhgia()
-  {
+  loaddanhgia() {
     this.danhgiaService.getdg_idsp(this.idsp).subscribe((res: dg[] | null) => {
-    this.items_danhgia = (res) ? res : [];
-  });
+      this.items_danhgia = (res) ? res : [];
+    });
   }
-  dgp:Array<any>=[];
-  insertbl(id:number)
-  {
-    const dp=new dgphu(
-      $('#input'+id).val().toString(),
-      0,
-      "vinh",
-      true,
-      "@"
-    )
-    console.log(dp) 
-    this.dgp.push(dp);
 
-    const d=new dg(
-      id,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      this.dgp,
-      null,
-      0
-    );
-    this.danhgiaService.insert_binhluan_danhgia(d).subscribe(
-      () => {
-          alert('Thực hiện thành công');
-      }
-    );
+  show_insert_danhgiaphu(id: number) {
+    var noidungdanhgia = $('#input' + id).val().toString();
+    if (noidungdanhgia.length == 0) {
+      alert("Vui lòng nhập nội dung!");
+    }
+    else {
+      const dialogRef = this.dialog.open(ModalDanhGiaPhuComponent, {
+        width: '80vh',
+        height: 'auto',
+        data: {
+          idsp: this.idsp,
+          noidungdanhgia: noidungdanhgia,
+        }
+      });
+    }
   }
 }

@@ -30,13 +30,15 @@ export class dgphu {
     noidung:string;
     luotthich:number;
     ten: string;
+    chucdanh : boolean;
     gioitinh: boolean;
     email:string;
     ngaydanhgiaphu:Date;
-    constructor(noidung:string, luotthich:number, ten: string, gioitinh: boolean, email:string) {
+    constructor(noidung:string, luotthich:number, ten: string, chucdanh : boolean, gioitinh: boolean, email:string) {
         this.noidung = noidung;
         this.luotthich = luotthich;
         this.ten = ten;
+        this.chucdanh = chucdanh;
         this.gioitinh = gioitinh;
         this.email = email;
     }

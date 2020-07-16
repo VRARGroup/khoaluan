@@ -29,6 +29,7 @@ namespace dienmayxanhapi.Model
     public string noidung { get; set; }
     public int? luotthich { get; set; }
     public string ten { get; set; }
+    public Boolean chucdanh { get; set; }
     public Boolean gioitinh { get; set; }
     public string email { get; set; }
     public DateTime ngaydanhgiaphu { get; set; }
