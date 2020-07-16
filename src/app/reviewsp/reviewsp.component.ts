@@ -78,7 +78,6 @@ export class ReviewspComponent implements OnInit {
     }
     this.idinput="inputmt"+this.i;
     let fileToUpload = <File>files[0];
-    this.urls.push(fileToUpload.name);
     this.isImageSaved=true;
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
@@ -91,6 +90,7 @@ export class ReviewspComponent implements OnInit {
           console.log(this.responseimage)
         }
       });
+      setTimeout(()=>{this.urls.push(fileToUpload.name)},500);
       console.log("h",this.urls);
      
   }
@@ -98,7 +98,7 @@ export class ReviewspComponent implements OnInit {
   v:boolean=false;
   serverPath: string;
   public createImgPath = (s:string) => {
-    if(s==null)
+    setTimeout(() => {if(s==null)
     {
       this.serverPath=null;
     }
@@ -124,7 +124,7 @@ export class ReviewspComponent implements OnInit {
         
         this.serverPath="https://localhost:44309/Resources/Images/"+s;
       }
-    }
+    }},500);
     return this.serverPath;
   }
 

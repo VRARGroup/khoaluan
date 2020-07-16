@@ -576,7 +576,7 @@ export class TaosanphamComponent implements OnInit {
        
         let fileToUpload = <File>files[0];
         this.urlimagedd=Object(fileToUpload.name);
-        this.nameimagedd=fileToUpload.name;
+        
         this.isImageSaveddd=true;
         const formData = new FormData();
         formData.append('file', fileToUpload, fileToUpload.name);
@@ -591,6 +591,7 @@ export class TaosanphamComponent implements OnInit {
               console.log(this.responsedd)
             }
           });
+          setTimeout(()=>{this.nameimagedd=fileToUpload.name},500);
           document.getElementById("uploadimagedd")["value"] = "";
       }
 
@@ -600,7 +601,6 @@ export class TaosanphamComponent implements OnInit {
         }
         this.idinput="inputmt"+this.i;
         let fileToUpload = <File>files[0];
-        this.urls.push(fileToUpload.name);
         this.isImageSaved=true;
         const formData = new FormData();
         formData.append('file', fileToUpload, fileToUpload.name);
@@ -614,13 +614,14 @@ export class TaosanphamComponent implements OnInit {
               console.log(this.responseimage)
             }
           });
+          setTimeout(()=>{this.urls.push(fileToUpload.name)},500);
           document.getElementById("uploadCaptureInputFile")["value"] = "";
           console.log("h",this.urls);
          
       }
 
       createImgPath = (s:string) => {
-        
+        setTimeout(() => {
         if(s===undefined)
         {
           this.serverPath="https://localhost:44309/Resources/Images/"+this.serverPath;
@@ -651,7 +652,7 @@ export class TaosanphamComponent implements OnInit {
               this.serverPath="https://localhost:44309/Resources/Images/"+s;
             }
           }
-        }
+        }},500);
         
         return this.serverPath;
       }

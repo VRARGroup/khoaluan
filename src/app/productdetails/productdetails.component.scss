@@ -515,6 +515,10 @@ textarea {
   background-color: transparent;
   min-width: 123px;
   padding: 8px;
+  .divloading{
+    background-color: transparent;
+    width: 100%;
+  }
 }
 
 .img-space img {
@@ -672,11 +676,9 @@ ul {
 .rep-comment-info {
   border-radius: 4px;
   background: white;
-  padding: 10px 10px 1px 10px;
   margin-top: 10px;
   margin-left: 10px;
-  margin-bottom: 10px;
-  border-left: 4px solid #efefef;
+ 
   display: none;
 
   .qtv {
@@ -691,6 +693,11 @@ ul {
     margin-bottom: 4px;
     display: inline-block;
     text-transform: capitalize;
+  }
+
+  .rep-comment-info-dg{
+    padding: 10px 10px 1px 10px;
+    border-left: 4px solid #efefef;
   }
 }
 
@@ -763,7 +770,7 @@ ul {
   display: block;
   overflow: hidden;
   position: relative;
-  color: rgba(79, 248, 130, 0.815);
+  color: #288ad6;
   border: 0;
   background: #e4dadab2;
   width: 100%;

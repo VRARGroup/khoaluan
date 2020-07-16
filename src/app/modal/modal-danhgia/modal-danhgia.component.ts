@@ -161,7 +161,7 @@ export class ModalDanhgiaComponent implements OnInit {
     }
     if (this.urls.length < 4) {
       let fileToUpload = <File>files[0];
-      this.urls.push(fileToUpload.name);
+      
       this.isImageSaved = true;
       const formData = new FormData();
       formData.append('file', fileToUpload, fileToUpload.name);
@@ -174,13 +174,14 @@ export class ModalDanhgiaComponent implements OnInit {
             console.log(this.responseimage)
           }
         });
+      setTimeout(()=>{this.urls.push(fileToUpload.name)},500);
       document.getElementById("uploadCaptureInputFile")["value"] = "";
       console.log("h", this.urls);
     }
   }
 
   createImgPath = (s: string) => {
-
+   
     if (s === undefined) {
       this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
     }
@@ -198,7 +199,8 @@ export class ModalDanhgiaComponent implements OnInit {
   {
     this.tieuchidanhgia.splice(i,1);
     this.tieuchidanhgia.splice(i,0,true);
-    $('#y'+i).css("background-color","rgb(21, 43, 24)");
+    $('#y'+i).css("box-shadow","inset 1px 1px 6px -1px rgb(33 29 29)");
+    $('#n'+i).css("box-shadow","inset 0px 0px 0px 0px");
     console.log(this.tieuchidanhgia);
   }
 
@@ -206,40 +208,48 @@ export class ModalDanhgiaComponent implements OnInit {
   {
     this.tieuchidanhgia.splice(i,1);
     this.tieuchidanhgia.splice(i,0,false);
-    $('#n'+i).css("background-color","rgb(119, 61, 61)");
+    $('#n'+i).css("box-shadow","inset 1px 1px 6px -1px rgb(33 29 29)");
+    $('#y'+i).css("box-shadow","inset 0px 0px 0px 0px");
     console.log(this.tieuchidanhgia);
   }
 
   guidanhgiangay() {
     try
     {
-    if( $("#hotenm").val().toString().trim()!=null && $('#sdtm').val().toString().trim()!=null && $('#emailm').val().toString().trim()!=null)
-    {
-      for (let i = 0; i < this.urls.length; i++) {
-        this.getvalue(i);
+      if($('#textarea_danhgiasosao_modal').val().toString().length)
+      {
+        if( $("#hotenm").val().toString().trim()!="" && $('#sdtm').val().toString().trim()!="" && $('#emailm').val().toString().trim()!="")
+        {
+          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(re.test($('#email').val().toString()))
+            {
+              for (let i = 0; i < this.urls.length; i++) {
+                this.getvalue(i);
+              }
+              const d = new dg(
+                0,
+                this.star,
+                $("#hotenm").val().toString(),
+                $('#sdtm').val().toString(),
+                $('#emailm').val().toString(),
+                $('#textarea_danhgiasosao_modal').val().toString(),
+                this.hinhthuctesp,
+                0,
+                null,
+                this.tieuchidanhgia,
+                parseInt(this.idsp.toString())
+              );
+              console.log("danhgia", d);
+              this.Createdg(d);
+              this.hinhthuctesp = [];
+              this.dialogRef.close()
+            }
+          }
       }
-      const d = new dg(
-        0,
-        this.star,
-        $("#hotenm").val().toString(),
-        $('#sdtm').val().toString(),
-        $('#emailm').val().toString(),
-        $('#textarea_danhgiasosao_modal').val().toString(),
-        this.hinhthuctesp,
-        0,
-        null,
-        this.tieuchidanhgia,
-        parseInt(this.idsp.toString())
-      );
-      console.log("danhgia", d);
-      this.Createdg(d);
-      this.hinhthuctesp = [];
-      this.dialogRef.close()
-    }
-    else
-    {
-      alert("Vui lòng nhập họ tên, số điện thoại và email");
-    }
+      else
+      {
+        alert("Vui lòng nhập họ tên, số điện thoại và email");
+      }
     }
     catch
     {

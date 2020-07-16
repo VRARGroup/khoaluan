@@ -93,6 +93,7 @@ namespace dienmayxanhapi.Controllers
       [HttpPut("{_id}")]
       public ActionResult<List<danhgia>> putdanhgia(int _id, danhgia g)
       {
+        g.danhgiaphu[0].ngaydanhgiaphu = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc);
         var filter = Builders<danhgia>.Filter.Eq("_id", _id);
         BsonArray arraydsq = new BsonArray();
         var update = Builders<danhgia>.Update.Push(x => x.danhgiaphu, g.danhgiaphu[0]);

@@ -4,8 +4,8 @@
     <div class="row slot-danhgia" *ngFor="let slot_danh_gia of resulf_danhgia, let i=index">
         <div class="col-10" *ngIf="!slot_danh_gia.includes('?')" style="width: 80%;">{{slot_danh_gia}} ?</div>
         <div class="col-10" *ngIf="slot_danh_gia.includes('?')" style="width: 80%;">{{slot_danh_gia}}</div>
-        <a class="col-1" (click)="tieuchidanhgia_y(i)"><div id="y{{i}}" style="border: 1px solid rgb(1, 255, 35); border-radius: 5px; text-align: center;background-color: #c7ffa0;">yes</div></a>
-        <a class="col-1"(click)="tieuchidanhgia_n(i)"><div id="n{{i}}" style="border: 1px solid rgb(255, 1, 1); border-radius: 5px; text-align: center;background-color: #f77;">no</div></a>
+        <a class="col-1 " (click)="tieuchidanhgia_y(i)"><div id="y{{i}}" style="border: 1px solid rgb(1, 255, 35); border-radius: 5px; text-align: center; background-color: #c7ffa0;">yes</div></a>
+        <a class="col-1"(click)="tieuchidanhgia_n(i)"><div id="n{{i}}" style="border: 1px solid rgb(255, 1, 1); border-radius: 5px; text-align: center; background-color: #f77;">no</div></a>
     </div>
 
     <textarea (keyup)="textarea_text_change($event)" id="textarea_danhgiasosao_modal" cols="30" rows="10" placeholder="Mời bạn chia sẻ thêm một số cảm nhận..."></textarea>

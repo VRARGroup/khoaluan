@@ -193,19 +193,19 @@
               <div class="col-6">
                 <ul>
                   <li><a>5 sao</a>
-                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar5}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>4 sao</a>
-                    <mat-progress-bar mode="determinate" value="30"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar4}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>3 sao</a>
-                    <mat-progress-bar mode="determinate" value="20"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar3}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>2 sao</a>
-                    <mat-progress-bar mode="determinate" value="10"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar2}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>1 sao</a>
-                    <mat-progress-bar mode="determinate" value="0"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar1}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                 </ul>
               </div>
@@ -225,19 +225,19 @@
                 </div>
                 <ul>
                   <li><a>5 sao</a>
-                    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar5}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>4 sao</a>
-                    <mat-progress-bar mode="determinate" value="30"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar4}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>3 sao</a>
-                    <mat-progress-bar mode="determinate" value="20"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar3}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>2 sao</a>
-                    <mat-progress-bar mode="determinate" value="10"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar2}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                   <li><a>1 sao</a>
-                    <mat-progress-bar mode="determinate" value="0"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar1}}"></mat-progress-bar> <a> đánh giá</a>
                   </li>
                 </ul>
               </div>
@@ -365,11 +365,11 @@
                       </p>
                     </div>
                     <div class="reply-danhgia">
-                      <a href="javascript:void()" (click)="show_danhgia_thaoluan(item_danhgia._id)">
+                      <a href="javascript:void(0)" (click)="show_danhgia_thaoluan(item_danhgia._id)">
                         Thảo luận
                       </a>
                       <span> • </span>
-                      <a href="javascript:void()">
+                      <a href="javascript:void(0)">
                         <i class="fa fa-thumbs-up"></i>
                         Hữu ích
                       </a>
@@ -379,9 +379,10 @@
                   <ng-container *ngIf="show(item_danhgia._id).length>0">
                     <li class="rep-comment-info" id="rep-comment-info{{item_danhgia._id}}">
                       <div *ngFor="let item of show(item_danhgia._id)">
+                        <div class="rep-comment-info-dg" style="margin-bottom: 10px;">
                         <div>
                           <span>{{item.ten}}
-                            <label class="qtv">QTV</label>
+                            <label class="qtv" *ngIf="item.chucdanh==true">QTV</label>
                           </span>
                         </div>
                         <div>
@@ -390,10 +391,11 @@
                           </p>
                         </div>
                         <div>
-                          <a href="javascript:void()" class="cmtl">
+                          <a href="javascript:void(0)" class="cmtl">
                             <i class="fa fa-thumbs-up"></i>
                             Hữu ích
                           </a>
+                        </div>
                         </div>
                       </div>
                     </li>
@@ -449,11 +451,11 @@
                 <div class="infocom_ask">Hiện tại e thấy sp giảm 10% e ở tp châu đốc vậy có được giảm bà giảm giá khi e
                   mua tiền mặt bao nhiêi cho chiếu tivi này ạ</div>
                 <div class="relate_infocom">
-                  <a href="javascript:void()">
+                  <a href="javascript:void(0)">
                     <span class="reply-comment">Trả lời </span>
                   </a>
                   <b class="dot">●</b>
-                  <a href="javascript:void()">
+                  <a href="javascript:void(0)">
                     <i class="fa fa-thumbs-up"></i>
                     <span class="like"> Thích</span>
                   </a>
@@ -479,15 +481,15 @@
                         <br>Thông tin đến anh.&nbsp;
                       </div>
                       <div class="relate_infocom">
-                        <a href="javascript:void()"><span class="btnreply">Trả lời </span></a>
+                        <a href="javascript:void(0)"><span class="btnreply">Trả lời </span></a>
                         <b class="dot">●</b>
-                        <a href="javascript:void()" class="favor satis">
+                        <a href="javascript:void(0)" class="favor satis">
                           <i class="fa fa-thumbs-up"></i>
                           Hài lòng
                           <span></span>
                         </a>
                         <b class="dot">●</b>
-                        <a href="javascript:void()" class="favor satis">
+                        <a href="javascript:void(0)" class="favor satis">
                           <i class="fa fa-thumbs-down"></i>
                           Không hài lòng
                           <span></span>
@@ -503,7 +505,7 @@
                               bắt buộc):</span>
                             <input placeholder="Họ tên" type="text" class="ustName">
                             <input placeholder="Số điện thoại" type="text" class="ustPhone">
-                            <a href="javascript:void()">GỬI</a>
+                            <a href="javascript:void(0)">GỬI</a>
                           </div>
                         </div>
                       </div>

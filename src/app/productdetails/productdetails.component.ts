@@ -17,10 +17,11 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Location } from '@angular/common';
 import { dg } from '../model/danhgia';
 import { dgphu } from '../model/danhgia';
+import { Validators } from '@angular/forms';
 
 import { ModalThongsokythuatComponent } from '../modal/modal-thongsokythuat/modal-thongsokythuat.component';
 import { ModalDanhgiaComponent } from '../modal/modal-danhgia/modal-danhgia.component';
-import { ModalDanhGiaPhuComponent } from '../modal/modal-danhgiaphu/modal-danhgiaphu.component';
+import { ModalDanhgiaphuComponent } from '../modal/modal-danhgiaphu/modal-danhgiaphu.component';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -332,7 +333,7 @@ export class ProductdetailsComponent implements OnInit {
     }
     if (this.urls.length < 4) {
       let fileToUpload = <File>files[0];
-      this.urls.push(fileToUpload.name);
+      
       this.isImageSaved = true;
       const formData = new FormData();
       formData.append('file', fileToUpload, fileToUpload.name);
@@ -342,16 +343,17 @@ export class ProductdetailsComponent implements OnInit {
             this.progress = Math.round(100 * event.loaded / event.total);
           else if (event.type === HttpEventType.Response) {
             this.responseimage.push(event.body);
-            console.log(this.responseimage)
           }
         });
+      setTimeout(()=>{this.urls.push(fileToUpload.name)},500);
       document.getElementById("uploadCaptureInputFile")["value"] = "";
       console.log("h", this.urls);
     }
   }
 
+  counth:number=0;
   createImgPath = (s: string) => {
-
+    
     if (s === undefined) {
       this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
     }
@@ -375,32 +377,52 @@ export class ProductdetailsComponent implements OnInit {
         }
       }
     }
-
+    this.counth++
     return this.serverPath;
   }
 
   guidanhgiangay() {
-    if ($("#hoten").val().toString().trim() != null && $('#sdt').val().toString().trim() != null && $('#email').val().toString().trim() != null) {
-      for (let i = 0; i < this.urls.length; i++) {
-        this.getvalue(i);
+    if(this.textarea_count>=80)
+    {
+      if ($('#hoten').val().toString().trim() != "" && $('#sdt').val().toString().trim() != "" && $('#email').val().toString().trim() != "") 
+      {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(re.test($('#email').val().toString()))
+        {
+          for (let i = 0; i < this.urls.length; i++) {
+            this.getvalue(i);
+          }
+          const d = new dg(
+            0,
+            this.sosao,
+            $("#hoten").val().toString(),
+            $('#sdt').val().toString(),
+            $('#email').val().toString(),
+            this.valuetext,
+            this.hinhthuctesp,
+            0,
+            null,
+            null,
+            parseInt(this.idsp.toString())
+          );
+          console.log("danhgia", d);
+          this.Createdg(d);
+          this.hinhthuctesp = [];
+          this.show_hide_danhgiasosao();
+        }
+        else{
+          alert("Email nhập không hợp lệ vui lòng kiểm tra lại !!!")
+          $("#email").css("border","1px solid red");
+        }
       }
-      const d = new dg(
-        0,
-        this.sosao,
-        document.getElementById("hoten")["value"],
-        document.getElementById("sdt")["value"],
-        document.getElementById("email")["value"],
-        this.valuetext,
-        this.hinhthuctesp,
-        0,
-        null,
-        null,
-        parseInt(this.idsp.toString())
-      );
-      console.log("danhgia", d);
-      this.Createdg(d);
-      this.hinhthuctesp = [];
-      this.show_hide_danhgiasosao();
+      else
+      {
+        alert("Vui lòng nhập đầy đủ thông tin cá nhân !!!")
+      }
+    }
+    else
+    {
+      alert("Nội dung phải đủ 80 ký tự trở lên !!!")
     }
   }
 
@@ -438,9 +460,21 @@ export class ProductdetailsComponent implements OnInit {
     return items_danhgiaphu;
   }
 
+  sumstar1:number=0;
+  sumstar2:number=0;
+  sumstar3:number=0;
+  sumstar4:number=0;
+  sumstar5:number=0;
+  countstar:number=0;
   loaddanhgia() {
     this.danhgiaService.getdg_idsp(this.idsp).subscribe((res: dg[] | null) => {
       this.items_danhgia = (res) ? res : [];
+      this.countstar=res.length;
+      this.sumstar1=((res.filter(x=>x.sosao===1).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
+      this.sumstar2=((res.filter(x=>x.sosao===2).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
+      this.sumstar3=((res.filter(x=>x.sosao===3).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
+      this.sumstar4=((res.filter(x=>x.sosao===4).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
+      this.sumstar5=((res.filter(x=>x.sosao===5).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
     });
   }
 
@@ -450,11 +484,12 @@ export class ProductdetailsComponent implements OnInit {
       alert("Vui lòng nhập nội dung!");
     }
     else {
-      const dialogRef = this.dialog.open(ModalDanhGiaPhuComponent, {
-        width: '80vh',
+      const dialogRef = this.dialog.open(ModalDanhgiaphuComponent, {
+        width: '50vw',
         height: 'auto',
         data: {
           idsp: this.idsp,
+          iddg: id,
           noidungdanhgia: noidungdanhgia,
         }
       });
