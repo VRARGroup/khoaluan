@@ -22,6 +22,7 @@ import { Validators } from '@angular/forms';
 import { ModalThongsokythuatComponent } from '../modal/modal-thongsokythuat/modal-thongsokythuat.component';
 import { ModalDanhgiaComponent } from '../modal/modal-danhgia/modal-danhgia.component';
 import { ModalDanhgiaphuComponent } from '../modal/modal-danhgiaphu/modal-danhgiaphu.component';
+import { ModalBinhluanphuComponent } from '../modal/modal-binhluanphu/modal-binhluanphu.component';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -56,8 +57,10 @@ export class ProductdetailsComponent implements OnInit {
   }
   ngOnInit() {
     let id_sanpham = this.route.snapshot.params.id;
+    // debugger
+    if (isNaN(id_sanpham))
+      id_sanpham = parseInt(window.localStorage.getItem("sp"));
     this.idsp = id_sanpham;
-    console.log(this.idsp);
     if (isNaN(id_sanpham))
       this.router.navigate(["appmain/products"]);
     this.get_product_details(id_sanpham);
@@ -144,12 +147,15 @@ export class ProductdetailsComponent implements OnInit {
       this.same_products = (res) ? res : [];
     });
   }
-  render_sp(id_sanpham: any): void {
-    window.localStorage.removeItem("sp");
-    window.localStorage.setItem("sp", id_sanpham.toString());
+  render_sp(id_sanpham): void {
+    this.router.navigate(['/appmain/productdetails',id_sanpham]).then(()=>{
+      window.location.reload();
+    });
+    // window.localStorage.removeItem("sp");
+    // window.localStorage.setItem("sp", id_sanpham.toString());
 
-    // this.router.navigate(["appmain/productdetails"]);
-    window.location.href = "appmain/productdetails";
+    // // this.router.navigate(["appmain/productdetails"]);
+    // window.location.href = "appmain/productdetails";
   }
   get_same_price_products(id_sanpham: number) {
     this.sanphamService.get_same_price_products(id_sanpham).subscribe((res: sp[] | null) => {
@@ -494,5 +500,17 @@ export class ProductdetailsComponent implements OnInit {
         }
       });
     }
+  }
+
+  show_insert_binhluanphu(idbl: number) {
+    const dialogRef = this.dialog.open(ModalBinhluanphuComponent, {
+      width: '50vw',
+      height: 'auto',
+      data: {
+        idsp: this.idsp,
+        idbl: idbl,
+        name: "name",
+      }
+    });
   }
 }

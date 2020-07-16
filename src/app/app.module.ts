@@ -85,6 +85,7 @@ import { ModalDanhgiaComponent } from './modal/modal-danhgia/modal-danhgia.compo
 import { RepbinhluanComponent } from './repbinhluan/repbinhluan.component';
 import { ModalDanhgiaphuComponent } from './modal/modal-danhgiaphu/modal-danhgiaphu.component';
 import { TatcadanhgiaComponent } from './tatcadanhgia/tatcadanhgia.component';
+import { ModalBinhluanphuComponent } from './modal/modal-binhluanphu/modal-binhluanphu.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { TatcadanhgiaComponent } from './tatcadanhgia/tatcadanhgia.component';
     RepbinhluanComponent,
     ModalDanhgiaphuComponent,
     TatcadanhgiaComponent,
+    ModalBinhluanphuComponent,
   ],
   imports: [
     
@@ -172,7 +174,7 @@ import { TatcadanhgiaComponent } from './tatcadanhgia/tatcadanhgia.component';
     CarouselModule,
     MDBBootstrapModule.forRoot()
   ],
-  entryComponents: [ ModalThongsokythuatComponent,  ModalthemuseComponent, ModalDanhgiaComponent, ModalDanhgiaphuComponent],
+  entryComponents: [ ModalThongsokythuatComponent,  ModalthemuseComponent, ModalDanhgiaComponent, ModalDanhgiaphuComponent, ModalBinhluanphuComponent],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

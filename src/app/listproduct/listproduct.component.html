@@ -1,5 +1,5 @@
 <div id="list_product">
-  <img class="banner" src="https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png">
+  <img class="banner" src={{banner}}>
   <div class="title-head">
     <div class="title-head-info">
       4 LỢI ÍCH CHỈ CÓ TẠI ĐIỆN MÁY XANH
@@ -26,14 +26,16 @@
       <div class="list">
         <ng-container id="list_1" *ngFor="let item of items">
           <a [routerLink]="['/appmain/productdetails', item._id]">
-            <div class="box-image-same-price">
+            <div class="box-list-product">
               <div><label class="tra-gop"> Trả góp 0% </label><img src="{{item.hinhdaidien}}"></div>
-              <p style="padding: 2px 25px; height: 37px;">{{item.ten}}</p>
+              <p class="list-product-name">{{item.ten}}</p>
               <p *ngIf="item.giamgia!=0 && item.giamgia!=null" style="color: #d0021b;">
                 {{item.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
               <p>{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
-              <p style="color: #fc9639;" *ngIf="item.sosao !=0 && item.sosao !=null"> <i class="fa fa-star"
-                  aria-hidden="true"></i>{{item.sosao}}/5</p>
+              <p style="color: #fc9639;" *ngIf="item.sosao !=0 && item.sosao !=null">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                {{item.sosao}}/5
+              </p>
             </div>
           </a>
         </ng-container>
@@ -77,17 +79,17 @@
         <h2>Hãng</h2>
         <div class="category" *ngFor="let category of categories">
           <a (change)="suggest_category(categories)">
-            <input type="checkbox" id="{{category}}">
-            <label for="{{category}}"> {{category}}</label>
+            <input type="checkbox" id="category_{{category}}">
+            <label for="category_{{category}}"> {{category}}</label>
           </a>
         </div>
       </div>
       <div class="filter-price">
         <h2>Giá Bán</h2>
         <div class="category" *ngFor="let price of prices">
-          <a (change)="suggest_category(categories)">
-            <input type="checkbox" id="{{price}}">
-            <label for="{{price}}"> {{price}}</label>
+          <a (change)="suggest_price(categories)">
+            <input type="checkbox" id="price_{{price}}">
+            <label for="price_{{price}}"> {{price}}</label>
           </a>
         </div>
       </div>

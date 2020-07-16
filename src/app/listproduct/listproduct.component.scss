@@ -21,10 +21,10 @@
   padding: 10px 10px 10px 51px;
 }
 
-.box-image-same-price {
+.box-list-product {
   height: 340px;
   width: 231px;
-  padding: 30px 0 10px 0;
+  padding: 10px 0 10px 0;
   vertical-align: middle !important;
   display: table-cell;
   text-align: center;
@@ -36,10 +36,14 @@
     height: auto;
     max-width: 209px;
   }
+  .list-product-name {
+    padding: 2px 11px; 
+    height: auto;
+  }
 }
 
-.box-image-same-price:hover,
-.box-image-same-price:focus {
+.box-list-product:hover,
+.box-list-product:focus {
   z-index: 10;
   box-shadow: 0 1px 1px 1px rgba(109, 107, 107, 0.075), 0 3px 3px 3px rgba(114, 112, 112, 0.212), 0 7px 7px 7px rgba(165, 162, 162, 0.212), 0 14px 14px 14px rgba(168, 166, 166, 0.089) !important;
   transform: translateY(-1em);

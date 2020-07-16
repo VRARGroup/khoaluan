@@ -1,5 +1,6 @@
 import { Component,ElementRef, OnInit, ViewChild,HostListener  } from '@angular/core';
 import {MatSidenav} from '@angular/material'
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -27,7 +28,7 @@ Danhmuc: any = {
 	]
 };
 
-	constructor() { }
+	constructor(private router: Router) { }
 
 	ngOnInit() {
 		$('ul.navbar-nav li div.dropdown-menu li').hover(function() {
@@ -37,10 +38,14 @@ Danhmuc: any = {
 		});
 	}
   	render_loai_sp(id_loai_sanpham: any):void {
-		window.localStorage.removeItem("loai_sp");
-		window.localStorage.setItem("loai_sp",id_loai_sanpham.toString());
+      this.router.navigate(['/appmain/listproduct',id_loai_sanpham]).then(()=>{
+        window.location.reload();
+      });
+    // window.localStorage.removeItem("sp");
+    // window.localStorage.setItem("sp", id_sanpham.toString());
 
-		window.location.href="appmain/listproduct";
-	}
+    // // this.router.navigate(["appmain/productdetails"]);
+    // window.location.href = "appmain/productdetails";
+  }
 }
 
