@@ -1,0 +1,57 @@
+.danhgia-popup{
+    padding: 0;
+    height: auto;
+    background-color: #fff;
+    line-height: 18px;
+
+}
+.danhgia-info{
+    display: block;
+    overflow: hidden;
+    background: #fff;
+    padding: 0 10px 10px;
+    input[type=text]{
+        display: block;
+        padding: 8px;
+        width: 94%;
+        margin: 0 auto 10px;
+        height: 35px;
+        border: 1px solid #dadada;
+        background: #fff;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    input[type=radio]{
+        margin-right: 5px;
+    }
+    label{
+        margin-right: 20px;
+    }
+}
+.danhgia-title{
+    width: 100%;
+    height: 40px !important;    
+    background: -webkit-linear-gradient(top,#fafafa,#f2f2f2);
+    display: block;
+    overflow: hidden;
+    padding: 13px 10px !important;
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+}
+.btn-submit-danhgia{
+    background: -webkit-linear-gradient(top,#f89406,#f76b1c);
+    width: 100%;
+    display: block;
+    width: 98%;
+    padding: 8px;
+    height: 40px;
+    font-size: 14px;
+    color: #fff;
+    text-transform: uppercase;
+    border: 1px solid #d97f00;
+    border-radius: 4px;
+}
+.danhgia-radio{
+    padding: 15px;
+}

@@ -260,23 +260,23 @@
             </div>
             <div class="col-12" style="padding-top:20px;list-style-type:none; width: auto; max-width: 66vw;">
               <h6 style="display: inline; margin-right: 10px;">Chọn đánh giá của bạn</h6>
-              <a (click)="choose_star(1)"  style="display: inline-block;">
+              <a (click)="choose_star(1)" style="display: inline-block;">
                 <div (mouseover)="mouseover_star(1)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
                     aria-hidden="true" id="star_1"></i></div>
               </a>
-              <a (click)="choose_star(2)"  style="display: inline-block;">
+              <a (click)="choose_star(2)" style="display: inline-block;">
                 <div (mouseover)="mouseover_star(2)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
                     aria-hidden="true" id="star_2"></i></div>
               </a>
-              <a (click)="choose_star(3)"  style="display: inline-block;">
+              <a (click)="choose_star(3)" style="display: inline-block;">
                 <div (mouseover)="mouseover_star(3)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
                     aria-hidden="true" id="star_3"></i></div>
               </a>
-              <a (click)="choose_star(4)"  style="display: inline-block;">
+              <a (click)="choose_star(4)" style="display: inline-block;">
                 <div (mouseover)="mouseover_star(4)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
                     aria-hidden="true" id="star_4"></i></div>
               </a>
-              <a (click)="choose_star(5)"  style="display: inline-block;">
+              <a (click)="choose_star(5)" style="display: inline-block;">
                 <div (mouseover)="mouseover_star(5)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
                     aria-hidden="true" id="star_5"></i></div>
               </a>
@@ -300,10 +300,10 @@
                 <input style="margin: 0 8px; font-size: 14px;" placeholder="Số điện thoại (Bắt buộc)" type="number">
                 <input placeholder="Email (Không bắt buộc)" type="text">
               </div> -->
-              <div (click)="openFile()"
-                style="display: block; overflow: hidden; position: relative; color: rgba(79, 248, 130, 0.815); border: 0;background: #e4dadab2; width: 100%; height: 40px; padding: 6px; margin-top: -4px;margin-bottom: 14px; ">
-                <span style="cursor: pointer;"><i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
-                Đính kèm ảnh</span>
+              <div (click)="openFile()" class="btn-open-file">
+                <span style="cursor: pointer;"><i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera"
+                    aria-hidden="true"></i>
+                  Đính kèm ảnh</span>
                 <p style="float: right; margin-top: 14px;">{{textarea_count}} /80 kí tự.</p>
               </div>
               <div class="filter">
@@ -329,9 +329,7 @@
                 <input id="email" placeholder="Email (Không bắt buộc)" type="text">
               </div>
               <a>
-                <div
-                  style="border:1px solid #fff; background: #288ad6; border-radius: 6px; color: #fff; font-size: 14; padding: 15px 5px; margin: 20px auto; width: 46%; box-sizing: border-box; display: block; text-align: center; clear: both;"
-                  (click)="guidanhgiangay()">
+                <div class="btn-gui-danhgia" (click)="guidanhgiangay()">
                   GỬI ĐÁNH GIÁ NGAY
                 </div>
               </a>
@@ -342,7 +340,7 @@
               <div style="float:left">
                 <span style="font-weight: 500;"></span>
               </div>
-              
+
               <ul style="list-style-type: none; ">
                 <div *ngFor="let item_danhgia of items_danhgia">
                   <li class="danhgia-list">
@@ -372,38 +370,38 @@
                       </a>
                       <span> • </span>
                       <a href="javascript:void()">
-                       <i class="fa fa-thumbs-up"></i>
-                        Hữu ích 
+                        <i class="fa fa-thumbs-up"></i>
+                        Hữu ích
                       </a>
                     </div>
-                    
+
                   </li>
                   <ng-container *ngIf="show(item_danhgia._id).length>0">
                     <li class="rep-comment-info" id="rep-comment-info{{item_danhgia._id}}">
                       <div *ngFor="let item of show(item_danhgia._id)">
-                      <div>
-                        <span>{{item.ten}}
-                          <label class="qtv">QTV</label>
-                        </span>
+                        <div>
+                          <span>{{item.ten}}
+                            <label class="qtv">QTV</label>
+                          </span>
+                        </div>
+                        <div>
+                          <p>
+                            <i>{{item.noidung}}</i>
+                          </p>
+                        </div>
+                        <div>
+                          <a href="javascript:void()" class="cmtl">
+                            <i class="fa fa-thumbs-up"></i>
+                            Hữu ích
+                          </a>
+                        </div>
                       </div>
-                      <div>
-                        <p>
-                          <i>{{item.noidung}}</i>
-                        </p>
-                      </div>
-                      <div>
-                        <a href="javascript:void()" class="cmtl">
-                          <i class="fa fa-thumbs-up"></i>
-                          Hữu ích
-                        </a>
-                      </div>
-                    </div>
                     </li>
                   </ng-container>
-                    <li class="rep-comment-info-input" id="rep-comment-info-input{{item_danhgia._id}}">
-                      <input id="input{{item_danhgia._id}}" placeholder="Nhập thảo luận của bạn">
-                      <a (click)="insertbl(item_danhgia._id)">GỬI</a>
-                    </li>
+                  <li class="rep-comment-info-input" id="rep-comment-info-input{{item_danhgia._id}}">
+                    <input id="input{{item_danhgia._id}}" placeholder="Nhập thảo luận của bạn">
+                    <a (click)="show_insert_danhgiaphu(item_danhgia._id)">GỬI</a>
+                  </li>
                 </div>
               </ul>
             </ng-container>

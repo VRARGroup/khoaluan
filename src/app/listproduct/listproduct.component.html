@@ -1,42 +1,96 @@
 <div id="list_product">
-    <img class="banner" src="https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png">
-    <div class="title-head">   
-        <div class="title-head-info">
-            4 LỢI ÍCH CHỈ CÓ TẠI ĐIỆN MÁY XANH 
-            <div id="triangle-right"> </div> 
-        </div>
-        <i class="fas fa-truck" aria-hidden="true"></i>Giao hàng miễn phí
-        <i class="fa fa-cogs" aria-hidden="true"></i>Miễn phí công lắp đặt
-        <i class="fa fa-retweet" aria-hidden="true"></i>1 đổi 1 trong 1 tháng (Nếu lỗi)
-        <i class="fa fa-shield" aria-hidden="true"></i>Bảo hành chính hãng
+  <img class="banner" src="https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png">
+  <div class="title-head">
+    <div class="title-head-info">
+      4 LỢI ÍCH CHỈ CÓ TẠI ĐIỆN MÁY XANH
+      <div id="triangle-right"> </div>
     </div>
-    <div class="body-list">
-        <div class="radio-filter">
-            <label style="margin-top: 8px; height: 24px;">
-                <input type="checkbox" checked="checked">Mới 2020
-            </label>
-            <span>
-         
-                <label><input type="radio" name="select" /><span class="span-radio-filter">Bán chạy</span></label>
-                <label><input type="radio" name="select" /><span class="span-radio-filter">Giá cao đến thấp</span></label>
-                <label><input type="radio" name="select" /><span class="span-radio-filter">Giá thấp đến cao</span></label>
-            </span>
-        </div>
-        <div class="list">
-            <ng-container id="list_1" *ngFor="let item of items">
-                <a [routerLink]="['/appmain/productdetails', item._id]">
-                    <div class="box-image-same-price">
-                        <div ><label class="tra-gop"> Trả góp 0% </label><img src="{{item.hinhdaidien}}"></div>
-                        <p style="padding: 2px 25px; height: 37px;">{{item.ten}}</p>
-                        <p *ngIf="item.giamgia!=0 && item.giamgia!=null" style="color: #d0021b;">{{item.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
-                        <p>{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
-                        <p style="color: #fc9639;" *ngIf="item.sosao !=0 && item.sosao !=null"> <i class="fa fa-star" aria-hidden="true"></i>{{item.sosao}}/5</p>
-                    </div>
-                </a>
-            </ng-container>
-            <div class="show-more-list-product"style="text-align: center;">
-                <a (click)="show_more_list_product()">Đọc thêm <i style=" font-size: 23px;" class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+    <i class="fas fa-truck" aria-hidden="true"></i>Giao hàng miễn phí
+    <i class="fa fa-cogs" aria-hidden="true"></i>Miễn phí công lắp đặt
+    <i class="fa fa-retweet" aria-hidden="true"></i>1 đổi 1 trong 1 tháng (Nếu lỗi)
+    <i class="fa fa-shield" aria-hidden="true"></i>Bảo hành chính hãng
+  </div>
+  <div class="body-list row">
+    <div class="left-panel">
+      <div class="radio-filter">
+        <label style="margin-top: 8px; height: 24px;">
+          <input type="checkbox" checked="checked">Mới 2020
+        </label>
+        <span>
+
+          <label><input type="radio" name="select" /><span class="span-radio-filter">Bán chạy</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter">Giá cao đến thấp</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter">Giá thấp đến cao</span></label>
+        </span>
+      </div>
+      <div class="list">
+        <ng-container id="list_1" *ngFor="let item of items">
+          <a [routerLink]="['/appmain/productdetails', item._id]">
+            <div class="box-image-same-price">
+              <div><label class="tra-gop"> Trả góp 0% </label><img src="{{item.hinhdaidien}}"></div>
+              <p style="padding: 2px 25px; height: 37px;">{{item.ten}}</p>
+              <p *ngIf="item.giamgia!=0 && item.giamgia!=null" style="color: #d0021b;">
+                {{item.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+              <p>{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+              <p style="color: #fc9639;" *ngIf="item.sosao !=0 && item.sosao !=null"> <i class="fa fa-star"
+                  aria-hidden="true"></i>{{item.sosao}}/5</p>
             </div>
+          </a>
+        </ng-container>
+        <div class="show-more-list-product" style="text-align: center;">
+          <a (click)="show_more_list_product()">Đọc thêm <i style=" font-size: 23px;" class="fa fa-arrow-circle-down"
+              aria-hidden="true"></i></a>
         </div>
+      </div>
     </div>
-</div>  
+    <div class="right-panel">
+      <!-- <h2>Chọn tivi theo cỡ màn hình</h2>
+      <div class="suggest-inch">
+        <a>
+          <input type="checkbox" id="suggest_ich_input1" name="suggest_ich_input1" value="1">
+          <label for="suggest_ich_input1"> Từ 32 - 43 inch</label>
+        </a>
+        <a>
+          <input type="checkbox" id="suggest_ich_input2" name="suggest_ich_input2" value="2">
+          <label for="suggest_ich_input2"> Từ 44 - 54 inch</label>
+        </a>
+        <a>
+          <input type="checkbox" id="suggest_ich_input3" name="suggest_ich_input3" value="3">
+          <label for="suggest_ich_input3"> Từ 55 - 64 inch</label>
+        </a>
+        <a>
+          <input type="checkbox" id="suggest_ich_input4" name="suggest_ich_input4" value="4">
+          <label for="suggest_ich_input4"> Từ 65 - 74 inch</label>
+        </a>
+        <a>
+          <input type="checkbox" id="suggest_ich_input5" name="suggest_ich_input5" value="5">
+          <label for="suggest_ich_input5"> Trên 75 inch</label>
+        </a>
+      </div>
+      <div class="search-screen"><span>Hoặc tìm theo số inch</span>
+        <div class="inputscreen">
+          <i class="fa fa-search"></i>
+          <input type="number" min="0" placeholder="Nhập số" maxlength="3" class="inch-input">
+        </div>
+      </div> -->
+      <div class="filter-category">
+        <h2>Hãng</h2>
+        <div class="category" *ngFor="let category of categories">
+          <a (change)="suggest_category(categories)">
+            <input type="checkbox" id="{{category}}">
+            <label for="{{category}}"> {{category}}</label>
+          </a>
+        </div>
+      </div>
+      <div class="filter-price">
+        <h2>Giá Bán</h2>
+        <div class="category" *ngFor="let price of prices">
+          <a (change)="suggest_category(categories)">
+            <input type="checkbox" id="{{price}}">
+            <label for="{{price}}"> {{price}}</label>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

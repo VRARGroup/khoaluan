@@ -109,11 +109,33 @@ namespace dienmayxanhapi.Controllers
     {
       return (_spdtService.Getfillter_list_product(idlsp));
     }
+
     [Route("get_more_list_product")]
     [HttpGet]
     public ActionResult<List<sanphamdienthoai>> Getfillter_more_list_product(int idlsp)
     {
       return (_spdtService.Getfillter_more_list_product(idlsp));
+    }
+
+    [Route("get_list_product_category")]
+    [HttpGet]
+    public ActionResult<List<string>> Getfillter_list_product_category(int idlsp)
+    {
+      return (_spdtService.Getfillter_list_product_category(idlsp));
+    } 
+
+    [Route("get_list_product_price")]
+    [HttpGet]
+    public ActionResult<List<string>> Getfillter_list_product_price(int idlsp)
+    {
+      return (_spdtService.Getfillter_list_product_price(idlsp));
+    } 
+    
+    [Route("get_list_suggest_category")]
+    [HttpGet]
+    public ActionResult<List<sanphamdienthoai>> Getfillter_list_suggest_category(int idlsp, string arrthuonghieu)
+    {
+      return (_spdtService.Getfillter_list_suggest_category(idlsp,arrthuonghieu));
     }
     //[HttpPost]
     //public ActionResult<BsonDocument> Create(sanphamdienthoai spdt)
