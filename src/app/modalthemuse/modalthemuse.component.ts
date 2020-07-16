@@ -10,7 +10,8 @@ import { TaikhoanService} from '../service/taikhoan.service';
 import { Inject } from '@angular/core'; 
 import { DOCUMENT } from '@angular/common';
 import { GroupService } from '../service/group.service';
-import { grp } from '../model/group'; 
+import { grp } from '../model/group';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -27,12 +28,13 @@ export class ModalthemuseComponent implements OnInit {
   hidetext:boolean=false;
   a: Array<any>=[];
   stud: Array<any>=[];
-  
+  alltk_quyen:tk[]=[];
 
   valueChangedb(event){
   	this.selecteddb;
   }
-  constructor(public activeModal: NgbActiveModal, @Inject(DOCUMENT) private document: Document,private location: Location, private router: Router, private taikhoanService: TaikhoanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService) { }
+  constructor(private dialogRef: MatDialogRef<ModalthemuseComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any, @Inject(DOCUMENT) private document: Document,private location: Location, private router: Router, private taikhoanService: TaikhoanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService) { }
   t:string=null;
   ngOnInit() {
     console.log(this.lesson);
@@ -57,6 +59,7 @@ export class ModalthemuseComponent implements OnInit {
       this.lesson.idg,
       );
       this.Updatetk(t);
+      this.loadtkgroup();
   }
 
   Updatetk(t: tk){
@@ -68,7 +71,7 @@ export class ModalthemuseComponent implements OnInit {
             }
         );
         this.a=[];
-
+        this.loadtkgroup();
     }
     catch
     {
@@ -87,6 +90,18 @@ export class ModalthemuseComponent implements OnInit {
     return null;
   }
 
+  closemodal()
+  {
+    const t=new tk(
+      0,
+      "v",
+      "v",
+      true,
+      true,
+      0
+    )
+    this.dialogRef.close(t);
+  }
   
 
 }

@@ -16,6 +16,7 @@ import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalthemuseComponent } from '../modalthemuse/modalthemuse.component';
 import { lesson } from '../model/modalthemuse';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-quanlyquyen-taikhoan',
@@ -30,14 +31,16 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
   alltk:tk[];
   allgroup:grp[];
   idtk_quyen:Array<any>=[];
-  alltk_quyen:Array<tk>=[];
+  alltk_quyen:tk[]=[];
   p: number = 1;
   c:boolean = false;
   ktd:number=0;
   hoatdong:boolean=false;
   _id_group:number=0;
+  _id_group_location:number=9999;
   lessons:lesson;
-  constructor(@Inject(DOCUMENT) private document: Document, private modalService: NgbModal, private location: Location, private router: Router, private taikhoanService: TaikhoanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService ) { }
+  atk:boolean=true;
+  constructor(@Inject(DOCUMENT) private document: Document, private dialog: MatDialog ,private modalService: NgbModal, private location: Location, private router: Router, private taikhoanService: TaikhoanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService ) { }
 
   ngOnInit() {
     this._id_group=parseInt(window.localStorage.getItem("idg"));
@@ -57,6 +60,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
       if(window.localStorage.getItem("teng").toUpperCase()=="ADMIN" || window.localStorage.getItem("teng").toUpperCase()=="QUẢN LÝ")
       {
         this.loadtaikhoan();
+        this.getalltaikhoan();
         this.loadgroup();
       }
       else
@@ -103,6 +107,8 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
       });
       this.detaitk_quyen(a1);
       }
+      this._id_group_location=a1;
+      this.atk=false;
   }
   loaddsq() {
     this.danhsachquyenService.getdanhsachquyen().subscribe((res: dsq[] | null) => {
@@ -163,6 +169,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
 
   huycapphep(id: number)
   {
+    
     const tkh=new tk(
        id,
        null,
@@ -173,11 +180,19 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
      );
      this.alltk_quyen=[];
      this.Updatetk(tkh);
-     this.document.location.reload();
+     if(this.atk==false)
+     {
+      this.loadtaikhoan_id_group(this._id_group_location);
+     }
+     else
+     {
+       this.getalltaikhoan();
+     }
   }
 
   capphep(id: number)
   {
+    
     const tkh1=new tk(
        id,
        null,
@@ -188,7 +203,21 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
      );
      this.alltk_quyen=[];
      this.Updatetk(tkh1);
-     this.document.location.reload();
+     if(this.atk==false)
+     {
+      this.loadtaikhoan_id_group(this._id_group_location);
+     }
+     else
+     {
+       this.getalltaikhoan();
+     }
+  }
+
+  loadtaikhoan_id_group(_id_group: number)
+  {
+    this.taikhoanService.gettk_id_group(_id_group).subscribe((res: tk[] | null) => {
+    this.alltk_quyen = (res) ? res : [];
+  });
   }
 
   themuser(id:number)
@@ -202,11 +231,19 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
 
   themusergroup(id:number)
   {
-    const modalRef = this.modalService.open(ModalthemuseComponent);
-    const t=new lesson(
-      id
-    );
-    modalRef.componentInstance.lesson = t;
+    // const modalRef = this.modalService.open(ModalthemuseComponent);
+    // const t=new lesson(
+    //   id
+    // );
+    // modalRef.componentInstance.lesson = t;
+    const dialogRef =  this.dialog.open(ModalthemuseComponent, {data: {id: id}, disableClose: true});
+    dialogRef.afterClosed().subscribe((submit) => {
+      if (submit) {
+        this.getalltaikhoan();
+      } else {
+        console.log("null")
+      }
+    })
   }
 
   Updatetk(t: tk){
@@ -223,6 +260,16 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
       alert("Error");
       this.router.navigate(['appmainnv/appmainquanly']);
     }
+  }
+
+  getalltaikhoan()
+  {
+    this.atk=true;
+    setTimeout(() => {this.taikhoanService.gettk().subscribe((res: tk[] | null) => {
+      this.alltk_quyen = (res) ? res : [];
+    });},500);
+    this.alltk=[];
+    setTimeout(() => {this.loadtaikhoan()},500);
   }
 
  }

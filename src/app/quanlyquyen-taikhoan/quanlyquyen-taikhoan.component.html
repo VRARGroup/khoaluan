@@ -2,13 +2,20 @@
 <div class="fillterbak">
     <div class="bak">
         <div class="container-fluid">
-            <div class="filter ">
+            <div class="filter">
+                <div class="d-flex justify-content-center">
+                <div class="inline">
+                    <button class="buttonth" (click)="getalltaikhoan()">TẤT CẢ TÀI KHOẢN</button>
+                </div>
+                </div>
+            </div>
+            <div id="group" class="filter">
                 <div class="d-flex justify-content-center">
                 <div class="inline" *ngFor="let obj of allgroup, let i=index">
                     <ng-container>
                         <div class="btn-group">
                             <button class="buttonth" (click)="getid_quyen(obj.danhsachquyentruycap, obj._id)">{{obj.tengroup.toLocaleUpperCase()}}</button>
-                            <div  class="btn-group-vertical btninbtnlsp">
+                            <div class="btn-group-vertical btninbtnlsp">
                                 <button  type="button" class="buttonct" (click)="themusergroup(obj._id)"><i class="fas fa-plus fa-1x" aria-hidden="true"></i></button>
                                 <button  type="button" class="buttonct" (click)="detaiaddgroupquyen(obj._id)"><i class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
                             </div>
@@ -53,10 +60,10 @@
                                     <td>{{item.password}}</td>
                                     <td>
                                         <ng-container *ngIf="item.giayphep==true">
-                                            <a ><span style="margin-right: 10px;">Được phép đăng nhập</span><i id="hq"class="far fa-times-circle fa-3x" title="Chặn tài khoãn này" (click)="huycapphep(item._id)"></i></a>
+                                            <a title="Chặn tài khoãn này" (click)="huycapphep(item._id)"><span style="margin-right: 10px;">Được phép đăng nhập</span><i id="hq"class="far fa-check-circle fa-3x"></i></a>
                                         </ng-container>
                                         <ng-container *ngIf="item.giayphep==false">
-                                            <a ><span style="margin-right: 10px;">Chưa cấp phép đăng nhập</span><i class="far fa-check-circle fa-3x" title="Cho phép tài khoãn này truy cập hệ thống" (click)="capphep(item._id)" ></i></a>
+                                            <a title="Cho phép tài khoãn này truy cập hệ thống" (click)="capphep(item._id)"><span style="margin-right: 10px;">Chưa cấp phép đăng nhập</span><i class="far fa-times-circle fa-3x"></i></a>
                                         </ng-container>
                                     </td>
                                 </tr>

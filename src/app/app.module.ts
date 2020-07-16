@@ -83,6 +83,7 @@ import { AddquyengroupComponent } from './addquyengroup/addquyengroup.component'
 import { ModalthemuseComponent } from './modalthemuse/modalthemuse.component';
 import { ModalDanhgiaComponent } from './modal/modal-danhgia/modal-danhgia.component';
 import { RepbinhluanComponent } from './repbinhluan/repbinhluan.component';
+import { ModalHotenComponent } from './modal/modal-hoten/modal-hoten.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { RepbinhluanComponent } from './repbinhluan/repbinhluan.component';
     ModalthemuseComponent,
     ModalDanhgiaComponent,
     RepbinhluanComponent,
+    ModalHotenComponent,
   ],
   imports: [
     

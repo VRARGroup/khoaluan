@@ -13,7 +13,6 @@ export class RepbinhluanComponent implements OnInit {
   constructor( private location: Location, private router: Router) { }
 
   ngOnInit() {
-    
     $("#btndx").css("display","block");
     this.hoatdong=JSON.parse(window.localStorage.getItem("editid1"));
     if(this.hoatdong==false|| this.hoatdong==null)

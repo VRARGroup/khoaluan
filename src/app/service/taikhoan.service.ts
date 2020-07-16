@@ -38,6 +38,10 @@ export class TaikhoanService {
     return this.http.get<tk[]>(this.url+'/'+id);
   }
 
+  gettk_id_group(id_group:number): Observable<tk[]> {
+    return this.http.get<tk[]>(this.url+'/'+"detailtk_id_group?_id_group="+id_group);
+  }
+
   updatehdtk(id:number): Observable<tk> {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.put<tk>(this.url + '/'+ 'dangxuattk?_id='+id, httpOptions);

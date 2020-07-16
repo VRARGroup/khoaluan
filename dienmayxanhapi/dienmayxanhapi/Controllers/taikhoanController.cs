@@ -39,6 +39,13 @@ namespace dienmayxanhapi.Controllers
         {
           return (_tkService.Getgrouptk());
         }
+        
+        [Route("detailtk_id_group")]
+        [HttpGet]
+        public ActionResult<List<taikhoan>> Gettk_id_group(int _id_group)
+        {
+          return (_tkService.Getdetailtk_id_group(_id_group));
+        }
 
         [Route("detailtk")]
         [HttpGet]

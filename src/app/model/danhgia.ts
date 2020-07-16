@@ -8,9 +8,10 @@ export class dg {
     hinh:Array<string>;
     luotthich:number;
     danhgiaphu:Array<dgphu>;
-    tieuchidanhgia:Array<object>;
+    tieuchidanhgia:Array<boolean>;
     _id_sanpham:number;
-    constructor(_id: number,  sosao: number, ten: string, sdt:string, email:string, noidung:string, hinh:Array<string>, luotthich:number, danhgiaphu:Array<dgphu>, tieuchidanhgia:Array<object>, _id_sanpham:number) {
+    ngaydanhgia:Date;
+    constructor(_id: number,  sosao: number, ten: string, sdt:string, email:string, noidung:string, hinh:Array<string>, luotthich:number, danhgiaphu:Array<dgphu>, tieuchidanhgia:Array<boolean>, _id_sanpham:number) {
         this._id = _id;
         this.sosao = sosao;
         this.ten = ten;
@@ -31,6 +32,7 @@ export class dgphu {
     ten: string;
     gioitinh: boolean;
     email:string;
+    ngaydanhgiaphu:Date;
     constructor(noidung:string, luotthich:number, ten: string, gioitinh: boolean, email:string) {
         this.noidung = noidung;
         this.luotthich = luotthich;

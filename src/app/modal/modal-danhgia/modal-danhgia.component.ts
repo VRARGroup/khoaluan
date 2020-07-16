@@ -1,6 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { HttpEventType, HttpClient } from '@angular/common/http';
+import { Router } from "@angular/router";
+import { DanhgiaService } from '../../service/danhgia.service';
 import * as $ from "jquery";
+import { dg } from '../../model/danhgia';
 @Component({
   selector: 'app-modal-danhgia',
   templateUrl: './modal-danhgia.component.html',
@@ -12,13 +16,28 @@ export class ModalDanhgiaComponent implements OnInit {
   name: string;
   textarea_count: number = 0;
   star: number=0;
-  constructor(  
-    public dialogRef: MatDialogRef<ModalDanhgiaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-    ) { }
+  serverPath: String = "";
+  urls = [];
+  isImageSaved: boolean = false;
+  public progress: number;
+  responseimage: any = [];
+  kthttp: string = "https://";
+  hinhthuctesp: Array<any> = [];
+  ktsavedhinhthuctesanpham: boolean = false;
+  idsp: number = null;
+  tieuchidanhgia:Array<boolean>=[];
+  constructor(private danhgiaService: DanhgiaService,private router: Router, public dialogRef: MatDialogRef<ModalDanhgiaComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private http: HttpClient) 
+  { }
   ngOnInit() {
     this.name = this.data.name;
     this.resulf_danhgia = this.data.resulf_danhgia;
+    this.idsp = this.data.idsp;
+    console.log(this.idsp);
+    for(let i=0;i<this.resulf_danhgia.length;i++)
+    {
+      this.tieuchidanhgia.push(true);
+    }
+    console.log(this.tieuchidanhgia);
   }
   textarea_text_change(value:string){
     this.textarea_count = $('#textarea_danhgiasosao_modal').val().toString().length;
@@ -111,4 +130,135 @@ export class ModalDanhgiaComponent implements OnInit {
       $('#star_55').css("color","#fc9639");
     }
   }
+
+  openFile() {
+    console.log('hell')
+    $('#upload_file').click();
+  }
+
+  Remove(id: number) {
+    console.log("s", id);
+    console.log("s", this.urls.length);
+    this.urls.splice(id, 1);
+    console.log("xoa", this.urls);
+  }
+
+  getvalue(v: number) {
+    this.kthttp = this.urls[v];
+    if (this.kthttp.startsWith("https://") == false) {
+      this.hinhthuctesp.push("https://localhost:44309/Resources/Images/" + this.urls[v]);
+      this.ktsavedhinhthuctesanpham = true;
+    }
+    else {
+      this.hinhthuctesp.push(this.urls[v]);
+      this.ktsavedhinhthuctesanpham = true;
+    }
+  }
+
+  public uploadFileimage = (files) => {
+    if (files.length === 0) {
+      return;
+    }
+    if (this.urls.length < 4) {
+      let fileToUpload = <File>files[0];
+      this.urls.push(fileToUpload.name);
+      this.isImageSaved = true;
+      const formData = new FormData();
+      formData.append('file', fileToUpload, fileToUpload.name);
+      this.http.post('https://localhost:44309/api/saveimagefolder', formData, { reportProgress: true, observe: 'events' })
+        .subscribe(event => {
+          if (event.type === HttpEventType.UploadProgress)
+            this.progress = Math.round(100 * event.loaded / event.total);
+          else if (event.type === HttpEventType.Response) {
+            this.responseimage.push(event.body);
+            console.log(this.responseimage)
+          }
+        });
+      document.getElementById("uploadCaptureInputFile")["value"] = "";
+      console.log("h", this.urls);
+    }
+  }
+
+  createImgPath = (s: string) => {
+
+    if (s === undefined) {
+      this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
+    }
+    if (s == "") {
+      this.serverPath = "./assets/upanh.png";
+    }
+    else {
+      this.serverPath = "https://localhost:44309/Resources/Images/" + s;
+    }
+    return this.serverPath;
+  }
+
+  
+  tieuchidanhgia_y(i:number)
+  {
+    this.tieuchidanhgia.splice(i,1);
+    this.tieuchidanhgia.splice(i,0,true);
+    $('#y'+i).css("background-color","rgb(21, 43, 24)");
+    console.log(this.tieuchidanhgia);
+  }
+
+  tieuchidanhgia_n(i:number)
+  {
+    this.tieuchidanhgia.splice(i,1);
+    this.tieuchidanhgia.splice(i,0,false);
+    $('#n'+i).css("background-color","rgb(119, 61, 61)");
+    console.log(this.tieuchidanhgia);
+  }
+
+  guidanhgiangay() {
+    try
+    {
+    if( $("#hotenm").val().toString().trim()!=null && $('#sdtm').val().toString().trim()!=null && $('#emailm').val().toString().trim()!=null)
+    {
+      for (let i = 0; i < this.urls.length; i++) {
+        this.getvalue(i);
+      }
+      const d = new dg(
+        0,
+        this.star,
+        $("#hotenm").val().toString(),
+        $('#sdtm').val().toString(),
+        $('#emailm').val().toString(),
+        $('#textarea_danhgiasosao_modal').val().toString(),
+        this.hinhthuctesp,
+        0,
+        null,
+        this.tieuchidanhgia,
+        parseInt(this.idsp.toString())
+      );
+      console.log("danhgia", d);
+      this.Createdg(d);
+      this.hinhthuctesp = [];
+      this.dialogRef.close()
+    }
+    else
+    {
+      alert("Vui lòng nhập họ tên, số điện thoại và email");
+    }
+    }
+    catch
+    {
+      alert("Error");
+    }
+  }
+
+  Createdg(d: dg) {
+    try {
+      this.danhgiaService.creatdg(d).subscribe(
+        () => {
+        }
+      );
+    }
+    catch
+    {
+      alert("Error");
+      this.router.navigate(['appmain']);
+    }
+  }
+
 }

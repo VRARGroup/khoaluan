@@ -284,6 +284,11 @@ namespace dienmayxanhapi
           var dl = collectiontk.Find(x =>x._id==id).ToList();
           return dl;
         }
+        public List<taikhoan> Getdetailtk_id_group(int id_group)
+        {
+          var dl = collectiontk.Find(x => x._id_group == id_group).ToList();
+          return dl;
+        }
 
         public Boolean Updatetk(FilterDefinition<taikhoan> filter, UpdateDefinition<taikhoan> update)
         {
@@ -331,13 +336,22 @@ namespace dienmayxanhapi
           return dl;
         }
 
-        public BsonDocument insertdg(BsonDocument dg)
+        public List<danhgia> Getdetaildg(int _id)
         {
-          var client = new MongoClient(ConnectionString);
-          var database = client.GetDatabase(DatabaseName);
-          var collectiondg = database.GetCollection<BsonDocument>(CollectionNamedanhgia);
-          collectiondg.InsertOne(dg);
-          return dg;
+          var dl = collectiondanhgia.Find(x =>x._id_sanpham==_id).ToList().Take(3).ToList();
+          return dl;
+        }
+
+        public Boolean Updatedanhgia(FilterDefinition<danhgia> filter, UpdateDefinition<danhgia> update)
+        {
+          collectiondanhgia.FindOneAndUpdate(filter, update);
+          return true;
+        }
+
+        public BsonDocument insertdg(danhgia dg)
+        {
+          collectiondanhgia.InsertOne(dg);
+          return null;
         }
     
         public List<string> check_tieuchidanhgia(int id)

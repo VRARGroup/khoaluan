@@ -38,8 +38,8 @@ export class ThemtaikhoanComponent implements OnInit {
   ctc:boolean=false;
   hideselectddb: boolean=true;
   ktthaotacdelete:boolean=false;
-  selectednhomq:number=9999;
   hoatdong: boolean=false;
+  selected: number=9999;
   constructor(@Inject(DOCUMENT) private document: Document,private location: Location, private router: Router, private taikhoanService: TaikhoanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService ) { }
 
   ngOnInit() {
@@ -66,7 +66,9 @@ export class ThemtaikhoanComponent implements OnInit {
       {
         document.getElementById("delete_tk").style.display="none";
         this.hdf=true;
-        this.gpf=true;
+        this.gpt=true;
+        $('#selectid').css("display","none");
+        $('#labelnq').css("display","none");
       }
       else
       {
@@ -79,7 +81,9 @@ export class ThemtaikhoanComponent implements OnInit {
    {
     this.taikhoanService.getcttk_id(this.idtk).subscribe((res: tk[] | null) => {
     this.alltk = (res) ? res : [];
-    this.selectednhomq=res[0]._id_group;
+    this.selected=res[0]._id_group;
+    $('#username').val(res[0].username);
+    $('#pass').val(res[0].password);
     if(res[0].hoatdong==true)
     {
       this.hdt=true;
@@ -99,27 +103,13 @@ export class ThemtaikhoanComponent implements OnInit {
     });
    }
 
-  valueChangegroup(event){
-    this.selectednhomq;
-    console.log(this.selectednhomq);
-    this.loaddetaildsq();
-  }
-
   loaddsq() {
     this.danhsachquyenService.getdanhsachquyen().subscribe((res: dsq[] | null) => {
     this.alldsq = (res) ? res : [];
     });
   }
 
-  loaddetaildsq() {
-    this.dtldsq=[];
-    this.dtlgrp=this.allgroup.find(x=>x._id==this.selectednhomq[0]).danhsachquyentruycap;
-    for(let i=0;i<this.dtlgrp.length;i++)
-    {
-      this.dtldsq.push(this.alldsq.find(x=>x._id==this.dtlgrp[i]["_id_quyen"]));
-    }
-    console.log(this.dtldsq);
-  }
+
 
   loadgroup() {
     this.groupService.getgrp().subscribe((res: grp[] | null) => {
@@ -168,10 +158,11 @@ export class ThemtaikhoanComponent implements OnInit {
             document.getElementById("pass")["value"],
             false,
             this.ctk,
-            this.selectednhomq
+            this.selected
           );
           console.log(d);
           this.Updatetk(d);
+          $('#back').click();
         }
         else
         {
@@ -181,7 +172,7 @@ export class ThemtaikhoanComponent implements OnInit {
             document.getElementById("pass")["value"],
             false,
             this.ctk,
-            this.selectednhomq
+            this.selected
           );
           console.log(d);
           this.Createtk(d);
@@ -251,4 +242,8 @@ export class ThemtaikhoanComponent implements OnInit {
     this.location.back();
   }
   
+  valueChange(event)
+  {
+    this.selected;
+  }
 }

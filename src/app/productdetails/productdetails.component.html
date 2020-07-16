@@ -243,7 +243,7 @@
               </div>
               <div id="show_hide_comment_1" class="col-7">
                 <a (click)="show_modal_danhgia(item.ten)">
-                  <div id="show_hide_danhgiasosao">
+                  <div style="margin-top: 30px;text-align: center; margin-right: 20px" id="show_hide_danhgiasosao">
                     Đánh giá ngay
                   </div>
                 </a>
@@ -301,9 +301,9 @@
                 <input placeholder="Email (Không bắt buộc)" type="text">
               </div> -->
               <div (click)="openFile()"
-                style="display: block; overflow: hidden; position: relative; color: rgba(79, 248, 130, 0.815); border: 0;background: #e4dadab2; width: 100%; height: 40px; padding: 6px; margin-top: -4px;margin-bottom: 14px; cursor: pointer;">
-                <i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
-                Đính kèm ảnh
+                style="display: block; overflow: hidden; position: relative; color: rgba(79, 248, 130, 0.815); border: 0;background: #e4dadab2; width: 100%; height: 40px; padding: 6px; margin-top: -4px;margin-bottom: 14px; ">
+                <span style="cursor: pointer;"><i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
+                Đính kèm ảnh</span>
                 <p style="float: right; margin-top: 14px;">{{textarea_count}} /80 kí tự.</p>
               </div>
               <div class="filter">
@@ -330,7 +330,8 @@
               </div>
               <a>
                 <div
-                  style="border:1px solid #fff; background: #288ad6; border-radius: 6px; color: #fff; font-size: 14; padding: 15px 5px; margin: 20px auto; width: 46%; box-sizing: border-box; display: block; text-align: center; clear: both;">
+                  style="border:1px solid #fff; background: #288ad6; border-radius: 6px; color: #fff; font-size: 14; padding: 15px 5px; margin: 20px auto; width: 46%; box-sizing: border-box; display: block; text-align: center; clear: both;"
+                  (click)="guidanhgiangay()">
                   GỬI ĐÁNH GIÁ NGAY
                 </div>
               </a>
@@ -340,80 +341,54 @@
             <ng-container>
               <div style="float:left">
                 <span style="font-weight: 500;"></span>
-                <!-- <div *ngFor="let tieuchi of tieuchis">
-
-                                </div> -->
               </div>
-              <!-- <div style="float:left">
-                <div style="float: left;" *ngFor='let i of arrayOne(item.sosao)'>
-                  <i style="color: #fc9639;" class="fa fa-star" aria-hidden="true"></i>
-                </div>
-                <div style="float: left;" *ngFor='let i of arrayTwo(item.sosao)'>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                </div>
-                <p></p>
-              </div>
-              <div style="color: #999; margin: 5px 0 15px 0; display: block; clear: both;">
-                <a>thảo luận</a>
-                <span> • </span>
-                <a>thích</a>
-              </div> -->
-              <ul style="list-style-type: none;">
+              
+              <ul style="list-style-type: none; ">
                 <div *ngFor="let item_danhgia of items_danhgia">
                   <li class="danhgia-list">
                     <div>
-                      <span class="danhgia-name"> Nguyễn Ngọc Phương </span>
+                      <span class="danhgia-name"> {{item_danhgia.ten}} </span>
                     </div>
                     <div class="danhgia-info">
                       <p>
                         <span>
                           <div style="float:left">
-                            <div style="float: left;" *ngFor='let i of arrayOne(item.sosao)'>
+                            <div style="float: left;" *ngFor='let i of arrayOne(item_danhgia.sosao)'>
                               <i style="color: #fc9639;" class="fa fa-star" aria-hidden="true"></i>
                             </div>
-                            <div style="float: left;" *ngFor='let i of arrayTwo(item.sosao)'>
+                            <div style="float: left;" *ngFor='let i of arrayTwo(item_danhgia.sosao)'>
                               <i class="fa fa-star" aria-hidden="true"></i>
                             </div>
                             <p></p>
                           </div>
                         </span>
-                        <i>Vừa mua Xiaomi 2C.
-                          <br>Đắng đo làm gì, không khí là thứ không nhìn thấy được, chỉ cảm nhận được bằng mũi, khi mũi
-                          cảm
-                          nhận được thì không khí đã nặng lắm rồi; ..... tiền kiếm lại được, sức khỏe thì không;
-                          <br>Thế hệ mình ..... ừ thì bình thường thôi, không sao (kệ đi), quan trọng thế hệ sau của
-                          mình
-                          kìa, khỏe mạnh là "hạnh phúc" rồi;
-                          <br>:))
-                          <br>Ahihi ..... đang lúc convịt-19 đang đi chơi khắp nơi, không khí ở nhà ổn tí cho
-                          lành.
-                          <br>Đang
-                          sử dụng Xiaomi 3H, và Sharp FP-GM50E-B.
-                          <br>Sản phẩm ok !
+                        <i style="margin-left: 10px;">{{item_danhgia.noidung}}
                         </i>
                       </p>
                     </div>
                     <div class="reply-danhgia">
-                      <a href="javascript:void()" (click)="show_danhgia_thaoluan(item_danhgia.id)">
+                      <a href="javascript:void()" (click)="show_danhgia_thaoluan(item_danhgia._id)">
                         Thảo luận
                       </a>
                       <span> • </span>
                       <a href="javascript:void()">
-                        <i class="fa fa-thumbs-up"></i>
-                        Hữu ích
+                       <i class="fa fa-thumbs-up"></i>
+                        Hữu ích 
                       </a>
                     </div>
+                    
                   </li>
-                  <!-- <div class="list-rep-comment-info"+{{item_danhgia.id}} *ngFor="let item_phu of arrayOne(item_danhgia.danhgiaphu.length)"> -->
-                    <li class="rep-comment-info">
+                  <ng-container *ngIf="show(item_danhgia._id).length>0">
+                    <li class="rep-comment-info" id="rep-comment-info{{item_danhgia._id}}">
+                      <div *ngFor="let item of show(item_danhgia._id)">
                       <div>
-                        <span> Xong Lê
+                        <span>{{item.ten}}
                           <label class="qtv">QTV</label>
                         </span>
                       </div>
                       <div>
                         <p>
-                          <i>Điện máy Xanh đã ghi nhận và chuyển bộ phận liên quan hỗ trợ quý khách</i>
+                          <i>{{item.noidung}}</i>
                         </p>
                       </div>
                       <div>
@@ -422,12 +397,13 @@
                           Hữu ích
                         </a>
                       </div>
+                    </div>
                     </li>
-                  <!-- </div> -->
-                  <li class="reply" id="reply_"+{{item_danhgia.id}}>
-                    <input placeholder="Nhập thảo luận của bạn">
-                    <a href="javascript:void()" class="reply-send">GỬI</a>
-                  </li>
+                  </ng-container>
+                    <li class="rep-comment-info-input" id="rep-comment-info-input{{item_danhgia._id}}">
+                      <input id="input{{item_danhgia._id}}" placeholder="Nhập thảo luận của bạn">
+                      <a (click)="insertbl(item_danhgia._id)">GỬI</a>
+                    </li>
                 </div>
               </ul>
             </ng-container>

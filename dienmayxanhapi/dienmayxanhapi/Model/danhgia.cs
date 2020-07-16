@@ -1,3 +1,4 @@
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,10 @@ namespace dienmayxanhapi.Model
     public List<string> hinh { get; set; }
     public int? luotthich { get; set; }
     public IList<danhgiaphu> danhgiaphu { get; set; }
-    public dynamic tieuchidanhgia { get; set; }
+    public List<Boolean> tieuchidanhgia { get; set; }
     public int? _id_sanpham { get; set; }
+    [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
+    public DateTime ngaydanhgia { get; set; }
 
   }
 
@@ -28,5 +31,6 @@ namespace dienmayxanhapi.Model
     public string ten { get; set; }
     public Boolean gioitinh { get; set; }
     public string email { get; set; }
+    public DateTime ngaydanhgiaphu { get; set; }
   }
 }

@@ -9,9 +9,14 @@
         </div>
         <div class="card-body ">
             <label for="lname">Username</label>
-            <input class="inputtext" type="text" value="{{this.alltk[0].username}}" id="username">
+            <input class="inputtext" type="text" id="username">
             <label for="lname">Password</label>
-            <input class="inputtext" type="text" value="{{this.alltk[0].password}}" id="pass">
+            <input class="inputtext" type="text" id="pass">
+            <label id="labelnq" >Nhóm quyền: </label> 
+            <select id="selectid" style="margin-left: 10px;" [(ngModel)] ="selected" (change)="valueChange($event)">
+                <option [ngValue]="undefined" disabled selected>Select Any </option>
+                <option *ngFor="let obj of allgroup" [ngValue]="obj._id" [selected]="obj._id == selected">{{obj.tengroup}}</option>             
+            </select>               
             <label class="inline" for="lname">Tình trạng</label>
             <ng-container class="inline" *ngIf="hdt">
                 <a class="spanfar"><span>Đang hoạt động</span><i id="hq"class="far fa-check-circle fa-3x" ></i></a>
@@ -41,7 +46,7 @@
     </div>
     <div style="margin-bottom: 50px; margin-top: 50px;">
         <div class="container d-flex justify-content-center">
-            <button class="btn btn-outline-dark" type="button" id="save_tk" (click)="back()"><i class="fas fa-caret-square-left"></i></button>
+            <button class="btn btn-outline-dark" type="button" id="back" (click)="back()"><i class="fas fa-caret-square-left"></i></button>
             <button class="btn btn-primary" type="button" id="save_tk" (click)="onSubmit()">Save</button>
             <button class="btn btn-danger" type="button" id="delete_tk" (click)="Deletetk()">Delete</button>
             <button type="button" class="btn btn-warning" id="clear_tk" (click)="reset()">Clear</button>
