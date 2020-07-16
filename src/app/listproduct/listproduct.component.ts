@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { SanphamService } from '../service/sanpham.service';
 import { sp } from '../model/sanpham';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -22,16 +22,40 @@ export class ListproductComponent implements OnInit {
   id_loai_sanpham: number;
   categories: any[] = [];
   prices: any[] = [];
-  constructor(private router: Router, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
+  banner: string = "";
+  constructor(private router: Router,private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit() {
-    let id_loai_sanpham = this.id_loai_sanpham = parseInt(window.localStorage.getItem("loai_sp"));
+    let id_loai_sanpham = this.id_loai_sanpham = this.route.snapshot.params.id;
+    if (isNaN(id_loai_sanpham))
+      id_loai_sanpham = this.id_loai_sanpham = parseInt(window.localStorage.getItem("loai_sp"));
     if (isNaN(id_loai_sanpham))
       window.location.href = "appmain/products";
     this.get_list_product(id_loai_sanpham);
     this.get_list_product_category(id_loai_sanpham);
+    this.get_list_product_price(id_loai_sanpham);
     document.getElementById('dropdown-menu').style.display = "";
-    document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bgTizi.png)";
+
+
+    if (id_loai_sanpham.toString() == "20000") {
+      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bgTizi.png)";
+      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png";
+    }else if (id_loai_sanpham.toString() == "30000") {
+      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
+      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/tulanh.png";
+    } else if (id_loai_sanpham.toString() == "40000") {
+      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
+      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/maygiat.png";
+    } else if (id_loai_sanpham.toString() == "50000") {
+      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
+      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/maylanh.2.png";
+    } else if (id_loai_sanpham.toString() == "60000") {
+      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/newbanner/background-top.png)";
+      this.banner = "https://cdn.tgdd.vn/2020/07/banner/QDHt7desk1200x375-1200x375.png";
+    } 
+
+
+
     document.getElementById('html').style.backgroundPosition = "initial";
     document.getElementById('html').style.backgroundSize = "cover";
     document.getElementById('html').style.backgroundRepeat = "no-repeat";
@@ -82,9 +106,12 @@ export class ListproductComponent implements OnInit {
     // else{
     //   this.sanphamService.get_list_suggest_category(this.id_loai_sanpham, list).subscribe((res: sp[] | null) => {
     //     this.items = (res) ? res : [];
-        
+
     // debugger
     //   });
     // }
+  }
+  suggest_price(categories: any[]) {
+
   }
 }

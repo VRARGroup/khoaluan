@@ -38,8 +38,8 @@
                     <li *ngIf="special.trim().length >=1">{{special}}</li>
                   </ul>
                 </div>
-                <div *ngIf="item.dacdiemnoibat.trim().split('.').length >=1" id="more_info_dacdiemnoibat">
-                  <a (click)="show_dacdiemnoibat_image()">Xem thêm điểm nổi bật <i style="font-size: 13px;"
+                <div *ngIf="item.dacdiemnoibat.trim().split('.').length >1" id="more_info_dacdiemnoibat">
+                  <a (click)="show_dacdiemnoibat_image()">Xem thêm đặc điểm nổi bật <i style="font-size: 13px;"
                       class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
                 </div>
               </div>
@@ -55,7 +55,7 @@
             <div class="same-product">
               <ng-container *ngFor="let same_product of same_products">
                 <div style="flex: 1; padding: 5px;">
-                  <a (click)="render_sp(same_product._id)">
+                  <a [routerLink]="['/appmain/productdetails', same_product._id]" (click)="render_sp(same_product._id)">
                     <div class="box-same-product">
                       <span>
                         <sub class="icondetail-check"></sub>
@@ -447,11 +447,11 @@
               <!-- <ng-container *ngFor="let item_comment of item_comments"> -->
               <div class="comment_ask">
                 <i class="iconcom-user">C</i>
-                <strong onclick="selCmt(42243451)">Cường</strong>
+                <strong>Cường</strong>
                 <div class="infocom_ask">Hiện tại e thấy sp giảm 10% e ở tp châu đốc vậy có được giảm bà giảm giá khi e
                   mua tiền mặt bao nhiêi cho chiếu tivi này ạ</div>
                 <div class="relate_infocom">
-                  <a href="javascript:void(0)">
+                  <a (click)="show_insert_binhluanphu(1)">
                     <span class="reply-comment">Trả lời </span>
                   </a>
                   <b class="dot">●</b>
@@ -481,7 +481,9 @@
                         <br>Thông tin đến anh.&nbsp;
                       </div>
                       <div class="relate_infocom">
-                        <a href="javascript:void(0)"><span class="btnreply">Trả lời </span></a>
+                        <a (click)="show_insert_binhluanphu(1)">
+                          <span class="btnreply">Trả lời </span>
+                        </a>
                         <b class="dot">●</b>
                         <a href="javascript:void(0)" class="favor satis">
                           <i class="fa fa-thumbs-up"></i>
