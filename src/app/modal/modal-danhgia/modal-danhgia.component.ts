@@ -216,12 +216,12 @@ export class ModalDanhgiaComponent implements OnInit {
   guidanhgiangay() {
     try
     {
-      if($('#textarea_danhgiasosao_modal').val().toString().length)
+      if($('#textarea_danhgiasosao_modal').val().toString().length>=15)
       {
-        if( $("#hotenm").val().toString().trim()!="" && $('#sdtm').val().toString().trim()!="" && $('#emailm').val().toString().trim()!="")
+        if( $("#hotenm").val().toString().trim().length>0 && $('#sdtm').val().toString().length>0 && $('#emailm').val().toString().length>0)
         {
           const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if(re.test($('#email').val().toString()))
+            if(re.test($('#emailm').val().toString()))
             {
               for (let i = 0; i < this.urls.length; i++) {
                 this.getvalue(i);
@@ -245,10 +245,14 @@ export class ModalDanhgiaComponent implements OnInit {
               this.dialogRef.close()
             }
           }
+          else
+          {
+            alert("Vui lòng nhập họ tên, số điện thoại và email");
+          }
       }
       else
       {
-        alert("Vui lòng nhập họ tên, số điện thoại và email");
+        alert("Vui lòng nhập đủ đánh giá");
       }
     }
     catch

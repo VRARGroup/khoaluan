@@ -25,33 +25,6 @@
           </ng-container>
         </div>
       </div>
-    </a>
-    <a class="col-1" (click)="tieuchidanhgia_n(i)">
-      <div id="n{{i}}"
-        style="border: 1px solid rgb(255, 1, 1); border-radius: 5px; text-align: center;background-color: #f77;">no
-      </div>
-    </a>
-  </div>
-
-  <textarea (keyup)="textarea_text_change($event)" id="textarea_danhgiasosao_modal" cols="30" rows="10"
-    placeholder="Mời bạn chia sẻ thêm một số cảm nhận..."></textarea>
-  <div class="bar-danhkemanh">
-    <i style="display:inline-block;font-size: 30px; padding: 1px 15px; cursor: pointer;" class="fa fa-camera"
-      (click)="openFile()" aria-hidden="true"><span style="font-size: 20px; text-align: center;">Đính kèm ảnh</span></i>
-    <p style="float: right; margin-top: 14px;">{{textarea_count}} /15 kí tự.</p>
-  </div>
-  <div class="filter">
-    <div class="inline" *ngFor='let url of urls,let i=index'>
-      <ng-container>
-        <div class="img-space">
-          <ng-container *ngIf="isImageSaved">
-            <img [src]="createImgPath(url)" height="100"> <br />
-          </ng-container>
-        </div>
-        <button class="btn btn-danger" (click)="Remove(i)" *ngIf="isImageSaved">Xóa</button>
-      </ng-container>
-    </div>
-  </div>
   <div class="custom-file">
     <input type='file' #file (change)="uploadFileimage(file.files)" style="display:none" id="upload_file"
       style="display:none" multiple>
@@ -85,7 +58,7 @@
   </div>
   <div class="comment-1-input">
     <input id="hotenm" placeholder="Họ tên(Bắc buộc)" type="text">
-    <input id="sdtm" style="margin: 0 8px;" placeholder="Số điện thoại (Bắt buộc)" type="number">
+    <input id="sdtm" style="margin: 0 8px;" placeholder="Số điện thoại (Bắt buộc)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" type="text">
     <input id="emailm" placeholder="Email (Không bắt buộc)" type="text">
   </div>
   <a>
