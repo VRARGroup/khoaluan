@@ -85,6 +85,11 @@ namespace dienmayxanhapi.Controllers
 
       }
 
+      [HttpGet("get_danhgia_1day")]
+      public ActionResult<List<danhgia>> Getfillter_danhgia_1day()
+      {
+        return (_dgService.Getfillter_danhgia_1day());
+      }
 
   }
 }

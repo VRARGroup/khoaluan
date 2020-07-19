@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
       (res) ? res : [];
       if(res==null)
       {
-        alert("Tài khoản không tồn tại !!!");
+        alert("Sai tài khoản hoặc mật khẩu !!!");
         $('#u').val($('#u').val().toString().replace($('#u').val().toString(),""));
         $('#p').val($('#p').val().toString().replace($('#p').val().toString(),""));
         return false;
