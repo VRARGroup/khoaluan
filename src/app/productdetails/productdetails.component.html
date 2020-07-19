@@ -210,7 +210,7 @@
                 </ul>
               </div>
               <div style="margin-top: 30px;text-align: center;" id="show_hide_comment_1" class="col-3">
-                <a (click)="show_hide_danhgiasosao()">
+                <a id="show_hide_danhgiasosaoa" (click)="show_hide_danhgiasosao()">
                   <div id="show_hide_danhgiasosao">
                     Đánh giá ngay
                   </div>
@@ -310,11 +310,12 @@
                 <div class="inline" *ngFor='let url of urls,let i=index'>
                   <ng-container>
                     <div class="img-space">
+                      <div class="d-flex justify-content-end" ><i class="fas fa-times-circle fa-2x" (click)="Remove(i)"></i></div>
                       <ng-container *ngIf="isImageSaved">
                         <img [src]="createImgPath(url)" height="100"> <br />
                       </ng-container>
                     </div>
-                    <button class="btn btn-danger" (click)="Remove(i)" *ngIf="isImageSaved">Xóa</button>
+                    
                   </ng-container>
                 </div>
               </div>
@@ -324,8 +325,8 @@
               </div>
               <div class="comment-1-input">
                 <input id="hoten" placeholder="Họ tên(Bắc buộc)" type="text">
-                <input id="sdt" style="margin: 0 8px; font-size: 14px;" placeholder="Số điện thoại (Bắt buộc)"
-                  type="number">
+                <input id="sdt" style="margin: 0 8px; font-size: 14px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Số điện thoại (Bắt buộc)"
+                  type="text">
                 <input id="email" placeholder="Email (Không bắt buộc)" type="text">
               </div>
               <a>
@@ -360,12 +361,13 @@
                             <p></p>
                           </div>
                         </span>
+                        
                         <i style="margin-left: 10px;">{{item_danhgia.noidung}}
                         </i>
                       </p>
                     </div>
                     <div class="reply-danhgia">
-                      <a href="javascript:void(0)" (click)="show_danhgia_thaoluan(item_danhgia._id)">
+                      <a href="javascript:void(0)" id="showdg{{item_danhgia._id}}" (click)="show_danhgia_thaoluan(item_danhgia._id)">
                         Thảo luận
                       </a>
                       <span> • </span>
@@ -421,7 +423,7 @@
               </div>
               <div class="col-12">
                 <div class="footer-textarea-danhgia">
-                  <div class="footer-textarea-danhgia-first-div">
+                  <div class="footer-textarea-danhgia-first-div" (click)="openFile_bl()" >
                     <a>
                       <i style="font-size: 20px; padding: 1px 10px;" class="fa fa-camera" aria-hidden="true"></i>
                       Gửi hình
@@ -434,24 +436,40 @@
                       <input type="radio" id="female" name="gender">
                       <label for="female">Chị</label>
                     </div>
-                    <input type="text" placeholder="Họ tên bắt buộc">
-                    <input type="text" placeholder="Email" style="padding:2px 0; margin-left: 5px;">
-                    <a class="btn-gui">
+                    <input id="ht" type="text" placeholder="Họ tên bắt buộc">
+                    <input id="emailbl" type="text" placeholder="Email" style="padding:2px 0; margin-left: 5px;">
+                    <a class="btn-gui" (click)="insertbl()">
                       <div>Gửi</div>
                     </a>
                   </div>
                 </div>
+                <div class="filter">
+                  <div class="inline" *ngFor='let url of urls_bl,let i=index'>
+                    <ng-container>
+                      <div class="img-space">
+                        <div class="d-flex justify-content-end"><i class="fas fa-times-circle fa-2x" (click)="Removeimgbl(i)" ></i></div>
+                        <ng-container *ngIf="isImageSavedbl">
+                          <img [src]="createImgPath(url)" height="100"> <br />
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="custom-file">
+                  <input type='file' #filebl (change)="uploadFileimage_bl(filebl.files)" style="display:none"
+                    id="uploadCaptureInputFile_bl" multiple>
+                </div>
               </div>
             </div>
             <div class="list-comment">
-              <!-- <ng-container *ngFor="let item_comment of item_comments"> -->
+              <ng-container>
+              <div *ngFor="let item_comment of item_comments | paginate: { itemsPerPage: 10, currentPage: p };">
               <div class="comment_ask">
-                <i class="iconcom-user">C</i>
-                <strong>Cường</strong>
-                <div class="infocom_ask">Hiện tại e thấy sp giảm 10% e ở tp châu đốc vậy có được giảm bà giảm giá khi e
-                  mua tiền mặt bao nhiêi cho chiếu tivi này ạ</div>
+                <i class="iconcom-user">{{item_comment.ten.substring(0,1)}}</i>
+                <strong>{{item_comment.ten}}</strong>
+                <div class="infocom_ask">{{item_comment.noidung}}</div>
                 <div class="relate_infocom">
-                  <a (click)="show_insert_binhluanphu(1)">
+                  <a (click)="show_insert_binhluanphu(item_comment._id,item_comment.ten)">
                     <span class="reply-comment">Trả lời </span>
                   </a>
                   <b class="dot">●</b>
@@ -464,24 +482,21 @@
                   </span>
                 </div>
               </div>
+              <ng-container *ngIf="showbinhluanphu(item_comment._id, item_comments).length>0">
+              <div *ngFor="let itembl of showbinhluanphu(item_comment._id, item_comments),let i=index">
               <div class="comment_reply">
                 <i class="arrow_box"></i>
                 <div class="comment_ask">
                   <div class="avt-qtv">
                     <img style="width: 30px;" src="/assets/ic_dmx_blue.jpg">
                   </div>
-                  <strong> Kim Ngân</strong>
-                  <b class="qtv">Quản trị viên</b>
+                  <strong>{{itembl.ten}}</strong>
+                  <b *ngIf="itembl.chucdanh==true" class="qtv">Quản trị viên</b>
                   <div class="infocom_ask">
                     <div class="conticon">
-                      <div class="cmtcontent">Chào anh,&nbsp;
-                        <br>
-                        Dạ anh có thể sử dụng ống 10 nhưng sẽ có thể ảnh hưởng
-                        đến tuổi thọ của máy anh nhé. Anh nên tham khảo các máy có ống đồng 6/12 anh nhé.&nbsp;
-                        <br>Thông tin đến anh.&nbsp;
-                      </div>
+                      <div class="cmtcontent">{{itembl.noidung}}</div>
                       <div class="relate_infocom">
-                        <a (click)="show_insert_binhluanphu(1)">
+                        <a (click)="show_insert_binhluanphu(item_comment._id,itembl.ten)">
                           <span class="btnreply">Trả lời </span>
                         </a>
                         <b class="dot">●</b>
@@ -490,18 +505,23 @@
                           Hài lòng
                           <span></span>
                         </a>
-                        <b class="dot">●</b>
-                        <a href="javascript:void(0)" class="favor satis">
-                          <i class="fa fa-thumbs-down"></i>
-                          Không hài lòng
-                          <span></span>
-                        </a>
-                        <div class="wrapsatis" style="display: none;">
+                        <ng-container *ngIf="itembl.chucdanh==true">
+                          <b class="dot">●</b>
+                          <a href="javascript:void(0)" id="khl{{i}}" (click)="clickkohailong(i)" class="favor satis">
+                            <i class="fa fa-thumbs-down"></i>
+                            Không hài lòng
+                            <span></span>
+                          </a>
+                        </ng-container>
+                        <div class="wrapsatis" id="khl_dg{{i}}" style="display: none;">
                           <div class="wrsct">
-                            <i class="iconcom-close"></i>
-                            <span>Điện máy XANH rất tiếc đã làm bạn chưa hài lòng. Mời bạn góp ý để
-                              <b>QTV Kim Ngân</b> phục vụ tốt hơn:
-                            </span>
+                            <div>
+                              <i (click)="close(i)" class="fas fa-times "></i>
+                              <span>Điện máy XANH rất tiếc đã làm bạn chưa hài lòng. Mời bạn góp ý để
+                                <b>QTV {{itembl.ten}}</b> phục vụ tốt hơn:
+                              </span>
+                             
+                            </div>
                             <textarea placeholder="Nhập nội dung góp ý" type="text" class="ustCt"></textarea>
                             <span>Hãy để lại thông tin để được hỗ trợ khi cần thiết (không
                               bắt buộc):</span>
@@ -515,11 +535,13 @@
                   </div>
                 </div>
               </div>
-              <!-- </ng-container> -->
             </div>
-
-
-
+            </ng-container>
+              </div>
+              </ng-container>
+             
+            </div>
+            <pagination-controls style="margin-top: 10px; margin-bottom: 10px; font-size: 13px;" (pageChange)="p = $event"></pagination-controls>
             <textarea (click)="render_textarea()" cols="30" rows="10"
               placeholder="Mời bạn nhập tiếng việt có dấu"></textarea>
           </div>

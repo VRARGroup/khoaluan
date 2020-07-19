@@ -337,7 +337,7 @@ li {
 }
 
 .comment-3 {
-  height: 800px;
+  height: auto;
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid rgba(122, 120, 120, 0.664);
@@ -450,6 +450,7 @@ mat-progress-bar {
 
 .btn-gui {
   flex: 1;
+  cursor: pointer;
 
   div {
     margin-left: 5px;
@@ -555,9 +556,9 @@ textarea {
     text-transform: capitalize;
   }
 
-  .relate_infocom {
-    margin-left: 30px;
-  }
+  // .relate_infocom {
+  //   margin-left: 30px;
+  // }
 
   .qtv {
     background: #eebc49;
@@ -579,7 +580,7 @@ textarea {
   font-size: 14px;
   color: #4a4a4a;
   line-height: 22px;
-  margin-left: 30px;
+  margin-left: 40px;
 }
 
 .relate_infocom {
@@ -779,3 +780,45 @@ ul {
   margin-top: -4px;
   margin-bottom: 14px;
 }
+.wrapsatis{
+  overflow: visible;
+  position: absolute;
+  left: 4%;
+  top: 40px;
+  z-index: 91;
+  width: 430px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  margin: auto;
+  .wrsct {
+    position: relative;
+    span {
+      margin-bottom: 7px;
+      display: block;
+      max-width: 96%;
+    }
+    i {
+      width: 20px;
+      height: 20px;
+      top: 0;
+      right: 0;
+      position: absolute;
+      cursor: pointer;
+      font-size: 18px;
+      background-color: white;
+      color: black;
+    }
+  }
+}
+
+.fa-2x {
+  font-size: 20px !important;
+  color: #f50909;
+  cursor: pointer;
+}
+
+
+
+

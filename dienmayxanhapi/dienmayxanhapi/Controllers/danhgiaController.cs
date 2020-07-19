@@ -32,46 +32,26 @@ namespace dienmayxanhapi.Controllers
         return (_dgService.Getdetaildg(_id));
       }
 
+      [Route ("danhgia")]
+      [HttpGet]
+      public ActionResult<List<danhgia>> Getdetaildangia_allidsp(int _id)
+      {
+        return (_dgService.Getalldetaildg_idsp(_id));
+      }
+
+      [Route ("danhgiaphu")]
+      [HttpGet]
+      public ActionResult<List<danhgiaphu>> Getdangiaphu(int _id)
+      {
+        return (_dgService.Getdetaildgphu(_id));
+      }
+
+
       [HttpPost]
       public ActionResult<BsonDocument> Create(danhgia dg)
       {
         try
         {
-          //BsonArray arrayhinh = new BsonArray();
-          //for (int i = 0; i < dg.hinh.Count; i++)
-          //{
-          //  arrayhinh.Add(dg.hinh[i]);
-          //}
-          //BsonArray arraytieuchidanhgia = new BsonArray();
-          //if (dg.tieuchidanhgia != null)
-          //{
-          //  for (int i = 0; i < dg.tieuchidanhgia.Count; i++)
-          //  {
-          //    arraytieuchidanhgia.Add(dg.tieuchidanhgia[i]);
-          //  }
-
-          //}
-          //BsonArray arraydanhgiaphu = new BsonArray();
-          //int id = 0;
-          //if (_dgService.Getdg() != null && _dgService.Getdg().Count != 0)
-          //{
-          //  id = Convert.ToInt32(_dgService.Getdg().LastOrDefault()._id + 1);
-          //}
-          //var d = DateTime.Now;
-          //var document = new BsonDocument {
-          //            { "_id", id},
-          //            { "sosao" , dg.sosao},
-          //            { "ten" , dg.ten},
-          //            { "sdt" , dg.sdt},
-          //            { "email" , dg.email},
-          //            { "noidung" , dg.noidung},
-          //            { "hinh" , arrayhinh},
-          //            { "luotthich", dg.luotthich},
-          //            { "danhgiaphu" , arraydanhgiaphu},
-          //            { "tieuchidanhgia" , arraytieuchidanhgia},
-          //            { "_id_sanpham" , dg._id_sanpham},
-          //            { "ngaydanhgia" , DateTime.Now}
-          //            };
             int id = 0;
             if (_dgService.Getdg() != null && _dgService.Getdg().Count != 0)
             {

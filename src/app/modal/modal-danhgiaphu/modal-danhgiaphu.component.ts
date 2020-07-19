@@ -26,33 +26,53 @@ export class ModalDanhgiaphuComponent implements OnInit {
     this.iddg = this.data.iddg;
   }
   danhgia_save_modal() {
-    let gt=false;
-    if($("#danhgia_male").is(":checked"))
+    if(this.noidungdanhgia=!null && this.noidungdanhgia!="")
     {
-      gt=true;
-    }
-    const dp = new dgphu(this.noidungdanhgia, 0, $("#hotendgp").val().toString(), false, gt, $("#emaildgp").val().toString())
-    console.log(dp)
-    this.dgp.push(dp);
+      if($("#hotendgp").val().toString().length>0 && $("#emaildgp").val().toString().length>0)
+      {
+      const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if(re.test($('#emaildgp').val().toString()))
+      {
+        let gt=false;
+        if($("#danhgia_male").is(":checked"))
+        {
+          gt=true;
+        }
+        const dp = new dgphu(this.noidungdanhgia, 0, $("#hotendgp").val().toString(), false, gt, $("#emaildgp").val().toString())
+        this.dgp.push(dp);
 
-    const d = new dg(
-      this.iddg,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      this.dgp,
-      null,
-      parseInt(this.idsp.toString())
-    );
-    this.danhgiaService.insert_binhluan_danhgia(d).subscribe(
-      () => {
-        alert('Thực hiện thành công');
+        const d = new dg(
+          this.iddg,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          this.dgp,
+          null,
+          parseInt(this.idsp.toString())
+        );
+        this.danhgiaService.insert_binhluan_danhgia(d).subscribe(
+          () => {
+            alert('Thực hiện thành công');
+          }
+        );
       }
-    );
-    this.dialogRef.close();
+      else
+      {
+        alert("Email không đúng định dạnh !!!");
+      }
+      }
+      else
+      {
+        alert("Vui lòng nhâp đủ thông tin cá nhân !!!");
+      }
+  }
+  else
+  {
+    alert("Vui lòng nhâp đủ thông tin đánh giá !!!");
+  }
   }
 }

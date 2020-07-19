@@ -57,7 +57,7 @@
 
 						<tbody>
 							<tr *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
-								<td>{{i+1}}</td>
+								<td>{{(i+1)+((p-1)*8)}}</td>
 								<td><a (click)="chitietsp(item._id)">{{item.ten}}</a></td>
 								<td>{{item.thuonghieu}}</td>
 								<td>{{item.giaban}}</td>

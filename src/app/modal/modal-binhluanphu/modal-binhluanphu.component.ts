@@ -3,7 +3,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpEventType, HttpClient } from '@angular/common/http';
 import { Router } from "@angular/router";
 import * as $ from "jquery";
-import { dg } from '../../model/danhgia';
+
+import { bl } from '../../model/binhluan';
+import { blphu } from '../../model/binhluan';
+import { BinhluanService } from '../../service/binhluan.service';
+import { parseJSON } from 'jquery';
 @Component({
   selector: 'app-modal-binhluanphu',
   templateUrl: './modal-binhluanphu.component.html',
@@ -15,55 +19,90 @@ export class ModalBinhluanphuComponent implements OnInit {
   idbl:number;
   textarea_count: number = 0;
   serverPath: String = "";
-  urls = [];
+  urls_blp = [];
   isImageSaved: boolean = false;
   public progress: number;
   responseimage: any = [];
   kthttp: string = "https://";
-  hinhthuctesp: Array<any> = [];
+  hinhthuctebl_phu: Array<any> = [];
   ktsavedhinhthuctesanpham: boolean = false;
-  constructor(private router: Router, public dialogRef: MatDialogRef<ModalBinhluanphuComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {
+  blphu:Array<any> = [];
+  constructor(private router: Router, public dialogRef: MatDialogRef<ModalBinhluanphuComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private binhluanService: BinhluanService) {
 
   }
   ngOnInit() {
-    $('#textarea_binhluansosao_modal').val(this.data.name);
+    $('#textarea_binhluansosao_modal').val("@"+this.data.name+":");
     this.idsp = this.data.idsp;    
     this.idbl = this.data.idbl;
   }
+  
   binhluan_save_modal() {
+    if($('#textarea_binhluanphu_modal').val().toString().length>=15)
+    {
+    let gt=false;
+    if($("#binhluan_male").is(":checked"))
+    {
+      gt=true;
+    }
+    const bp = new blphu(
+      $('#textarea_binhluanphu_modal').val().toString(), 0, 
+      $(".cfm-UserName").val().toString(), false, gt , $(".cfm-UserEmail").val().toString())
+      this.blphu.push(bp);
 
+    const b = new bl(
+      this.idbl,
+      null,
+      gt,
+      null,
+      null,
+      null,
+      null,
+      this.blphu,
+      parseInt(this.idsp.toString())
+    );
+    this.binhluanService.insert_binhluan_phu(b).subscribe(
+      () => {
+        alert('Thực hiện thành công');
+      }
+    );
+    this.dialogRef.close(this.idbl);
+    }
+    else
+    {
+      alert("Vui lòng nhập đủ 15 ký tự bình luận !!!")
+    }
   }
   openFile() {
     console.log('hell')
     $('#upload_file').click();
   }
 
-  Remove(id: number) {
+  Remove_img_blp(id: number) {
     console.log("s", id);
-    console.log("s", this.urls.length);
-    this.urls.splice(id, 1);
-    console.log("xoa", this.urls);
+    console.log("s", this.urls_blp.length);
+    this.urls_blp.splice(id, 1);
+    console.log("xoa", this.urls_blp);
   }
 
   getvalue(v: number) {
-    this.kthttp = this.urls[v];
+    this.kthttp = this.urls_blp[v];
     if (this.kthttp.startsWith("https://") == false) {
-      this.hinhthuctesp.push("https://localhost:44309/Resources/Images/" + this.urls[v]);
+      this.hinhthuctebl_phu.push("https://localhost:44309/Resources/Images/" + this.urls_blp[v]);
       this.ktsavedhinhthuctesanpham = true;
     }
     else {
-      this.hinhthuctesp.push(this.urls[v]);
+      this.hinhthuctebl_phu.push(this.urls_blp[v]);
       this.ktsavedhinhthuctesanpham = true;
     }
   }
 
-  public uploadFileimage = (files) => {
+  public uploadFileimage_blp = (files) => {
     if (files.length === 0) {
       return;
     }
-    if (this.urls.length < 4) {
+    if (this.urls_blp.length < 4) {
       let fileToUpload = <File>files[0];
-      this.urls.push(fileToUpload.name);
+      this.urls_blp.push(fileToUpload.name);
       this.isImageSaved = true;
       const formData = new FormData();
       formData.append('file', fileToUpload, fileToUpload.name);
@@ -77,7 +116,7 @@ export class ModalBinhluanphuComponent implements OnInit {
           }
         });
       document.getElementById("uploadCaptureInputFile")["value"] = "";
-      console.log("h", this.urls);
+      console.log("h", this.urls_blp);
     }
   }
 
@@ -96,6 +135,6 @@ export class ModalBinhluanphuComponent implements OnInit {
   }
 
   textarea_text_change(value: string) {
-    this.textarea_count = $('#textarea_danhgiasosao_modal').val().toString().length;
+    this.textarea_count = $('#textarea_binhluanphu_modal').val().toString().length;
   }
 }

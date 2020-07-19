@@ -37,7 +37,7 @@ export class ModalthemuseComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: any, @Inject(DOCUMENT) private document: Document,private location: Location, private router: Router, private taikhoanService: TaikhoanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService) { }
   t:string=null;
   ngOnInit() {
-    console.log(this.lesson);
+   
     this.loadtkgroup();
   }
 
@@ -56,10 +56,10 @@ export class ModalthemuseComponent implements OnInit {
       item.password,
       item.hoatdong,
       item.giayphep,
-      this.lesson.idg,
+      this.data.id,
       );
       this.Updatetk(t);
-      this.loadtkgroup();
+      setTimeout(()=>{ this.loadtkgroup();},100);
   }
 
   Updatetk(t: tk){
@@ -71,7 +71,6 @@ export class ModalthemuseComponent implements OnInit {
             }
         );
         this.a=[];
-        this.loadtkgroup();
     }
     catch
     {
@@ -92,15 +91,8 @@ export class ModalthemuseComponent implements OnInit {
 
   closemodal()
   {
-    const t=new tk(
-      0,
-      "v",
-      "v",
-      true,
-      true,
-      0
-    )
-    this.dialogRef.close(t);
+    
+    this.dialogRef.close(this.data.id);
   }
   
 

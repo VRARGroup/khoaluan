@@ -72,6 +72,16 @@ export class ListproductComponent implements OnInit {
       Array.prototype.push.apply(this.items, res);
     });
     $('.show-more-list-product').css("display", "none");
+    if(this.show_giatdc==true)
+    {
+      this.items=this.items.sort((a,b)=>a.giaban-b.giaban);
+    }
+    else{
+      if(this.show_giacdt==true)
+      {
+        this.items=this.items.sort((a,b)=>b.giaban-a.giaban);
+      }
+    }
   }
   // render_sp(id_sanpham: any):void {
   // 	// window.localStorage.removeItem("sp");
@@ -113,5 +123,21 @@ export class ListproductComponent implements OnInit {
   }
   suggest_price(categories: any[]) {
 
+  }
+  show_giatdc:boolean=false;
+  show_giacdt:boolean=false;
+  show_giathapdencao()
+  {
+    this.show_giatdc=true;
+    this.items=this.items.sort((a,b)=>a.giaban-b.giaban);
+  }
+  show_caothapdenthap()
+  {
+    this.show_giacdt=true;
+    this.items=this.items.sort((a,b)=>b.giaban-a.giaban);
+  }
+  show_banchaynhat()
+  {
+    this.get_list_product(this.id_loai_sanpham);
   }
 }

@@ -20,6 +20,7 @@ namespace dienmayxanhapi
         public virtual DbSet<taikhoan> taikhoan { get; set; }
         public virtual DbSet<group> group { get; set; }
         public virtual DbSet<danhgia> danhgia { get; set; }
+        public virtual DbSet<binhluan> binhluan { get; set; }
         private string ConnectionString = "mongodb://localhost:27017";
         private string DatabaseName = "dienmayxanh";
         private string CollectionNamesp = "sanpham";
@@ -28,12 +29,14 @@ namespace dienmayxanhapi
         private string CollectionNametaikhoan = "taikhoan";
         private string CollectionNametgroup = "group";
         private string CollectionNamedanhgia = "danhgia";
+        private string CollectionNamebinhluan = "binhluan";
         private readonly IMongoCollection<sanphamdienthoai> collectionspdt;
         private readonly IMongoCollection<loaisanpham> collectionlsp;
         private readonly IMongoCollection<danhsachquyen> collectiondsq;
         private readonly IMongoCollection<taikhoan> collectiontk;
         private readonly IMongoCollection<group> collectiongroup;
         private readonly IMongoCollection<danhgia> collectiondanhgia;
+        private readonly IMongoCollection<binhluan> collectionbinhluan;
         public dienmayxanhdbcontext()
         {
             var client = new MongoClient(ConnectionString);
@@ -44,6 +47,7 @@ namespace dienmayxanhapi
             collectiontk = database.GetCollection<taikhoan>(CollectionNametaikhoan);
             collectiongroup = database.GetCollection<group>(CollectionNametgroup);
             collectiondanhgia = database.GetCollection<danhgia>(CollectionNamedanhgia);
+            collectionbinhluan = database.GetCollection<binhluan>(CollectionNamebinhluan);
         }
         public List<sanphamdienthoai> Get()
         {
@@ -345,6 +349,19 @@ namespace dienmayxanhapi
           return dl;
         }
 
+        public List<danhgia> Getalldetaildg_idsp(int _id)
+        {
+          var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList();
+          return dl;
+        }
+
+        public List<danhgiaphu> Getdetaildgphu(int _id)
+        {
+          var dl = collectiondanhgia.Find(x => x._id == _id).ToList();
+          var danhgiaphu = dl.Find(x=>true).danhgiaphu.ToList();
+          return danhgiaphu;
+        }
+
         public Boolean Updatedanhgia(FilterDefinition<danhgia> filter, UpdateDefinition<danhgia> update)
         {
           collectiondanhgia.FindOneAndUpdate(filter, update);
@@ -394,5 +411,28 @@ namespace dienmayxanhapi
             var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp && arr_thuonghieuu.Contains(x.thuonghieu)).ToList();
             return dl;
         }
-    }
+
+        public List<binhluan> Getbinhluan()
+        {
+          var dl = collectionbinhluan.Find(x =>true).ToList();
+          return dl;
+        }
+
+        public List<binhluan> Getdetaibinhluan_idsp(int id_sp)
+        {
+          var dl = collectionbinhluan.Find(x => x._id_sanpham == id_sp).ToList();
+          return dl;
+        }
+
+        public BsonDocument insertbinhluan(binhluan bl)
+        {
+          collectionbinhluan.InsertOne(bl);
+          return bl.ToBsonDocument();
+        }
+        public Boolean Updatebl(FilterDefinition<binhluan> filter, UpdateDefinition<binhluan> update)
+        {
+          collectionbinhluan.FindOneAndUpdate(filter, update);
+          return true;
+        }
+  }
 }

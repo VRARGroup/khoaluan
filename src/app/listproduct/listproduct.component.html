@@ -18,9 +18,9 @@
         </label>
         <span>
 
-          <label><input type="radio" name="select" /><span class="span-radio-filter">Bán chạy</span></label>
-          <label><input type="radio" name="select" /><span class="span-radio-filter">Giá cao đến thấp</span></label>
-          <label><input type="radio" name="select" /><span class="span-radio-filter">Giá thấp đến cao</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_banchaynhat()">Bán chạy</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_caothapdenthap()">Giá cao đến thấp</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_giathapdencao()">Giá thấp đến cao</span></label>
         </span>
       </div>
       <div class="list">

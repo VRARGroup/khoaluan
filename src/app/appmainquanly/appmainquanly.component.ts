@@ -118,6 +118,7 @@ export class AppmainquanlyComponent implements OnInit {
       this.tensanphamphu = this.tensanpham;
       console.log("tensanpham", res);
     });
+    this.searchText=null;
     this.p=1;
   }
   taosp(): void {
@@ -179,51 +180,16 @@ export class AppmainquanlyComponent implements OnInit {
   
   inputsearch()
   {
-    
+    this.p=1;
     let l:Array<sp>=[];
     l=this.tensanpham;
     let textkt:string=this.searchText;
-    if(this.searchText!=null)
+    if(this.searchText!=null && this.searchText!="")
     {
       if(this.tendanhmuc!=null)
       {
-        if(this.tendanhmuc.toUpperCase()!="TIVI")
-        {
-          if(this.searchText.toUpperCase().startsWith(this.tendanhmuc.toUpperCase())==true)
-          {
-            textkt=this.searchText.toUpperCase().replace(this.tendanhmuc.toUpperCase(),"").trim();
-          }
-          l=this.tensanphamphu.filter(x=>x.ten.toString().toUpperCase().replace(this.tendanhmuc.toUpperCase(),"").trim().startsWith(textkt.toString().toUpperCase()));
-          console.log(l);
-          this.tensanpham=l;
-        }
-        else
-        {
-          if(this.searchText.toUpperCase().startsWith(this.tendanhmuc.toUpperCase())==true)
-          {
-            textkt=this.searchText.toUpperCase().replace(this.tendanhmuc.toUpperCase(),"").trim();
-          }
-          else
-          {
-            if(this.searchText.toUpperCase().startsWith("ANDROID"+" "+this.tendanhmuc.toUpperCase())==true)
-            {
-              textkt=this.searchText.toUpperCase().replace("ANDROID"+" "+this.tendanhmuc,"").trim();
-            }
-            else
-            {
-              if(this.searchText.toUpperCase().startsWith("SMART"+" "+this.tendanhmuc.toUpperCase())==true)
-              {
-                textkt=this.searchText.toUpperCase().replace("SMART"+" "+this.tendanhmuc.toUpperCase(),"").trim();
-              }
-            }
-          }
-          l=this.tensanphamphu.filter(x=>x.ten.toString().toUpperCase().replace("ANDROID"+" "+this.tendanhmuc.toUpperCase(),"").trim().startsWith(textkt.toString().toUpperCase()));
-          if(l.length==0)
-          {
-            l=this.tensanphamphu.filter(x=>x.ten.toString().toUpperCase().replace("SMART"+" "+this.tendanhmuc.toUpperCase(),"").trim().startsWith(textkt.toString().toUpperCase()));
-          }
-          this.tensanpham=l;
-        }
+        l=this.tensanphamphu.filter(x=>x.ten.toString().toUpperCase().match(textkt.toString().toUpperCase()));
+        this.tensanpham=l;
       }
       else
       {

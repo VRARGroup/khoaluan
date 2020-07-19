@@ -232,14 +232,15 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
   themusergroup(id:number)
   {
     // const modalRef = this.modalService.open(ModalthemuseComponent);
-    // const t=new lesson(
-    //   id
-    // );
-    // modalRef.componentInstance.lesson = t;
+    const t=new lesson(
+      id
+    );
+    //modalRef.componentInstance.lesson = t;
     const dialogRef =  this.dialog.open(ModalthemuseComponent, {data: {id: id}, disableClose: true});
     dialogRef.afterClosed().subscribe((submit) => {
       if (submit) {
-        this.getalltaikhoan();
+        console.log("gg",submit)
+        this.loadtaikhoan_id_group(parseInt(submit));
       } else {
         console.log("null")
       }

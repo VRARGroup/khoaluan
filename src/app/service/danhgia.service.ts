@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { dg } from '../model/danhgia';
+import { dgphu } from '../model/danhgia';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,14 @@ export class DanhgiaService {
   
   getalldg(): Observable<dg[]> {
 		return this.http.get<dg[]>(this.url);
+  }
+
+  getalldg_idsp(id:number): Observable<dg[]> {
+		return this.http.get<dg[]>(this.url+"/danhgia?_id="+id);
+  }
+
+  getalldgphu(id:number): Observable<dgphu[]> {
+		return this.http.get<dgphu[]>(this.url+"/danhgiaphu?_id="+id);
   }
   
   getdg_idsp(id:number): Observable<dg[]> {
