@@ -23,7 +23,7 @@ export class ListproductComponent implements OnInit {
   categories: any[] = [];
   prices: any[] = [];
   banner: string = "";
-  constructor(private router: Router,private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
+  constructor(private router: Router, private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit() {
     let id_loai_sanpham = this.id_loai_sanpham = this.route.snapshot.params.id;
@@ -31,36 +31,33 @@ export class ListproductComponent implements OnInit {
       id_loai_sanpham = this.id_loai_sanpham = parseInt(window.localStorage.getItem("loai_sp"));
     if (isNaN(id_loai_sanpham))
       window.location.href = "appmain/products";
-    this.get_list_product(id_loai_sanpham);
-    this.get_list_product_category(id_loai_sanpham);
-    this.get_list_product_price(id_loai_sanpham);
-    document.getElementById('dropdown-menu').style.display = "";
-
-
-    if (id_loai_sanpham.toString() == "20000") {
-      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bgTizi.png)";
-      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png";
-    }else if (id_loai_sanpham.toString() == "30000") {
-      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
-      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/tulanh.png";
-    } else if (id_loai_sanpham.toString() == "40000") {
-      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
-      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/maygiat.png";
-    } else if (id_loai_sanpham.toString() == "50000") {
-      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
-      this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/maylanh.2.png";
-    } else if (id_loai_sanpham.toString() == "60000") {
-      document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/newbanner/background-top.png)";
-      this.banner = "https://cdn.tgdd.vn/2020/07/banner/QDHt7desk1200x375-1200x375.png";
-    } 
-
-
-
-    document.getElementById('html').style.backgroundPosition = "initial";
-    document.getElementById('html').style.backgroundSize = "cover";
-    document.getElementById('html').style.backgroundRepeat = "no-repeat";
-    document.getElementById('html').style.backgroundColor = "#f3f3f3";
-    window.scroll(0, 0);
+    if (this.id_loai_sanpham != 0) {
+      this.get_list_product(id_loai_sanpham);
+      this.get_list_product_category(id_loai_sanpham);
+      this.get_list_product_price(id_loai_sanpham);
+      document.getElementById('dropdown-menu').style.display = "";
+      if (id_loai_sanpham.toString() == "20000") {
+        document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bgTizi.png)";
+        this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png";
+      } else if (id_loai_sanpham.toString() == "30000") {
+        document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
+        this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/tulanh.png";
+      } else if (id_loai_sanpham.toString() == "40000") {
+        document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
+        this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/maygiat.png";
+      } else if (id_loai_sanpham.toString() == "50000") {
+        document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
+        this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/maylanh.2.png";
+      } else if (id_loai_sanpham.toString() == "60000") {
+        document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/newbanner/background-top.png)";
+        this.banner = "https://cdn.tgdd.vn/2020/07/banner/QDHt7desk1200x375-1200x375.png";
+      }
+      document.getElementById('html').style.backgroundPosition = "initial";
+      document.getElementById('html').style.backgroundSize = "cover";
+      document.getElementById('html').style.backgroundRepeat = "no-repeat";
+      document.getElementById('html').style.backgroundColor = "#f3f3f3";
+      window.scroll(0, 0);
+    }
   }
   get_list_product(id: number) {
     this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
@@ -72,14 +69,12 @@ export class ListproductComponent implements OnInit {
       Array.prototype.push.apply(this.items, res);
     });
     $('.show-more-list-product').css("display", "none");
-    if(this.show_giatdc==true)
-    {
-      this.items=this.items.sort((a,b)=>a.giaban-b.giaban);
+    if (this.show_giatdc == true) {
+      this.items = this.items.sort((a, b) => a.giaban - b.giaban);
     }
-    else{
-      if(this.show_giacdt==true)
-      {
-        this.items=this.items.sort((a,b)=>b.giaban-a.giaban);
+    else {
+      if (this.show_giacdt == true) {
+        this.items = this.items.sort((a, b) => b.giaban - a.giaban);
       }
     }
   }
@@ -124,20 +119,17 @@ export class ListproductComponent implements OnInit {
   suggest_price(categories: any[]) {
 
   }
-  show_giatdc:boolean=false;
-  show_giacdt:boolean=false;
-  show_giathapdencao()
-  {
-    this.show_giatdc=true;
-    this.items=this.items.sort((a,b)=>a.giaban-b.giaban);
+  show_giatdc: boolean = false;
+  show_giacdt: boolean = false;
+  show_giathapdencao() {
+    this.show_giatdc = true;
+    this.items = this.items.sort((a, b) => a.giaban - b.giaban);
   }
-  show_caothapdenthap()
-  {
-    this.show_giacdt=true;
-    this.items=this.items.sort((a,b)=>b.giaban-a.giaban);
+  show_caothapdenthap() {
+    this.show_giacdt = true;
+    this.items = this.items.sort((a, b) => b.giaban - a.giaban);
   }
-  show_banchaynhat()
-  {
+  show_banchaynhat() {
     this.get_list_product(this.id_loai_sanpham);
   }
 }

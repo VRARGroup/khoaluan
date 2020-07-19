@@ -90,4 +90,8 @@ export class SanphamService {
 	// get_list_suggest_category(idlsp: number,arrthuonghieu: string[]) {
 	// 	return this.http.get<sp[]>(this.url + '/' + 'get_list_suggest_category?idlsp=' + idlsp +"&&"+ "arrthuonghieu=" + arrthuonghieu);
 	// }
+
+	get_allsp(): Observable<sp[]> {
+		return this.http.get<sp[]>(this.url + '/'+ 'allsp');
+	}
 }
