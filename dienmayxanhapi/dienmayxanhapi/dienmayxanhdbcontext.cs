@@ -125,7 +125,6 @@ namespace dienmayxanhapi
             collectionspdt.DeleteOne(filter);
             var dl = collectionlsp.Find(x => true).ToList();
             return dl;
-
         }
         public List<loaisanpham> Getlsp()
         {
@@ -166,7 +165,6 @@ namespace dienmayxanhapi
             var dl = collectionlsp.Find(x => true).ToList();
             return dl;
         }
-
 
         public List<sanphamdienthoai> Getfillter_same_products(int idsp)
         {
@@ -293,8 +291,8 @@ namespace dienmayxanhapi
         }
         public List<taikhoan> Getdetailtk_id_group(int id_group)
         {
-          var dl = collectiontk.Find(x => x._id_group == id_group).ToList();
-          return dl;
+            var dl = collectiontk.Find(x => x._id_group == id_group).ToList();
+            return dl;
         }
 
         public Boolean Updatetk(FilterDefinition<taikhoan> filter, UpdateDefinition<taikhoan> update)
@@ -345,33 +343,33 @@ namespace dienmayxanhapi
 
         public List<danhgia> Getdetaildg(int _id)
         {
-          var dl = collectiondanhgia.Find(x =>x._id_sanpham==_id).ToList().Take(3).ToList();
-          return dl;
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList().Take(3).ToList();
+            return dl;
         }
 
         public List<danhgia> Getalldetaildg_idsp(int _id)
         {
-          var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList();
-          return dl;
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList();
+            return dl;
         }
 
         public List<danhgiaphu> Getdetaildgphu(int _id)
         {
-          var dl = collectiondanhgia.Find(x => x._id == _id).ToList();
-          var danhgiaphu = dl.Find(x=>true).danhgiaphu.ToList();
-          return danhgiaphu;
+            var dl = collectiondanhgia.Find(x => x._id == _id).ToList();
+            var danhgiaphu = dl.Find(x => true).danhgiaphu.ToList();
+            return danhgiaphu;
         }
 
         public Boolean Updatedanhgia(FilterDefinition<danhgia> filter, UpdateDefinition<danhgia> update)
         {
-          collectiondanhgia.FindOneAndUpdate(filter, update);
-          return true;
+            collectiondanhgia.FindOneAndUpdate(filter, update);
+            return true;
         }
 
         public BsonDocument insertdg(danhgia dg)
         {
-          collectiondanhgia.InsertOne(dg);
-          return null;
+            collectiondanhgia.InsertOne(dg);
+            return null;
         }
 
         public List<string> check_tieuchidanhgia(int id)
@@ -405,7 +403,7 @@ namespace dienmayxanhapi
             vs.Add("Trên " + dl * 0.7);
             return vs;
         }
-        
+
         public List<sanphamdienthoai> Getfillter_list_suggest_category(int idlsp, string arr_thuonghieuu)
         {
             var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp && arr_thuonghieuu.Contains(x.thuonghieu)).ToList();
@@ -414,31 +412,37 @@ namespace dienmayxanhapi
 
         public List<binhluan> Getbinhluan()
         {
-          var dl = collectionbinhluan.Find(x =>true).ToList();
-          return dl;
+            var dl = collectionbinhluan.Find(x => true).ToList();
+            return dl;
         }
 
         public List<binhluan> Getdetaibinhluan_idsp(int id_sp)
         {
-          var dl = collectionbinhluan.Find(x => x._id_sanpham == id_sp).ToList();
-          return dl;
+            var dl = collectionbinhluan.Find(x => x._id_sanpham == id_sp).ToList();
+            return dl;
         }
 
         public BsonDocument insertbinhluan(binhluan bl)
         {
-          collectionbinhluan.InsertOne(bl);
-          return bl.ToBsonDocument();
+            collectionbinhluan.InsertOne(bl);
+            return bl.ToBsonDocument();
         }
         public Boolean Updatebl(FilterDefinition<binhluan> filter, UpdateDefinition<binhluan> update)
         {
-          collectionbinhluan.FindOneAndUpdate(filter, update);
-          return true;
+            collectionbinhluan.FindOneAndUpdate(filter, update);
+            return true;
         }
-  
+
         public List<danhgia> Getfillter_danhgia_1day()
         {
             var av = DateTime.Today.AddDays(-1);
-            var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-100) ).ToList();
+            var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-100)).ToList();
+            return dl;
+        }
+
+        public List<sanphamdienthoai> Getfillter_allsp()
+        {
+            var dl = collectionspdt.Find(x => true).ToList();
             return dl;
         }
     }

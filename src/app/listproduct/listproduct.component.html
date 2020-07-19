@@ -10,7 +10,10 @@
     <i class="fa fa-retweet" aria-hidden="true"></i>1 đổi 1 trong 1 tháng (Nếu lỗi)
     <i class="fa fa-shield" aria-hidden="true"></i>Bảo hành chính hãng
   </div>
-  <div class="body-list row">
+  <div *ngIf="id_loai_sanpham == 0" style="height: 53vh;font-size: 18px;font-weight: 600;padding-top: 122px;vertical-align: middle;text-align: center;">
+    Không tìm thấy sản phẩm !!!
+  </div>
+  <div *ngIf="id_loai_sanpham != 0" class="body-list row">
     <div class="left-panel">
       <div class="radio-filter">
         <label style="margin-top: 8px; height: 24px;">
