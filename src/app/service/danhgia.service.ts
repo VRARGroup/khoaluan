@@ -44,5 +44,9 @@ export class DanhgiaService {
   insert_binhluan_danhgia(d:dg): Observable<dg> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 		return this.http.put<dg>(this.url+"/"+d._id,d);
-	}
+  }
+
+  get_danhgia_1day(): Observable<dg[]> {
+		return this.http.get<dg[]>(this.url+"/get_danhgia_1day");
+  }
 }

@@ -6,7 +6,7 @@
                         <table class="table table-striped" style="text-align: center">
                             <thead >
                                 <tr>
-                                    <th>#</th>
+                                    <th>STT</th>
                                     <th>Tên đăng nhập</th>
                                     <th>Mật khẩu</th>
                                     <th>Được phép hoạt động</th>
@@ -14,7 +14,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of alltk | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
-                                    <td>{{i+1}}</td>
+                                    <td>{{(i+1)+((p-1)*8)}}</td>
                                     <td>{{item.username}}</td>
                                     <td>{{item.password}}</td>
                                     <td>

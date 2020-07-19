@@ -434,5 +434,12 @@ namespace dienmayxanhapi
           collectionbinhluan.FindOneAndUpdate(filter, update);
           return true;
         }
-  }
+  
+        public List<danhgia> Getfillter_danhgia_1day()
+        {
+            var av = DateTime.Today.AddDays(-1);
+            var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-100) ).ToList();
+            return dl;
+        }
+    }
 }
