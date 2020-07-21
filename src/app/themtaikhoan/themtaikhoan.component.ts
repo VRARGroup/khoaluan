@@ -156,6 +156,7 @@ export class ThemtaikhoanComponent implements OnInit {
             this.idtk,
             document.getElementById("username")["value"],
             document.getElementById("pass")["value"],
+            document.getElementById("tennv")["value"],
             false,
             this.ctk,
             this.selected
@@ -170,6 +171,7 @@ export class ThemtaikhoanComponent implements OnInit {
             0,
             document.getElementById("username")["value"],
             document.getElementById("pass")["value"],
+            document.getElementById("tennv")["value"],
             false,
             this.ctk,
             this.selected
@@ -200,6 +202,7 @@ export class ThemtaikhoanComponent implements OnInit {
   {
     document.getElementById("username")["value"]="";
     document.getElementById("pass")["value"]="";
+    document.getElementById("tennv")["value"]="";
     this.idtk=null;
   }
 

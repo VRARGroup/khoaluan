@@ -15,7 +15,7 @@ import * as $ from "jquery";
 export class ModalDanhgiaphuComponent implements OnInit {
 
   idsp: number;
-  noidungdanhgia: any;
+  noidungdanhgia: string;
   iddg: number;
   dgp: Array<any> = [];
   constructor(private danhgiaService: DanhgiaService, private router: Router, public dialogRef: MatDialogRef<ModalDanhgiaphuComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) { }
@@ -26,7 +26,7 @@ export class ModalDanhgiaphuComponent implements OnInit {
     this.iddg = this.data.iddg;
   }
   danhgia_save_modal() {
-    if(this.noidungdanhgia=!null && this.noidungdanhgia!="")
+    if( this.noidungdanhgia!="" && this.noidungdanhgia!=null)
     {
       if($("#hotendgp").val().toString().length>0 && $("#emaildgp").val().toString().length>0)
       {
@@ -38,6 +38,7 @@ export class ModalDanhgiaphuComponent implements OnInit {
         {
           gt=true;
         }
+        debugger
         const dp = new dgphu(this.noidungdanhgia, 0, $("#hotendgp").val().toString(), false, gt, $("#emaildgp").val().toString())
         this.dgp.push(dp);
 
@@ -59,6 +60,7 @@ export class ModalDanhgiaphuComponent implements OnInit {
             alert('Thực hiện thành công');
           }
         );
+        this.dialogRef.close(dp);
       }
       else
       {

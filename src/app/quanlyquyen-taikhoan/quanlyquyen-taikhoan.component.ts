@@ -174,6 +174,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
        id,
        null,
        null,
+       null,
        false,
        false,
        0
@@ -195,6 +196,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
     
     const tkh1=new tk(
        id,
+       null,
        null,
        null,
        false,

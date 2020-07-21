@@ -343,7 +343,7 @@
               </div>
 
               <ul style="list-style-type: none; ">
-                <div *ngFor="let item_danhgia of items_danhgia">
+                <div *ngFor="let item_danhgia of items_danhgia | paginate: {id:'paginationdg', itemsPerPage: 6, currentPage: pdg };">
                   <li class="danhgia-list">
                     <div>
                       <span class="danhgia-name"> {{item_danhgia.ten}} </span>
@@ -373,7 +373,11 @@
                       <span> • </span>
                       <a href="javascript:void(0)">
                         <i class="fa fa-thumbs-up"></i>
-                        Hữu ích
+                        Hữu ích 
+                      </a>
+                      <a class="spandate">
+                        <span class="spandate"> • </span>
+                        <span class="spandate">{{item_danhgia.ngaydanhgia.toString().split('T')[0] | date:'dd/MM/yyyy' }}</span>
                       </a>
                     </div>
 
@@ -397,6 +401,10 @@
                             <i class="fa fa-thumbs-up"></i>
                             Hữu ích
                           </a>
+                          <a class="spandate">
+                            <span class="spandate"> • </span>
+                            <span class="spandate">{{item.ngaydanhgiaphu.toString().split('T')[0] | date:'dd/MM/yyyy' }}</span>
+                          </a>
                         </div>
                         </div>
                       </div>
@@ -406,12 +414,14 @@
                     <input id="input{{item_danhgia._id}}" placeholder="Nhập thảo luận của bạn">
                     <a (click)="show_insert_danhgiaphu(item_danhgia._id)">GỬI</a>
                   </li>
+                  
                 </div>
+                <pagination-controls id="paginationdg" style="margin-top: 10px; margin-bottom: 10px; font-size: 13px;" (pageChange)="pdg = $event"></pagination-controls>
               </ul>
             </ng-container>
-            <p id="more_info_danhgia">
+            <!-- <p id="more_info_danhgia">
               <a>Xem thêm đánh giá</a>
-            </p>
+            </p> -->
           </div>
           <div class="comment-3">
             <textarea class="comment-3-textarea" (click)="textarea()" cols="30" rows="10"
@@ -463,7 +473,7 @@
             </div>
             <div class="list-comment">
               <ng-container>
-              <div *ngFor="let item_comment of item_comments | paginate: { itemsPerPage: 10, currentPage: p };">
+              <div *ngFor="let item_comment of item_comments | paginate: { id:'paginationbl' ,itemsPerPage: 10, currentPage: p };">
               <div class="comment_ask">
                 <i class="iconcom-user">{{item_comment.ten.substring(0,1)}}</i>
                 <strong>{{item_comment.ten}}</strong>
@@ -477,17 +487,21 @@
                     <i class="fa fa-thumbs-up"></i>
                     <span class="like"> Thích</span>
                   </a>
-                  <span>
-                    <b class="dot">●</b>
+                  <span style="margin-left: 5px;">
+                    <b class="spandate">●</b>
+                    <a class="spandate">
+                      <span class="spandate">{{item_comment.ngaybinhluan.toString().split('T')[0] | date:'dd/MM/yyyy' }}</span>
+                    </a>
                   </span>
                 </div>
               </div>
               <ng-container *ngIf="showbinhluanphu(item_comment._id, item_comments).length>0">
               <div *ngFor="let itembl of showbinhluanphu(item_comment._id, item_comments),let i=index">
               <div class="comment_reply">
-                <i class="arrow_box"></i>
+                
                 <div class="comment_ask">
-                  <div class="avt-qtv">
+                  <i *ngIf="itembl.chucdanh==false" class="iconcom-user">{{itembl.ten.substring(0,1)}}</i>
+                  <div *ngIf="itembl.chucdanh==true" class="avt-qtv">
                     <img style="width: 30px;" src="/assets/ic_dmx_blue.jpg">
                   </div>
                   <strong>{{itembl.ten}}</strong>
@@ -506,13 +520,18 @@
                           <span></span>
                         </a>
                         <ng-container *ngIf="itembl.chucdanh==true">
-                          <b class="dot">●</b>
                           <a href="javascript:void(0)" id="khl{{i}}" (click)="clickkohailong(i)" class="favor satis">
                             <i class="fa fa-thumbs-down"></i>
                             Không hài lòng
                             <span></span>
                           </a>
                         </ng-container>
+                        <span style="margin-left: 5px;">
+                          <b class="spandate">●</b>
+                          <a class="spandate">
+                            <span class="spandate">{{itembl.ngaybinhluanphu.toString().split('T')[0] | date:'dd/MM/yyyy' }}</span>
+                          </a>
+                        </span>
                         <div class="wrapsatis" id="khl_dg{{i}}" style="display: none;">
                           <div class="wrsct">
                             <div>
@@ -541,7 +560,7 @@
               </ng-container>
              
             </div>
-            <pagination-controls style="margin-top: 10px; margin-bottom: 10px; font-size: 13px;" (pageChange)="p = $event"></pagination-controls>
+            <pagination-controls id="paginationbl" style="margin-top: 10px; margin-bottom: 10px; font-size: 13px;" (pageChange)="p = $event"></pagination-controls>
             <textarea (click)="render_textarea()" cols="30" rows="10"
               placeholder="Mời bạn nhập tiếng việt có dấu"></textarea>
           </div>

@@ -38,6 +38,10 @@ export class TaikhoanService {
     return this.http.get<tk[]>(this.url+'/'+id);
   }
 
+  gettennv(id:number): Observable<tk[]> {
+    return this.http.get<tk[]>(this.url+'/'+"gettennv?id="+id);
+  }
+
   gettk_id_group(id_group:number): Observable<tk[]> {
     return this.http.get<tk[]>(this.url+'/'+"detailtk_id_group?_id_group="+id_group);
   }

@@ -103,6 +103,7 @@ namespace dienmayxanhapi.Controllers
                         { "_id", id},
                         { "username" , tk.username},
                         { "password" , tk.password},
+                        { "tennv" , tk.tennv },
                         { "hoatdong" , tk.hoatdong},
                         { "giayphep" , tk.giayphep},
                         { "_id_group" , tk._id_group}
@@ -123,6 +124,7 @@ namespace dienmayxanhapi.Controllers
             var update =  Builders<taikhoan>.Update.Combine(
                           Builders<taikhoan>.Update.Set("username" , tk.username),
                           Builders<taikhoan>.Update.Set("password" , tk.password),
+                          Builders<taikhoan>.Update.Set( "tennv" , tk.tennv ),
                           Builders<taikhoan>.Update.Set("hoatdong", tk.hoatdong),
                           Builders<taikhoan>.Update.Set("giayphep" , tk.giayphep),
                           Builders<taikhoan>.Update.Set("_id_group", tk._id_group)
@@ -138,6 +140,13 @@ namespace dienmayxanhapi.Controllers
           var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
           _tkService.deletetk(deletefilter);
           return NoContent();
+        }
+
+        [Route("gettennv")]
+        [HttpGet]
+        public ActionResult<List<taikhoan>> gettennv(int id)
+        {
+          return _tkService.Gettennv_id(id);
         }
   }
 }

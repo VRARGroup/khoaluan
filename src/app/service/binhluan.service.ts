@@ -38,4 +38,12 @@ export class BinhluanService {
 		return this.http.get<bl[]>(this.url);
   }
 
+  get_binhluan_1day_idspp(id:number): Observable<bl[]> {
+		return this.http.get<bl[]>(this.url+"/get_binhluan_1day_idsp?_id_sp="+id);
+  }
+
+  get_binhluan_choseday_idsp(id:number, d:String): Observable<bl[]> {
+		return this.http.get<bl[]>(this.url+"/get_binhluan_choseday_idsp?_id_sp="+id + "&&"+"d="+d );
+  }
+
 }

@@ -42,7 +42,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="tr_{{item._id}}" (click)="loaddanhgia(item._id)" *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p}; let i=index">
+                <tr id="tr_{{item._id}}" (click)="loaddanhgia(item._id)" *ngFor="let item of tensanpham | paginate: {id: 'pagination2', itemsPerPage: 5, currentPage: p}; let i=index">
                   <td>{{(i+1)+((p-1)*8)}}</td>
                   <td>{{item.ten}}</td>
                   <td>{{item.thuonghieu}}</td>
@@ -51,19 +51,26 @@
                 </tr>
               </tbody>
             </table>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            <pagination-controls id='pagination2' (pageChange)="p = $event"></pagination-controls>
           </ng-container>
         </div>
       </div>
+      <div class="filter">
+        <mat-form-field id="datedanhgia" style="float: right; padding-top: 10px;">
+          <input id="dateinput" [(ngModel)]="this.date" (ngModelChange)="modelChangeddanhgia($event)" matInput [matDatepicker]="picker" placeholder="chọn ngày">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
       <div class="filter filter-danhgia" *ngIf="items_danhgia.length>0">
+        
         <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Danh sách đánh giá</label>
         <div class="d-flex justify-content-center">
           <ul>
-            <div class="inline box-danhgia" *ngFor="let item_danhgia of items_danhgia, let i=index">
+            <div class="inline box-danhgia" *ngFor="let item_danhgia of items_danhgia | paginate: {id: 'paginationdg', itemsPerPage: 10, currentPage: pdg}, let i=index">
               <hr>
               <li class="danhgia-list">
                 <div>
-                  <span class="danhgia-name"> {{item_danhgia.ten}} </span>
+                  <span class="danhgia-name">{{item_danhgia.ten}} </span>
                 </div>
                 <div>
                   <p>
@@ -99,25 +106,41 @@
                       </div>
                     </div>
                   </div>
+                  
                 </li>
               </ng-container>
               <div class="reply-danhgia" id="reply_danhgiaphu{{item_danhgia._id}}">
                 <a href="javascript:void(0)" (click)="show_box_danhgiaphu(item_danhgia._id)">
-                  Trã lời đánh giá
+                  Trả lời đánh giá
                 </a>
               </div>
+
+              <div id="reply_box_danhgiaphu{{item_danhgia._id}}" class="reply-box" style="display: none;"> 
+                <textarea id="text_danhgiaphu{{item_danhgia._id}}" 
+                style="border: 1px solid #ddd;border-radius: 4px;-webkit-border-radius: 4px;font-size: 14px;color: #999;padding: 8px;width: 50vw;margin-top: 0px;margin-bottom: 0px;height: 58px;margin-left: 30px;">
+                </textarea>
+                <a style="padding: 9px 10px; border: 1px solid #288ad6; background: #fff;font-size: 13px;color: #288ad6;border-radius: 4px;height: 36px;margin-left: 10px;" (click)="insertdphu()">Trả lời</a>
+              </div>
             </div>
+            <pagination-controls  id="paginationdg" (pageChange)="pdg = $event"></pagination-controls>
           </ul>
         </div>
       </div>
       <div class="filter notification-null" *ngIf="items_danhgia.length==0 && active_null_dg == true">
         <label>Danh sách đáng giá của sản phẩm đang rỗng !!!</label>
       </div>
+      </div>
+      <div class="filter">
+        <mat-form-field id="datebinhluan" style="float: right; padding-top: 10px;">
+          <input id="dateinputbl" [(ngModel)]="this.date1" (ngModelChange)="modelChangedbinhluan($event)" matInput [matDatepicker]="picker1" placeholder="chọn ngày">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
       <div class="filter filter-binhluan" *ngIf="items_binhluan.length>0">
         <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Danh sách bình luận</label>
         <div class="d-flex justify-content-center">
           <ul>
-            <div class="inline box-binhluan" *ngFor="let item_binhluan of items_binhluan, let i=index">
+            <div class="inline box-binhluan" *ngFor="let item_binhluan of items_binhluan | paginate: {id: 'paginationbl', itemsPerPage: 10, currentPage: pbl}, let i=index">
               <hr>
               <li class="binhluan-list">
                 <div>
@@ -149,15 +172,24 @@
               </ng-container>
               <div class="reply-binhluan" id="reply_binhluanphu{{item_binhluan._id}}">
                 <a href="javascript:void(0)" (click)="show_box_binhluanphu(item_binhluan._id)">
-                  Trã lời bình luận
+                  Trả lời bình luận
                 </a>
+                
               </div>
+              <div id="reply_box_binhluanphu{{item_binhluan._id}}" class="reply-box" style="display: none;"> 
+                <textarea id="text_binhluanphu{{item_binhluan._id}}" style="border: 1px solid #ddd;border-radius: 4px;-webkit-border-radius: 4px;font-size: 14px;color: #999;width: 50vw;margin-top: 0px;margin-bottom: 0px;height: 58px;margin-left: 30px;">
+                </textarea>
+                <a style="padding: 9px 10px; border: 1px solid #288ad6; background: #fff;font-size: 13px;color: #288ad6;border-radius: 4px;height: 36px;margin-left: 10px;" (click)="insertblp()">Trả lời</a>
+              </div>
+              
             </div>
+            <pagination-controls id="paginationbl" (pageChange)="pbl = $event"></pagination-controls>
           </ul>
         </div>
       </div>
       <div class="filter notification-null" *ngIf="items_binhluan.length==0 && active_null_bl == true">
         <label>Danh sách bình luận của sản phẩm đang rỗng !!!</label>
+      </div>
       </div>
     </div>
   </div>

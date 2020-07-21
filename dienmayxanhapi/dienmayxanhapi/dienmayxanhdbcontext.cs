@@ -343,7 +343,7 @@ namespace dienmayxanhapi
 
         public List<danhgia> Getdetaildg(int _id)
         {
-            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList().Take(3).ToList();
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList().Take(50).ToList().OrderByDescending(x => x.ngaydanhgia).ToList();
             return dl;
         }
 
@@ -436,7 +436,7 @@ namespace dienmayxanhapi
         public List<danhgia> Getfillter_danhgia_1day()
         {
             var av = DateTime.Today.AddDays(-1);
-            var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-100)).ToList();
+            var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-1)).ToList();
             return dl;
         }
 
@@ -445,5 +445,33 @@ namespace dienmayxanhapi
             var dl = collectionspdt.Find(x => true).ToList();
             return dl;
         }
-    }
+
+        public List<danhgia> Getfillter_danhgia_1day_theo_idsp(int _id_sp)
+        {
+          var dl = collectiondanhgia.Find(x => x._id_sanpham== _id_sp && x.ngaydanhgia >= DateTime.Today).ToList();
+          return dl;
+        }
+        public List<binhluan> Getfillter_binhluan_1day_theo_idsp(int _id_sp)
+        {
+          var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= DateTime.Today).ToList();
+          return dl;
+        }
+        public List<binhluan> Getfillter_binhluan_choseday_theo_idsp(int _id_sp, String d)
+        {
+          var v = Convert.ToDateTime(d);
+          var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= Convert.ToDateTime(d)).ToList();
+          return dl;
+        }
+        public List<danhgia> Getfillter_danhgia_choseday_theo_idsp(int _id_sp, String d)
+        {
+          var v = Convert.ToDateTime(d);
+          var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= v).ToList();
+          return dl;
+        }
+        public List<taikhoan> Gettennv_id(int id)
+        {
+          var dl = collectiontk.Find(x => x._id == id).ToList().Take(1).ToList();
+          return dl;
+        }
+  }
 }

@@ -10,6 +10,7 @@ namespace dienmayxanhapi.Model
     public int? _id { get; set; }
     public string username { get; set; }
     public string password { get; set; }
+    public string tennv { get; set; }
     public Boolean hoatdong { get; set; }
     public Boolean giayphep { get; set; }
     public int? _id_group { get; set; }

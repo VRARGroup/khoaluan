@@ -54,6 +54,7 @@ export class ModalthemuseComponent implements OnInit {
       item._id,
       item.username,
       item.password,
+      item.tennv,
       item.hoatdong,
       item.giayphep,
       this.data.id,

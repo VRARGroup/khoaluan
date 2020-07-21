@@ -19,6 +19,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class ListproductComponent implements OnInit {
 
   items: sp[] = [];
+  itemsphu: sp[] = [];
   id_loai_sanpham: number;
   categories: any[] = [];
   prices: any[] = [];
@@ -61,22 +62,44 @@ export class ListproductComponent implements OnInit {
   }
   get_list_product(id: number) {
     this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
-      this.items = (res) ? res : [];
+      this.items = res.slice(0,20);
+      this.itemsphu = (res) ? res : [];
     });
   }
   show_more_list_product() {
-    this.sanphamService.get_more_list_product(this.id_loai_sanpham).subscribe((res: sp[] | null) => {
-      Array.prototype.push.apply(this.items, res);
-    });
-    $('.show-more-list-product').css("display", "none");
+    
+    // this.sanphamService.get_more_list_product(this.id_loai_sanpham).subscribe((res: sp[] | null) => {
+    //   Array.prototype.push.apply(this.items, res);
+    // });
     if (this.show_giatdc == true) {
-      this.items = this.items.sort((a, b) => a.giaban - b.giaban);
+      if(this.items.length >= this.itemsphu.length)
+      {
+        this.items = this.items.sort((a, b) => a.giaban - b.giaban);
+      }
+      else
+      {
+        this.items = this.itemsphu;
+        this.items = this.itemsphu.sort((a, b) => a.giaban - b.giaban);
+      }
     }
     else {
       if (this.show_giacdt == true) {
-        this.items = this.items.sort((a, b) => b.giaban - a.giaban);
+        if(this.items.length >= this.itemsphu.length)
+        {
+          this.items = this.items.sort((a, b) => b.giaban - a.giaban);
+        }
+        else
+        {
+          this.items = this.itemsphu;
+          this.items = this.items.sort((a, b) => b.giaban - a.giaban);
+        }
+      }
+      else
+      {
+        this.items = this.itemsphu;
       }
     }
+    $('.show-more-list-product').css("display", "none");
   }
   // render_sp(id_sanpham: any):void {
   // 	// window.localStorage.removeItem("sp");
@@ -97,27 +120,281 @@ export class ListproductComponent implements OnInit {
     });
   }
 
-  suggest_category(categories: any[]) {
-    // let list = [];
-    // categories.forEach(element => {
-    //   if ($('#' + element).is(":checked")) {
-    //     list.push(element);
-    //   }
-    // });
-    // if(list.length==0)
+  hang:Array<string>=[];
+  suggest_category(value: any) {
+    $('.show-more-list-product').css("display", "none");
+    // if(value=="iPhone (Apple)")
     // {
-    //   this.get_list_product(this.id_loai_sanpham);
+    //   if(this.hang.length==0)
+    //   {
+        
+    //     this.items=[];
+    //   }
+    //   const index = this.hang.indexOf(value, 0);
+    //   if(index>-1)
+    //   {
+    //     this.hang.splice(index, 1);
+    //     for(let i of this.hang)
+    //     {
+    //       this.items=[];
+    //       this.items.push.apply(this.items,this.itemsphu.filter(x=>x.thuonghieu==i));
+    //     }
+    //   }
+    //   if(index==-1)
+    //   {
+    //     this.hang.push(value);
+    //     this.items.push.apply(this.items,this.itemsphu.filter(x=>x.thuonghieu==value));
+    //   }
     // }
-    // else{
-    //   this.sanphamService.get_list_suggest_category(this.id_loai_sanpham, list).subscribe((res: sp[] | null) => {
-    //     this.items = (res) ? res : [];
-
-    // debugger
-    //   });
-    // }
+    // if(value!="iPhone (Apple)")
+    // {
+      const index = this.hang.indexOf(value, 0);
+      if(index==-1)//$("#category_"+value).is(":checked"))
+      {
+        if(this.hang.length==0 && this.gia.length==0)
+        {
+          this.items=[];
+        }
+        const index = this.hang.indexOf(value, 0);
+        if(index==-1)
+        {
+          this.hang.push(value);
+         
+          
+          if(this.gia.length>0)
+          {
+            this.items=[];
+           
+            for(let j of this.hang)
+            {
+              this.items.push.apply(this.items,this.itemsphu.filter(x=>x.thuonghieu==j));
+            }
+            let arritems:Array<any>=[];
+            arritems=this.items;
+            for(let i of this.gia)
+            {
+              this.items=arritems;
+              const j = this.gia.indexOf(i, 0);
+              var g=this.gia[j].toString().split(' ');
+              var g1=g[1].toString().split('-');
+              if(g1.length>1)
+              {
+                this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]) && x.giaban<parseInt(g1[1]));
+              }
+              else
+              {
+                if(g[0].toString().toUpperCase()=="DƯỚI")
+                {
+                  this.items=this.items.filter(x=>x.giaban<parseInt(g1[0]));
+                }
+                else
+                {
+                  if(g[0].toString().toUpperCase()=="TRÊN")
+                  {
+                    this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]));
+                  }
+                  else
+                  {
+                    this.items=this.items.filter(x=>x.giaban==parseInt(g1[0]));
+                  }
+                }
+              }
+            }
+          }
+          else
+          {
+            this.items.push.apply(this.items,this.itemsphu.filter(x=>x.thuonghieu==value));
+          }
+        }
+      }
+      else
+      {
+        // const index = this.hang.indexOf(value, 0);
+        // if(index>-1)
+        // {
+          this.hang.splice(index, 1);
+          for(let i of this.hang)
+          {
+            this.items=[];
+            this.items.push.apply(this.items,this.itemsphu.filter(x=>x.thuonghieu==i));
+          }
+          let arr=this.items;
+            if(this.gia.length>0)
+            {
+              for(let j of this.gia)
+              {
+                this.items=arr;
+                const k = this.gia.indexOf(j, 0);
+                var g=this.gia[k].toString().split(' ');
+                var g1=g[1].toString().split('-');
+                if(g1.length>1)
+                {
+                  this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]) && x.giaban<parseInt(g1[1]));
+                }
+                else
+                {
+                  if(g[0].toString().toUpperCase()=="DƯỚI")
+                  {
+                    this.items=this.items.filter(x=>x.giaban<parseInt(g1[0]));
+                  }
+                  else
+                  {
+                    if(g[0].toString().toUpperCase()=="TRÊN")
+                    {
+                      this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]));
+                    }
+                    else
+                    {
+                      this.items=this.items.filter(x=>x.giaban==parseInt(g1[0]));
+                    }
+                  }
+                }
+              }
+            }
+          
+        //}
+        
+      }
+    //}
+    if(this.hang.length==0 && this.gia.length==0)
+    {
+      this.items=this.itemsphu;
+      this.items=this.items.slice(0,20);
+      $('.show-more-list-product').css("display", "block");
+    }
+    
   }
-  suggest_price(categories: any[]) {
+  gia: Array<any>=[]
+  suggest_price(value: any) {
+    if(this.gia.length==0 && this.hang.length==0)
+    {
+      this.items=[];
+    }
+    const index = this.gia.indexOf(value, 0);
+    if(index==-1)
+    {
+      this.gia.push(value);
+      const i = this.gia.indexOf(value, 0);
+      var g=this.gia[i].toString().split(' ');
+      var g1=g[1].toString().split('-');
+      if(this.hang.length==0)
+      {
+        if(g1.length>1)
+        {
+          this.items.push.apply(this.items,this.itemsphu.filter(x=>x.giaban>parseInt(g1[0]) && x.giaban<parseInt(g1[1])));
+        }
+        else
+        {
+          if(g[0].toString().toUpperCase()=="DƯỚI")
+          {
+            this.items.push.apply(this.items,this.itemsphu.filter(x=>x.giaban<parseInt(g1[0])));
+          }
+          else
+          {
+            if(g[0].toString().toUpperCase()=="TRÊN")
+            {
+              this.items.push.apply(this.items,this.itemsphu.filter(x=>x.giaban>parseInt(g1[0])));
+            }
+            else
+            {
+              this.items.push.apply(this.items,this.itemsphu.filter(x=>x.giaban==parseInt(g1[0])));
+            }
+          }
+        }
+      }
 
+      else
+      {
+        this.items=[];
+        for(let i of this.hang)
+        {
+          this.items.push.apply(this.items,this.itemsphu.filter(x=>x.thuonghieu==i));
+        }
+       
+        const i = this.gia.indexOf(value, 0);
+        var g=this.gia[i].toString().split(' ');
+        var g1=g[1].toString().split('-');
+        if(g1.length>1)
+        {
+          this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]) && x.giaban<parseInt(g1[1]));
+        }
+        else
+        {
+          if(g[0].toString().toUpperCase()=="DƯỚI")
+          {
+            this.items=this.items.filter(x=>x.giaban<parseInt(g1[0]));
+          }
+          else
+          {
+            if(g[0].toString().toUpperCase()=="TRÊN")
+            {
+              this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]));
+            }
+            else
+            {
+              this.items=this.items.filter(x=>x.giaban==parseInt(g1[0]));
+            }
+          }
+        }
+      }
+    }
+    else
+    {
+      this.gia.splice(index, 1);
+      if(this.hang.length==0)
+      {
+        for(let i of this.gia)
+        {
+          this.items=[];
+          this.items.push.apply(this.items,this.itemsphu.filter(x=>x.giaban==i));
+        }
+      }
+      else
+      {
+        this.items=[];
+        for(let i of this.hang)
+        {
+          this.items.push.apply(this.items,this.itemsphu.filter(x=>x.thuonghieu==i));
+        }
+        let arr=this.items;
+        for(let j of this.gia)
+        {
+          this.items=arr;
+          const k = this.gia.indexOf(j, 0);
+          var g=this.gia[k].toString().split(' ');
+          var g1=g[1].toString().split('-');
+          if(g1.length>1)
+          {
+            this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]) && x.giaban<parseInt(g1[1]));
+          }
+          else
+          {
+            if(g[0].toString().toUpperCase()=="DƯỚI")
+            {
+              this.items=this.items.filter(x=>x.giaban<parseInt(g1[0]));
+            }
+            else
+            {
+              if(g[0].toString().toUpperCase()=="TRÊN")
+              {
+                this.items=this.items.filter(x=>x.giaban>parseInt(g1[0]));
+              }
+              else
+              {
+                this.items=this.items.filter(x=>x.giaban==parseInt(g1[0]));
+              }
+            }
+          }
+        }
+        
+      }
+    }
+    if(this.hang.length==0 && this.gia.length==0)
+    {
+      this.items=this.itemsphu;
+      this.items=this.items.slice(0,20);
+      $('.show-more-list-product').css("display", "block");
+    }
   }
   show_giatdc: boolean = false;
   show_giacdt: boolean = false;

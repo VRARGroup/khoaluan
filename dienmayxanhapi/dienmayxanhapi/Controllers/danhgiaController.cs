@@ -85,11 +85,24 @@ namespace dienmayxanhapi.Controllers
 
       }
 
-      [HttpGet("get_danhgia_1day")]
+      [HttpGet("get_danhgia_1day")] 
       public ActionResult<List<danhgia>> Getfillter_danhgia_1day()
       {
         return (_dgService.Getfillter_danhgia_1day());
       }
+
+      [HttpGet("get_danhgia_1day_idsp")] 
+      public ActionResult<List<danhgia>> Getfillter_danhgia_1day_theo_idsp(int _id_sp)
+      {
+        return (_dgService.Getfillter_danhgia_1day_theo_idsp(_id_sp));
+      }
+
+      [HttpGet("get_danhgia_choseday_idsp")]
+      public ActionResult<List<danhgia>> Getfillter_danhgia_choseday_theo_idsp(int _id_sp, String d)
+      {
+        return (_dgService.Getfillter_danhgia_choseday_theo_idsp(_id_sp, d));
+      }
+
 
   }
 }

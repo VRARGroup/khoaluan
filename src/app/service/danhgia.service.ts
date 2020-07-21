@@ -49,4 +49,12 @@ export class DanhgiaService {
   get_danhgia_1day(): Observable<dg[]> {
 		return this.http.get<dg[]>(this.url+"/get_danhgia_1day");
   }
+
+  get_danhgia_1day_idsp(id:number): Observable<dg[]> {
+		return this.http.get<dg[]>(this.url+"/get_danhgia_1day_idsp?_id_sp="+id);
+  }
+
+  get_danhgia_choseday_idsp(id:number, d:String): Observable<dg[]> {
+		return this.http.get<dg[]>(this.url+"/get_danhgia_choseday_idsp?_id_sp="+id +"&&"+"d="+d );
+  }
 }

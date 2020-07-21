@@ -688,6 +688,7 @@ export class ProductdetailsComponent implements OnInit {
 
   countbl:number=0;
   p: number=1;
+  pdg: number=1;
   loadbinhluan() {
     this.binhluanService.getallbl_idsp(this.idsp).subscribe((res: bl[] | null) => {
     this.item_comments = (res) ? res : [];
@@ -712,5 +713,11 @@ export class ProductdetailsComponent implements OnInit {
   close(id:number)
   {
     $('#khl_dg'+id).css("display","none");
+  }
+
+  customdate(d: string)
+  {
+    var f=d.split('-');
+    return f[0]+"/"+f[1]+"/"+f[2];
   }
 }

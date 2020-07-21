@@ -39,33 +39,33 @@ export class ModalBinhluanphuComponent implements OnInit {
   binhluan_save_modal() {
     if($('#textarea_binhluanphu_modal').val().toString().length>=15)
     {
-    let gt=false;
-    if($("#binhluan_male").is(":checked"))
-    {
-      gt=true;
-    }
-    const bp = new blphu(
-      $('#textarea_binhluanphu_modal').val().toString(), 0, 
-      $(".cfm-UserName").val().toString(), false, gt , $(".cfm-UserEmail").val().toString())
-      this.blphu.push(bp);
-
-    const b = new bl(
-      this.idbl,
-      null,
-      gt,
-      null,
-      null,
-      null,
-      null,
-      this.blphu,
-      parseInt(this.idsp.toString())
-    );
-    this.binhluanService.insert_binhluan_phu(b).subscribe(
-      () => {
-        alert('Thực hiện thành công');
+      let gt=false;
+      if($("#binhluan_male").is(":checked"))
+      {
+        gt=true;
       }
-    );
-    this.dialogRef.close(this.idbl);
+      const bp = new blphu(
+        $('#textarea_binhluanphu_modal').val().toString(), 0, 
+        $(".cfm-UserName").val().toString(), false, gt , $(".cfm-UserEmail").val().toString())
+        this.blphu.push(bp);
+
+      const b = new bl(
+        this.idbl,
+        null,
+        gt,
+        null,
+        null,
+        null,
+        null,
+        this.blphu,
+        parseInt(this.idsp.toString())
+      );
+      this.binhluanService.insert_binhluan_phu(b).subscribe(
+        () => {
+          alert('Thực hiện thành công');
+        }
+      );
+      this.dialogRef.close(this.idbl);
     }
     else
     {

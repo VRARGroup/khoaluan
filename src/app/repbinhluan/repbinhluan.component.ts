@@ -16,17 +16,32 @@ import { hinh } from '../model/sanpham';
 import { Subscription } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material';
 import { dsq } from '../model/danhsachquyen';
+import { bl,blphu } from '../model/binhluan';
 import { DanhsachquyenService } from '../service/danhsachquyen.service';
+import { BinhluanService } from '../service/binhluan.service';
 import { GroupService } from '../service/group.service';
+import { TaikhoanService } from '../service/taikhoan.service';
 import { quyentruycap } from '../model/group';
 import { grp } from '../model/group';
 import { lsanpham } from '../model/loaisanpham';
 import { FormBuilder } from '@angular/forms';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
+import { tk } from '../model/taikhoan';
+
 
 @Component({
   selector: 'app-repbinhluan',
   templateUrl: './repbinhluan.component.html',
-  styleUrls: ['./repbinhluan.component.scss']
+  styleUrls: ['./repbinhluan.component.scss'],
+  providers: [
+    {
+        provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+    ]
 })
 export class RepbinhluanComponent implements OnInit {
   hoatdong: boolean;
@@ -46,13 +61,20 @@ export class RepbinhluanComponent implements OnInit {
   items_danhgia: dg[] = [];
   active_null_dg: boolean = false;
   active_null_bl: boolean = false;
-  items_binhluan: dg[] = [];
+  items_binhluan: bl[] = [];
   alllsp_danhgia: number[] = [];
   alllsp_danhgia_1day: dg[] = [];
-  constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService) { }
+  pdg:number=1;
+  pbl:number=1;
+  tennvdn:string=null;
+  public date: Date = new Date();
+  public date1: Date = new Date();
+  constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService) { }
 
   ngOnInit() {
     $("#btndx").css("display", "block");
+    $("#datedanhgia").css('display','none');
+    $("#datebinhluan").css('display','none');
     this.hoatdong = JSON.parse(window.localStorage.getItem("editid1"));
     if (this.hoatdong == false || this.hoatdong == null) {
       window.localStorage.removeItem("truycaptraiphep");
@@ -75,6 +97,7 @@ export class RepbinhluanComponent implements OnInit {
     else {
       this.loadlsp();
       this.loaddsq();
+      this.gettennv(parseInt(window.localStorage.getItem("idtk")));
     }
   }
 
@@ -139,6 +162,7 @@ export class RepbinhluanComponent implements OnInit {
       }
     });
   }
+
   loadtensp(tensp: string) {
     this.sanphamService.gettensp(tensp).subscribe((res: sp[] | null) => {
       this.tensanpham = (res) ? res : [];
@@ -150,16 +174,20 @@ export class RepbinhluanComponent implements OnInit {
     this.active_null_bl = false;
   }
 
+  idsp:number;
   loaddanhgia(cv: number): void {
-    this.danhgiaService.getdg_idsp(cv).subscribe((res: dg[] | null) => {
-      this.items_danhgia = (res) ? res : [];
+    this.idsp=cv;
+    this.danhgiaService.get_danhgia_1day_idsp(cv).subscribe((res: dg[] | null) => {
+    this.items_danhgia = (res) ? res : [];
     });
-    this.danhgiaService.getdg_idsp(cv).subscribe((res: dg[] | null) => {
+    this.binhluanService.get_binhluan_1day_idspp(cv).subscribe((res: bl[] | null) => {
       this.items_binhluan = (res) ? res : [];
     });
     this.active_null_dg = this.active_null_bl = true;
     $("tbody tr").css('color', '#000');
     $("#tr_" + cv).css('color', 'red');
+    $("#datedanhgia").css('display','');
+    $("#datebinhluan").css('display','');
   };
 
   p: number = 1;
@@ -174,51 +202,31 @@ export class RepbinhluanComponent implements OnInit {
 
   searchText: string = null;
 
-  inputsearch() {
-
-    let l: Array<sp> = [];
-    l = this.tensanpham;
-    let textkt: string = this.searchText;
-    if (this.searchText != null) {
-      if (this.tendanhmuc != null) {
-        if (this.tendanhmuc.toUpperCase() != "TIVI") {
-          if (this.searchText.toUpperCase().startsWith(this.tendanhmuc.toUpperCase()) == true) {
-            textkt = this.searchText.toUpperCase().replace(this.tendanhmuc.toUpperCase(), "").trim();
-          }
-          l = this.tensanphamphu.filter(x => x.ten.toString().toUpperCase().replace(this.tendanhmuc.toUpperCase(), "").trim().startsWith(textkt.toString().toUpperCase()));
-          console.log(l);
-          this.tensanpham = l;
-        }
-        else {
-          if (this.searchText.toUpperCase().startsWith(this.tendanhmuc.toUpperCase()) == true) {
-            textkt = this.searchText.toUpperCase().replace(this.tendanhmuc.toUpperCase(), "").trim();
-          }
-          else {
-            if (this.searchText.toUpperCase().startsWith("ANDROID" + " " + this.tendanhmuc.toUpperCase()) == true) {
-              textkt = this.searchText.toUpperCase().replace("ANDROID" + " " + this.tendanhmuc, "").trim();
-            }
-            else {
-              if (this.searchText.toUpperCase().startsWith("SMART" + " " + this.tendanhmuc.toUpperCase()) == true) {
-                textkt = this.searchText.toUpperCase().replace("SMART" + " " + this.tendanhmuc.toUpperCase(), "").trim();
-              }
-            }
-          }
-          l = this.tensanphamphu.filter(x => x.ten.toString().toUpperCase().replace("ANDROID" + " " + this.tendanhmuc.toUpperCase(), "").trim().startsWith(textkt.toString().toUpperCase()));
-          if (l.length == 0) {
-            l = this.tensanphamphu.filter(x => x.ten.toString().toUpperCase().replace("SMART" + " " + this.tendanhmuc.toUpperCase(), "").trim().startsWith(textkt.toString().toUpperCase()));
-          }
-          this.tensanpham = l;
-        }
+  inputsearch()
+  {
+    this.p=1;
+    let l:Array<sp>=[];
+    l=this.tensanpham;
+    let textkt:string=this.searchText;
+    if(this.searchText!=null && this.searchText!="")
+    {
+      if(this.tendanhmuc!=null)
+      {
+        l=this.tensanphamphu.filter(x=>x.ten.toString().toUpperCase().match(textkt.toString().toUpperCase()));
+        this.tensanpham=l;
       }
-      else {
+      else
+      {
         alert("Bạn vui lòng chọn loại sản phẩm cần tìm kiếm !!!");
       }
     }
-    else {
+    else
+    {
       console.log(this.tensanphamphu);
-      this.tensanpham = this.tensanphamphu;
+      this.tensanpham=this.tensanphamphu;
     }
   }
+
   arrayOne(n: number): any[] {
     return Array(n);
   }
@@ -230,21 +238,111 @@ export class RepbinhluanComponent implements OnInit {
     return items_danhgiaphu;
   }
   show_bl(id: number) {
-    let items_binhluanphu: dgphu[] = this.items_binhluan.find(x => x._id == id).danhgiaphu;
+    let items_binhluanphu: blphu[] = this.items_binhluan.find(x => x._id == id).binhluanphu;
     return items_binhluanphu;
   }
+  iddgp:number
   show_box_danhgiaphu(id: number) {
-    if ($('#reply_box_danhgiaphu' + id).length > 0) {
-      $('#reply_box_danhgiaphu' + id + " textarea").val("");
-    } else {
-      $('#reply_danhgiaphu' + id).after('<div id = "reply_box_danhgiaphu' + id + '" class="reply-box" style="display: inline-flex;"> <textarea style="border: 1px solid #ddd;border-radius: 4px;-webkit-border-radius: 4px;font-size: 14px;color: #999;padding: 8px;width: 50vw;margin-top: 0px;margin-bottom: 0px;height: 58px;margin-left: 30px;"></textarea><a style="padding: 9px 10px; border: 1px solid #288ad6; background: #fff;font-size: 13px;color: #288ad6;border-radius: 4px;height: 36px;margin-left: 10px;">Trã lời</a></div>');
+    this.iddgp=id;
+    $('#reply_box_danhgiaphu' + id ).css("display","block");
+    $('#reply_box_danhgiaphu' + id ).css("display","inline-flex");
+  }
+  idtextbl:number;
+  show_box_binhluanphu(id: number) {
+    this.idtextbl=id;
+    $('#reply_box_binhluanphu' + id).css("display","block");
+    $('#reply_box_binhluanphu' + id).css("display","inline-flex");
+  }
+
+username:string=null;
+gettennv(cv: number): void {
+  this.taikhoanService.gettennv(cv).subscribe((res: tk[] | null) => {
+   this.tennvdn=res[0].tennv;
+   this.username=res[0].username;
+  });
+}
+  blp:Array<any>=[];
+
+  insertblp() {
+    if($("#text_binhluanphu"+this.idtextbl).val().toString()!=null && $("#text_binhluanphu"+this.idtextbl).val().toString()!="")
+    {
+      const bp = new blphu(
+        $('#text_binhluanphu'+this.idtextbl).val().toString().trim(), 0, 
+        this.tennvdn, true, true , "dienmayxanh"+this.username+"@gmail.com")
+        this.blp.push(bp);
+
+      const b = new bl(
+        this.idtextbl,
+        null,
+        true,
+        null,
+        null,
+        null,
+        null,
+        this.blp,
+        parseInt(this.idsp.toString())
+      );
+      this.binhluanService.insert_binhluan_phu(b).subscribe(
+        () => {
+          alert('Thực hiện thành công');
+        }
+        
+      );
+      $('#reply_box_binhluanphu' + this.idtextbl).css("display","none");
+      $('#text_binhluanphu' + this.idtextbl).val("");
+      this.show_bl(this.idtextbl).push(bp);
+    }
+    else
+    {
+      alert("Vui lòng nhập nội dung bình luận !!!")
     }
   }
-  show_box_binhluanphu(id: number) {
-    if ($('#reply_box_binhluanphu' + id).length > 0) {
-      $('#reply_box_binhluanphu' + id + " textarea").val("");
-    } else {
-      $('#reply_binhluanphu' + id).after('<div id = "reply_box_binhluanphu' + id + '" class="reply-box" style="display: inline-flex;"> <textarea style="border: 1px solid #ddd;border-radius: 4px;-webkit-border-radius: 4px;font-size: 14px;color: #999;padding: 8px;width: 50vw;margin-top: 0px;margin-bottom: 0px;height: 58px;margin-left: 30px;"></textarea><a style="padding: 9px 10px; border: 1px solid #288ad6; background: #fff;font-size: 13px;color: #288ad6;border-radius: 4px;height: 36px;margin-left: 10px;">Trã lời</a></div>');
-    }
+
+  insertdphu() {
+    var s=$('#text_danhgiaphu'+ this.iddgp ).val();
+    if($('#text_danhgiaphu' + this.iddgp).val()!=null || $('#text_danhgiaphu' + this.iddgp).val().toString().trim()!="")
+    {
+      var s=$('#text_danhgiaphu'+ this.iddgp ).val();
+        const dp = new dgphu($('#text_danhgiaphu' + this.iddgp ).val().toString().trim(), 0, this.tennvdn, true, true,  "dienmayxanh"+this.username+"@gmail.com")
+        let dgp:Array<any>=[];
+        dgp.push(dp);
+
+        const d = new dg(
+          this.iddgp,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          dgp,
+          null,
+          parseInt(this.idsp.toString())
+        );
+        this.danhgiaService.insert_binhluan_danhgia(d).subscribe(
+          () => {
+            alert('Thực hiện thành công');
+          }
+        );
+        this.show(this.iddgp).push(dp);
+        $('#reply_box_danhgiaphu' + this.iddgp).css("display","none");
+        $('#text_reply_box_danhgiaphu' + this.iddgp).val("");
+  }
+  else
+  {
+    alert("Vui lòng nhâp đủ thông tin đánh giá !!!");
+  }
+}
+
+  modelChangeddanhgia(value){
+    this.danhgiaService.get_danhgia_choseday_idsp(this.idsp,document.getElementById("dateinput")["value"]).subscribe((res: dg[] | null) => {
+      this.items_danhgia = (res) ? res : [];
+      });
+  }
+  modelChangedbinhluan(value){
+      this.binhluanService.get_binhluan_choseday_idsp(this.idsp,document.getElementById("dateinputbl")["value"]).subscribe((res: bl[] | null) => {
+      this.items_binhluan = (res) ? res : [];
+      });
   }
 }
