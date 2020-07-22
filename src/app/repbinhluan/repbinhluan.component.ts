@@ -291,6 +291,9 @@ gettennv(cv: number): void {
       $('#reply_box_binhluanphu' + this.idtextbl).css("display","none");
       $('#text_binhluanphu' + this.idtextbl).val("");
       this.show_bl(this.idtextbl).push(bp);
+      this.router.navigate(["/appmain/productdetails/4"], {
+        queryParams: {refresh: new Date().getTime()}
+     });
     }
     else
     {

@@ -18,7 +18,6 @@ namespace dienmayxanhapi.Model
     public int? luotthich { get; set; }
     public IList<binhluanphu> binhluanphu { get; set; }
     public int? _id_sanpham { get; set; }
-    [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
     public DateTime ngaybinhluan { get; set; }
   }
 

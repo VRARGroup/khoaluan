@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNet.SignalR;
+using dienmayxanhapi.Hubs;
 
 namespace dienmayxanhapi
 {
@@ -37,7 +39,8 @@ namespace dienmayxanhapi
               o.MultipartBodyLengthLimit = int.MaxValue;
               o.MemoryBufferThreshold = int.MaxValue;
             });
-    }
+            services.AddSignalR(options => { options.KeepAliveInterval = TimeSpan.FromSeconds(5); }).AddMessagePackProtocol();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,6 +53,7 @@ namespace dienmayxanhapi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
 
             app.UseAuthorization();
             app.UseStaticFiles();
@@ -58,10 +62,15 @@ namespace dienmayxanhapi
               FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
               RequestPath = new PathString("/Resources")
             });
+            
             app.UseCors(x => x
               .AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader());
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<SignalHub>("/signalHub");
+            });
 
             app.UseEndpoints(endpoints =>
             {

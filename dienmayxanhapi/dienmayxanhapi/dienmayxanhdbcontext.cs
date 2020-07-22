@@ -458,14 +458,13 @@ namespace dienmayxanhapi
         }
         public List<binhluan> Getfillter_binhluan_choseday_theo_idsp(int _id_sp, String d)
         {
-          var v = Convert.ToDateTime(d);
-          var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= Convert.ToDateTime(d)).ToList();
+          var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= Convert.ToDateTime(d) && x.ngaybinhluan < Convert.ToDateTime(d).AddDays(1)).ToList();
           return dl;
         }
         public List<danhgia> Getfillter_danhgia_choseday_theo_idsp(int _id_sp, String d)
         {
-          var v = Convert.ToDateTime(d);
-          var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= v).ToList();
+          DateTime v = Convert.ToDateTime(d).Date;
+          var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= v && x.ngaydanhgia < v.AddDays(1)).ToList();
           return dl;
         }
         public List<taikhoan> Gettennv_id(int id)

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { SanphamService } from '../service/sanpham.service';
 import { LoaisanphamService } from '../service/loaisanpham.service';
 import { DanhgiaService } from '../service/danhgia.service';
@@ -33,7 +33,7 @@ import { data } from 'jquery';
   templateUrl: './productdetails.component.html',
   styleUrls: ['./productdetails.component.scss'],
 })
-export class ProductdetailsComponent implements OnInit {
+export class ProductdetailsComponent implements OnInit, OnDestroy {
 
   // @ViewChild('div') div:ElementRef;
   items: sp[] = [];
@@ -59,11 +59,18 @@ export class ProductdetailsComponent implements OnInit {
   items_danhgia: dg[];
   items_danhgiaphu: dgphu[];
   item_comments: bl[];
+  mySubscription;
   constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService) {
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+         // Trick the Router into believing it's last link wasn't previously loaded
+         this.router.navigated = false;
+      }
+    });
+
   }
   ngOnInit() {
     let id_sanpham = this.route.snapshot.params.id;
-    // debugger
     if (isNaN(id_sanpham))
       id_sanpham = parseInt(window.localStorage.getItem("sp"));
     this.idsp = id_sanpham;
@@ -78,13 +85,22 @@ export class ProductdetailsComponent implements OnInit {
     this.loaddanhgia();
     this.loadbinhluan();
     console.log(this.idsp);
-
+    setTimeout(function(){
+      console.log("vinh")
+    },100);
 
     // setTimeout(() => {
     //   if(id_sanpham == null || id_sanpham == undefined)
     //     this.router.navigate(["appmain/products"]);
 
     //   }, 800);
+  }
+
+  ngOnDestroy(): void {
+    // Destroy navigationSubscription to avoid memory leaks
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 
   show_thongsokythuat(name, thongsokythuat): void {

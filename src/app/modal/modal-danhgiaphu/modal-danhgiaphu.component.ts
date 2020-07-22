@@ -38,7 +38,6 @@ export class ModalDanhgiaphuComponent implements OnInit {
         {
           gt=true;
         }
-        debugger
         const dp = new dgphu(this.noidungdanhgia, 0, $("#hotendgp").val().toString(), false, gt, $("#emaildgp").val().toString())
         this.dgp.push(dp);
 

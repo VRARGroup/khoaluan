@@ -15,6 +15,7 @@ namespace dienmayxanhapi.Controllers
     public class binhluanController : ControllerBase
     {
       private readonly dienmayxanhdbcontext _blService;
+     
       public binhluanController(dienmayxanhdbcontext blService)
       {
         _blService = blService;

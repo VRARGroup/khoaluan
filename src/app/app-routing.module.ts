@@ -59,7 +59,7 @@ const routes: Routes = [
       path: 'products', component: ProductsComponent
     },
     {
-      path: 'productdetails/:id', component: ProductdetailsComponent
+      path: 'productdetails/:id', component: ProductdetailsComponent, runGuardsAndResolvers: 'always'
     },
     {
       path: 'listproduct/:id', component: ListproductComponent
@@ -68,4 +68,4 @@ const routes: Routes = [
   }
 ];
 
-export const AppRoutingModule : ModuleWithProviders = RouterModule.forRoot(routes);
+export const AppRoutingModule : ModuleWithProviders = RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'});

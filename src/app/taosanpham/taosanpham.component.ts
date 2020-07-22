@@ -621,7 +621,7 @@ export class TaosanphamComponent implements OnInit {
       }
 
       createImgPath = (s:string) => {
-        setTimeout(() => {
+        
         if(s===undefined)
         {
           this.serverPath="https://localhost:44309/Resources/Images/"+this.serverPath;
@@ -652,7 +652,7 @@ export class TaosanphamComponent implements OnInit {
               this.serverPath="https://localhost:44309/Resources/Images/"+s;
             }
           }
-        }},500);
+        };
         
         return this.serverPath;
       }

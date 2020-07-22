@@ -133,7 +133,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
    detaitk_quyen(id:number)
    {
      
-     console.log(this.alltk.length);
+     console.log("alltk",this.alltk);
      this.alltk_quyen=[];
      let kt=null;
      this.c=true;
@@ -193,7 +193,6 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
 
   capphep(id: number)
   {
-    
     const tkh1=new tk(
        id,
        null,
@@ -207,7 +206,8 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
      this.Updatetk(tkh1);
      if(this.atk==false)
      {
-      this.loadtaikhoan_id_group(this._id_group_location);
+      setTimeout(()=>{this.loadtaikhoan_id_group(this._id_group_location)},500);
+      
      }
      else
      {
@@ -220,6 +220,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
     this.taikhoanService.gettk_id_group(_id_group).subscribe((res: tk[] | null) => {
     this.alltk_quyen = (res) ? res : [];
   });
+  setTimeout(() => {this.loadtaikhoan()},100);
   }
 
   themuser(id:number)
