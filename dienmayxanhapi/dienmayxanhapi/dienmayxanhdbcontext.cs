@@ -223,11 +223,10 @@ namespace dienmayxanhapi
 
         public List<sanphamdienthoai> Getfillter_list_product(int idlsp)
         {
-            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();
+            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList().Take(20).ToList();
             return dl;
         }
 
-        //bỏ
         public List<sanphamdienthoai> Getfillter_more_list_product(int idlsp)
         {
             var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();

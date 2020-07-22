@@ -5,8 +5,9 @@
       placeholder="Mời bạn chia sẻ thêm một số cảm nhận..."></textarea>
     <div class="bar-danhkemanh">
       <i style="display:inline-block;font-size: 30px; padding: 1px 15px; cursor: pointer;" class="fa fa-camera"
-        (click)="openFile()" aria-hidden="true"><span style="font-size: 20px; text-align: center;">Đính kèm
-          ảnh</span></i>
+        (click)="openFile()" aria-hidden="true">
+        <span style="font-size: 20px; text-align: center;">Đính kèm ảnh</span>
+      </i>
       <p style="float: right; margin-top: 14px;">{{textarea_count}} /15 kí tự.</p>
     </div>
     <div class="filter">
@@ -14,7 +15,8 @@
         <ng-container>
           <div class="img-space">
             <ng-container *ngIf="isImageSaved">
-              <img [src]="createImgPath(url)" height="100"> <br />
+              <img [src]="createImgPath(url)" height="100">
+              <br>
             </ng-container>
           </div>
           <button class="btn btn-danger" (click)="Remove_img_blp(i)" *ngIf="isImageSaved">Xóa</button>

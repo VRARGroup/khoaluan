@@ -40,6 +40,4 @@ export class AppmainnhanvienComponent implements OnInit {
       this.router.navigate(['appmainnv/appmainquanly']);
     }
   }
-
-  
 }

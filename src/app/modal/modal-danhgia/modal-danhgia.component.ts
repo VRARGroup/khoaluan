@@ -15,7 +15,7 @@ export class ModalDanhgiaComponent implements OnInit {
   resulf_danhgia: any[];
   name: string;
   textarea_count: number = 0;
-  star: number=0;
+  star: number = 0;
   serverPath: String = "";
   urls = [];
   isImageSaved: boolean = false;
@@ -25,109 +25,99 @@ export class ModalDanhgiaComponent implements OnInit {
   hinhthuctesp: Array<any> = [];
   ktsavedhinhthuctesanpham: boolean = false;
   idsp: number = null;
-  tieuchidanhgia:Array<boolean>=[];
-  constructor(private danhgiaService: DanhgiaService,private router: Router, public dialogRef: MatDialogRef<ModalDanhgiaComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private http: HttpClient) 
-  { }
+  tieuchidanhgia: Array<boolean> = [];
+  constructor(private danhgiaService: DanhgiaService, private router: Router, public dialogRef: MatDialogRef<ModalDanhgiaComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) { }
   ngOnInit() {
     this.name = this.data.name;
     this.resulf_danhgia = this.data.resulf_danhgia;
     this.idsp = this.data.idsp;
     console.log(this.idsp);
-    for(let i=0;i<this.resulf_danhgia.length;i++)
-    {
+    for (let i = 0; i < this.resulf_danhgia.length; i++) {
       this.tieuchidanhgia.push(true);
     }
     console.log(this.tieuchidanhgia);
   }
-  textarea_text_change(value:string){
+
+  textarea_text_change(value: string) {
     this.textarea_count = $('#textarea_danhgiasosao_modal').val().toString().length;
   }
-  mouseover_star(star: any){
-    if( star == 1 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#000");
-      $('#star_33').css("color","#000");
-      $('#star_44').css("color","#000");
-      $('#star_55').css("color","#000");
+
+  mouseover_star(star: any) {
+    if (star == 1) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#000");
+      $('#star_33').css("color", "#000");
+      $('#star_44').css("color", "#000");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 2 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#000");
-      $('#star_44').css("color","#000");
-      $('#star_55').css("color","#000");
+    if (star == 2) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#000");
+      $('#star_44').css("color", "#000");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 3 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#fc9639");
-      $('#star_44').css("color","#000");
-      $('#star_55').css("color","#000");
+    if (star == 3) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#fc9639");
+      $('#star_44').css("color", "#000");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 4 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#fc9639");
-      $('#star_44').css("color","#fc9639");
-      $('#star_55').css("color","#000");
+    if (star == 4) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#fc9639");
+      $('#star_44').css("color", "#fc9639");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 5 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#fc9639");
-      $('#star_44').css("color","#fc9639");
-      $('#star_55').css("color","#fc9639");
+    if (star == 5) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#fc9639");
+      $('#star_44').css("color", "#fc9639");
+      $('#star_55').css("color", "#fc9639");
     }
   }
-  choose_star(star: any){
+  choose_star(star: any) {
     this.star = star;
   }
-  mouseleave_star(){
+  mouseleave_star() {
     let star = this.star;
-    if( star == 1 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#000");
-      $('#star_33').css("color","#000");
-      $('#star_44').css("color","#000");
-      $('#star_55').css("color","#000");
+    if (star == 1) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#000");
+      $('#star_33').css("color", "#000");
+      $('#star_44').css("color", "#000");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 2 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#000");
-      $('#star_44').css("color","#000");
-      $('#star_55').css("color","#000");
+    if (star == 2) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#000");
+      $('#star_44').css("color", "#000");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 3 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#fc9639");
-      $('#star_44').css("color","#000");
-      $('#star_55').css("color","#000");
+    if (star == 3) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#fc9639");
+      $('#star_44').css("color", "#000");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 4 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#fc9639");
-      $('#star_44').css("color","#fc9639");
-      $('#star_55').css("color","#000");
+    if (star == 4) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#fc9639");
+      $('#star_44').css("color", "#fc9639");
+      $('#star_55').css("color", "#000");
     }
-    if( star == 5 )
-    {
-      $('#star_11').css("color","#fc9639");
-      $('#star_22').css("color","#fc9639");
-      $('#star_33').css("color","#fc9639");
-      $('#star_44').css("color","#fc9639");
-      $('#star_55').css("color","#fc9639");
+    if (star == 5) {
+      $('#star_11').css("color", "#fc9639");
+      $('#star_22').css("color", "#fc9639");
+      $('#star_33').css("color", "#fc9639");
+      $('#star_44').css("color", "#fc9639");
+      $('#star_55').css("color", "#fc9639");
     }
   }
 
@@ -161,7 +151,6 @@ export class ModalDanhgiaComponent implements OnInit {
     }
     if (this.urls.length < 4) {
       let fileToUpload = <File>files[0];
-      
       this.isImageSaved = true;
       const formData = new FormData();
       formData.append('file', fileToUpload, fileToUpload.name);
@@ -174,14 +163,13 @@ export class ModalDanhgiaComponent implements OnInit {
             console.log(this.responseimage)
           }
         });
-      setTimeout(()=>{this.urls.push(fileToUpload.name)},500);
+      setTimeout(() => { this.urls.push(fileToUpload.name) }, 500);
       document.getElementById("uploadCaptureInputFile")["value"] = "";
       console.log("h", this.urls);
     }
   }
 
   createImgPath = (s: string) => {
-   
     if (s === undefined) {
       this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
     }
@@ -194,64 +182,55 @@ export class ModalDanhgiaComponent implements OnInit {
     return this.serverPath;
   }
 
-  
-  tieuchidanhgia_y(i:number)
-  {
-    this.tieuchidanhgia.splice(i,1);
-    this.tieuchidanhgia.splice(i,0,true);
-    $('#y'+i).css("box-shadow","inset 1px 1px 6px -1px rgb(33 29 29)");
-    $('#n'+i).css("box-shadow","inset 0px 0px 0px 0px");
+  tieuchidanhgia_y(i: number) {
+    this.tieuchidanhgia.splice(i, 1);
+    this.tieuchidanhgia.splice(i, 0, true);
+    $('#y' + i).css("box-shadow", "inset 1px 1px 6px -1px rgb(33 29 29)");
+    $('#n' + i).css("box-shadow", "inset 0px 0px 0px 0px");
     console.log(this.tieuchidanhgia);
   }
 
-  tieuchidanhgia_n(i:number)
-  {
-    this.tieuchidanhgia.splice(i,1);
-    this.tieuchidanhgia.splice(i,0,false);
-    $('#n'+i).css("box-shadow","inset 1px 1px 6px -1px rgb(33 29 29)");
-    $('#y'+i).css("box-shadow","inset 0px 0px 0px 0px");
+  tieuchidanhgia_n(i: number) {
+    this.tieuchidanhgia.splice(i, 1);
+    this.tieuchidanhgia.splice(i, 0, false);
+    $('#n' + i).css("box-shadow", "inset 1px 1px 6px -1px rgb(33 29 29)");
+    $('#y' + i).css("box-shadow", "inset 0px 0px 0px 0px");
     console.log(this.tieuchidanhgia);
   }
 
   guidanhgiangay() {
-    try
-    {
-      if($('#textarea_danhgiasosao_modal').val().toString().length>=15)
-      {
-        if( $("#hotenm").val().toString().trim().length>0 && $('#sdtm').val().toString().length>0 && $('#emailm').val().toString().length>0)
-        {
+    try {
+      if ($('#textarea_danhgiasosao_modal').val().toString().length >= 15) {
+        if ($("#hotenm").val().toString().trim().length > 0 && $('#sdtm').val().toString().length > 0 && $('#emailm').val().toString().length > 0) {
           const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if(re.test($('#emailm').val().toString()))
-            {
-              for (let i = 0; i < this.urls.length; i++) {
-                this.getvalue(i);
-              }
-              const d = new dg(
-                0,
-                this.star,
-                $("#hotenm").val().toString(),
-                $('#sdtm').val().toString(),
-                $('#emailm').val().toString(),
-                $('#textarea_danhgiasosao_modal').val().toString(),
-                this.hinhthuctesp,
-                0,
-                null,
-                this.tieuchidanhgia,
-                parseInt(this.idsp.toString())
-              );
-              console.log("danhgia", d);
-              this.Createdg(d);
-              this.hinhthuctesp = [];
-              this.dialogRef.close()
+          if (re.test($('#emailm').val().toString())) {
+            for (let i = 0; i < this.urls.length; i++) {
+              this.getvalue(i);
             }
+            const d = new dg(
+              0,
+              this.star,
+              $("#hotenm").val().toString(),
+              $('#sdtm').val().toString(),
+              $('#emailm').val().toString(),
+              $('#textarea_danhgiasosao_modal').val().toString(),
+              this.hinhthuctesp,
+              0,
+              null,
+              this.tieuchidanhgia,
+              parseInt(this.idsp.toString())
+            );
+            console.log("danhgia", d);
+            this.Createdg(d);
+            this.hinhthuctesp = [];
+            this.dialogRef.close()
           }
-          else
-          {
-            alert("Vui lòng nhập họ tên, số điện thoại và email");
-          }
+        }
+        else {
+          alert("Vui lòng nhập họ tên, số điện thoại và email");
+        }
       }
-      else
-      {
+      else {
         alert("Vui lòng nhập đủ đánh giá");
       }
     }

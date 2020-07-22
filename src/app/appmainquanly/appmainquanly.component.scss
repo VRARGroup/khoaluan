@@ -1,199 +1,191 @@
-
 .filter {
-    margin-left: 80px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 80px;
-    background-color: #ffffffe7;
-    // max-width: 1159px;
+  margin-left: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 80px;
+  background-color: #ffffffe7;
 }
 
-.inline{
-    display: inline-block;
-    text-align: center;
-}
-.button {
- 	-webkit-transition-duration: 0.4s; /* Safari */
- 	transition-duration: 0.4s;
- 	margin-left:5px;
-    padding:0px 20px;
-    min-width: 135px; 
-    min-height: 40px;
+.inline {
+  display: inline-block;
+  text-align: center;
 }
 
 .btn-group .button:hover {
-	 background-color: rgb(20, 163, 220);
-     color: white;   
+  background-color: rgb(20, 163, 220) !important;
+  color: white;
 }
 
-.btn-group-vertical .buttonth:hover{
-    background-color: #fbda00;
-    color: white;
-    padding-left: 30px;
+.btn-group-vertical .buttonth:hover {
+  background-color: #fbda00 !important;
+  color: white;
+  padding-left: 30px;
 }
-.btn-group:hover .btninbtnlsp{
-    display: block !important;
-}
-// .button:hover {
-// 	 background-color: rgb(20, 163, 220);
-//      color: white;	
-// }
 
-// .btninbtn:hover {
-//    display: block;
-//    background-color: white;
-// }
+.btn-group:hover .btninbtnlsp {
+  display: block !important;
+}
 
 .button {
-  	background-color: white;
-  	color: black;
- 	border: 1px solid #4a90e2;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  margin-left: 5px;
+  padding: 0px 20px;
+  min-width: 135px;
+  min-height: 40px;
+  background-color: white;
+  color: black;
+  border: 1px solid #4a90e2;
 }
 
 .buttonth {
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    padding:0px 20px;
-    min-width: 145px; 
-    min-height: 40px;
-}
-.buttonth {
-    background-color: white;
-    color: black;
-    border: 1px solid #fbda00;
-    z-index: 1;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  padding: 0px 20px;
+  min-width: 145px;
+  min-height: 40px;
+  background-color: white;
+  color: black;
+  border: 1px solid #fbda00;
+  z-index: 1;
 }
 
-// .buttonth:hover {
-//     background-color: #fbda00;
-//     color: white;
-   
-// }
+.container-fluid {
+  z-index: 2;
+  min-height: 500px;
+  color: #000000;
+}
 
-.container-fluid{
-    z-index: 2;
-    min-height:500px ;
-    color: #000000;
+.bak {
+  background-image: url("/assets/logonguoi.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position-y: 250px;
+  min-height: 500px;
 }
-.bak{
-    background-image: url("/assets/logonguoi.png");
-    background-position:center;
-    background-repeat:no-repeat;
-    background-position-y: 250px;
-    min-height: 500px;
-}
-.btnright{
-    width: auto;
-    margin-top: 5px;
-    border: 3px solid #4a90e2;
-    background-color: #4a90e2;
-    
+
+.btnright {
+  width: auto;
+  margin-top: 5px;
+  border: 3px solid #4a90e2;
+  background-color: #4a90e2;
 }
 
 .buttontl {
-    background-color: white;
-    color: black;
-    border: 2px solid #e2754a7a;
+  background-color: white;
+  color: black;
+  border: 2px solid #e2754a7a;
 }
-.buttontl:hover {
-    background-color: #fbda00;
-    color: white;	
 
+.buttontl:hover {
+  background-color: #fbda00;
+  color: white;
 }
 
 .buttontsp {
-    margin-left: 4px;
-    background-color: white;
-    color: black;
-    border: 2px solid #e24ac93a;
+  margin-left: 4px;
+  background-color: white;
+  color: black;
+  border: 2px solid #e24ac93a;
 }
+
 .buttontsp:hover {
-    background-color: #fbda00;
-    color: white;	
+  background-color: #fbda00;
+  color: white;
 }
+
 div.transbox {
-    margin: 5%;
-    font-weight: bold;
-    color: #000000;
+  margin: 5%;
+  font-weight: bold;
+  color: #000000;
 }
-.btninbtnlsp{
-    background-color: white;
-    color: black;
-    border: 1px solid #4a90e2;
-    max-width: 30px;
-    display: none;
+
+.btninbtnlsp {
+  background-color: white;
+  color: black;
+  border: 1px solid #4a90e2;
+  max-width: 30px;
+  display: none;
 }
-.btninbtn{
-    background-color: white;
-    color: black;
-    border: 1px solid #4a90e2;
-    max-width: 30px;
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
+
+.btninbtn {
+  background-color: white;
+  color: black;
+  border: 1px solid #4a90e2;
+  max-width: 30px;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }
-.btninbtnlsp:hover{
-    color: white;
-    width: auto;
-    max-height: 40px;
+
+.btninbtnlsp:hover {
+  color: white;
+  width: auto;
+  max-height: 40px;
 }
+
 .buttonct {
-    width: 5px; 
-    height: 5px;
+  width: 5px;
+  height: 5px;
 }
 
 .fa-1x {
-    font-size: 8px !important;
+  font-size: 8px !important;
 }
 
 .fas {
-    vertical-align: middle !important;
-    margin-top: -4px;
+  vertical-align: middle !important;
+  margin-top: -4px;
 }
 
-.buttonct{
-    padding-right: 2px !important;
-	padding-left: 2px !important;
-	padding-top: 0px !important;
-	padding-bottom: 0px !important;
-	height: 19px !important;
-    width: 22px !important;
-    background-color: white;
-  	color: black;
- 	border: 1px solid #fbda00;
+.buttonct {
+  padding-right: 2px !important;
+  padding-left: 2px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  height: 19px !important;
+  width: 22px !important;
+  background-color: white;
+  color: black;
+  border: 1px solid #fbda00;
 }
 
 .btn-group-vertical .buttonct:hover {
-    background-color: #87e24afa;
-    color: white;
+  background-color: #87e24afa;
+  color: white;
 }
 
 .buttonct:hover {
-    height: 19px !important;
-    width: 100% !important;
+  height: 19px !important;
+  width: 100% !important;
 }
-.fa-2x{
-    font-size: 30px !important;
+
+.fa-2x {
+  font-size: 30px !important;
 }
+
 .search-hero {
-    max-width: 500px;
-    margin:auto;
-    text-align: center;
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
 }
-.search-hero .inputsearch{
-    width: 100%;
+
+.search-hero .inputsearch {
+  width: 100%;
 }
+
 .containersearchhero {
-    padding-top: 50px;
-    padding-bottom: 10px;
-    color: #405065;
+  padding-top: 50px;
+  padding-bottom: 10px;
+  color: #405065;
 }
+
 .form-control {
-    box-shadow: 0 10px 40px 0 #B0C1D9;
-  }
-  
-.form-control::placeholder  {
-    font-family: FontAwesome;
+  box-shadow: 0 10px 40px 0 #B0C1D9;
+}
+
+.form-control::placeholder {
+  font-family: FontAwesome;
 }

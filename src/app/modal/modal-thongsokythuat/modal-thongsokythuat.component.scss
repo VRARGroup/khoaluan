@@ -1,13 +1,15 @@
-.thong-so-ky-thuat ul li:nth-child(2n+1){
-    background-color: #f4f4f4;
+.thong-so-ky-thuat ul li:nth-child(2n+1) {
+  background-color: #f4f4f4;
 }
-.thong-so-ky-thuat ul li{
-    min-height: 36px;
-    height: auto;
-    padding: 10px;
+
+.thong-so-ky-thuat ul li {
+  min-height: 36px;
+  height: auto;
+  padding: 10px;
 }
-.thong-so-ky-thuat{
-    font-size: 16px;
-    color: #333;
-    padding: 10px;
+
+.thong-so-ky-thuat {
+  font-size: 16px;
+  color: #333;
+  padding: 10px;
 }

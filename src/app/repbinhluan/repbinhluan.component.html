@@ -10,7 +10,7 @@
         <div class="d-flex justify-content-center">
           <div class="inline">
             <ng-container *ngFor="let obj of alllsp">
-              <div class="btn-group">
+              <div class="btn-group" id="btn_lsp_{{obj._id}}">
                 <button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">{{obj.tendanhmuc | uppercase}}</button>
               </div>
             </ng-container>
@@ -21,7 +21,7 @@
         <div class="d-flex justify-content-center">
           <div class="inline" *ngFor="let obj of lspth, let i=index">
             <ng-container *ngFor="let i of obj.thuonghieu">
-              <div class="btn-group-vertical">
+              <div class="btn-group-vertical" id="btn_sp_thuonghieu_{{obj._id}}{{i.replace(' ','').replace('(','').replace(')','')}}">
                 <button class="buttonth" id="lspth_{{obj._id}}" (click)="loadtensp(obj._id+','+i)">{{i}}</button>
               </div>
             </ng-container>
@@ -42,8 +42,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="tr_{{item._id}}" (click)="loaddanhgia(item._id)" *ngFor="let item of tensanpham | paginate: {id: 'pagination2', itemsPerPage: 5, currentPage: p}; let i=index">
-                  <td>{{(i+1)+((p-1)*8)}}</td>
+                <tr id="tr_{{item._id}}" (click)="loaddanhgia(item._id)" *ngFor="let item of tensanpham | paginate: {id: 'pagination2', itemsPerPage: 6, currentPage: p}; let i=index">
+                  <td>{{(i+1)+((p-1)*6)}}</td>
                   <td>{{item.ten}}</td>
                   <td>{{item.thuonghieu}}</td>
                   <td>{{item.giaban}}</td>
