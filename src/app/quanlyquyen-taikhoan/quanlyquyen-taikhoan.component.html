@@ -1,78 +1,88 @@
-
 <div class="fillterbak">
-    <div class="bak">
-        <div class="container-fluid">
-            <div class="filter">
-                <div class="d-flex justify-content-center">
-                <div class="inline">
-                    <button class="buttonth" (click)="getalltaikhoan()">TẤT CẢ TÀI KHOẢN</button>
-                </div>
-                </div>
-            </div>
-            <div id="group" class="filter">
-                <div class="d-flex justify-content-center">
-                <div class="inline" *ngFor="let obj of allgroup, let i=index">
-                    <ng-container>
-                        <div class="btn-group">
-                            <button class="buttonth" (click)="getid_quyen(obj.danhsachquyentruycap, obj._id)">{{obj.tengroup.toLocaleUpperCase()}}</button>
-                            <div class="btn-group-vertical btninbtnlsp">
-                                <button  type="button" class="buttonct" (click)="themusergroup(obj._id)"><i class="fas fa-plus fa-1x" aria-hidden="true"></i></button>
-                                <button  type="button" class="buttonct" (click)="detaiaddgroupquyen(obj._id)"><i class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </ng-container>
-                </div>
-                </div>
-            </div>
-
-            <div class="filter ">
-                <div class="d-flex justify-content-center">
-                <div class="inline" >
-                    <ng-container *ngFor="let obj of quyen">
-                    <div class="btn-group">
-                        <button class="button">{{obj.tenquyen | uppercase}}</button>
-                    </div>
-                    </ng-container>
-                    <!-- <button class="buttonplusquyen"><i class="fas fa-plus fa-2x" aria-hidden="true" title="thêm quyền người dùng mới" (click)="themuquyen()"></i></button> -->
-                </div>
-                </div>
-            </div>
-            
-            <div class="filter">
-                <div>
-                     <ng-container *ngIf="this.alltk_quyen.length > 0">
-                        <div *ngIf="quanlytk" class="d-flex justify-content-end">
-                            <div class="buttonpanel" ><i class="fas fa-plus fa-3x" title="thêm người dùng mới" (click)="themuser()"></i></div>
-                        </div>
-                        <table class="table table-striped" style="text-align: center">
-                            <thead >
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên đăng nhập</th>
-                                    <th>Mật khẩu</th>
-                                    <th>Được phép hoạt động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of alltk_quyen | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
-                                    <td>{{(i+1)+((p-1)*8)}}</td>
-                                    <td><a (click)="detaitk(item._id)" title="chi tiết tài khoản {{item.username}}">{{item.username}}</a></td>
-                                    <td>{{item.password}}</td>
-                                    <td>
-                                        <ng-container *ngIf="item.giayphep==true">
-                                            <a title="Chặn tài khoãn này" (click)="huycapphep(item._id)"><span style="margin-right: 10px;">Được phép đăng nhập</span><i id="hq"class="far fa-check-circle fa-3x"></i></a>
-                                        </ng-container>
-                                        <ng-container *ngIf="item.giayphep==false">
-                                            <a title="Cho phép tài khoãn này truy cập hệ thống" (click)="capphep(item._id)"><span style="margin-right: 10px;">Chưa cấp phép đăng nhập</span><i class="far fa-times-circle fa-3x"></i></a>
-                                        </ng-container>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                    </ng-container>
-                </div>
-            </div>
+  <div class="bak">
+    <div class="container-fluid">
+      <div class="filter">
+        <div class="d-flex justify-content-center">
+          <div class="inline">
+            <button class="buttonth" (click)="getalltaikhoan()">TẤT CẢ TÀI KHOẢN</button>
+          </div>
         </div>
+      </div>
+      <div id="group" class="filter">
+        <div class="d-flex justify-content-center">
+          <div class="inline" *ngFor="let obj of allgroup, let i=index">
+            <ng-container>
+              <div class="btn-group" id="btn_lsp_{{obj._id}}">
+                <button class="button"
+                  (click)="getid_quyen(obj.danhsachquyentruycap, obj._id)">{{obj.tengroup.toLocaleUpperCase()}}</button>
+                <div class="btn-group-vertical btninbtnlsp">
+                  <button type="button" class="buttonct" (click)="themusergroup(obj._id)"><i class="fas fa-plus fa-1x"
+                      aria-hidden="true"></i></button>
+                  <button type="button" class="buttonct" (click)="detaiaddgroupquyen(obj._id)"><i
+                      class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="filter ">
+        <div class="d-flex justify-content-center">
+          <div class="inline">
+            <ng-container *ngFor="let obj of quyen">
+              <div class="btn-group">
+                <button class="buttonth">{{obj.tenquyen | uppercase}}</button>
+              </div>
+            </ng-container>
+            <!-- <button class="buttonplusquyen"><i class="fas fa-plus fa-2x" aria-hidden="true" title="thêm quyền người dùng mới" (click)="themuquyen()"></i></button> -->
+          </div>
+        </div>
+      </div>
+      <div class="filter">
+        <div>
+          <ng-container *ngIf="this.alltk_quyen.length > 0">
+            <div *ngIf="quanlytk" class="d-flex justify-content-end">
+              <div class="buttonpanel">
+                <i class="fas fa-plus fa-3x" title="thêm người dùng mới" (click)="themuser()"> </i>
+              </div>
+            </div>
+            <table class="table table-striped" style="text-align: center">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên đăng nhập</th>
+                  <th>Mật khẩu</th>
+                  <th>Được phép hoạt động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of alltk_quyen | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
+                  <td>{{(i+1)+((p-1)*8)}}</td>
+                  <td>
+                    <a (click)="detaitk(item._id)" title="chi tiết tài khoản {{item.username}}">{{item.username}}</a>
+                  </td>
+                  <td>{{item.password}}</td>
+                  <td>
+                    <ng-container *ngIf="item.giayphep==true">
+                      <a title="Chặn tài khoãn này" (click)="huycapphep(item._id)">
+                        <span style="margin-right: 10px;">Được phép đăng nhập</span>
+                        <i id="hq" class="far fa-check-circle fa-3x"></i>
+                      </a>
+                    </ng-container>
+                    <ng-container *ngIf="item.giayphep==false">
+                      <a title="Cho phép tài khoãn này truy cập hệ thống" (click)="capphep(item._id)">
+                        <span style="margin-right: 10px;">Chưa cấp phép đăng nhập</span>
+                        <i class="far fa-times-circle fa-3x"></i>
+                      </a>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </ng-container>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

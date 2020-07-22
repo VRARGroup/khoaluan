@@ -468,12 +468,6 @@ export class TaoloaisanphamComponent implements OnInit {
     }
   }
 
-  // get()
-  // {
-  //   this.maRefs.forEach((maRef: ElementRef) => this.dactrung.push(maRef.nativeElement.id,document.getElementById(maRef.nativeElement.id)["value"]));
-  //   console.log(this.dactrung)
-  // }
-
   hiddenwarbutton(i:number)
   {
     
@@ -499,5 +493,4 @@ export class TaoloaisanphamComponent implements OnInit {
   {
     this.location.back();
   }
-  
 }

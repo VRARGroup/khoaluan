@@ -20,16 +20,19 @@
   padding: 0px 20px;
   min-width: 135px;
   min-height: 40px;
+  background-color: white;
+  color: black;
+  border: 1px solid #4a90e2;
 }
 
 .btn-group .button:hover {
-  background-color: rgb(20, 163, 220);
+  background-color: rgb(20, 163, 220) !important;
   color: white;
 
 }
 
 .btn-group-vertical .buttonth:hover {
-  background-color: #fbda00;
+  background-color: #fbda00 !important;
   color: white;
   padding-left: 30px;
 }
@@ -38,21 +41,12 @@
   display: block !important;
 }
 
-.button {
-  background-color: white;
-  color: black;
-  border: 1px solid #4a90e2;
-}
-
 .buttonth {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   padding: 0px 20px;
   min-width: 145px;
   min-height: 40px;
-}
-
-.buttonth {
   background-color: white;
   color: black;
   border: 1px solid #fbda00;

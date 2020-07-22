@@ -10,7 +10,8 @@
     <i class="fa fa-retweet" aria-hidden="true"></i>1 đổi 1 trong 1 tháng (Nếu lỗi)
     <i class="fa fa-shield" aria-hidden="true"></i>Bảo hành chính hãng
   </div>
-  <div *ngIf="id_loai_sanpham == 0" style="height: 53vh;font-size: 18px;font-weight: 600;padding-top: 122px;vertical-align: middle;text-align: center;">
+  <div *ngIf="id_loai_sanpham == 0"
+    style="height: 53vh;font-size: 18px;font-weight: 600;padding-top: 122px;vertical-align: middle;text-align: center;">
     Không tìm thấy sản phẩm !!!
   </div>
   <div *ngIf="id_loai_sanpham != 0" class="body-list row">
@@ -20,28 +21,32 @@
           <input type="checkbox" checked="checked">Mới 2020
         </label>
         <span>
-
-          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_banchaynhat()">Bán chạy</span></label>
-          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_caothapdenthap()">Giá cao đến thấp</span></label>
-          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_giathapdencao()">Giá thấp đến cao</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_banchaynhat()">Bán
+              chạy</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_caothapdenthap()">Giá
+              cao đến thấp</span></label>
+          <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_giathapdencao()">Giá
+              thấp đến cao</span></label>
         </span>
       </div>
       <div class="list">
-        <ng-container id="list_1" *ngFor="let item of items">
-          <a [routerLink]="['/appmain/productdetails', item._id]">
-            <div class="box-list-product">
-              <div><label class="tra-gop"> Trả góp 0% </label><img src="{{item.hinhdaidien}}"></div>
-              <p class="list-product-name">{{item.ten}}</p>
-              <p *ngIf="item.giamgia!=0 && item.giamgia!=null" style="color: #d0021b;">
-                {{item.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
-              <p>{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
-              <p style="color: #fc9639;" *ngIf="item.sosao !=0 && item.sosao !=null">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {{item.sosao}}/5
-              </p>
-            </div>
-          </a>
-        </ng-container>
+        <div id="list_1">
+          <ng-container *ngFor="let item of items">
+            <a [routerLink]="['/appmain/productdetails', item._id]">
+              <div class="box-list-product">
+                <div><label class="tra-gop"> Trả góp 0% </label><img src="{{item.hinhdaidien}}"></div>
+                <p class="list-product-name">{{item.ten}}</p>
+                <p *ngIf="item.giamgia!=0 && item.giamgia!=null" style="color: #d0021b;">
+                  {{item.giamgia| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                <p>{{item.giaban| currency: 'VND' :'symbol':'3.0-0':'fr'}}</p>
+                <p style="color: #fc9639;" *ngIf="item.sosao !=0 && item.sosao !=null">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  {{item.sosao}}/5
+                </p>
+              </div>
+            </a>
+          </ng-container>
+        </div>
         <div class="show-more-list-product" style="text-align: center;">
           <a (click)="show_more_list_product()">Đọc thêm <i style=" font-size: 23px;" class="fa fa-arrow-circle-down"
               aria-hidden="true"></i></a>

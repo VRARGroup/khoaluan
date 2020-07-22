@@ -15,8 +15,8 @@ import { parseJSON } from 'jquery';
 })
 export class ModalBinhluanphuComponent implements OnInit {
 
-  idsp:number;
-  idbl:number;
+  idsp: number;
+  idbl: number;
   textarea_count: number = 0;
   serverPath: String = "";
   urls_blp = [];
@@ -26,29 +26,26 @@ export class ModalBinhluanphuComponent implements OnInit {
   kthttp: string = "https://";
   hinhthuctebl_phu: Array<any> = [];
   ktsavedhinhthuctesanpham: boolean = false;
-  blphu:Array<any> = [];
+  blphu: Array<any> = [];
   constructor(private router: Router, public dialogRef: MatDialogRef<ModalBinhluanphuComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private binhluanService: BinhluanService) {
 
   }
   ngOnInit() {
-    $('#textarea_binhluansosao_modal').val("@"+this.data.name+":");
-    this.idsp = this.data.idsp;    
+    $('#textarea_binhluansosao_modal').val("@" + this.data.name + ":");
+    this.idsp = this.data.idsp;
     this.idbl = this.data.idbl;
   }
-  
+
   binhluan_save_modal() {
-    if($('#textarea_binhluanphu_modal').val().toString().length>=15)
-    {
-      let gt=false;
-      if($("#binhluan_male").is(":checked"))
-      {
-        gt=true;
+    if ($('#textarea_binhluanphu_modal').val().toString().length >= 15) {
+      let gt = false;
+      if ($("#binhluan_male").is(":checked")) {
+        gt = true;
       }
       const bp = new blphu(
-        $('#textarea_binhluanphu_modal').val().toString(), 0, 
-        $(".cfm-UserName").val().toString(), false, gt , $(".cfm-UserEmail").val().toString())
-        this.blphu.push(bp);
-
+        $('#textarea_binhluanphu_modal').val().toString(), 0,
+        $(".cfm-UserName").val().toString(), false, gt, $(".cfm-UserEmail").val().toString())
+      this.blphu.push(bp);
       const b = new bl(
         this.idbl,
         null,
@@ -67,11 +64,11 @@ export class ModalBinhluanphuComponent implements OnInit {
       );
       this.dialogRef.close(this.idbl);
     }
-    else
-    {
+    else {
       alert("Vui lòng nhập đủ 15 ký tự bình luận !!!")
     }
   }
+
   openFile() {
     console.log('hell')
     $('#upload_file').click();
@@ -121,7 +118,6 @@ export class ModalBinhluanphuComponent implements OnInit {
   }
 
   createImgPath = (s: string) => {
-
     if (s === undefined) {
       this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
     }

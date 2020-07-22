@@ -1,77 +1,72 @@
-
 <div class="fillterbak">
-<div class="bak">
-	<div class="container-fluid">
-		
-		<div class="d-flex justify-content-end">
-			<div class="btnright">
-				<button class="buttontl" *ngIf="quanlysp" (click)="taolsp()">Thêm loại sản phẩm</button>
-				<button class="buttontsp" *ngIf="quanlylsp" (click)="taosp()">Thêm sản phẩm</button>
-			</div>
-		</div>
-		<div class="search-hero">
-			<label style="font-size: 26px; font-weight: 600; line-height: 53px;">Quản Lý Sản Phẩm</label>
-			<input (keyup)="inputsearch()" class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442; Tên sản phẩm tìm kiếm" >
-		</div>
-		<div class="filter ">
-			<div class="d-flex justify-content-center">
-			<div class="inline" >
-				<ng-container *ngFor="let obj of alllsp">
-				<div class="btn-group">
-					<button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">{{obj.tendanhmuc | uppercase}}</button>
-					<div  class="btn-group-vertical btninbtnlsp">
-						<button *ngIf="quanlysp" type="button" class="buttonct" (click)="detaitaosp(obj._id)"><i class="fas fa-plus fa-1x" aria-hidden="true"></i></button>
-						<button *ngIf="quanlylsp" type="button" class="buttonct" (click)="detailsp(obj._id)"><i class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
-					</div>
-				</div>
-				</ng-container>
-			</div>
-			</div>
-		</div>
-		<div class="filter ">
-			<div class="d-flex justify-content-center">
-			<div class="inline" *ngFor="let obj of lspth, let i=index">
-				<ng-container *ngFor="let i of obj.thuonghieu">
-					<div class="btn-group-vertical">
-						<button class="buttonth" (click)="loadtensp(obj._id+','+i)">{{i}}</button>
-					</div>
-				</ng-container>
-			</div>
-			</div>
-
-		</div>
-		<div class="filter">
-			<div>
-				<ng-container *ngIf="tensanpham.length > 0">
-					<table class="table table-striped" style="text-align: center">
-
-						<thead >
-							<tr>
-								<th>STT</th>
-								<th>Tên sản phẩm</th>
-								<th>Thương hiệu</th>
-								<th>Giá bán</th>
-								<th>Giảm giá</th>
-								
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
-								<td>{{(i+1)+((p-1)*8)}}</td>
-								<td><a (click)="chitietsp(item._id)">{{item.ten}}</a></td>
-								<td>{{item.thuonghieu}}</td>
-								<td>{{item.giaban}}</td>
-								<td>{{item.giamgia}}</td>								
-							</tr>
-						</tbody>
-						
-						
-					</table>
-					<pagination-controls (pageChange)="p = $event"></pagination-controls>
-				</ng-container>
-			</div>
-		</div>
-	</div>
-</div>
+  <div class="bak">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-end">
+        <div class="btnright">
+          <button class="buttontl" *ngIf="quanlysp" (click)="taolsp()">Thêm loại sản phẩm</button>
+          <button class="buttontsp" *ngIf="quanlylsp" (click)="taosp()">Thêm sản phẩm</button>
+        </div>
+      </div>
+      <div class="search-hero">
+        <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Quản Lý Sản Phẩm</label>
+        <input (keyup)="inputsearch()" class="form-control" type="text" name="search" [(ngModel)]="searchText"
+          autocomplete="off" placeholder="&#61442; Tên sản phẩm tìm kiếm">
+      </div>
+      <div class="filter ">
+        <div class="d-flex justify-content-center">
+          <div class="inline">
+            <ng-container *ngFor="let obj of alllsp">
+              <div class="btn-group" id="btn_lsp_{{obj._id}}">
+                <button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">{{obj.tendanhmuc | uppercase}}</button>
+                <div class="btn-group-vertical btninbtnlsp">
+                  <button *ngIf="quanlysp" type="button" class="buttonct" (click)="detaitaosp(obj._id)"><i
+                      class="fas fa-plus fa-1x" aria-hidden="true"></i></button>
+                  <button *ngIf="quanlylsp" type="button" class="buttonct" (click)="detailsp(obj._id)"><i
+                      class="fas fa-pen-nib fa-1x" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="filter ">
+        <div class="d-flex justify-content-center">
+          <div class="inline" *ngFor="let obj of lspth, let i=index">
+            <ng-container *ngFor="let i of obj.thuonghieu">
+              <div class="btn-group-vertical" id="btn_sp_thuonghieu_{{obj._id}}{{i.replace(' ','').replace('(','').replace(')','')}}">
+                <button class="buttonth" (click)="loadtensp(obj._id+','+i)">{{i}}</button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="filter">
+        <div>
+          <ng-container *ngIf="tensanpham.length > 0">
+            <table class="table table-striped" style="text-align: center">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Thương hiệu</th>
+                  <th>Giá bán</th>
+                  <th>Giảm giá</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
+                  <td>{{(i+1)+((p-1)*8)}}</td>
+                  <td><a (click)="chitietsp(item._id)">{{item.ten}}</a></td>
+                  <td>{{item.thuonghieu}}</td>
+                  <td>{{item.giaban}}</td>
+                  <td>{{item.giamgia}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

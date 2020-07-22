@@ -22,7 +22,6 @@ body {
   margin-top: auto;
   padding-right: 0px;
   padding-left: 0px;
-
 }
 
 
@@ -36,8 +35,6 @@ body {
     right: -50px;
   }
 }
-
-
 
 a {
   padding: 0px;
@@ -192,7 +189,6 @@ owl-carousel-o {
   background-position: 50% 50%;
 }
 
-/* Feel free to change duration  */
 .animated {
   -webkit-animation-duration: 1000 ms;
   animation-duration: 1000 ms;
@@ -200,19 +196,14 @@ owl-carousel-o {
   animation-fill-mode: both;
 }
 
-/* .owl-animated-out - only for current item */
-/* This is very important class. Use z-index if you want move Out item above In item */
 .owl-animated-out {
   z-index: 1
 }
 
-/* .owl-animated-in - only for upcoming item
-/* This is very important class. Use z-index if you want move In item above Out item */
 .owl-animated-in {
   z-index: 0
 }
 
-/* .fadeOut is style taken from Animation.css and this is how it looks in owl.carousel.css:  */
 .fadeOut {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
@@ -265,4 +256,8 @@ owl-carousel-o {
 
 ul {
   list-style-type: none;
+}
+
+button:focus {
+  outline: 0;
 }

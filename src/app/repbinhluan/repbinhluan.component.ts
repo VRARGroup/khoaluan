@@ -145,6 +145,10 @@ export class RepbinhluanComponent implements OnInit {
     this.tendanhmuc = tendanhmuc;
     this.p = 1;
     this.load_danhgia_1day();
+    $(".btn-group .button").css("background-color", "#fff");
+    $(".btn-group .button").css("color", "#000");
+    $("#btn_lsp_" + id + " .button").css("background-color", "#ec314d");
+    $("#btn_lsp_" + id + " .button").css("color", "#fff");
   }
 
   load_danhgia_1day() {
@@ -172,6 +176,10 @@ export class RepbinhluanComponent implements OnInit {
     this.p = 1;
     this.active_null_dg = false;
     this.active_null_bl = false;
+    $(".btn-group-vertical .buttonth").css("background-color", "#fff");
+    $(".btn-group-vertical .buttonth").css("color", "#000");
+    $("#btn_sp_thuonghieu_" + tensp.replace(' ','').replace(',','').replace('(','').replace(')','') + " .buttonth").css("background-color", "#ec314d");
+    $("#btn_sp_thuonghieu_" + tensp.replace(' ','').replace(',','').replace('(','').replace(')','') + " .buttonth").css("color", "#fff");
   }
 
   idsp:number;
