@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using dienmayxanhapi.Model;
 
-namespace dienmayxanhapi.Hubs
+namespace dienmayxanhapi.SignalRHubs
 {
-  public class SignalHub: Hub
+  public class SignalHub : Hub
   {
   }
 }

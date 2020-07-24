@@ -249,3 +249,19 @@ tr:focus {
     display: inline-block !important;
   }
 }
+
+.rat {
+  margin-top: 10px;
+  display: inline;
+  width: auto;
+  img{
+    min-width: 120px;
+    max-width: 250px;
+    min-height: 120px;
+    max-height: 140px;
+    margin: 0 3px 6px;
+    cursor: pointer;
+    float: left;
+    object-fit: cover;
+  }
+}

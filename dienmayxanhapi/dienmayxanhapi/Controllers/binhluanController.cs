@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using dienmayxanhapi.Hubservice;
+using dienmayxanhapi.SignalRHubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace dienmayxanhapi.Controllers
 {
@@ -15,10 +18,13 @@ namespace dienmayxanhapi.Controllers
     public class binhluanController : ControllerBase
     {
       private readonly dienmayxanhdbcontext _blService;
-     
-      public binhluanController(dienmayxanhdbcontext blService)
+      private readonly ISignalService _signalService;
+      private readonly IHubContext<SignalHub> _hubContext;
+      public binhluanController(dienmayxanhdbcontext blService, ISignalService signalService, IHubContext<SignalHub> hubContext)
       {
         _blService = blService;
+        _signalService = signalService;
+        _hubContext = hubContext;
       }
 
       [HttpGet]
@@ -39,6 +45,7 @@ namespace dienmayxanhapi.Controllers
       {
         try
         {
+            
             int id = 0;
             if (_blService.Getbinhluan() != null && _blService.Getbinhluan().Count != 0)
             {
@@ -49,7 +56,9 @@ namespace dienmayxanhapi.Controllers
             b.binhluanphu = blp;
             b.ngaybinhluan = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc);
             _blService.insertbinhluan(b);
-            return NoContent();
+            var saveResult = _signalService.SaveSignalAsync(b);
+            _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
+            return Ok(b);
         }
         catch(Exception e)
         {
@@ -60,15 +69,27 @@ namespace dienmayxanhapi.Controllers
     [HttpPut("{_id}")]
     public ActionResult<List<binhluan>> putbinhluan(int _id, binhluan b)
     {
-      b.binhluanphu[0].ngaybinhluanphu = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc);
-      var filter = Builders<binhluan>.Filter.Eq("_id", _id);
-      BsonArray arraydsq = new BsonArray();
-      var update = Builders<binhluan>.Update.Push(x => x.binhluanphu, b.binhluanphu[0]);
-      if (_blService.Updatebl(filter, update) == true)
+      try
+      {
+        if(checkktid(_id)==true)
+        { 
+          b.binhluanphu[0].ngaybinhluanphu = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc);
+          var filter = Builders<binhluan>.Filter.Eq("_id", _id);
+          BsonArray arraydsq = new BsonArray();
+          var update = Builders<binhluan>.Update.Push(x => x.binhluanphu, b.binhluanphu[0]);
+          var saveResult = _signalService.SaveSignalAsync(b);
+          _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
+          if (_blService.Updatebl(filter, update) == true)
+          {
+            return Ok(b);
+          }
+        }
+        return NoContent();
+      }
+      catch
       {
         return NoContent();
       }
-      return NoContent();
 
     }
 
@@ -82,6 +103,25 @@ namespace dienmayxanhapi.Controllers
     public ActionResult<List<binhluan>> Getfillter_binhluan_choseday_theo_idsp(int _id_sp, String d)
     {
       return (_blService.Getfillter_binhluan_choseday_theo_idsp(_id_sp,d));
+    }
+
+    public Boolean checkktid(int id)
+    {
+      try
+      {
+        var s = _blService.Getbinhluan().Find(x => x._id == id);
+        if (s == null)
+        {
+          return false;
+        }
+        else
+          return true;
+      }
+      catch
+      {
+        return false;
+      }
+
     }
   }
 }

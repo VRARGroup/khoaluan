@@ -370,28 +370,50 @@ export class TaoloaisanphamComponent implements OnInit {
 
   Createlsp(lsp: lsanpham){
 		this.LoaisanphamService.createlsp(lsp).subscribe(
-        	() => {
+        	(data) => {
+            if(data!=null && data!=undefined)
+            {
           		this.massage = 'Lưu thành công';
               alert(this.massage);
+            }
+            else
+            {
+              alert("Gặp sự cố !!!");
+            }
         	}
       );
   }
 
   Deletelsp(){
     if (confirm("Bạn có muốn xóa loại sản phẩm này ?")) {  
-        this.LoaisanphamService.deletelsp(this.idlsp).subscribe(() => {
-        this.massage = 'Xóa thành công';
-        alert(this.massage);
-        this.router.navigate(['appmainnv/appmainquanly']);
+        this.LoaisanphamService.deletelsp(this.idlsp).subscribe((data) => {
+        if(data!=undefined && data!=null)
+        {
+          this.massage = 'Xóa thành công';
+          alert(this.massage);
+          this.router.navigate(['appmainnv/appmainquanly']);
+        }
+        else
+        {
+          alert("Gặp sự cố !!!");
+          this.router.navigate(['appmainnv/appmainquanly']);
+        }
       });
     }
   }
 
   Updatelsp(lsp: lsanpham){
 		this.LoaisanphamService.updatelsp(lsp).subscribe(
-        	() => {
+        	(data) => {
+            if(data!=null && data!=undefined)
+            {
           		this.massage = 'Lưu thành công';
               alert(this.massage);
+            }
+            else
+            {
+              alert("Gặp sự cố !!!");
+            }
         	}
       );
   }

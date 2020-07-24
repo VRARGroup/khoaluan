@@ -68,25 +68,47 @@ namespace dienmayxanhapi.Controllers
         [HttpPut]
         public ActionResult<List<taikhoan>> puthoatdong(int _id)
         {
-            var filter = Builders<taikhoan>.Filter.Eq("_id", _id);
-            var update = Builders<taikhoan>.Update.Combine(
-                         Builders<taikhoan>.Update.Set("hoatdong", false)
-                );
-            _tkService.Updatetk(filter, update);
-          return NoContent();
+          try
+          {
+            if (checkktid(_id) == true)
+            {
+              var filter = Builders<taikhoan>.Filter.Eq("_id", _id);
+              var update = Builders<taikhoan>.Update.Combine(
+                           Builders<taikhoan>.Update.Set("hoatdong", false)
+                  );
+              _tkService.Updatetk(filter, update);
+              return Ok(true);
+            }
+            return NoContent();
+          }
+          catch
+          {
+            return NoContent();
+          }
         }
 
         [Route("quyen")]
         [HttpPut]
         public ActionResult<List<taikhoan>> putquyen(int _id, taikhoan gp)
         {
-          var filter = Builders<taikhoan>.Filter.Eq("_id", _id);
-          var update = Builders<taikhoan>.Update.Combine(
-                       Builders<taikhoan>.Update.Set("hoatdong", gp.hoatdong),
-                       Builders<taikhoan>.Update.Set("giayphep", gp.giayphep)
-              );
-          _tkService.Updatetk(filter, update);
-          return NoContent();
+          try
+          {
+            if (checkktid(_id) == true)
+            {
+              var filter = Builders<taikhoan>.Filter.Eq("_id", _id);
+              var update = Builders<taikhoan>.Update.Combine(
+                           Builders<taikhoan>.Update.Set("hoatdong", gp.hoatdong),
+                           Builders<taikhoan>.Update.Set("giayphep", gp.giayphep)
+                  );
+              _tkService.Updatetk(filter, update);
+              return Ok(true);
+            }
+            return NoContent();
+          }
+          catch
+          {
+            return NoContent();
+          }
         }
 
         [HttpPost]
@@ -109,7 +131,7 @@ namespace dienmayxanhapi.Controllers
                         { "_id_group" , tk._id_group}
                         };
               _tkService.inserttk(document);
-              return NoContent();
+              return Ok(true);
             }
             catch(Exception e)
             {
@@ -120,26 +142,47 @@ namespace dienmayxanhapi.Controllers
         [HttpPut("{_id}")]
         public ActionResult<taikhoan> Put(int _id, taikhoan tk)
         {
-            var filter = Builders<taikhoan>.Filter.Eq("_id", _id);
-            var update =  Builders<taikhoan>.Update.Combine(
-                          Builders<taikhoan>.Update.Set("username" , tk.username),
-                          Builders<taikhoan>.Update.Set("password" , tk.password),
-                          Builders<taikhoan>.Update.Set( "tennv" , tk.tennv ),
-                          Builders<taikhoan>.Update.Set("hoatdong", tk.hoatdong),
-                          Builders<taikhoan>.Update.Set("giayphep" , tk.giayphep),
-                          Builders<taikhoan>.Update.Set("_id_group", tk._id_group)
+          try
+          {
+            if (checkktid(_id) == true)
+            {
+              var filter = Builders<taikhoan>.Filter.Eq("_id", _id);
+              var update = Builders<taikhoan>.Update.Combine(
+                            Builders<taikhoan>.Update.Set("username", tk.username),
+                            Builders<taikhoan>.Update.Set("password", tk.password),
+                            Builders<taikhoan>.Update.Set("tennv", tk.tennv),
+                            Builders<taikhoan>.Update.Set("hoatdong", tk.hoatdong),
+                            Builders<taikhoan>.Update.Set("giayphep", tk.giayphep),
+                            Builders<taikhoan>.Update.Set("_id_group", tk._id_group)
 
-                        );
-            _tkService.Updatetk(filter,update);
+                          );
+              _tkService.Updatetk(filter, update);
+              return Ok(true);
+            }
             return NoContent();
+          }
+          catch {
+            return NoContent();
+          }
         }
 
         [HttpDelete("{id}")]
         public IActionResult deletetaikhoan(int id)
         {
-          var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
-          _tkService.deletetk(deletefilter);
-          return NoContent();
+          try
+          {
+            if(checkktid(id)==true)
+            { 
+              var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
+              _tkService.deletetk(deletefilter);
+              return Ok(true);
+            }
+            return NoContent();
+          }
+          catch
+          {
+            return NoContent();
+          }
         }
 
         [Route("gettennv")]
@@ -147,6 +190,23 @@ namespace dienmayxanhapi.Controllers
         public ActionResult<List<taikhoan>> gettennv(int id)
         {
           return _tkService.Gettennv_id(id);
+        }
+        public Boolean checkktid(int id)
+        {
+          try
+          {
+            var s = _tkService.Gettk().Find(x => x._id == id);
+            if (s == null)
+            {
+              return false;
+            }
+            else
+              return true;
+          }
+          catch
+          {
+            return false;
+          }
         }
   }
 }

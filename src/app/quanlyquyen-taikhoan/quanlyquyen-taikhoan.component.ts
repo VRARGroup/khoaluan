@@ -198,7 +198,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
     this.taikhoanService.gettk_id_group(_id_group).subscribe((res: tk[] | null) => {
       this.alltk_quyen = (res) ? res : [];
     });
-    setTimeout(() => { this.loadtaikhoan() }, 100);
+    setTimeout(() => { this.loadtaikhoan() }, 200);
   }
 
   themuser(id: number) {

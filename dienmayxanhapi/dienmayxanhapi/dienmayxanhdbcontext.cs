@@ -11,8 +11,8 @@ using MongoDB.Driver;
 
 namespace dienmayxanhapi
 {
-    public class dienmayxanhdbcontext
-    {
+    public class dienmayxanhdbcontext : DbContext
+  {
         public virtual DbSet<sanphamdienthoai> sanphamdienthoai { get; set; }
         public virtual DbSet<loaisanpham> loaisanpham { get; set; }
         public virtual DbSet<hinhanhfolder> hinhanhfolder { get; set; }
@@ -223,7 +223,7 @@ namespace dienmayxanhapi
 
         public List<sanphamdienthoai> Getfillter_list_product(int idlsp)
         {
-            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList().Take(20).ToList();
+            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList();
             return dl;
         }
 

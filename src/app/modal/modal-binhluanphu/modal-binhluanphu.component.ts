@@ -58,8 +58,15 @@ export class ModalBinhluanphuComponent implements OnInit {
         parseInt(this.idsp.toString())
       );
       this.binhluanService.insert_binhluan_phu(b).subscribe(
-        () => {
-          alert('Thực hiện thành công');
+        (data) => {
+          if(data!=null && data!=undefined)
+          {
+            alert('Thực hiện thành công');
+          }
+          else
+          {
+            alert('Gặp sự cố');
+          }
         }
       );
       this.dialogRef.close(this.idbl);

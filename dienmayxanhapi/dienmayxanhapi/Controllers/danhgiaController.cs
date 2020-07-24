@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using dienmayxanhapi.Hubservice;
+using dienmayxanhapi.SignalRHubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace dienmayxanhapi.Controllers
 {
@@ -15,9 +18,13 @@ namespace dienmayxanhapi.Controllers
     public class danhgiaController : ControllerBase
     {
       private readonly dienmayxanhdbcontext _dgService;
-      public danhgiaController(dienmayxanhdbcontext dgService)
+      private readonly ISignalService _signalService;
+      private readonly IHubContext<SignalHub> _hubContext;
+      public danhgiaController(dienmayxanhdbcontext dgService, ISignalService signalService, IHubContext<SignalHub> hubContext)
       {
         _dgService = dgService;
+        _signalService = signalService;
+        _hubContext = hubContext;
       }
 
       [HttpGet]
@@ -62,7 +69,9 @@ namespace dienmayxanhapi.Controllers
             dg.danhgiaphu = dgp;
             dg.ngaydanhgia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc);
             _dgService.insertdg(dg);
-            return NoContent();
+            var saveResult = _signalService.SaveSignaldgAsync(dg);
+            _hubContext.Clients.All.SendAsync("Signaldg", dg);
+            return Ok(true);
         }
         catch(Exception e)
         {
@@ -73,15 +82,27 @@ namespace dienmayxanhapi.Controllers
       [HttpPut("{_id}")]
       public ActionResult<List<danhgia>> putdanhgia(int _id, danhgia g)
       {
-        g.danhgiaphu[0].ngaydanhgiaphu = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc);
-        var filter = Builders<danhgia>.Filter.Eq("_id", _id);
-        BsonArray arraydsq = new BsonArray();
-        var update = Builders<danhgia>.Update.Push(x => x.danhgiaphu, g.danhgiaphu[0]);
-        if (_dgService.Updatedanhgia(filter, update) == true)
+        try
+        {
+          if (checkktid(_id) == true)
+          {
+            g.danhgiaphu[0].ngaydanhgiaphu = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, DateTimeKind.Utc);
+            var filter = Builders<danhgia>.Filter.Eq("_id", _id);
+            BsonArray arraydsq = new BsonArray();
+            var update = Builders<danhgia>.Update.Push(x => x.danhgiaphu, g.danhgiaphu[0]);
+            if (_dgService.Updatedanhgia(filter, update) == true)
+            {
+              var saveResult = _signalService.SaveSignaldgAsync(g);
+              _hubContext.Clients.All.SendAsync("Signaldg", g);
+              return Ok(true);
+            }
+          }
+          return NoContent();
+        }
+        catch
         {
           return NoContent();
         }
-        return NoContent();
 
       }
 
@@ -101,6 +122,25 @@ namespace dienmayxanhapi.Controllers
       public ActionResult<List<danhgia>> Getfillter_danhgia_choseday_theo_idsp(int _id_sp, String d)
       {
         return (_dgService.Getfillter_danhgia_choseday_theo_idsp(_id_sp, d));
+      }
+
+      public Boolean checkktid(int id)
+      {
+        try
+        {
+          var s = _dgService.Getdg().Find(x => x._id == id);
+          if (s == null)
+          {
+            return false;
+          }
+          else
+            return true;
+          }
+        catch
+        {
+          return false;
+        }
+
       }
 
 

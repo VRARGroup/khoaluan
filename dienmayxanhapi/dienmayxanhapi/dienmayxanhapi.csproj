@@ -8,6 +8,7 @@
     <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

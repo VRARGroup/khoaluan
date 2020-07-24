@@ -90,32 +90,30 @@ export class ReviewspComponent implements OnInit {
           console.log(this.responseimage)
         }
       });
-    setTimeout(() => { this.urls.push(fileToUpload.name) }, 500);
+    setTimeout(() => { this.urls.push(fileToUpload.name) }, 200);
     console.log("h", this.urls);
   }
 
   public createImgPath = (s: string) => {
-    setTimeout(() => {
-      if (s == null) {
-        this.serverPath = null;
-      }
-      if (s == undefined) {
-        this.serverPath = "./assets/upanh.png";
-      }
-      else {
-        if (!isNaN(this.idlsp)) {
-          if (s != "") {
-            this.serverPath = s;
-          }
-          else {
-            this.serverPath = "./assets/upanh.png";
-          }
+    if (s == null) {
+      this.serverPath = null;
+    }
+    if (s == undefined) {
+      this.serverPath = "./assets/upanh.png";
+    }
+    else {
+      if (!isNaN(this.idlsp)) {
+        if (s != "") {
+          this.serverPath = s;
         }
         else {
-          this.serverPath = "https://localhost:44309/Resources/Images/" + s;
+          this.serverPath = "./assets/upanh.png";
         }
       }
-    }, 500);
+      else {
+        this.serverPath = "https://localhost:44309/Resources/Images/" + s;
+      }
+    }
     return this.serverPath;
   }
 
@@ -155,8 +153,8 @@ export class ReviewspComponent implements OnInit {
     for (let i = 0; i < this.valuegt.length; i = i + 2) {
       if (i < this.valuegt.length - 1) {
         const gt = new hinh(
-          document.getElementById(this.valuegt[i])["value"],
-          document.getElementById(this.valuegt[i + 1])["src"]
+          document.getElementById(this.valuegt[i + 1])["src"],
+          document.getElementById(this.valuegt[i])["value"] 
         );
         this.gt.push(gt);
       }
@@ -180,8 +178,16 @@ export class ReviewspComponent implements OnInit {
 
   creategt(tsp: sp) {
     this.sanphamService.creategtsp(tsp).subscribe(
-      () => {
-        alert('Lưu thành công');
+      (data) => {
+        if(data)
+        {
+          alert('Lưu thành công');
+          this.back();
+        }
+        else
+        {
+          alert('Gặp sự cố');
+        }
       }
     );
   }

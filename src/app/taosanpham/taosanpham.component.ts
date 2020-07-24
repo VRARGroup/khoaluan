@@ -225,8 +225,8 @@ export class TaosanphamComponent implements OnInit {
             this.selected,
             this.tskt,
           );
-          console.log("dskt", this.tskt);
-          console.log("dskt", this.tsktname);
+          // console.log("dskt", this.tskt);
+          // console.log("dskt", this.tsktname);
           console.log(tsp);
           this.Createsp(tsp);
           this.reset();
@@ -326,9 +326,16 @@ export class TaosanphamComponent implements OnInit {
   Createsp(tsp: sp) {
     try {
       this.sanphamService.createsp(tsp).subscribe(
-        () => {
-          this.massage = 'Lưu thành công';
-          alert(this.massage);
+        (data) => {
+          if(data!=null && data!=undefined)
+          {
+            this.massage = 'Lưu thành công';
+            alert(this.massage);
+          }
+          else
+          {
+            alert("Đã xảy ra lỗi !!!");
+          }
         }
       );
     }
@@ -342,9 +349,16 @@ export class TaosanphamComponent implements OnInit {
   Updatesp(tsp: sp) {
     try {
       this.sanphamService.updatesp(tsp).subscribe(
-        () => {
-          this.massage = 'Lưu thành công';
-          alert(this.massage);
+        (data) => {
+          if(data!=null && data!=undefined)
+          {
+            this.massage = 'Lưu thành công';
+            alert(this.massage);
+          }
+          else
+          {
+            alert("Đã xảy ra lỗi !!!");
+          }
         }
       );
     }
@@ -428,10 +442,18 @@ export class TaosanphamComponent implements OnInit {
 
   Deletesp() {
     if (confirm("Bạn có muốn xóa sản phẩm này ?")) {
-      this.sanphamService.deletesp(this.idlsp).subscribe(() => {
-        this.massage = 'Xóa thành công';
-        alert(this.massage);
-        this.location.back();
+      this.sanphamService.deletesp(this.idlsp).subscribe((data) => {
+        if(data!=null && data !=undefined)
+        {
+          this.massage = 'Xóa thành công';
+          alert(this.massage);
+          this.location.back();
+        }
+        else
+        {
+          alert("Gặp sự cố !!!");
+          this.location.back();
+        }
       });
     }
     this.idlsp = null;
@@ -468,7 +490,7 @@ export class TaosanphamComponent implements OnInit {
           console.log(this.responsedd)
         }
       });
-    setTimeout(() => { this.nameimagedd = fileToUpload.name }, 500);
+    setTimeout(() => { this.nameimagedd = fileToUpload.name }, 200);
     document.getElementById("uploadimagedd")["value"] = "";
   }
 
@@ -491,31 +513,29 @@ export class TaosanphamComponent implements OnInit {
           console.log(this.responseimage)
         }
       });
-    setTimeout(() => { this.urls.push(fileToUpload.name) }, 500);
+    setTimeout(() => { this.urls.push(fileToUpload.name) }, 200);
     document.getElementById("uploadCaptureInputFile")["value"] = "";
     console.log("h", this.urls);
   }
 
   createImgPath = (s: string) => {
-    setTimeout(() => {
-      if (s === undefined) {
-        this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
-      }
-      if (s == "") {
-        this.serverPath = "./assets/upanh.png";
-      }
-      else {
-        if (this.idlsp != null) {
-          var s1 = s.toString().startsWith("https://");
-          if (s1 == true) {
-            this.serverPath = s;
-          }
-          else {
-            this.serverPath = "https://localhost:44309/Resources/Images/" + s;
-          }
+    if (s === undefined) {
+      this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
+    }
+    if (s == "") {
+      this.serverPath = "./assets/upanh.png";
+    }
+    else {
+      if (this.idlsp != null) {
+        var s1 = s.toString().startsWith("https://");
+        if (s1 == true) {
+          this.serverPath = s;
+        }
+        else {
+          this.serverPath = "https://localhost:44309/Resources/Images/" + s;
         }
       }
-    }, 500);
+    }
     return this.serverPath;
   }
 

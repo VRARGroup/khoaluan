@@ -35,9 +35,20 @@ namespace dienmayxanhapi.Controllers
         [HttpDelete("{id}")]
         public IActionResult deletequyen(int id)
         {
-          var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
-          _dsqService.deletedsq(deletefilter);
-          return NoContent();
+          try
+          {
+            if (checkktid(id))
+            {
+              var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
+              _dsqService.deletedsq(deletefilter);
+              return Ok(true);
+            }
+            return NoContent();
+          }
+          catch
+          {
+            return NoContent();
+          }
         }
 
         [HttpPost]
@@ -55,12 +66,29 @@ namespace dienmayxanhapi.Controllers
                           { "tenquyen" , dsq.tenquyen}
                           };
             _dsqService.insertdsq(document);
-            return NoContent();
+            return Ok(dsq);
           }
           catch(Exception e)
           {
             return NoContent();
           }
         }
-      }
+        public Boolean checkktid(int id)
+        {
+          try
+          {
+            var s = _dsqService.Getdsq().Find(x => x._id == id);
+            if (s == null)
+            {
+              return false;
+            }
+            else
+              return true;
+          }
+          catch
+          {
+            return false;
+          }
+        }
+  }
 }

@@ -35,22 +35,50 @@ namespace dienmayxanhapi.Controllers
       [HttpPut("{_id}")]
       public ActionResult<List<group>> putgroup(int _id, group g)
       {
-        var filter = Builders<group>.Filter.Eq("_id", _id);
-        BsonArray arraydsq = new BsonArray();
-        for (int i=0;i<g.danhsachquyentruycap.Count;i++)
+        try
         {
-          var hinh = new BsonDocument().Add("_id_quyen", g.danhsachquyentruycap[i]._id_quyen);
-          arraydsq.AsBsonArray.Add(BsonValue.Create(hinh));
+          if (checkktid(_id) == true)
+          {
+            var filter = Builders<group>.Filter.Eq("_id", _id);
+            BsonArray arraydsq = new BsonArray();
+            for (int i = 0; i < g.danhsachquyentruycap.Count; i++)
+            {
+              var hinh = new BsonDocument().Add("_id_quyen", g.danhsachquyentruycap[i]._id_quyen);
+              arraydsq.AsBsonArray.Add(BsonValue.Create(hinh));
+            }
+            var update = Builders<group>.Update.Combine(
+                         Builders<group>.Update.Set("danhsachquyentruycap", arraydsq)
+                );
+            if (_gService.Updategroup(filter, update) == true)
+            {
+              return Ok(g);
+            }
+          }
+          return NoContent();
         }
-        var update = Builders<group>.Update.Combine(
-                     Builders<group>.Update.Set("danhsachquyentruycap", arraydsq)
-            );
-        if(_gService.Updategroup(filter, update)==true)
+        catch
         {
           return NoContent();
         }
-        return NoContent();
 
       }
-  }
+      public Boolean checkktid(int id)
+      {
+        try
+        {
+          var s = _gService.Getgroup().Find(x => x._id == id);
+          if (s == null)
+          {
+            return false;
+          }
+          else
+            return true;
+        }
+        catch
+        {
+          return false;
+        }
+
+      }
+    }
 }

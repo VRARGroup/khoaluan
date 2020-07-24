@@ -155,6 +155,7 @@
 
 .list {
   padding-top: 25px;
+  height: auto;
 }
 
 .radio-filter {
@@ -249,6 +250,47 @@ a:hover{
 }
 
 #list_1{
-  height: 108vh;
+  height: 100%;
   overflow-y: hidden;
 }
+
+.show-more-list-product{
+  display: block;
+  overflow: hidden;
+  text-align: center;
+  margin-bottom: 50px;
+  a{
+    display: block;
+    overflow: hidden;
+    position: relative;
+    line-height: 40px;
+    font-size: 14px;
+    color: #288ad6;
+    border: 1px solid #eee;
+    text-align: center;
+    border-radius: 4px;
+    margin: 10px auto 0 auto;
+    width: 400px;
+    background-color: #fff;
+  }
+  a:hover {
+    background: #288ad6;
+    border-color: #288ad6;
+    color: #fff;
+  }
+  a:after {
+    content: '';
+    width: 0;
+    right: 0;
+    border-top: 6px solid #288ad6;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin: -2px 0 0 5px;
+  }
+  a:hover:after {
+    border-top: 6px solid #fff;
+}
+}
+

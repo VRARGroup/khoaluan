@@ -420,7 +420,7 @@ namespace dienmayxanhapi.Controllers
                 document.Add("thongsokythuat", arraythongsokythuat);
 
                 _spdtService.insert(document);
-                return NoContent();
+                return Ok(true);
             }
             catch (Exception e)
             {
@@ -431,29 +431,51 @@ namespace dienmayxanhapi.Controllers
         [HttpDelete("{id}")]
         public IActionResult deletesanpham(int id)
         {
-            var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
-            _spdtService.deletesp(deletefilter);
-            return NoContent();
+            try
+            {
+              if (checkktid(id) == true)
+              {
+                var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
+                _spdtService.deletesp(deletefilter);
+                return Ok(true);
+              }
+              return NoContent();
+            }
+            catch
+            {
+              return NoContent();
+            }
         }
 
         [Route("gt")]
         [HttpPut]
         public IActionResult update(int _id, sanphamdienthoai spdt)
         {
-            var filter = Builders<sanphamdienthoai>.Filter.Eq("_id", _id);
-            BsonArray arrayhinhanh = new BsonArray();
-            for (int i = 0; i < spdt.gioithieu.Count; i++)
+          try
+          {
+            if (checkktid(_id) == true)
             {
+              var filter = Builders<sanphamdienthoai>.Filter.Eq("_id", _id);
+              BsonArray arrayhinhanh = new BsonArray();
+              for (int i = 0; i < spdt.gioithieu.Count; i++)
+              {
                 var hinh = new BsonDocument().
                 Add("hinhanh", spdt.gioithieu[i].hinhanh.ToString()).
                 Add("mota", spdt.gioithieu[i].mota.ToString());
                 arrayhinhanh.AsBsonArray.Add(BsonValue.Create(hinh));
+              }
+              var update = Builders<sanphamdienthoai>.Update.Combine(
+                  Builders<sanphamdienthoai>.Update.Set("gioithieu", arrayhinhanh)
+              );
+              _spdtService.Update(filter, update);
+              return Ok(true);
             }
-            var update = Builders<sanphamdienthoai>.Update.Combine(
-                Builders<sanphamdienthoai>.Update.Set("gioithieu", arrayhinhanh)
-            );
-            _spdtService.Update(filter, update);
             return NoContent();
+          }
+          catch
+          {
+             return NoContent();
+          }
         }
 
         [Route("updatesp")]
@@ -462,6 +484,8 @@ namespace dienmayxanhapi.Controllers
         {
             try
             {
+                if(checkktid(_id)==true)
+                { 
                 var filter = Builders<sanphamdienthoai>.Filter.Eq("_id", _id);
                 BsonArray arraygt = new BsonArray();
                 if (spdt.gioithieu != null)
@@ -551,6 +575,9 @@ namespace dienmayxanhapi.Controllers
                     Builders<sanphamdienthoai>.Update.Set("thongsokythuat", arraythongsokythuat)
                 );
                 _spdtService.Update(filter, update);
+                return Ok(true);
+                }
+
                 return NoContent();
             }
             catch (Exception e)
@@ -565,5 +592,24 @@ namespace dienmayxanhapi.Controllers
         {
             return (_spdtService.Getfillter_allsp());
         }
-    }
+
+        public Boolean checkktid(int id)
+        {
+          try
+          {
+            var s = _spdtService.Get().Find(x => x._id == id);
+            if (s == null)
+            {
+              return false;
+            }
+            else
+              return true;
+          }
+          catch
+          {
+            return false;
+          }
+
+        }
+  }
 }

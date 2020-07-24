@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from "@angular/router";
 import * as $ from "jquery";
@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { Observable, from } from 'rxjs';
 import { LoaisanphamService } from '../service/loaisanpham.service';
+import { SignalRService } from '../service/signal-r.service'
 import { sp } from '../model/sanpham';
 import { hinh } from '../model/sanpham';
 import { Subscription } from 'rxjs';
@@ -69,7 +70,12 @@ export class RepbinhluanComponent implements OnInit {
   tennvdn:string=null;
   public date: Date = new Date();
   public date1: Date = new Date();
-  constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService) { }
+  blreal_time: bl;
+  blreal_timearr: bl[]=[];
+  dgreal_time: dg;
+  dgreal_timearr: dg[]=[];
+  constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService, private signalRService: SignalRService) { 
+  }
 
   ngOnInit() {
     $("#btndx").css("display", "block");
@@ -99,6 +105,50 @@ export class RepbinhluanComponent implements OnInit {
       this.loaddsq();
       this.gettennv(parseInt(window.localStorage.getItem("idtk")));
     }
+      if(this.checkinsertblp==false)
+      {
+        this.signalRService.signalReceived.subscribe((signal: bl) => {
+          console.log(signal);
+          if(signal!=null && signal!=undefined)
+          {
+            this.blreal_time=signal;
+            this.blreal_timearr.push(signal);
+            if(!isNaN(this.idsp))
+            {
+              if(signal.binhluanphu[0]!=null && signal.binhluanphu[0]!=undefined)
+              {
+                this.show_bl(signal._id).push(signal.binhluanphu[0]);
+              }
+              else
+              {
+                this.items_binhluan.push(signal);
+              }
+            }
+            this.checkinsertblp=true;
+          }
+        });
+      }
+
+      this.signalRService.signaldgReceived.subscribe((signal: dg) => {
+        if(signal!=null && signal!=undefined)
+        {
+          console.log(signal);
+          this.dgreal_time=signal;
+          this.dgreal_timearr.push(signal);
+          if(!isNaN(this.idsp))
+          {
+            if(signal.danhgiaphu[0]!=null && signal.danhgiaphu[0]!=undefined)
+            {
+              this.show(signal._id).push(signal.danhgiaphu[0]);
+            }
+            else
+            {
+              this.items_danhgia.push(signal);
+            }
+          }
+          this.checkinsertblp=true;
+        }
+      });
   }
 
   quanlytk = false;
@@ -144,7 +194,7 @@ export class RepbinhluanComponent implements OnInit {
     this.loadtensp(id + ',' + 'v');
     this.tendanhmuc = tendanhmuc;
     this.p = 1;
-    this.load_danhgia_1day();
+    //this.load_danhgia_1day();
     $(".btn-group .button").css("background-color", "#fff");
     $(".btn-group .button").css("color", "#000");
     $("#btn_lsp_" + id + " .button").css("background-color", "#ec314d");
@@ -262,22 +312,23 @@ export class RepbinhluanComponent implements OnInit {
     $('#reply_box_binhluanphu' + id).css("display","inline-flex");
   }
 
-username:string=null;
-gettennv(cv: number): void {
-  this.taikhoanService.gettennv(cv).subscribe((res: tk[] | null) => {
-   this.tennvdn=res[0].tennv;
-   this.username=res[0].username;
-  });
-}
-  blp:Array<any>=[];
-
+  username:string=null;
+  gettennv(cv: number): void {
+    this.taikhoanService.gettennv(cv).subscribe((res: tk[] | null) => {
+    this.tennvdn=res[0].tennv;
+    this.username=res[0].username;
+    });
+  }
+  
+  checkinsertblp:boolean=false;
   insertblp() {
     if($("#text_binhluanphu"+this.idtextbl).val().toString()!=null && $("#text_binhluanphu"+this.idtextbl).val().toString()!="")
     {
       const bp = new blphu(
         $('#text_binhluanphu'+this.idtextbl).val().toString().trim(), 0, 
         this.tennvdn, true, true , "dienmayxanh"+this.username+"@gmail.com")
-        this.blp.push(bp);
+        let blp:Array<any>=[];
+        blp.push(bp);
 
       const b = new bl(
         this.idtextbl,
@@ -287,21 +338,28 @@ gettennv(cv: number): void {
         null,
         null,
         null,
-        this.blp,
+        blp,
         parseInt(this.idsp.toString())
       );
       this.binhluanService.insert_binhluan_phu(b).subscribe(
-        () => {
-          alert('Thực hiện thành công');
+        (data) => {         
+          if(data!=null && data!=undefined)
+          {
+            this.checkinsertblp=true;
+            alert('Thực hiện thành công');
+
+          }
+          else
+          {
+            alert('Thực hiện thất bại');
+          }
         }
         
       );
       $('#reply_box_binhluanphu' + this.idtextbl).css("display","none");
       $('#text_binhluanphu' + this.idtextbl).val("");
       this.show_bl(this.idtextbl).push(bp);
-      this.router.navigate(["/appmain/productdetails/4"], {
-        queryParams: {refresh: new Date().getTime()}
-     });
+      
     }
     else
     {
@@ -356,4 +414,5 @@ gettennv(cv: number): void {
       this.items_binhluan = (res) ? res : [];
       });
   }
+    
 }

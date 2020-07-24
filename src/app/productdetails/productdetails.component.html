@@ -361,11 +361,17 @@
                             <p></p>
                           </div>
                         </span>
-                        
-                        <i style="margin-left: 10px;">{{item_danhgia.noidung}}
-                        </i>
+                        <i style="margin-left: 10px;">{{item_danhgia.noidung}}</i>
                       </p>
                     </div>
+                    <div class="d-flex justify-content-start">
+                    <ng-container *ngIf="item_danhgia.hinh!=null && item_danhgia.hinh.length>0" >
+                      <div *ngFor="let i of item_danhgia.hinh" class="rat">
+                        <img src="{{i}}">
+                      </div>
+                    </ng-container>
+                    </div>
+                   
                     <div class="reply-danhgia">
                       <a href="javascript:void(0)" id="showdg{{item_danhgia._id}}" (click)="show_danhgia_thaoluan(item_danhgia._id)">
                         Thảo luận
@@ -478,6 +484,13 @@
                 <i class="iconcom-user">{{item_comment.ten.substring(0,1)}}</i>
                 <strong>{{item_comment.ten}}</strong>
                 <div class="infocom_ask">{{item_comment.noidung}}</div>
+                <div class="d-flex justify-content-start">
+                  <ng-container *ngIf="item_comment.hinh!=null && item_comment.hinh.length>0" >
+                    <div *ngFor="let i of item_comment.hinh" class="rat">
+                      <img style="width: 30px;" src="{{i}}">
+                    </div>
+                  </ng-container>
+                </div>
                 <div class="relate_infocom">
                   <a (click)="show_insert_binhluanphu(item_comment._id,item_comment.ten)">
                     <span class="reply-comment">Trả lời </span>
@@ -509,6 +522,13 @@
                   <div class="infocom_ask">
                     <div class="conticon">
                       <div class="cmtcontent">{{itembl.noidung}}</div>
+                    <div class="d-flex justify-content-start">
+                      <ng-container *ngIf="itembl.hinh!=null && itembl.hinh.length>0" >
+                        <div *ngFor="let i of itembl.hinh" class="rat">
+                          <img style="width: 30px;" src="{{i}}">
+                        </div>
+                      </ng-container>
+                    </div>
                       <div class="relate_infocom">
                         <a (click)="show_insert_binhluanphu(item_comment._id,itembl.ten)">
                           <span class="btnreply">Trả lời </span>

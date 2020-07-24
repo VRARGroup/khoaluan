@@ -81,7 +81,7 @@ namespace dienmayxanhapi.Controllers
               document.Add("dactrung", arraydactrung);
               document.Add("tieuchidanhgia", arraythuonghieu);
               _lspService.insertls(document);
-              return NoContent();
+              return Ok(lsp);
             }
             catch(Exception e)
             {
@@ -92,9 +92,19 @@ namespace dienmayxanhapi.Controllers
         [HttpDelete("{id}")]
         public IActionResult deleteloaisanpham(int id)
         {
-            var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
-            _lspService.deletels(deletefilter);
+          try
+          {
+            if (checkktid(id) == true)
+            {
+              var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
+              _lspService.deletels(deletefilter);
+              return Ok(true);
+            }
             return NoContent();
+          }
+          catch {
+            return NoContent();
+          }
         }
 
         [Route("updatelsp")]
@@ -103,6 +113,8 @@ namespace dienmayxanhapi.Controllers
         {
             try
             {
+              if (checkktid(_id) == true)
+              {
                 var filter = Builders<loaisanpham>.Filter.Eq("_id", _id);
                 BsonArray arraythuonghieu = new BsonArray();
                 for (int i = 0; i < lsp.thuonghieu.Count; i++)
@@ -113,15 +125,15 @@ namespace dienmayxanhapi.Controllers
                 BsonArray arraydactrung = new BsonArray();
                 for (int i = 0; i < lsp.dactrung.Count; i = i + 2)
                 {
-                    BsonArray arrayctdactrung = new BsonArray();
-                    if (i < lsp.dactrung.Count)
+                  BsonArray arrayctdactrung = new BsonArray();
+                  if (i < lsp.dactrung.Count)
+                  {
+                    string[] arrstringdactrung = lsp.dactrung[i + 1].ToString().Split(',');
+                    for (int j = 0; j < arrstringdactrung.Length; j++)
                     {
-                      string[] arrstringdactrung = lsp.dactrung[i + 1].ToString().Split(',');
-                      for (int j = 0; j < arrstringdactrung.Length; j++)
-                      {
-                        arrayctdactrung.Add(arrstringdactrung[j]);
-                      }
+                      arrayctdactrung.Add(arrstringdactrung[j]);
                     }
+                  }
                   var documentnddactrung = new BsonDocument { };
                   documentnddactrung.Add(lsp.dactrung[i].ToString(), arrayctdactrung);
                   arraydactrung.AsBsonArray.Add(BsonValue.Create(documentnddactrung));
@@ -150,7 +162,8 @@ namespace dienmayxanhapi.Controllers
                     );
                   _lspService.Updatelsp(filter, update);
                 }
-
+                return Ok(lsp);
+              }
               return NoContent();
             }
             catch (Exception e)
@@ -163,5 +176,22 @@ namespace dienmayxanhapi.Controllers
         {
             return _lspService.check_tieuchidanhgia(_id);
         }
-    }
+        public Boolean checkktid(int id)
+        {
+          try
+          {
+            var s = _lspService.Getlsp().Find(x => x._id == id);
+            if (s == null)
+            {
+              return false;
+            }
+            else
+              return true;
+          }
+          catch
+          {
+            return false;
+          }
+        }
+  }
 }

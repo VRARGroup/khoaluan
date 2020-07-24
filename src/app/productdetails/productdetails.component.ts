@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { SanphamService } from '../service/sanpham.service';
 import { LoaisanphamService } from '../service/loaisanpham.service';
 import { DanhgiaService } from '../service/danhgia.service';
 import { BinhluanService } from '../service/binhluan.service';
+import { SignalRService } from "../service/signal-r.service";
+
 import { sp } from '../model/sanpham';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -33,7 +35,7 @@ import { data } from 'jquery';
   templateUrl: './productdetails.component.html',
   styleUrls: ['./productdetails.component.scss'],
 })
-export class ProductdetailsComponent implements OnInit, OnDestroy {
+export class ProductdetailsComponent implements OnInit {
 
   // @ViewChild('div') div:ElementRef;
   items: sp[] = [];
@@ -59,15 +61,9 @@ export class ProductdetailsComponent implements OnInit, OnDestroy {
   items_danhgia: dg[];
   items_danhgiaphu: dgphu[];
   item_comments: bl[];
-  mySubscription;
-  constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService) {
-    this.mySubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-         // Trick the Router into believing it's last link wasn't previously loaded
-         this.router.navigated = false;
-      }
-    });
-
+  signalList: bl;
+  constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService, private signalRService: SignalRService) {
+    
   }
   ngOnInit() {
     let id_sanpham = this.route.snapshot.params.id;
@@ -94,13 +90,28 @@ export class ProductdetailsComponent implements OnInit, OnDestroy {
     //     this.router.navigate(["appmain/products"]);
 
     //   }, 800);
-  }
+    this.signalRService.signalReceived.subscribe((signal: bl) => {
+      if(signal!=null && signal!=undefined)
+      {
+        console.log(signal);
+        let arr:Array<blphu>=[]
+        arr.push(signal.binhluanphu[0]);
+        this.showbinhluanphu(signal._id,this.item_comments).push(arr[0]);
+        console.log(this.p);
+      }
+    });
 
-  ngOnDestroy(): void {
-    // Destroy navigationSubscription to avoid memory leaks
-    if (this.mySubscription) {
-      this.mySubscription.unsubscribe();
-    }
+    this.signalRService.signaldgReceived.subscribe((signal: dg) => {
+      if(signal!=null && signal!=undefined)
+      {
+        console.log(signal);
+        let arr:Array<dgphu>=[]
+        arr.push(signal.danhgiaphu[0]);
+        this.show(signal._id).push(arr[0]);
+        console.log(this.p);
+      }
+    });
+    
   }
 
   show_thongsokythuat(name, thongsokythuat): void {
@@ -441,6 +452,7 @@ export class ProductdetailsComponent implements OnInit, OnDestroy {
           $('#sdt').val("").toString();
           $('#email').val("").toString();
           $('#textarea_danhgiasosao').val("").toString(),
+          this.star=0;
           this.urls=[];
           this.show_hide_danhgiasosao();
           
@@ -572,17 +584,19 @@ export class ProductdetailsComponent implements OnInit, OnDestroy {
     try {
       let al=null;
       this.binhluanService.creatbl(b).subscribe(
-        () => {
-          al="lưu thành công";
-          alert(al);
+        (data) => {
+          if(data!=null && data!=undefined)
+          {
+            alert("lưu thành công");
+          }
+          else
+          {
+            alert("lưu thất bại");
+          }
         }
       );
       $(".comment-3-textarea-show").css("display", "none");
       $(".comment-3-textarea").css("display", "block");
-      if(al!=null)
-      {
-        alert(al);
-      }
     }
     catch
     {
@@ -679,12 +693,13 @@ export class ProductdetailsComponent implements OnInit, OnDestroy {
           gt;
           $('#emailbl').val("").toString();
           $('.textarea_danhgia').val("").toString();
-         
+          
           
           this.hinhthuctesp_bl=[];
           this.urls_bl=[];
           this.item_comments=[];
-          setTimeout(()=>{this.loadbinhluan()},100);
+          setTimeout(()=>{this.loadbinhluan()},200);
+         
         }
         else{
           alert("Email nhập không hợp lệ vui lòng kiểm tra lại !!!")

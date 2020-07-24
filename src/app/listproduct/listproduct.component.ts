@@ -19,7 +19,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class ListproductComponent implements OnInit {
 
   items: sp[] = [];
-  itemsphu: sp[] = [];
+  itemsphu:sp[] = [];
   id_loai_sanpham: number;
   categories: any[] = [];
   prices: any[] = [];
@@ -67,19 +67,11 @@ export class ListproductComponent implements OnInit {
   }
   get_list_product(id: number) {
     this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
-      this.items = res.slice(0, 20);
       this.itemsphu = (res) ? res : [];
+      this.items = res.slice(0,25);
     });
-    setTimeout(() => {
-      this.sanphamService.get_more_list_product(this.id_loai_sanpham).subscribe((res: sp[] | null) => {
-        Array.prototype.push.apply(this.items, res);
-      });
-    }, 5000);
   }
   show_more_list_product() {
-    // this.sanphamService.get_more_list_product(this.id_loai_sanpham).subscribe((res: sp[] | null) => {
-    //   Array.prototype.push.apply(this.items, res);
-    // });
     if (this.show_giatdc == true) {
       if (this.items.length >= this.itemsphu.length) {
         this.items = this.items.sort((a, b) => a.giaban - b.giaban);
@@ -100,27 +92,24 @@ export class ListproductComponent implements OnInit {
         }
       }
       else {
-        this.items = this.itemsphu;
+        if(this.items.length<this.itemsphu.length)
+        {
+          var arritemsphu=this.itemsphu
+          Array.prototype.push.apply(this.items ,arritemsphu.slice(this.items.length, this.items.length+25));
+          if(this.items.length==this.itemsphu.length)
+          {
+            $('.show-more-list-product').css("display", "none");
+          }
+        }
+        else
+        {
+          $('.show-more-list-product').css("display", "none");
+        }
       }
     }
-    $('.show-more-list-product').css("display", "none");
-    $('#list_1').css("height", "100%");
-    // if (this.show_giatdc == true) {
-    //   this.items = this.items.sort((a, b) => a.giaban - b.giaban);
-    // }
-    // else {
-    //   if (this.show_giacdt == true) {
-    //     this.items = this.items.sort((a, b) => b.giaban - a.giaban);
-    //   }
-    // }
+    
+    $('#list_1').css("height", "auto");
   }
-  // render_sp(id_sanpham: any):void {
-  // 	// window.localStorage.removeItem("sp");
-  // 	// window.localStorage.setItem("sp",id_sanpham.toString());
-
-  //   this.router.navigate(["appmain/productdetails",5]);
-  //   // window.location.href="appmain/productdetails";
-  // }
   get_list_product_category(id: number) {
     this.sanphamService.get_list_product_category(id).subscribe((res: any[] | null) => {
       this.categories = (res) ? res : [];
@@ -345,11 +334,13 @@ export class ListproductComponent implements OnInit {
   }
 
   show_giathapdencao() {
+    this.show_giacdt = false;
     this.show_giatdc = true;
     this.items = this.items.sort((a, b) => a.giaban - b.giaban);
   }
 
   show_caothapdenthap() {
+    this.show_giatdc = false;
     this.show_giacdt = true;
     this.items = this.items.sort((a, b) => b.giaban - a.giaban);
   }
