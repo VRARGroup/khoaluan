@@ -189,7 +189,7 @@ export class ThemtaikhoanComponent implements OnInit {
     try {
       this.taikhoanService.createtk(t).subscribe(
         () => {
-          alert('Lưu thành công');
+          alert('Lưu thành công.');
         }
       );
     }

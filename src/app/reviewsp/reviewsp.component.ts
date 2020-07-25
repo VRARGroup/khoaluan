@@ -181,7 +181,7 @@ export class ReviewspComponent implements OnInit {
       (data) => {
         if(data)
         {
-          alert('Lưu thành công');
+          alert('Lưu thành công.');
           this.back();
         }
         else

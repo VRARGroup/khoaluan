@@ -447,29 +447,44 @@ namespace dienmayxanhapi
 
         public List<danhgia> Getfillter_danhgia_1day_theo_idsp(int _id_sp)
         {
-          var dl = collectiondanhgia.Find(x => x._id_sanpham== _id_sp && x.ngaydanhgia >= DateTime.Today).ToList();
-          return dl;
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= DateTime.Today).ToList();
+            return dl;
         }
         public List<binhluan> Getfillter_binhluan_1day_theo_idsp(int _id_sp)
         {
-          var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= DateTime.Today).ToList();
-          return dl;
+            var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= DateTime.Today).ToList();
+            return dl;
         }
         public List<binhluan> Getfillter_binhluan_choseday_theo_idsp(int _id_sp, String d)
         {
-          var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= Convert.ToDateTime(d) && x.ngaybinhluan < Convert.ToDateTime(d).AddDays(1)).ToList();
-          return dl;
+            var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= Convert.ToDateTime(d) && x.ngaybinhluan < Convert.ToDateTime(d).AddDays(1)).ToList();
+            return dl;
         }
         public List<danhgia> Getfillter_danhgia_choseday_theo_idsp(int _id_sp, String d)
         {
-          DateTime v = Convert.ToDateTime(d).Date;
-          var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= v && x.ngaydanhgia < v.AddDays(1)).ToList();
-          return dl;
+            DateTime v = Convert.ToDateTime(d).Date;
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= v && x.ngaydanhgia < v.AddDays(1)).ToList();
+            return dl;
         }
         public List<taikhoan> Gettennv_id(int id)
         {
-          var dl = collectiontk.Find(x => x._id == id).ToList().Take(1).ToList();
-          return dl;
+            var dl = collectiontk.Find(x => x._id == id).ToList().Take(1).ToList();
+            return dl;
         }
-  }
+        public class bangghepsanphamdanhgia : sanphamdienthoai
+        {
+            public danhgia[] Danhgias { get; set; }
+        }
+        public List<sanphamdienthoai> Getfillter_get_thong_ke_sp()
+        {
+            //var dl = collectionspdt.Aggregate()
+            //                           .Lookup<sanphamdienthoai, danhgia, bangghepsanphamdanhgia>(
+            //                                collectiondanhgia,
+            //                                x => x._id,
+            //                                y => y._id_sanpham,
+            //                                x => x.Danhgias).ToList().Take(100).ToList();
+            return null;
+        }
+    }
+
 }

@@ -1,0 +1,71 @@
+.filter {
+  margin-left: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 80px;
+  background-color: #ffffffe7;
+}
+
+.inline {
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-group .button:hover {
+  background-color: rgb(20, 163, 220) !important;
+  color: white;
+}
+
+.buttonth:hover {
+  background-color: #fbda00 !important;
+  color: white;
+  padding-left: 30px;
+}
+
+.button {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  margin-left: 5px;
+  padding: 0px 20px;
+  min-width: 135px;
+  min-height: 40px;
+  background-color: white;
+  color: black;
+  border: 1px solid #4a90e2;
+}
+
+.buttonth {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  padding: 0px 20px;
+  min-width: 145px;
+  min-height: 40px;
+  background-color: white;
+  color: black;
+  border: 1px solid #fbda00;
+  z-index: 1;
+}
+
+.container-fluid {
+  z-index: 2;
+  min-height: 500px;
+  color: #000000;
+}
+
+.bak {
+  background-image: url("/assets/logonguoi.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position-y: 250px;
+  min-height: 500px;
+}
+
+.search-hero {
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+}
+
+.thongke-loai{
+    display: none;
+}

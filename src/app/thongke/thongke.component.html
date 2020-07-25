@@ -1,0 +1,69 @@
+<div class="fillterbak">
+  <div class="bak">
+    <div class="container-fluid">
+      <div class="search-hero">
+        <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Thống Kê</label>
+      </div>
+      <div class="filter">
+        <div class="d-flex justify-content-center">
+          <div class="inline">
+            <button class="buttonth" (click)="load_thong_ke_sp()">SẢN PHẨM NỔI BẬT</button>
+            <button class="buttonth" (click)="load_thong_ke_loai_sp()">LOẠI SẢN PHẨM</button>
+          </div>
+        </div>
+      </div>
+      <div class="filter thongke-loai">
+        <div class="d-flex justify-content-center">
+          <div class="inline">
+            <ng-container *ngFor="let obj of alllsp">
+              <div class="btn-group" id="btn_lsp_{{obj._id}}">
+                <button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">
+                  {{obj.tendanhmuc | uppercase}}
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="filter thongke-loai">
+        <div class="d-flex justify-content-center">
+          <div class="inline" *ngFor="let obj of lspth, let i=index">
+            <ng-container *ngFor="let i of obj.thuonghieu">
+              <div class="btn-group-vertical"
+                id="btn_sp_thuonghieu_{{obj._id}}{{i.replace(' ','').replace('(','').replace(')','')}}">
+                <button class="buttonth" (click)="loadtensp(obj._id+','+i)">{{i}}</button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="filter">
+        <div>
+          <ng-container *ngIf="tensanpham.length > 0">
+            <table class="table table-striped" style="text-align: center">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Thương hiệu</th>
+                  <th>Giá bán</th>
+                  <th>Giảm giá</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
+                  <td>{{(i+1)+((p-1)*8)}}</td>
+                  <td><a (click)="chitietsp(item._id)">{{item.ten}}</a></td>
+                  <td>{{item.thuonghieu}}</td>
+                  <td>{{item.giaban}}</td>
+                  <td>{{item.giamgia}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
