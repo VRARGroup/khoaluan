@@ -373,7 +373,7 @@ export class TaoloaisanphamComponent implements OnInit {
         	(data) => {
             if(data!=null && data!=undefined)
             {
-          		this.massage = 'Lưu thành công';
+          		this.massage = 'Lưu thành công.';
               alert(this.massage);
             }
             else
@@ -407,7 +407,7 @@ export class TaoloaisanphamComponent implements OnInit {
         	(data) => {
             if(data!=null && data!=undefined)
             {
-          		this.massage = 'Lưu thành công';
+          		this.massage = 'Lưu thành công.';
               alert(this.massage);
             }
             else

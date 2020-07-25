@@ -86,6 +86,7 @@ import { RepbinhluanComponent } from './repbinhluan/repbinhluan.component';
 import { ModalDanhgiaphuComponent } from './modal/modal-danhgiaphu/modal-danhgiaphu.component';
 import { TatcadanhgiaComponent } from './tatcadanhgia/tatcadanhgia.component';
 import { ModalBinhluanphuComponent } from './modal/modal-binhluanphu/modal-binhluanphu.component';
+import { ThongkeComponent } from './thongke/thongke.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { ModalBinhluanphuComponent } from './modal/modal-binhluanphu/modal-binhl
     ModalDanhgiaphuComponent,
     TatcadanhgiaComponent,
     ModalBinhluanphuComponent,
+    ThongkeComponent,
   ],
   imports: [
     

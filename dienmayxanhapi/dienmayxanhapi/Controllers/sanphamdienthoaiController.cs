@@ -591,6 +591,13 @@ namespace dienmayxanhapi.Controllers
         public ActionResult<List<sanphamdienthoai>> Getfillter_allsp()
         {
             return (_spdtService.Getfillter_allsp());
+        } 
+        
+        [Route("get_thong_ke_sp")]
+        [HttpGet]
+        public ActionResult<List<sanphamdienthoai>> Getfillter_get_thong_ke_sp()
+        {
+            return (_spdtService.Getfillter_get_thong_ke_sp());
         }
 
         public Boolean checkktid(int id)

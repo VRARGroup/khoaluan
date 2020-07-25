@@ -236,7 +236,6 @@ export class ModalDanhgiaComponent implements OnInit {
     }
     catch
     {
-      alert("Error");
     }
   }
 
@@ -249,7 +248,6 @@ export class ModalDanhgiaComponent implements OnInit {
     }
     catch
     {
-      alert("Error");
       this.router.navigate(['appmain']);
     }
   }

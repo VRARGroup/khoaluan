@@ -17,6 +17,7 @@ import { ThemtaikhoanComponent } from './themtaikhoan/themtaikhoan.component';
 import { AddquyengroupComponent } from './addquyengroup/addquyengroup.component';
 import { RepbinhluanComponent } from './repbinhluan/repbinhluan.component';
 import { TatcadanhgiaComponent } from './tatcadanhgia/tatcadanhgia.component';
+import { ThongkeComponent } from './thongke/thongke.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'appmainnv/login' },
   { path: 'appmain', pathMatch: 'full', redirectTo: 'appmain/products' },
@@ -49,6 +50,9 @@ const routes: Routes = [
       },
       {
         path: 'repbinhluan', component: RepbinhluanComponent
+      },
+      {
+        path: 'thongke', component: ThongkeComponent
       },
     ]
   },

@@ -28,9 +28,11 @@ export class SanphamService {
 	getkmhotsp_idlsp(id: number): Observable<sp[]> {
 		return this.http.get<sp[]>(this.url + '/' + 'getidspkmhotloaisp?idloaisap=' + id);
 	}
+
 	get_sp_noi_bat(): Observable<sp[]> {
 		return this.http.get<sp[]>(this.url + '/' + 'get_sp_noi_bat');
 	}
+	
 	gettensp(tensp: string): Observable<sp[]> {
 		return this.http.get<sp[]>(this.url + '/' + 'getsp_idloaisp?tensp=' + tensp);
 	}
@@ -94,4 +96,9 @@ export class SanphamService {
 	get_allsp(): Observable<sp[]> {
 		return this.http.get<sp[]>(this.url + '/'+ 'allsp');
 	}
+	
+	get_thong_ke_sp(): Observable<sp[]> {
+		return this.http.get<sp[]>(this.url + '/' + 'get_thong_ke_sp');
+	}
+
 }

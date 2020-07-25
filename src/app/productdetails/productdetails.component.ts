@@ -485,13 +485,12 @@ export class ProductdetailsComponent implements OnInit {
     try {
       this.danhgiaService.creatdg(d).subscribe(
         () => {
-          alert('Lưu thành công');
+          alert('Cảm ơn bạn đã đánh giá.');
         }
       );
     }
     catch
     {
-      alert("Error");
       this.router.navigate(['appmain']);
     }
   }
@@ -587,11 +586,7 @@ export class ProductdetailsComponent implements OnInit {
         (data) => {
           if(data!=null && data!=undefined)
           {
-            alert("lưu thành công");
-          }
-          else
-          {
-            alert("lưu thất bại");
+            alert("Cảm ơn bạn đã bình luận.");
           }
         }
       );
@@ -600,7 +595,6 @@ export class ProductdetailsComponent implements OnInit {
     }
     catch
     {
-      alert("Error");
       this.router.navigate(['appmain']);
     }
   }
