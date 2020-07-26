@@ -66,6 +66,26 @@
   text-align: center;
 }
 
-.thongke-loai{
-    display: none;
+.thongke-loai {
+  display: none;
+}
+
+.btnright {
+  width: auto;
+  margin-top: 5px;
+  border: 2px solid green;
+  background-color: green;
+}
+
+.buttontl {
+  background-color: white;
+  color: black;
+  border: 0;
+}
+
+.buttontl:hover {
+  background-color: green;
+  color: white;i {
+    color: white !important;
+  }
 }

@@ -1,6 +1,11 @@
 <div class="fillterbak">
   <div class="bak">
     <div class="container-fluid">
+      <div class="d-flex justify-content-end">
+        <div class="btnright">
+          <button class="buttontl" (click)="download()"><i class="fa fa-file-excel-o" aria-hidden="true" style="color: green;"></i>  Xuất Excel</button>
+        </div>
+      </div>
       <div class="search-hero">
         <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Thống Kê</label>
       </div>
@@ -53,7 +58,7 @@
               <tbody>
                 <tr *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
                   <td>{{(i+1)+((p-1)*8)}}</td>
-                  <td><a (click)="chitietsp(item._id)">{{item.ten}}</a></td>
+                  <td>{{item.ten}}</td>
                   <td>{{item.thuonghieu}}</td>
                   <td>{{item.giaban}}</td>
                   <td>{{item.giamgia}}</td>
