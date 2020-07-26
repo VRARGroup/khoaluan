@@ -79,6 +79,7 @@ namespace dienmayxanhapi.Controllers
           var update = Builders<binhluan>.Update.Push(x => x.binhluanphu, b.binhluanphu[0]);
           var saveResult = _signalService.SaveSignalAsync(b);
           _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
+
           if (_blService.Updatebl(filter, update) == true)
           {
             return Ok(b);

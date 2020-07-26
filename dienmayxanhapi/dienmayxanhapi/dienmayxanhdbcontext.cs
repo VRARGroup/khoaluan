@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using dienmayxanhapi.Model;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -12,7 +13,7 @@ using MongoDB.Driver;
 namespace dienmayxanhapi
 {
     public class dienmayxanhdbcontext : DbContext
-  {
+    {
         public virtual DbSet<sanphamdienthoai> sanphamdienthoai { get; set; }
         public virtual DbSet<loaisanpham> loaisanpham { get; set; }
         public virtual DbSet<hinhanhfolder> hinhanhfolder { get; set; }
@@ -48,6 +49,22 @@ namespace dienmayxanhapi
             collectiongroup = database.GetCollection<group>(CollectionNametgroup);
             collectiondanhgia = database.GetCollection<danhgia>(CollectionNamedanhgia);
             collectionbinhluan = database.GetCollection<binhluan>(CollectionNamebinhluan);
+        }
+        public class bangghepsanphamdanhgia : sanphamdienthoai
+        {
+          public danhgia[] Danhgias { get; set; }
+          public danhgiaphu[] Danhgiaphus { get; set; }
+        }
+        public class bangghepsanphamdanhgia1 : danhgia
+        {
+          public danhgia[] Danhgias { get; set; }
+          public danhgiaphu[] Danhgiaphus { get; set; }
+        }
+        public class bangghepsanphamdanhgia_custom
+        {
+          public int? _id { get; set; }
+          public int? _id_loaisanpham { get; set; }
+          public int? _int_tb { get; set; }
         }
         public List<sanphamdienthoai> Get()
         {
@@ -432,11 +449,17 @@ namespace dienmayxanhapi
             return true;
         }
 
-        public List<danhgia> Getfillter_danhgia_1day()
+        public List<bangghepsanphamdanhgia_custom> Getfillter_danhgia_1day()
         {
-            var av = DateTime.Today.AddDays(-1);
-            var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-1)).ToList();
-            return dl;
+          var av = DateTime.Today.AddDays(-1);
+          var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-1)).ToList<danhgia>();
+          var dl1 = collectionspdt.Aggregate()
+                               .Lookup<sanphamdienthoai, danhgia, bangghepsanphamdanhgia>(
+                                    collectiondanhgia,
+                                    x => x._id,
+                                    y => y._id_sanpham,
+                                    x => x.Danhgias).ToList().Select(x => new bangghepsanphamdanhgia_custom {_id = x._id, _id_loaisanpham= x._id_loaisanpham, _int_tb=x.Danhgias.Where(p => p.ngaydanhgia >= DateTime.Today.AddDays(-1) && p.danhgiaphu.Where(c=>c.chucdanh==false ).ToList().Count>0 ).ToList().Count}).ToList<bangghepsanphamdanhgia_custom>();
+          return dl1;
         }
 
         public List<sanphamdienthoai> Getfillter_allsp()
@@ -471,10 +494,7 @@ namespace dienmayxanhapi
             var dl = collectiontk.Find(x => x._id == id).ToList().Take(1).ToList();
             return dl;
         }
-        public class bangghepsanphamdanhgia : sanphamdienthoai
-        {
-            public danhgia[] Danhgias { get; set; }
-        }
+       
         public List<sanphamdienthoai> Getfillter_get_thong_ke_sp()
         {
             //var dl = collectionspdt.Aggregate()

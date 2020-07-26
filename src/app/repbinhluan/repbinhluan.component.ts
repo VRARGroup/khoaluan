@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from "@angular/router";
 import * as $ from "jquery";
 import { dg, dgphu } from '../model/danhgia';
-// import { bl, blphu } from '../model/binhluan';
+import { bangghepdg_sp, bangghepdgphu_sp } from '../model/bangghepdg_sp';
 import { HttpClient } from '@angular/common/http';
 import { SanphamService } from '../service/sanpham.service';
 import { DanhgiaService } from '../service/danhgia.service';
@@ -64,7 +64,7 @@ export class RepbinhluanComponent implements OnInit {
   active_null_bl: boolean = false;
   items_binhluan: bl[] = [];
   alllsp_danhgia: number[] = [];
-  alllsp_danhgia_1day: dg[] = [];
+  alllsp_danhgia_1day: bangghepdg_sp[] = [];
   pdg:number=1;
   pbl:number=1;
   tennvdn:string=null;
@@ -74,6 +74,7 @@ export class RepbinhluanComponent implements OnInit {
   blreal_timearr: bl[]=[];
   dgreal_time: dg;
   dgreal_timearr: dg[]=[];
+  thongbaolsp: Array<any>=[];
   constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService, private signalRService: SignalRService) { 
   }
 
@@ -103,6 +104,7 @@ export class RepbinhluanComponent implements OnInit {
     else {
       this.loadlsp();
       this.loaddsq();
+      this.load_danhgia_1day();
       this.gettennv(parseInt(window.localStorage.getItem("idtk")));
     }
       if(this.checkinsertblp==false)
@@ -194,7 +196,6 @@ export class RepbinhluanComponent implements OnInit {
     this.loadtensp(id + ',' + 'v');
     this.tendanhmuc = tendanhmuc;
     this.p = 1;
-    //this.load_danhgia_1day();
     $(".btn-group .button").css("background-color", "#fff");
     $(".btn-group .button").css("color", "#000");
     $("#btn_lsp_" + id + " .button").css("background-color", "#ec314d");
@@ -202,17 +203,17 @@ export class RepbinhluanComponent implements OnInit {
   }
 
   load_danhgia_1day() {
-    this.danhgiaService.get_danhgia_1day().subscribe((res: dg[] | null) => {
-      this.alllsp_danhgia_1day = (res) ? res : [];
-      if (this.alllsp_danhgia_1day.length > 0) {
-        let i=0;
-        this.lspth.forEach(element => {
-          this.loadtensp(element._id+','+i);
-          this.tensanpham.forEach(element => {
-
-          });
-          $('#lspth_' + element._id).after('<div style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">' + this.alllsp_danhgia_1day.filter(x => x.danhgiaphu.length == 0 && x._id_sanpham == element._id).length + '</div>');
-        });
+    this.danhgiaService.get_danhgia_1day().subscribe((res: any[] | null) => {
+      for(let i=0; i<res.length;i++)
+      {
+        if(res[i]["_int_tb"]>0 )
+        {
+          let v:Array<any>=[];
+          v.push(res[i]);
+          Array.prototype.push.apply(this.alllsp_danhgia_1day,v);
+          console.log (this.alllsp_danhgia_1day);
+        }  
+        
       }
     });
   }

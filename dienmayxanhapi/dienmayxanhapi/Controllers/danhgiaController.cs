@@ -10,6 +10,7 @@ using MongoDB.Driver;
 using dienmayxanhapi.Hubservice;
 using dienmayxanhapi.SignalRHubs;
 using Microsoft.AspNetCore.SignalR;
+using static dienmayxanhapi.dienmayxanhdbcontext;
 
 namespace dienmayxanhapi.Controllers
 {
@@ -107,7 +108,7 @@ namespace dienmayxanhapi.Controllers
       }
 
       [HttpGet("get_danhgia_1day")] 
-      public ActionResult<List<danhgia>> Getfillter_danhgia_1day()
+      public ActionResult<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
       {
         return (_dgService.Getfillter_danhgia_1day());
       }

@@ -9,6 +9,8 @@ namespace dienmayxanhapi.Hubservice
   public interface ISignalService
   {
     Task<bool> SaveSignalAsync(binhluan inputModel);
+    
+
     Task<bool> SaveSignaldgAsync(danhgia inputModel);
   }
 }

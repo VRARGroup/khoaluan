@@ -12,7 +12,9 @@
             <ng-container *ngFor="let obj of alllsp">
               <div class="btn-group" id="btn_lsp_{{obj._id}}">
                 <button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">{{obj.tendanhmuc | uppercase}}</button>
-                <!-- <div id="lspth_{{obj._id}}" style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">{{this.dgreal_timearr.length+this.blreal_timearr.length}}</div> -->
+                <ng-container *ngFor="let objtb of alllsp_danhgia_1day">
+                  <div id="lspth_{{obj._id}}" style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">{{this.dgreal_timearr.length+this.blreal_timearr.length}}</div>
+                </ng-container>
               </div>
             </ng-container>
           </div>

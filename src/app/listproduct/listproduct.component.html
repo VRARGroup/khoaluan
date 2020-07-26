@@ -85,9 +85,8 @@
       <div class="filter-category">
         <h2>Hãng</h2>
         <div class="category" *ngFor="let category of categories, let i=index">
-          <a (click)="suggest_category(category)">
-            
-            <input type="checkbox" id="category_{{category}}">
+          <a>
+            <input type="checkbox" id="category_{{category}}" (change)="suggest_category(category)">
             <label id="label_{{category}}" for="category_{{category}}"> {{category}}</label>
           </a>
         </div>
@@ -95,8 +94,8 @@
       <div class="filter-price">
         <h2>Giá Bán</h2>
         <div class="category" *ngFor="let price of prices">
-          <a (change)="suggest_price(price)">
-            <input type="checkbox" id="price_{{price}}">
+          <a>
+            <input type="checkbox" id="price_{{price}}" (change)="suggest_price(price)">
             <label id="label_{{price}}" for="price_{{price}}"> {{price}}</label>
           </a>
         </div>
