@@ -3,7 +3,13 @@
     <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
       <img class="icondmx-logo" src="./assets/logo.PNG">
     </a>
-    <div class="d-flex justify-content-end">
+    <div class="nav-appmainnhanvien-menu">
+      <button class="nav-appmainnhanvien-itemmenu" [routerLink]="['/appmain/repbinhluan']">Đánh Giá | Bình Luận</button>
+      <button class="nav-appmainnhanvien-itemmenu" [routerLink]="['/appmain/appmainquanly']">QL Sản Phẩm</button>
+      <button class="nav-appmainnhanvien-itemmenu" [routerLink]="['/appmain/quyentk']">Phân Quyền | Tài Khoản</button>
+      <button class="nav-appmainnhanvien-itemmenu" [routerLink]="['/appmain/thongke']">Thống Kê</button>
+    </div>
+    <div class="d-flex justify-content-end" style="width: 100%;">
       <button id="btndx" class="buttonpanel"><i class="fas fa-sign-out-alt" (click)="dangxuat()"></i></button>
     </div>
   </div>

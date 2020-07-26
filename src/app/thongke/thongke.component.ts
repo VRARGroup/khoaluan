@@ -138,15 +138,55 @@ export class ThongkeComponent implements OnInit {
   }
 
   load_thong_ke_sp() {
-    $(".thongke-loai").css("display","none");
-    this.sanphamService.get_thong_ke_sp().subscribe((res: sp[] | null) => {
+    $(".thongke-loai").css("display", "none");
+    this.sanphamService.get_thong_ke_sp().subscribe((res: any[] | null) => {
       this.tensanpham = (res) ? res : [];
-      this.tensanphamphu = this.tensanpham;
-      console.log("tensanpham", res);
+      // this.tensanphamphu = this.tensanpham;
     });
   }
 
   load_thong_ke_loai_sp() {
-    $(".thongke-loai").css("display","block");
+    $(".thongke-loai").css("display", "block");
   }
+
+  xuat_excel() {
+
+  }
+
+  download() {
+    var csvData = this.ConvertToCSV(this.tensanpham);
+    var blob = new Blob(["\ufeff"+csvData], { type: 'text/csv;' });
+    if (navigator.msSaveBlob) { // IE 10+
+      navigator.msSaveBlob(blob, "Thong_Ke.csv");
+    } else {
+      var a = document.createElement("a");
+      a.setAttribute('style', 'display:none;');
+      document.body.appendChild(a);
+      var url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = 'Thong_Ke.csv';
+      a.click();
+      return 'success';
+    }
+  }
+
+  ConvertToCSV(objArray) {
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+    var row = "";
+    for (var index in objArray[0]) {
+      row += index + ',';
+    }
+    row = row.slice(0, -1);
+    str += row + '\r\n';
+    for (var i = 0; i < array.length; i++) {
+      var line = '';
+      for (var index in array[i]) {
+        line += '"' + JSON.stringify(array[i][index]).replace(/"/g, '""').replace(/,/g,'\,') + '",';
+      }
+      str += line + '\r\n';
+    }
+    return str;
+  }
+
 }

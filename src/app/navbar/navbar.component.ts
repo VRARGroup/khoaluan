@@ -87,8 +87,6 @@ export class NavbarComponent implements OnInit {
           <span style=" white-space: nowrap;text-overflow: ellipsis;overflow: hidden;display: block;"> </span>
           <h4 style="display:block;font-size: 12px !important;">
             <span style="display: inline; padding-right: 16px;"> ${match.ten} </span>
-            <span style="color:red; display: inline;">`+ this.checkvalue(match.giamgia) + ` </span>
-            <span style="display: inline;">`+ this.checkvalue(match.giaban) + ` </span>
           </h4>
         </div>`).join('');
           macth_list.innerHTML = html;

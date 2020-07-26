@@ -7,13 +7,16 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using dienmayxanhapi.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Newtonsoft.Json.Serialization;
+using static dienmayxanhapi.dienmayxanhdbcontext;
 
 namespace dienmayxanhapi.Controllers
 {
@@ -591,13 +594,13 @@ namespace dienmayxanhapi.Controllers
         public ActionResult<List<sanphamdienthoai>> Getfillter_allsp()
         {
             return (_spdtService.Getfillter_allsp());
-        } 
-        
+        }
+
         [Route("get_thong_ke_sp")]
         [HttpGet]
         public ActionResult<List<sanphamdienthoai>> Getfillter_get_thong_ke_sp()
         {
-            return (_spdtService.Getfillter_get_thong_ke_sp());
+            return _spdtService.Getfillter_get_thong_ke_sp();
         }
 
         public Boolean checkktid(int id)

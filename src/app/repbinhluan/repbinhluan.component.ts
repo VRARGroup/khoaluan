@@ -274,10 +274,6 @@ export class RepbinhluanComponent implements OnInit {
         l=this.tensanphamphu.filter(x=>x.ten.toString().toUpperCase().match(textkt.toString().toUpperCase()));
         this.tensanpham=l;
       }
-      else
-      {
-        alert("Bạn vui lòng chọn loại sản phẩm cần tìm kiếm !!!");
-      }
     }
     else
     {
