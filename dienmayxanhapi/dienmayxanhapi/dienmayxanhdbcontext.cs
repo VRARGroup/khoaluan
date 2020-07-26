@@ -469,6 +469,12 @@ namespace dienmayxanhapi
             return true;
         }
 
+        public Boolean deletebl(FilterDefinition<binhluan> filter)
+        {
+            collectionbinhluan.FindOneAndDelete(filter);
+            return true;
+        }
+
         public List<bangghepsanphamdanhgia_custom> Getfillter_danhgia_1day()
         {
           var av = DateTime.Today.AddDays(-1);

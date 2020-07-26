@@ -111,6 +111,29 @@ namespace dienmayxanhapi.Controllers
           }
         }
 
+        [Route("doipass")]
+        [HttpPut]
+        public ActionResult<List<taikhoan>> putpass(int _id, taikhoan gp)
+        {
+          try
+          {
+            if (checkktid(_id) == true)
+            {
+              var filter = Builders<taikhoan>.Filter.Eq("_id", _id);
+              var update = Builders<taikhoan>.Update.Combine(
+                           Builders<taikhoan>.Update.Set("password", gp.password)
+                  );
+              _tkService.Updatetk(filter, update);
+              return Ok(true);
+            }
+            return NoContent();
+          }
+          catch
+          {
+            return NoContent();
+          }
+        }
+
         [HttpPost]
         public ActionResult<BsonDocument> Create(taikhoan tk)
         {

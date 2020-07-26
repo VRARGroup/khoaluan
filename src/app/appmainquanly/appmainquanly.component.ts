@@ -45,6 +45,8 @@ export class AppmainquanlyComponent implements OnInit {
 
   ngOnInit() {
     document.getElementById("btndx").style.display = "block";
+    document.getElementById("btndmk").style.display = "block";
+    $(".nav-appmainnhanvien-menu").css("display", "block");
     var d = JSON.parse(window.localStorage.getItem("danhsachquyentruycap"));
     this.quyentc = d;
     this.hoatdong = JSON.parse(window.localStorage.getItem("editid1"));

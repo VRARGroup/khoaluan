@@ -50,25 +50,31 @@
     margin-right: 10px;
 }
 
-.btn:hover:first-child {
+.btn-primary:hover {
     background-color: #0f3561;
     color:white;
     border: 2px solid #fbda00;
 }
 
-.btn:hover:last-child {
+.btn-warning:hover {
     background-color: #50460a;
     color:white;
     border: 2px solid #fbda00;
+}
+
+.btn-danger{
+    margin-left: 10px;
 }
 
 .btn-danger:hover {
     background-color: #500505;
     color:white;
     border: 2px solid #fbda00;
+   
 }
 
-.btn:last-child {
+
+.btn-warning {
     margin-left: 10px;
 }
 

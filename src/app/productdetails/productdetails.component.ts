@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { SanphamService } from '../service/sanpham.service';
@@ -62,9 +62,37 @@ export class ProductdetailsComponent implements OnInit {
   items_danhgiaphu: dgphu[];
   item_comments: bl[];
   signalList: bl;
-  constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService, private signalRService: SignalRService) {
-    
-  }
+  showScroll: boolean;
+  showScrollHeight = 300;
+  hideScrollHeight = 10;
+  constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService, private signalRService: SignalRService) { }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() 
+    {
+      if (( window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) > this.showScrollHeight) 
+      {
+          this.showScroll = true;
+      } 
+      else if ( this.showScroll && (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) < this.hideScrollHeight) 
+      { 
+        this.showScroll = false; 
+      }
+    }
+
+    scrollToTop() 
+    { 
+      (function smoothscroll() 
+      { var currentScroll = document.documentElement.scrollTop || document.body.scrollTop; 
+        if (currentScroll > 0) 
+        {
+          window.requestAnimationFrame(smoothscroll);
+          window.scrollTo(0, currentScroll - (currentScroll / 5));
+        }
+      })();
+      //$(".comment-3-textarea")[0].scrollIntoView();
+    }
+
   ngOnInit() {
     let id_sanpham = this.route.snapshot.params.id;
     if (isNaN(id_sanpham))
@@ -627,7 +655,7 @@ export class ProductdetailsComponent implements OnInit {
     if (files.length === 0) {
       return;
     }
-    
+    if (this.urls_bl.length < 5) {
       let fileToUpload = <File>files[0];
       
       this.isImageSavedbl = true;
@@ -644,6 +672,7 @@ export class ProductdetailsComponent implements OnInit {
       setTimeout(()=>{this.urls_bl.push(fileToUpload.name)},300);
       document.getElementById("uploadCaptureInputFile")["value"] = "";
       console.log("h", this.urls_bl);
+    }
     
   }
 
@@ -652,64 +681,71 @@ export class ProductdetailsComponent implements OnInit {
   }
 
   insertbl(){
-    if($('.textarea_danhgia').val().toString().trim()!="" && $('.textarea_danhgia').val().toString()!=null)
+    if($('.textarea_danhgia').val().toString().length<=1000)
     {
-      if ($('#ht').val().toString().trim() != "" && $('#emailbl').val().toString().trim() != "") 
+      if($('.textarea_danhgia').val().toString().trim()!="" && $('.textarea_danhgia').val().toString()!=null)
       {
-        let gt=false;
-        if($("#male").is(":checked"))
+        if ($('#ht').val().toString().trim() != "" && $('#emailbl').val().toString().trim() != "") 
         {
-          gt=true;
-        }
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(re.test($('#emailbl').val().toString()))
-        {
-          
-          for (let i = 0; i < this.urls_bl.length; i++) {
-            this.getvaluebl(i);
+          let gt=false;
+          if($("#male").is(":checked"))
+          {
+            gt=true;
           }
-          console.log(this.hinhthuctesp_bl);
-          const b = new bl(
-            0,
-            $("#ht").val().toString(),
-            gt,
-            $('#emailbl').val().toString(),
-            $('.textarea_danhgia').val().toString(),
-            this.hinhthuctesp_bl,
-            0,
-            null,
-            parseInt(this.idsp.toString())
-          );
-          console.log("binhluan", b);
-          this.Createbl(b);
-          this.hinhthuctesp_bl;
-          $("#ht").val("").toString();
-          gt;
-          $('#emailbl').val("").toString();
-          $('.textarea_danhgia').val("").toString();
+          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if(re.test($('#emailbl').val().toString()))
+          {
+            
+            for (let i = 0; i < this.urls_bl.length; i++) {
+              this.getvaluebl(i);
+            }
+            console.log(this.hinhthuctesp_bl);
+            const b = new bl(
+              0,
+              $("#ht").val().toString(),
+              gt,
+              $('#emailbl').val().toString(),
+              $('.textarea_danhgia').val().toString(),
+              this.hinhthuctesp_bl,
+              0,
+              null,
+              parseInt(this.idsp.toString())
+            );
+            console.log("binhluan", b);
+            this.Createbl(b);
+            this.hinhthuctesp_bl;
+            $("#ht").val("").toString();
+            gt;
+            $('#emailbl').val("").toString();
+            $('.textarea_danhgia').val("").toString();
+            
+            
+            this.hinhthuctesp_bl=[];
+            this.urls_bl=[];
+            this.item_comments=[];
+            setTimeout(()=>{this.loadbinhluan()},200);
           
-          
-          this.hinhthuctesp_bl=[];
-          this.urls_bl=[];
-          this.item_comments=[];
-          setTimeout(()=>{this.loadbinhluan()},200);
-         
+          }
+          else{
+            alert("Email nhập không hợp lệ vui lòng kiểm tra lại !!!")
+            $("#emailbl").css("border","1px solid red");
+          }
         }
-        else{
-          alert("Email nhập không hợp lệ vui lòng kiểm tra lại !!!")
-          $("#emailbl").css("border","1px solid red");
+        else
+        {
+          alert("Vui lòng nhập đầy đủ thông tin cá nhân !!!")
         }
       }
       else
       {
-        alert("Vui lòng nhập đầy đủ thông tin cá nhân !!!")
+        alert("Vui lòng nhập thông tin bình luận !!!");
       }
     }
     else
     {
-      alert("Vui lòng nhập thông tin bình luận !!!");
+      alert("Bạn đã nhập nội dung vượt giới hạn !!!");
     }
-    }
+  }
 
   countbl:number=0;
   p: number=1;

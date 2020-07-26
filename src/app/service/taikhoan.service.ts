@@ -61,6 +61,11 @@ export class TaikhoanService {
     return this.http.put<tk>(this.url + '/'+t._id,t, httpOptions);
   }
 
+  updatepass(t:tk): Observable<tk> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.put<tk>(this.url + '/'+ 'doipass?_id='+t._id,t, httpOptions);
+  }
+
   update_idq_tk(id:number, _idq:number): Observable<tk> {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.put<tk>(this.url + '/'+ 'chanquyen?_id='+id+"&&"+"_idq="+_idq, httpOptions);

@@ -28,12 +28,25 @@
 }
 
 .buttonpanel {
-  background-color: transparent;
-  text-align: center;
-  border: transparent;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
+    background-color: transparent;
+    text-align: center;
+    border: transparent;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    span{
+        color: white;
+        display: block;
+        overflow: hidden;
+        position: relative;
+        line-height: 30px;
+        font-size: 14px;
+        border: 1px solid #eee;
+        text-align: center;
+        border-radius: 4px;
+        width: 100px;
+        background-color:transparent;
+    }
 }
 
 .fas {

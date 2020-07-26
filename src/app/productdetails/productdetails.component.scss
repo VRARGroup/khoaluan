@@ -840,6 +840,27 @@ ul {
   }
 }
 
+button {
+  background: black;
+  color: white;
+  padding: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 9999;
+}
+.scroll-to-top {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  opacity: 0;
+  transition: all .2s ease-in-out;
+}
+
+.show-scroll {
+  opacity: 1;
+}
+
 
 
 

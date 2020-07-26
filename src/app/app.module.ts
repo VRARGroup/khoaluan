@@ -87,6 +87,7 @@ import { ModalDanhgiaphuComponent } from './modal/modal-danhgiaphu/modal-danhgia
 import { TatcadanhgiaComponent } from './tatcadanhgia/tatcadanhgia.component';
 import { ModalBinhluanphuComponent } from './modal/modal-binhluanphu/modal-binhluanphu.component';
 import { ThongkeComponent } from './thongke/thongke.component';
+import { ModalDoipassComponent } from './modal/modal-doipass/modal-doipass.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { ThongkeComponent } from './thongke/thongke.component';
     TatcadanhgiaComponent,
     ModalBinhluanphuComponent,
     ThongkeComponent,
+    ModalDoipassComponent,
   ],
   imports: [
     
@@ -176,7 +178,7 @@ import { ThongkeComponent } from './thongke/thongke.component';
     CarouselModule,
     MDBBootstrapModule.forRoot()
   ],
-  entryComponents: [ ModalThongsokythuatComponent,  ModalthemuseComponent, ModalDanhgiaComponent, ModalDanhgiaphuComponent, ModalBinhluanphuComponent],
+  entryComponents: [ ModalThongsokythuatComponent,  ModalthemuseComponent, ModalDanhgiaComponent, ModalDanhgiaphuComponent, ModalBinhluanphuComponent, ModalDoipassComponent],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

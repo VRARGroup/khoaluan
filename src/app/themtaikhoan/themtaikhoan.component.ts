@@ -48,6 +48,7 @@ export class ThemtaikhoanComponent implements OnInit {
     this.hoatdong = JSON.parse(window.localStorage.getItem("editid1"));
     console.log(this.hoatdong);
     document.getElementById("btndx").style.display = "block";
+    document.getElementById("btndmk").style.display = "block";
     if (this.hoatdong == false || this.hoatdong == null) {
       this.router.navigate(['appmainnv/login']);
     }
@@ -78,6 +79,7 @@ export class ThemtaikhoanComponent implements OnInit {
       this.selected = res[0]._id_group;
       $('#username').val(res[0].username);
       $('#pass').val(res[0].password);
+      $('#tennv').val(res[0].tennv);
       if (res[0].hoatdong == true) {
         this.hdt = true;
       }
@@ -98,8 +100,6 @@ export class ThemtaikhoanComponent implements OnInit {
       this.alldsq = (res) ? res : [];
     });
   }
-
-
 
   loadgroup() {
     this.groupService.getgrp().subscribe((res: grp[] | null) => {

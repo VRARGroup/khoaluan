@@ -440,6 +440,8 @@ namespace dienmayxanhapi.Controllers
               {
                 var deletefilter = Builders<BsonDocument>.Filter.Eq("_id", id);
                 _spdtService.deletesp(deletefilter);
+                var deletebl = Builders<binhluan>.Filter.Eq("_id", id);
+                _spdtService.deletebl(deletebl);
                 return Ok(true);
               }
               return NoContent();

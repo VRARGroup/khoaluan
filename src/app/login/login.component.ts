@@ -24,11 +24,13 @@ export class LoginComponent implements OnInit {
   constructor(private location: Location, private router: Router, private taikhoanService: TaikhoanService, private groupService: GroupService) { }
 
   ngOnInit() {
-    document.getElementById("btndx").style.display = "none";
+    $("#btndmk").css("display","none")
+    $("#btndx").css("display","none")
     $(".nav-appmainnhanvien-menu").css("display", "none");
-    var s = (window.localStorage.getItem("truycaptraiphep"));
-    this.th = window.localStorage.getItem("thoihan");
-    if (this.th != null && s == "out") {
+    var s=(window.localStorage.getItem("truycaptraiphep"));
+    this.th=window.localStorage.getItem("thoihan");
+    if(this.th!=null && s=="out")
+    {
       alert(this.th);
       window.localStorage.removeItem("truycaptraiphep");
       window.localStorage.removeItem("thoihan");

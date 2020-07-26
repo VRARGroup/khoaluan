@@ -127,6 +127,7 @@ export class ReviewspComponent implements OnInit {
     this.hoatdong = JSON.parse(window.localStorage.getItem("editid1"));
     console.log(this.hoatdong);
     document.getElementById("btndx").style.display = "block";
+    document.getElementById("btndmk").style.display = "block";
     if (this.hoatdong == false || this.hoatdong == null) {
       this.router.navigate(['appmainnv/login']);
     }

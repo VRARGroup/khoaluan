@@ -92,12 +92,12 @@ export class RepbinhluanComponent implements OnInit {
       this.location.back();
     }
     document.getElementById("btndx").style.display = "block";
+    document.getElementById("btndmk").style.display = "block";
     var d = JSON.parse(window.localStorage.getItem("danhsachquyentruycap"));
     this.quyentc = d;
     this.hoatdong = JSON.parse(window.localStorage.getItem("editid1"));
     this.idgrp = parseInt(window.localStorage.getItem("idg"));
     console.log(this.idgrp);
-    document.getElementById("btndx").style.display = "block";
     if (this.hoatdong == false || this.hoatdong == null) {
       this.router.navigate(['appmainnv/login']);
     }
