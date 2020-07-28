@@ -48,7 +48,7 @@ export class AppmainnhanvienComponent implements OnInit {
   doipass()
   {
     const dialogRef = this.dialog.open(ModalDoipassComponent, {
-      width: '50vw',
+      width: '45vw',
       height: 'auto',
       data: {
         idtk: this.idtk,

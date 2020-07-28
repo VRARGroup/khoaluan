@@ -1,7 +1,7 @@
 <div class="fillterbak">
   <div class="bak">
     <div class="container-fluid">
-      <div class="d-flex justify-content-end">
+      <div style="width: auto; float: right;">
         <div class="btnright">
           <button class="buttontl" (click)="download()"><i class="fa fa-file-excel-o" aria-hidden="true" style="color: green;"></i>  Xuất Excel</button>
         </div>
@@ -12,8 +12,8 @@
       <div class="filter">
         <div class="d-flex justify-content-center">
           <div class="inline">
-            <button class="buttonth" (click)="load_thong_ke_sp()">SẢN PHẨM NỔI BẬT</button>
-            <button class="buttonth" (click)="load_thong_ke_loai_sp()">LOẠI SẢN PHẨM</button>
+            <button class="buttonth" id="thongke-spnoibat" (click)="load_thong_ke_sp()">SẢN PHẨM NỔI BẬT</button>
+            <button class="buttonth" id="thongke-sp" (click)="load_thong_ke_loai_sp()">LOẠI SẢN PHẨM</button>
           </div>
         </div>
       </div>

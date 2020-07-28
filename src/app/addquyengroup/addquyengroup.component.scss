@@ -24,13 +24,13 @@
 }
 
 .btn-group .button:hover {
-  background-color: rgb(20, 163, 220);
-  color: white;
+  background-color: rgb(20, 163, 220)  !important;
+  color: white  !important;
 }
 
 .btn-group-vertical .buttonth:hover {
-  background-color: #fbda00;
-  color: white;
+  background-color: #fbda00  !important;
+  color: white  !important;
   padding-left: 30px;
 }
 
@@ -61,6 +61,8 @@
   color: black;
   border: 1px solid #fbda00;
   z-index: 1;
+  margin-left: 5px;
+  margin-top: 5px;
 }
 
 .container-fluid {
@@ -76,36 +78,6 @@
   background-position-y: 250px;
   min-height: 500px;
 }
-
-// .btnright {
-//   width: auto;
-//   margin-top: 5px;
-//   border: 2px solid #4a90e2;
-//   background-color: #4a90e2;
-// }
-
-// .buttontl {
-//   background-color: white;
-//   color: black;
-//   border: 2px solid #e2754a7a;
-// }
-
-// .buttontl:hover {
-//   background-color: #fbda00;
-//   color: white;
-// }
-
-// .buttontsp {
-//   margin-left: 4px;
-//   background-color: white;
-//   color: black;
-//   border: 2px solid #e24ac93a;
-// }
-
-// .buttontsp:hover {
-//   background-color: #fbda00;
-//   color: white;
-// }
 
 div.transbox {
   margin: 5%;
@@ -134,7 +106,7 @@ div.transbox {
 }
 
 .btninbtnlsp:hover {
-  color: white;
+  color: white  !important;
   width: auto;
   max-height: 40px;
 }
@@ -237,4 +209,26 @@ div.transbox {
 
 .btn:first-child {
   margin-right: 10px;
+}
+
+.title-addgroupquyen{
+  font-size: 34px; 
+  font-weight: 600; 
+  text-align: center; 
+  line-height: 100%; 
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  padding-top: 10px; 
+  padding-bottom: 10px; 
+  color: #000;
+}
+
+.footer-addgroupquyen{
+  margin: 8px 80px; 
+  background-color: #fff; 
+  padding: 10px;
+}
+
+.container{
+  text-align: center;
 }

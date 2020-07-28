@@ -143,10 +143,19 @@ export class ThongkeComponent implements OnInit {
       this.tensanpham = (res) ? res : [];
       // this.tensanphamphu = this.tensanpham;
     });
+    
+    $("#thongke-sp").css("background-color", "#fff");
+    $("#thongke-sp").css("color", "#000");
+    $("#thongke-spnoibat").css("background-color", "#ec314d");
+    $("#thongke-spnoibat").css("color", "#fff");
   }
 
   load_thong_ke_loai_sp() {
     $(".thongke-loai").css("display", "block");
+    $("#thongke-spnoibat").css("background-color", "#fff");
+    $("#thongke-spnoibat").css("color", "#000");
+    $("#thongke-sp").css("background-color", "#ec314d");
+    $("#thongke-sp").css("color", "#fff");
   }
 
   xuat_excel() {

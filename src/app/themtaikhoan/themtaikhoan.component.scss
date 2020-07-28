@@ -167,7 +167,8 @@
 
 .card{
     min-width: 90% !important;
-    background-color: #eaeae785;
+    background-color: #ffffffe7;
+    padding: 40px;
 }
 
 .bak{
@@ -176,4 +177,8 @@
     background-repeat:no-repeat;
     background-position-y: 193px;
     position: absolute;
+}
+
+.container{
+    text-align: center;
 }
