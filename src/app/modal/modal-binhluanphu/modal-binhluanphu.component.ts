@@ -106,7 +106,9 @@ export class ModalBinhluanphuComponent implements OnInit {
     }
     if (this.urls_blp.length < 4) {
       let fileToUpload = <File>files[0];
-      this.urls_blp.push(fileToUpload.name);
+      setTimeout(() => {
+        this.urls_blp.push(fileToUpload.name);
+      }, 200);
       this.isImageSaved = true;
       const formData = new FormData();
       formData.append('file', fileToUpload, fileToUpload.name);

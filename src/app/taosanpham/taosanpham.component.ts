@@ -467,7 +467,19 @@ export class TaosanphamComponent implements OnInit {
       return false;
     }
     else
-      return true;
+    {
+    if(key=="Số khe SIM" || key == "Loại SIM")
+      {
+        this.valueidinput.push("input" + l.toString() + k.toString());
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+      
+      
+    }
   }
   responsedd: any = "";
   responseimage: any = [];

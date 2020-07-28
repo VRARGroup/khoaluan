@@ -185,27 +185,27 @@
           <div id="comment_1" class="row">
             <div id="comment_1_1" class="row col-12">
               <div
-                style="font-size: 87px !important;color: #fc9639; padding: 49px 0 10px 15px; border-right: 1px solid rgba(22, 20, 20, 0.342);"
+                style="font-size: 50px !important;color: #fc9639; padding: 49px 0 10px 15px; border-right: 1px solid rgba(22, 20, 20, 0.342);"
                 class="col-3">
-                {{item.sosao}}
+                {{numberstar}}
                 <i class="fa fa-star" aria-hidden="true"></i>
               </div>
               <div class="col-6">
                 <ul>
                   <li><a>5 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar5}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar5}}"></mat-progress-bar><span class="star-type"><b>{{this.sumstar5}}%</b></span> <a>| {{countstar5}} đánh giá</a>
                   </li>
                   <li><a>4 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar4}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar4}}"></mat-progress-bar><span class="star-type"><b>{{this.sumstar4}}%</b></span> <a>| {{countstar4}} đánh giá</a>
                   </li>
                   <li><a>3 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar3}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar3}}"></mat-progress-bar><span class="star-type"><b>{{this.sumstar3}}%</b></span> <a>| {{countstar3}} đánh giá</a>
                   </li>
                   <li><a>2 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar2}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar2}}"></mat-progress-bar><span class="star-type"><b>{{this.sumstar2}}%</b></span> <a>| {{countstar2}} đánh giá</a>
                   </li>
                   <li><a>1 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar1}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar1}}"></mat-progress-bar><span class="star-type"><b>{{this.sumstar1}}%</b></span> <a>| {{countstar1}} đánh giá</a>
                   </li>
                 </ul>
               </div>
@@ -218,42 +218,43 @@
               </div>
             </div>
             <div id="comment_1_2" class="row col-12">
-              <div class="col-5">
+              <div class="col-6">
                 <div style="font-size: 72px !important;color: #fc9639;">
-                  {{item.sosao}}
+                  {{numberstar}}
                   <i class="fa fa-star" aria-hidden="true"></i>
                 </div>
                 <ul>
                   <li><a>5 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar5}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar5}}"></mat-progress-bar> <span class="star-type"><b>{{this.sumstar5}}%</b></span> <a>| {{countstar5}} đánh giá</a>
                   </li>
                   <li><a>4 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar4}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar4}}"></mat-progress-bar> <span class="star-type"><b>{{this.sumstar4}}%</b></span> <a>| {{countstar4}} đánh giá</a>
                   </li>
                   <li><a>3 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar3}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar3}}"></mat-progress-bar> <span class="star-type"><b>{{this.sumstar3}}%</b></span> <a>| {{countstar3}} đánh giá</a>
                   </li>
                   <li><a>2 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar2}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar2}}"></mat-progress-bar> <span class="star-type"><b>{{this.sumstar2}}%</b></span> <a>| {{countstar2}} đánh giá</a>
                   </li>
                   <li><a>1 sao</a>
-                    <mat-progress-bar mode="determinate" value="{{sumstar1}}"></mat-progress-bar> <a> đánh giá</a>
+                    <mat-progress-bar mode="determinate" value="{{sumstar1}}"></mat-progress-bar> <span class="star-type"><b>{{this.sumstar1}}%</b></span> <a>| {{countstar1}} đánh giá</a>
                   </li>
                 </ul>
               </div>
-              <div id="show_hide_comment_1" class="col-7">
+              <div id="show_hide_comment_1" class="col-6" >
                 <a (click)="show_modal_danhgia(item.ten)">
-                  <div style="margin-top: 30px;text-align: center; margin-right: 20px" id="show_hide_danhgiasosao">
+                  <div style="margin-top: 15px;text-align: center; margin-right: 20px" id="show_hide_danhgiasosao">
                     Đánh giá ngay
                   </div>
                 </a>
-                <div style="width:100%; height: auto; min-height: 100px; margin-top: 40px;" class="show-danh-gia">
-                  <div *ngFor="let slot_danh_gia of this.resulf_danhgia">
+                <div style="width:100%; height: auto; min-height: 100px; margin-top: 20px; margin-bottom: 10px;" class="show-danh-gia">
+                  <h3 class="tcdg">Theo tiêu chí ({{countstar}} đánh giá)</h3>
+                  <div *ngFor="let slot_danh_gia of this.resulf_danhgia, let i=index">
                     <p *ngIf="!slot_danh_gia.includes('?')" style="font-size: 16px;">{{slot_danh_gia}} ?</p>
                     <p *ngIf="slot_danh_gia.includes('?')" style="font-size: 16px;">{{slot_danh_gia}}</p>
-                    <span></span>
-                    <mat-progress-bar mode="determinate" value="50" style="height: 9px;padding: 0;margin: 0;">
-                    </mat-progress-bar><span></span>
+                   
+                    <span class="star-type">{{counttcdg[i]}}% Có</span><mat-progress-bar mode="determinate" value="{{counttcdg[i]}}" style="height: 9px;padding: 0;margin: 0;">
+                    </mat-progress-bar> <span class="star-type">{{100-counttcdg[i]}}% Không</span>
                   </div>
                 </div>
               </div>
@@ -280,6 +281,7 @@
                 <div (mouseover)="mouseover_star(5)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
                     aria-hidden="true" id="star_5"></i></div>
               </a>
+              <label id="macth_list" style="display: inline-block;"></label>
               <br>
               <br>
               <textarea (keyup)="textarea_text_change($event)"
@@ -312,7 +314,7 @@
                     <div class="img-space">
                       <div class="d-flex justify-content-end" ><i class="fas fa-times-circle fa-2x" (click)="Remove(i)"></i></div>
                       <ng-container *ngIf="isImageSaved">
-                        <img [src]="createImgPath(url)" height="100"> <br />
+                        <img [src]="createImgPath(url)" class="img1"> <br />
                       </ng-container>
                     </div>
                     
@@ -465,7 +467,7 @@
                       <div class="img-space">
                         <div class="d-flex justify-content-end"><i class="fas fa-times-circle fa-2x" (click)="Removeimgbl(i)" ></i></div>
                         <ng-container *ngIf="isImageSavedbl">
-                          <img [src]="createImgPath(url)" height="100"> <br />
+                          <img [src]="createImgPath(url)" class="img1"> <br />
                         </ng-container>
                       </div>
                     </ng-container>

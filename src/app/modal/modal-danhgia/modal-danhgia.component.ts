@@ -200,39 +200,73 @@ export class ModalDanhgiaComponent implements OnInit {
 
   guidanhgiangay() {
     try {
-      if ($('#textarea_danhgiasosao_modal').val().toString().length >= 15) {
-        if ($("#hotenm").val().toString().trim().length > 0 && $('#sdtm').val().toString().length > 0 && $('#emailm').val().toString().length > 0) {
-          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          if (re.test($('#emailm').val().toString())) {
-            for (let i = 0; i < this.urls.length; i++) {
-              this.getvalue(i);
+      if(this.star>0)
+      {
+        if ($('#textarea_danhgiasosao_modal').val().toString().length >= 15) {
+          if ($("#hotenm").val().toString().trim().length > 0 && $('#sdtm').val().toString().length > 0 && $('#emailm').val().toString().length > 0) {
+            let v:boolean=true;
+            var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+            var mobile = $('#mobile').val();
+            if (vnf_regex.test($('#sdtm').val().toString().trim()) == false) {
+              v=false;
+              alert("Số điện thoại không đúng định dạng !!!");
+              return;
             }
-            const d = new dg(
-              0,
-              this.star,
-              $("#hotenm").val().toString(),
-              $('#sdtm').val().toString(),
-              $('#emailm').val().toString(),
-              $('#textarea_danhgiasosao_modal').val().toString(),
-              this.hinhthuctesp,
-              0,
-              null,
-              this.tieuchidanhgia,
-              parseInt(this.idsp.toString())
-            );
-            console.log("danhgia", d);
-            this.Createdg(d);
-            this.hinhthuctesp = [];
-            this.dialogRef.close()
+            else
+            {
+              v=true;
+            }
+            const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            
+            if($('#email').val().toString().trim() !="")
+            {
+              if(re.test($('#email').val().toString()))
+              {
+                v=true;
+              }
+              else
+              {
+                v=false;
+                alert("Email không đúng định dạnh !!!");
+                return;
+              }
+            }
+            if (v==true) {
+              for (let i = 0; i < this.urls.length; i++) {
+                this.getvalue(i);
+              }
+              const d = new dg(
+                0,
+                this.star,
+                $("#hotenm").val().toString(),
+                $('#sdtm').val().toString(),
+                $('#emailm').val().toString(),
+                $('#textarea_danhgiasosao_modal').val().toString(),
+                this.hinhthuctesp,
+                0,
+                null,
+                this.tieuchidanhgia,
+                parseInt(this.idsp.toString())
+              );
+              console.log("danhgia", d);
+              this.Createdg(d);
+              this.hinhthuctesp = [];
+              this.dialogRef.close(d)
+            }
           }
-        }
-        else {
-          alert("Vui lòng nhập họ tên, số điện thoại và email");
-        }
+          else {
+            alert("Vui lòng nhập họ tên, số điện thoại và email");
+          }
       }
       else {
         alert("Vui lòng nhập đủ đánh giá");
       }
+    }
+    else{
+      const html = '<span for="hdfStar" style="display: block;font-size: 13px; color: #d0021b; vertical-align: -webkit-baseline-middle;margin-left: 10px;">Vui lòng chọn sao để đánh giá</span>'
+      const macth_list=document.getElementById("macth_list");
+      macth_list.innerHTML = html;
+    }
     }
     catch
     {
@@ -243,6 +277,7 @@ export class ModalDanhgiaComponent implements OnInit {
     try {
       this.danhgiaService.creatdg(d).subscribe(
         () => {
+          alert("Cảm ơn bạn đã đánh giá");
         }
       );
     }

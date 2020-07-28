@@ -28,7 +28,7 @@
       <ng-container>
         <div class="img-space">
           <ng-container *ngIf="isImageSaved">
-            <img [src]="createImgPath(url)" height="100"> <br />
+            <img [src]="createImgPath(url)" class="img1"> <br />
           </ng-container>
         </div>
         <button class="btn btn-danger" (click)="Remove(i)" *ngIf="isImageSaved">Xóa</button>
@@ -69,8 +69,11 @@
           <i class="fa fa-star" aria-hidden="true" id="star_55"></i><br>Rất tốt
         </div>
       </a>
+      
     </div>
+    
   </div>
+  <div id="macth_list" class="d-flex justify-content-center"><label></label></div>
   <div class="comment-1-input">
     <input id="hotenm" placeholder="Họ tên(Bắc buộc)" type="text">
     <input id="sdtm" style="margin: 0 8px;" placeholder="Số điện thoại (Bắt buộc)"

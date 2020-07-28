@@ -152,6 +152,7 @@ export class ProductdetailsComponent implements OnInit {
       }
     });
   }
+  kl:boolean=true;
   show_modal_danhgia(name): void {
     const dialogRef = this.dialog.open(ModalDanhgiaComponent, {
       width: 'auto',
@@ -162,6 +163,16 @@ export class ProductdetailsComponent implements OnInit {
         resulf_danhgia: this.resulf_danhgia,
       }
     });
+    dialogRef.afterClosed().subscribe((submit) => {
+      if (submit) {
+        let a:dg[]=[];
+        a.push(submit);
+        this.kl=false;
+        setTimeout(()=>{this.loaddanhgia()},200);
+      } else {
+        console.log("null")
+      }
+    })
   }
 
   get_product_details(id: number) {
@@ -246,6 +257,17 @@ export class ProductdetailsComponent implements OnInit {
     document.getElementById('more_info_dacdiemnoibat').style.display = "none";
   }
   show_hide_danhgiasosao() {
+    if(document.getElementById('show_hide_danhgiasosao').innerHTML=="Hủy")
+    {
+      this.hinhthuctesp = [];
+      $("#hoten").val("").toString();
+      $('#sdt').val("").toString();
+      $('#email').val("").toString();
+      $('#textarea_danhgiasosao').val("").toString(),
+      this.star=0;
+      this.mouseover_star(this.star);
+      this.urls=[];
+    }
     if (document.getElementById('comment_1').style.height == "100%") {
       if (this.resulf_danhgia.length > 0) {
         document.getElementById("comment_1").style.height = this.resulf_danhgia.length * 36 + 60 + "px";
@@ -268,6 +290,14 @@ export class ProductdetailsComponent implements OnInit {
     console.log(this.valuetext);
   }
   mouseover_star(star: any) {
+    if (star ==0 )
+    {
+      $('#star_1').css("color", "#000");
+      $('#star_2').css("color", "#000");
+      $('#star_3').css("color", "#000");
+      $('#star_4').css("color", "#000");
+      $('#star_5').css("color", "#000");
+    }
     if (star == 1) {
       $('#star_1').css("color", "#fc9639");
       $('#star_2').css("color", "#000");
@@ -309,6 +339,7 @@ export class ProductdetailsComponent implements OnInit {
   }
   mouseleave_star() {
     let star = this.star;
+  
     if (star == 1) {
       $('#star_1').css("color", "#fc9639");
       $('#star_2').css("color", "#000");
@@ -450,55 +481,90 @@ export class ProductdetailsComponent implements OnInit {
   }
 
   guidanhgiangay() {
-    if(this.textarea_count>=80)
+    if(this.star>0)
     {
-      if ($('#hoten').val().toString().trim() != "" && $('#sdt').val().toString().trim() != "" && $('#email').val().toString().trim() != "") 
+      if(this.textarea_count>=80)
       {
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(re.test($('#email').val().toString()))
+        
+        if ($('#hoten').val().toString().trim() != "" && $('#sdt').val().toString().trim() != "" ) 
         {
-          for (let i = 0; i < this.urls.length; i++) {
-            this.getvalue(i);
+          let v:boolean=true;
+          var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+          var mobile = $('#mobile').val();
+          if (vnf_regex.test($('#sdt').val().toString().trim()) == false) {
+            v=false;
+            alert("Số điện thoại không đúng định dạng !!!");
+            return;
           }
-          const d = new dg(
-            0,
-            this.sosao,
-            $("#hoten").val().toString(),
-            $('#sdt').val().toString(),
-            $('#email').val().toString(),
-            this.valuetext,
-            this.hinhthuctesp,
-            0,
-            null,
-            null,
-            parseInt(this.idsp.toString())
-          );
-          console.log("danhgia", d);
-          this.Createdg(d);
-          this.hinhthuctesp = [];
-          $("#hoten").val("").toString();
-          $('#sdt').val("").toString();
-          $('#email').val("").toString();
-          $('#textarea_danhgiasosao').val("").toString(),
-          this.star=0;
-          this.urls=[];
-          this.show_hide_danhgiasosao();
+          else
+          {
+            v=true;
+          }
           
-          setTimeout(()=>{this.loaddanhgia()},200);
+          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if($('#email').val().toString().trim() !="")
+          {
+            if(re.test($('#email').val().toString()))
+            {
+              v=true;
+            }
+            else
+            {
+              v=false;
+              alert("Email không đúng định dạng !!!");
+              return;
+            }
+          }
+          if(v==true)
+          {
+            for (let i = 0; i < this.urls.length; i++) {
+              this.getvalue(i);
+            }
+            const d = new dg(
+              0,
+              this.sosao,
+              $("#hoten").val().toString(),
+              $('#sdt').val().toString(),
+              $('#email').val().toString(),
+              this.valuetext,
+              this.hinhthuctesp,
+              0,
+              null,
+              null,
+              parseInt(this.idsp.toString())
+            );
+            console.log("danhgia", d);
+            this.Createdg(d);
+            this.hinhthuctesp = [];
+            $("#hoten").val("").toString();
+            $('#sdt').val("").toString();
+            $('#email').val("").toString();
+            $('#textarea_danhgiasosao').val("").toString(),
+            this.star=0;
+            this.urls=[];
+            this.show_hide_danhgiasosao();
+            
+            setTimeout(()=>{this.loaddanhgia()},200);
+          }
+          else{
+            alert("Email nhập không hợp lệ vui lòng kiểm tra lại !!!")
+            $("#email").css("border","1px solid red");
+          }
         }
-        else{
-          alert("Email nhập không hợp lệ vui lòng kiểm tra lại !!!")
-          $("#email").css("border","1px solid red");
+        else
+        {
+          alert("Vui lòng nhập đầy đủ thông tin cá nhân !!!")
         }
       }
       else
       {
-        alert("Vui lòng nhập đầy đủ thông tin cá nhân !!!")
+        alert("Nội dung phải đủ 80 ký tự trở lên !!!")
       }
     }
-    else
-    {
-      alert("Nội dung phải đủ 80 ký tự trở lên !!!")
+    else{
+      const html = '<span for="hdfStar" style="display: block;font-size: 13px; color: #d0021b; vertical-align: -webkit-baseline-middle;margin-left: 10px;">Vui lòng chọn sao để đánh giá</span>'
+      const macth_list=document.getElementById("macth_list");
+      macth_list.innerHTML = html;
     }
   }
 
@@ -537,17 +603,57 @@ export class ProductdetailsComponent implements OnInit {
     return this.items_danhgiaphu_dl;
   }
 
+  countstar1:number=0;
+  countstar2:number=0;
+  countstar3:number=0;
+  countstar4:number=0;
+  countstar5:number=0;
   sumstar1:number=0;
   sumstar2:number=0;
   sumstar3:number=0;
   sumstar4:number=0;
   sumstar5:number=0;
   countstar:number=0;
+  numberstar:number=0;
+  counttcdg:Array<number>=[];
   loaddanhgia() {
     this.danhgiaService.getdg_idsp(this.idsp).subscribe((res: dg[] | null) => {
       this.items_danhgia = (res) ? res : [];
-      this.countstar=res.length;
-      
+      var j=res.find(x=>true);
+      if(j.sosao!=null && !isNaN(j.sosao) && j.tieuchidanhgia.length!=null && !isNaN(j.tieuchidanhgia.length))
+      {
+        this.countstar=res.length;
+        this.countstar1=res.filter(x=>x.sosao==1).length;
+        this.countstar2=res.filter(x=>x.sosao==2).length;
+        this.countstar3=res.filter(x=>x.sosao==3).length;
+        this.countstar4=res.filter(x=>x.sosao==4).length;
+        this.countstar5=res.filter(x=>x.sosao==5).length;
+        this.numberstar=(this.countstar1+this.countstar2+this.countstar3+this.countstar4+this.countstar5)/this.countstar;
+        for(let i of res[0].tieuchidanhgia)
+        {
+          this.counttcdg.push(0);
+          
+        }
+        
+        for(let i of res)
+        {
+          if(i.tieuchidanhgia!=null || i.tieuchidanhgia!=undefined)
+          {
+            for(let j in i.tieuchidanhgia)
+            {
+              if(i.tieuchidanhgia[j]==true)
+              {
+                this.counttcdg[j]=this.counttcdg[j]+1;
+              }
+            }
+          }
+        }
+        for(let k in this.counttcdg)
+        {
+          this.counttcdg[k]=(this.counttcdg[k]/res.length)*100;
+        }
+        console.log(this.counttcdg)
+        }
     });
     setTimeout(()=>{this.danhgiaService.getalldg_idsp(this.idsp).subscribe((res: dg[] | null) => {
       this.sumstar1=((res.filter(x=>x.sosao===1).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
