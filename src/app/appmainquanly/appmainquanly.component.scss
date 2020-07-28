@@ -13,12 +13,12 @@
 
 .btn-group .button:hover {
   background-color: rgb(20, 163, 220) !important;
-  color: white;
+  color: white  !important;
 }
 
 .btn-group-vertical .buttonth:hover {
   background-color: #fbda00 !important;
-  color: white;
+  color: white  !important;
   padding-left: 30px;
 }
 
@@ -48,6 +48,7 @@
   color: black;
   border: 1px solid #fbda00;
   z-index: 1;
+  margin-left: 5px;
 }
 
 .container-fluid {
@@ -77,10 +78,10 @@
   border: 1px solid #e2754a7a;
 }
 
-.buttontl:hover {
-  background-color: #4a90e2;
-  color: white;
-}
+// .buttontl:hover {
+//   background-color: #fbda00;
+//   color: white;
+// }
 
 .buttontsp {
   margin-left: 4px;
@@ -89,10 +90,10 @@
   border: 1px solid #e24ac93a;
 }
 
-.buttontsp:hover {
-  background-color: #4a90e2;
-  color: white;
-}
+// .buttontsp:hover {
+//   background-color: #fbda00;
+//   color: white;
+// }
 
 div.transbox {
   margin: 5%;
@@ -182,9 +183,9 @@ div.transbox {
   color: #405065;
 }
 
-.form-control {
-  box-shadow: 0 10px 40px 0 #B0C1D9;
-}
+// .form-control {
+//   box-shadow: 0 10px 40px 0 #B0C1D9;
+// }
 
 .form-control::placeholder {
   font-family: FontAwesome;

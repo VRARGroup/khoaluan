@@ -25,12 +25,12 @@
 
 .btn-group .button:hover {
   background-color: rgb(20, 163, 220) !important;
-  color: white;
+  color: white !important;
 }
 
 .btn-group-vertical .buttonth:hover {
   background-color: #fbda00 !important;
-  color: white;
+  color: white  !important;
   padding-left: 30px;
 }
 
@@ -48,6 +48,7 @@
   color: black;
   border: 1px solid #fbda00;
   z-index: 1;
+  margin-left: 5px;
 }
 
 .container-fluid {
@@ -63,36 +64,6 @@
   background-position-y: 250px;
   min-height: 500px;
 }
-
-// .btnright {
-//   width: auto;
-//   margin-top: 5px;
-//   border: 1px solid #4a90e2;
-//   background-color: #4a90e2;
-// }
-
-// .buttontl {
-//   background-color: white;
-//   color: black;
-//   border: 1px solid #e2754a7a;
-// }
-
-// .buttontl:hover {
-  // background-color: #fbda00;
-//   color: white;
-// }
-
-// .buttontsp {
-//   margin-left: 4px;
-//   background-color: white;
-//   color: black;
-//   border: 1px solid #e24ac93a;
-// }
-
-// .buttontsp:hover {
-//   background-color: #fbda00;
-//   color: white;
-// }
 
 div.transbox {
   margin: 5%;
@@ -211,4 +182,10 @@ div.transbox {
 
 .fa-times-circle {
   color: rgb(224, 39, 14);
+}
+
+.search-hero {
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
 }

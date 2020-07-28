@@ -4,13 +4,7 @@
         <div class="container-fluid">
             <div class="filter ">
                 <div class="inline" >
-                    <!-- <ng-container >
-                        <label for="lname">id nhóm</label>
-                        <input class="inputtext" type="text" value="{{ktraundefinde(this.allgroup[0]._id)}}" id="_idq" disabled>
-                    </ng-container>
-                    <label for="lname">Tên nhóm</label>
-                    <input class="inputtext" type="text" value="{{ktraundefinde(this.allgroup[0].tengroup)}}" id="tengroup" disabled> -->
-                    <p style="font-size: 34px; font-weight: 600; text-align: center; line-height: 100%; margin-top: 10px;margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; color: blue;">{{ktraundefinde(this.allgroup[0].tengroup)}}</p>
+                    <p class="title-addgroupquyen">{{ktraundefinde(this.allgroup[0].tengroup)}}</p>
                 </div>
             </div>
             <div class="filter">
@@ -19,7 +13,7 @@
                         <br><br>
                        
                         <ng-container *ngFor="let o of addquyen,let i=index">
-                            <div class="d-flex justify-content-start"><button class="buttonpanelclose"><i class="fas fa-times-circle fa-2x" (click)="Removeaddtext(i)"></i></button></div>
+                            <div><button class="buttonpanelclose"><i class="fas fa-times-circle fa-2x" (click)="Removeaddtext(i)"></i></button></div>
                             
                             <label style="margin-left: 10px;" >Quyền truy cập: </label> 
                             <select style="margin-left: 10px;" [(ngModel)] ="selected[i]" (change)="valueChange($event)">
@@ -28,12 +22,12 @@
                             </select>
                             <br><br>
                         </ng-container>
-                        <div class="buttonpanel"><i class="fas fa-plus fa-3x" (click)="Add()"></i></div>
+                        <div class="buttonpanel"><i class="fas fa-plus fa-3x" (click)="Add()"> Thêm</i></div>
                     </ng-container>
                 </div>
             </div>
-            <div style="margin-bottom: 50px; margin-top: 20px;">
-                <div class="container d-flex justify-content-center">
+            <div class="footer-addgroupquyen">
+                <div class="container">
                     <button class="btn btn-outline-dark" type="button" id="save_tk" (click)="back()"><i class="fas fa-caret-square-left"></i></button>
                     <button class="btn btn-primary" type="button" id="save_tk" (click)="onSubmit()">Save</button>
                 </div>

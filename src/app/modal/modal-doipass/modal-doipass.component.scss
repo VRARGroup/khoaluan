@@ -1,28 +1,37 @@
+.inline {
+  display: block;
+}
 
-  .inline {
-    display: block;
-  }
-  
-  .inputtext {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid #4a90e2;
-    border-radius: 4px;
-  }
-  
-  .inputtext1 {
-    width: 151px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid #4a90e2;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
+.inputtext {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #4a90e2;
+  border-radius: 4px;
+}
 
-  .card {
-    min-width: 60% !important;
-  }
-  
+.inputtext1 {
+  width: 151px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #4a90e2;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.card {
+  min-width: 60% !important;
+}
+
+.body-doimk {
+  padding: 0 82px;
+}
+
+.title-doimk {
+  height: 42px;
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+}
