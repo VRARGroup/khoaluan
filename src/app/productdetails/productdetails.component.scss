@@ -215,7 +215,7 @@ li {
   img {
     margin: 0px 12px !important;
     width: 100%;
-    max-height: 257px;
+    max-height: 242px;
     height: auto;
     max-width: 217px;
   }
@@ -376,7 +376,6 @@ mat-progress-bar {
   width: 32%;
   flex: 1;
   padding: 10px 0px;
-  color: rgb(199, 194, 194);
   font-size: 14px;
 }
 
@@ -400,7 +399,6 @@ mat-progress-bar {
   position: absolute;
   padding: 10px;
   border: 1px solid #288ad6;
-  border-bottom-left-radius: 5px;
   background: #288ad6;
   font-size: 13px;
   color: #fff;

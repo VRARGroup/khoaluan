@@ -392,7 +392,7 @@ export class ProductdetailsComponent implements OnInit {
         $("#comment_1").css("height", "235px");
       } else if (this.resulf_danhgia.length > 0) {
         $("#comment_1_1").css("display", "none");
-        $("#comment_1").css("height", this.resulf_danhgia.length * 36 + 60 + "px");
+        $("#comment_1").css("height", this.resulf_danhgia.length * 36 + 80 + "px");
       }
       else {
         $("#comment_1_2").css("display", "none");
@@ -483,7 +483,7 @@ export class ProductdetailsComponent implements OnInit {
   guidanhgiangay() {
     if(this.star>0)
     {
-      if(this.textarea_count>=80)
+      if(this.textarea_count>=15)
       {
         
         if ($('#hoten').val().toString().trim() != "" && $('#sdt').val().toString().trim() != "" ) 
@@ -558,7 +558,7 @@ export class ProductdetailsComponent implements OnInit {
       }
       else
       {
-        alert("Nội dung phải đủ 80 ký tự trở lên !!!")
+        alert("Nội dung phải đủ 15 ký tự trở lên !!!")
       }
     }
     else{

@@ -124,7 +124,7 @@
               <ng-template class="slide" carouselSlide>
                 <a (click)="render_sp(same_price._id)">
                   <div class="box-image-same-price">
-                    <div style="text-align: center; height: 257px; padding-top: 10px;"><label class="tra-gop"> Trả góp
+                    <div style="text-align: center; height: 242px; padding-top: 10px;"><label class="tra-gop"> Trả góp
                         0% </label><img src="{{same_price.hinhdaidien}}"></div>
                     <p style="padding: 2px 25px; min-height: 37px;">{{same_price.ten}}</p>
                     <p *ngIf="same_price.giamgia!=0 && same_price.giamgia!=null" style="color: #d0021b;">
@@ -243,7 +243,7 @@
               </div>
               <div id="show_hide_comment_1" class="col-6" >
                 <a (click)="show_modal_danhgia(item.ten)">
-                  <div style="margin-top: 15px;text-align: center; margin-right: 20px" id="show_hide_danhgiasosao">
+                  <div style="text-align: center;" id="show_hide_danhgiasosao">
                     Đánh giá ngay
                   </div>
                 </a>
@@ -262,51 +262,37 @@
             <div class="col-12" style="padding-top:20px;list-style-type:none; width: auto; max-width: 66vw;">
               <h6 style="display: inline; margin-right: 10px;">Chọn đánh giá của bạn</h6>
               <a (click)="choose_star(1)" style="display: inline-block;">
-                <div (mouseover)="mouseover_star(1)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
+                <div (mouseover)="mouseover_star(1)" (mouseleave)="mouseleave_star()"><i style="font-size: 20px;" class="fa fa-star"
                     aria-hidden="true" id="star_1"></i></div>
               </a>
               <a (click)="choose_star(2)" style="display: inline-block;">
-                <div (mouseover)="mouseover_star(2)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
+                <div (mouseover)="mouseover_star(2)" (mouseleave)="mouseleave_star()"><i style="font-size: 20px;" class="fa fa-star"
                     aria-hidden="true" id="star_2"></i></div>
               </a>
               <a (click)="choose_star(3)" style="display: inline-block;">
-                <div (mouseover)="mouseover_star(3)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
+                <div (mouseover)="mouseover_star(3)" (mouseleave)="mouseleave_star()"><i style="font-size: 20px;" class="fa fa-star"
                     aria-hidden="true" id="star_3"></i></div>
               </a>
               <a (click)="choose_star(4)" style="display: inline-block;">
-                <div (mouseover)="mouseover_star(4)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
+                <div (mouseover)="mouseover_star(4)" (mouseleave)="mouseleave_star()"><i style="font-size: 20px;" class="fa fa-star"
                     aria-hidden="true" id="star_4"></i></div>
               </a>
               <a (click)="choose_star(5)" style="display: inline-block;">
-                <div (mouseover)="mouseover_star(5)" (mouseleave)="mouseleave_star()"><i class="fa fa-star"
+                <div (mouseover)="mouseover_star(5)" (mouseleave)="mouseleave_star()"><i style="font-size: 20px;" class="fa fa-star"
                     aria-hidden="true" id="star_5"></i></div>
               </a>
               <label id="macth_list" style="display: inline-block;"></label>
               <br>
               <br>
               <textarea (keyup)="textarea_text_change($event)"
-                style="font-size: 16px; width: 100%; color: rgba(177, 174, 174, 0.664); padding: 5px;"
+                style="font-size: 16px; width: 100%; padding: 5px; height: 111px;"
                 id="textarea_danhgiasosao" cols="30" rows="10"
                 placeholder="Mời bạn chia sẻ thêm một số cảm nhận..."></textarea>
-              <!-- <div
-                style="display: block; overflow: hidden; position: relative; color: rgba(79, 248, 130, 0.815); border: 0;background: #e4dadab2; width: 100%; height: 40px; padding: 6px; margin-top: -4px;margin-bottom: 14px;">
-                <i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera" aria-hidden="true"></i>
-                Đính kèm ảnh
-                <p style="float: right; margin-top: 14px;">{{textarea_count}} /15 kí tự.</p>
-              </div>
-              <div class="custom-file">
-                <input type='file' id="uploadCaptureInputFile" (change)="onSelectFile($event)" multiple>
-              </div>
-              <div class="comment-1-input">
-                <input placeholder="Họ tên(Bắc buộc)" type="text">
-                <input style="margin: 0 8px; font-size: 14px;" placeholder="Số điện thoại (Bắt buộc)" type="number">
-                <input placeholder="Email (Không bắt buộc)" type="text">
-              </div> -->
               <div (click)="openFile()" class="btn-open-file">
                 <span style="cursor: pointer;"><i style="font-size: 30px; padding: 1px 15px;" class="fa fa-camera"
                     aria-hidden="true"></i>
                   Đính kèm ảnh</span>
-                <p style="float: right; margin-top: 14px;">{{textarea_count}} /80 kí tự.</p>
+                <p style="float: right; margin-top: 14px;">{{textarea_count}} /15 kí tự.</p>
               </div>
               <div class="filter">
                 <div class="inline" *ngFor='let url of urls,let i=index'>
@@ -326,10 +312,10 @@
                   id="uploadCaptureInputFile" multiple>
               </div>
               <div class="comment-1-input">
-                <input id="hoten" placeholder="Họ tên(Bắc buộc)" type="text">
+                <input id="hoten" placeholder="Họ tên(Bắt buộc)" type="text">
                 <input id="sdt" style="margin: 0 8px; font-size: 14px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Số điện thoại (Bắt buộc)"
                   type="text">
-                <input id="email" placeholder="Email (Không bắt buộc)" type="text">
+                <input id="email" placeholder="Email" type="text">
               </div>
               <a>
                 <div class="btn-gui-danhgia" (click)="guidanhgiangay()">
@@ -366,7 +352,7 @@
                         <i style="margin-left: 10px;">{{item_danhgia.noidung}}</i>
                       </p>
                     </div>
-                    <div class="d-flex justify-content-start">
+                    <div class="d-flex justify-content-start" style="background-color: #fff;">
                     <ng-container *ngIf="item_danhgia.hinh!=null && item_danhgia.hinh.length>0" >
                       <div *ngFor="let i of item_danhgia.hinh" class="rat">
                         <img src="{{i}}">
@@ -486,7 +472,7 @@
                 <i class="iconcom-user">{{item_comment.ten.substring(0,1)}}</i>
                 <strong>{{item_comment.ten}}</strong>
                 <div class="infocom_ask">{{item_comment.noidung}}</div>
-                <div class="d-flex justify-content-start">
+                <div class="d-flex justify-content-start" style="background-color: #fff !important;">
                   <ng-container *ngIf="item_comment.hinh!=null && item_comment.hinh.length>0" >
                     <div *ngFor="let i of item_comment.hinh" class="rat">
                       <img style="width: 30px;" src="{{i}}">
@@ -535,19 +521,19 @@
                         <a (click)="show_insert_binhluanphu(item_comment._id,itembl.ten)">
                           <span class="btnreply">Trả lời </span>
                         </a>
-                        <b class="dot">●</b>
+                        <!-- <b class="dot">●</b>
                         <a href="javascript:void(0)" class="favor satis">
                           <i class="fa fa-thumbs-up"></i>
                           Hài lòng
                           <span></span>
-                        </a>
-                        <ng-container *ngIf="itembl.chucdanh==true">
+                        </a> -->
+                        <!-- <ng-container *ngIf="itembl.chucdanh==true">
                           <a href="javascript:void(0)" id="khl{{i}}" (click)="clickkohailong(i)" class="favor satis">
                             <i class="fa fa-thumbs-down"></i>
                             Không hài lòng
                             <span></span>
                           </a>
-                        </ng-container>
+                        </ng-container> -->
                         <span style="margin-left: 5px;">
                           <b class="spandate">●</b>
                           <a class="spandate">

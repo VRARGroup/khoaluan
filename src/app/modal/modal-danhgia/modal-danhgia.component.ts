@@ -259,7 +259,7 @@ export class ModalDanhgiaComponent implements OnInit {
           }
       }
       else {
-        alert("Vui lòng nhập đủ đánh giá");
+        alert("Nội dung phải đủ 15 ký tự trở lên !!!");
       }
     }
     else{
