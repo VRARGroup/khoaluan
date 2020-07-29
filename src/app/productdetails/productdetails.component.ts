@@ -628,7 +628,8 @@ export class ProductdetailsComponent implements OnInit {
         this.countstar3=res.filter(x=>x.sosao==3).length;
         this.countstar4=res.filter(x=>x.sosao==4).length;
         this.countstar5=res.filter(x=>x.sosao==5).length;
-        this.numberstar=(this.countstar1+this.countstar2+this.countstar3+this.countstar4+this.countstar5)/this.countstar;
+        var s=((this.countstar1+this.countstar2+this.countstar3+this.countstar4+this.countstar5)/this.countstar).toFixed(1);
+        this.numberstar=Number(s);
         for(let i of res[0].tieuchidanhgia)
         {
           this.counttcdg.push(0);
@@ -650,17 +651,17 @@ export class ProductdetailsComponent implements OnInit {
         }
         for(let k in this.counttcdg)
         {
-          this.counttcdg[k]=(this.counttcdg[k]/res.length)*100;
+          this.counttcdg[k]=Math.round((this.counttcdg[k]/res.length)*100);
         }
         console.log(this.counttcdg)
         }
     });
     setTimeout(()=>{this.danhgiaService.getalldg_idsp(this.idsp).subscribe((res: dg[] | null) => {
-      this.sumstar1=((res.filter(x=>x.sosao===1).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
-      this.sumstar2=((res.filter(x=>x.sosao===2).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
-      this.sumstar3=((res.filter(x=>x.sosao===3).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
-      this.sumstar4=((res.filter(x=>x.sosao===4).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
-      this.sumstar5=((res.filter(x=>x.sosao===5).reduce((sum,current)=>sum+1,0))/this.countstar)*100;
+      this.sumstar1=Math.round((((res.filter(x=>x.sosao===1).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+      this.sumstar2=Math.round((((res.filter(x=>x.sosao===2).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+      this.sumstar3=Math.round((((res.filter(x=>x.sosao===3).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+      this.sumstar4=Math.round((((res.filter(x=>x.sosao===4).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+      this.sumstar5=Math.round((((res.filter(x=>x.sosao===5).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
     });},200);
     
   }
