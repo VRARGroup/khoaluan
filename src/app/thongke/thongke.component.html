@@ -14,6 +14,7 @@
           <div class="inline">
             <button class="buttonth" id="thongke-spnoibat" (click)="load_thong_ke_sp()">SẢN PHẨM NỔI BẬT</button>
             <button class="buttonth" id="thongke-sp" (click)="load_thong_ke_loai_sp()">LOẠI SẢN PHẨM</button>
+            <label style="color: #fff; font-size: 18px; margin-right: -100px; margin-left: 10px;" *ngIf="tensanpham.length > 0">{{tensanpham.length}} sản phẩm </label>
           </div>
         </div>
       </div>
