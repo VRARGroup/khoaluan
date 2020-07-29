@@ -28,6 +28,9 @@
           <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_giathapdencao()">Giá
               thấp đến cao</span></label>
         </span>
+        <label style="line-height: 30px; display: flex; margin: 0;" *ngIf="items.length > 0">
+          {{itemsphu.length}} sản phẩm
+        </label>
       </div>
       <div class="list">
         <div id="list_1">
@@ -47,13 +50,14 @@
             </a>
           </ng-container>
         </div>
-        <div *ngIf="(this.itemsphu.length-this.items.length) > 0" class="show-more-list-product" style="text-align: center;">
+        <div *ngIf="(this.itemsphu.length-this.items.length) > 0" class="show-more-list-product"
+          style="text-align: center;">
           <a (click)="show_more_list_product()">Xem thêm {{this.itemsphu.length-this.items.length}} sản phẩm</a>
         </div>
       </div>
     </div>
     <div class="right-panel">
-      <div class="filter-category">
+      <div class="filter-item">
         <h2>Hãng</h2>
         <div class="category" *ngFor="let category of categories, let i=index">
           <a>
@@ -62,12 +66,31 @@
           </a>
         </div>
       </div>
-      <div class="filter-price">
+      <div class="filter-item">
         <h2>Giá Bán</h2>
         <div class="category" *ngFor="let price of prices">
           <a>
             <input type="checkbox" id="price_{{price}}" (change)="suggest_price(price)">
             <label id="label_{{price}}" for="price_{{price}}"> {{price}}</label>
+          </a>
+        </div>
+      </div>
+      <div class="filter-item item-inch" style="display: none;">
+        <h2>Chọn TIVI Theo Cỡ Màn Hình</h2>
+        <img src="https://cdn.tgdd.vn/dmx2016/Content/images/rangeinch.png">
+        <div class="category" *ngFor="let item of items_inch">
+          <a>
+            <input type="checkbox" id="items_inch_{{item}}" (change)="suggest_inch(item)">
+            <label id="label_{{item}}" for="items_inch_{{item}}"> {{item}}</label>
+          </a>
+        </div>
+      </div>
+      <div class="filter-item item-lit" style="display: none;">
+        <h2>Dung Tích</h2>
+        <div class="category" *ngFor="let item of items_lit">
+          <a>
+            <input type="checkbox" id="items_lit_{{item}}" (change)="suggest_lit(item)">
+            <label id="label_{{item}}" for="items_lit_{{item}}"> {{item}}</label>
           </a>
         </div>
       </div>

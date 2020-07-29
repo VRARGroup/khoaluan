@@ -28,6 +28,8 @@ export class ListproductComponent implements OnInit {
   gia: Array<any> = [];
   show_giatdc: boolean = false;
   show_giacdt: boolean = false;
+  items_inch: any[] = ["Từ 32 - 43 inch","Từ 44 - 54 inch","Từ 55 - 64 inch","Từ 65 - 74 inch","Trên 75 inch"];
+  items_lit: any[] = ["Dưới 150 lít","Từ 150 - 300 lít","Từ 300 - 400 lít","Từ 400 - 550 lít","Trên 550 lít"];
   constructor(private router: Router, private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -44,9 +46,14 @@ export class ListproductComponent implements OnInit {
       if (id_loai_sanpham.toString() == "20000") {
         document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bgTizi.png)";
         this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Tivi2020/bannerTizi.png";
+        setTimeout(() => {
+          $(".item-inch").css("display","block");
+        }, 200);
       } else if (id_loai_sanpham.toString() == "30000") {
         document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
-        this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/tulanh.png";
+        this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/tulanh.png"; setTimeout(() => {
+          $(".item-lit").css("display","block");
+        }, 200);
       } else if (id_loai_sanpham.toString() == "40000") {
         document.getElementById('html').style.backgroundImage = "url(https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/bg.png)";
         this.banner = "https://cdn.tgdd.vn/dmx2016/Content/images/2020/CategoryV3/Birthday2020/maygiat.png";
@@ -373,6 +380,14 @@ export class ListproductComponent implements OnInit {
       this.items = this.items.slice(0, 20);
       $('.show-more-list-product').css("display", "block");
     }
+  }
+
+  suggest_inch(){
+
+  }
+
+  suggest_lit(){
+    
   }
 
   show_giathapdencao() {
