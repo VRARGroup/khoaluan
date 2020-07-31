@@ -169,6 +169,7 @@ export class ProductdetailsComponent implements OnInit {
         a.push(submit);
         this.kl=false;
         setTimeout(()=>{this.loaddanhgia()},200);
+        this.get_product_details(this.idsp);
       } else {
         console.log("null")
       }
@@ -520,6 +521,7 @@ export class ProductdetailsComponent implements OnInit {
             for (let i = 0; i < this.urls.length; i++) {
               this.getvalue(i);
             }
+            let tcdg:Array<boolean>=[];
             const d = new dg(
               0,
               this.sosao,
@@ -530,7 +532,7 @@ export class ProductdetailsComponent implements OnInit {
               this.hinhthuctesp,
               0,
               null,
-              null,
+              tcdg,
               parseInt(this.idsp.toString())
             );
             console.log("danhgia", d);
@@ -543,8 +545,9 @@ export class ProductdetailsComponent implements OnInit {
             this.star=0;
             this.urls=[];
             this.show_hide_danhgiasosao();
-            
+            this.get_product_details(this.idsp);
             setTimeout(()=>{this.loaddanhgia()},200);
+            
           }
           else{
             alert("Email nhập không hợp lệ vui lòng kiểm tra lại !!!")
@@ -620,6 +623,8 @@ export class ProductdetailsComponent implements OnInit {
     this.danhgiaService.getdg_idsp(this.idsp).subscribe((res: dg[] | null) => {
       this.items_danhgia = (res) ? res : [];
       var j=res.find(x=>true);
+      if(res!=null)
+      {
       if(j.sosao!=null && !isNaN(j.sosao) && j.tieuchidanhgia.length!=null && !isNaN(j.tieuchidanhgia.length))
       {
         this.countstar=res.length;
@@ -628,14 +633,13 @@ export class ProductdetailsComponent implements OnInit {
         this.countstar3=res.filter(x=>x.sosao==3).length;
         this.countstar4=res.filter(x=>x.sosao==4).length;
         this.countstar5=res.filter(x=>x.sosao==5).length;
-        var s=((this.countstar1+this.countstar2+this.countstar3+this.countstar4+this.countstar5)/this.countstar).toFixed(1);
-        this.numberstar=Number(s);
+        this.numberstar =Math.round(((this.countstar1+this.countstar2+this.countstar3+this.countstar4+this.countstar5)/this.countstar)*10)/10;
+       
         for(let i of res[0].tieuchidanhgia)
         {
           this.counttcdg.push(0);
           
         }
-        
         for(let i of res)
         {
           if(i.tieuchidanhgia!=null || i.tieuchidanhgia!=undefined)
@@ -653,17 +657,15 @@ export class ProductdetailsComponent implements OnInit {
         {
           this.counttcdg[k]=Math.round((this.counttcdg[k]/res.length)*100);
         }
+        this.sumstar1=Math.round((((res.filter(x=>x.sosao===1).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+        this.sumstar2=Math.round((((res.filter(x=>x.sosao===2).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+        this.sumstar3=Math.round((((res.filter(x=>x.sosao===3).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+        this.sumstar4=Math.round((((res.filter(x=>x.sosao===4).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
+        this.sumstar5=Math.round((((res.filter(x=>x.sosao===5).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
         console.log(this.counttcdg)
         }
+      }
     });
-    setTimeout(()=>{this.danhgiaService.getalldg_idsp(this.idsp).subscribe((res: dg[] | null) => {
-      this.sumstar1=Math.round((((res.filter(x=>x.sosao===1).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
-      this.sumstar2=Math.round((((res.filter(x=>x.sosao===2).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
-      this.sumstar3=Math.round((((res.filter(x=>x.sosao===3).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
-      this.sumstar4=Math.round((((res.filter(x=>x.sosao===4).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
-      this.sumstar5=Math.round((((res.filter(x=>x.sosao===5).reduce((sum,current)=>sum+1,0))/this.countstar)*100)*10)/10;
-    });},200);
-    
   }
 
   show_insert_danhgiaphu(id: number) {

@@ -113,6 +113,7 @@ export class TaosanphamComponent implements OnInit {
 
   valueChange(event) {
     this.loaddetaillsp(this.selected);
+    this.sp=[];
   }
 
   valueChangethuonghieu(event) {
@@ -170,6 +171,11 @@ export class TaosanphamComponent implements OnInit {
   onSubmit() {
     this.maRefs.forEach((maRef: ElementRef) => (console.log(document.getElementById(maRef.nativeElement.id)["name"])));
     this.getvalueimagedd();
+    if(this.hinhdaidiensanpham==null || this.hinhdaidiensanpham==undefined)
+    {
+      alert("Vui lòng chọn ảnh đại diện cho sản phẩm !!!");
+      return;
+    }
     for (let i = 0; i < this.urls.length; i++) {
       this.getvalue(i);
     }
@@ -229,6 +235,7 @@ export class TaosanphamComponent implements OnInit {
           // console.log("dskt", this.tskt);
           // console.log("dskt", this.tsktname);
           console.log(tsp);
+          
           this.Createsp(tsp);
           this.reset();
           if (!isNaN(this.idtaolsp)) {
@@ -489,7 +496,7 @@ export class TaosanphamComponent implements OnInit {
       return;
     }
     let fileToUpload = <File>files[0];
-    this.urlimagedd = Object(fileToUpload.name);
+    
     this.isImageSaveddd = true;
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
@@ -503,7 +510,7 @@ export class TaosanphamComponent implements OnInit {
           console.log(this.responsedd)
         }
       });
-    setTimeout(() => { this.nameimagedd = fileToUpload.name }, 200);
+      setTimeout(()=>{this.nameimagedd = fileToUpload.name},200);
     document.getElementById("uploadimagedd")["value"] = "";
   }
 

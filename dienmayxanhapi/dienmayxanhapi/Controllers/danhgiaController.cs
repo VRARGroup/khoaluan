@@ -72,6 +72,18 @@ namespace dienmayxanhapi.Controllers
             _dgService.insertdg(dg);
             var saveResult = _signalService.SaveSignaldgAsync(dg);
             _hubContext.Clients.All.SendAsync("Signaldg", dg);
+
+            var star1 = (_dgService.Getdg().Where(x=>x.sosao==1 && x._id_sanpham==dg._id_sanpham).ToList().Sum(x=>x.sosao));
+            var star2 = (_dgService.Getdg().Where(x => x.sosao == 2 && x._id_sanpham == dg._id_sanpham).ToList().Sum(x => x.sosao));
+            var star3 = (_dgService.Getdg().Where(x => x.sosao == 3 && x._id_sanpham == dg._id_sanpham).ToList().Sum(x => x.sosao));
+            var star4 = (_dgService.Getdg().Where(x => x.sosao == 4 && x._id_sanpham == dg._id_sanpham).ToList().Sum(x => x.sosao));
+            var star5 = (_dgService.Getdg().Where(x => x.sosao == 5 && x._id_sanpham == dg._id_sanpham).ToList().Sum(x => x.sosao));
+            double sumstar = Math.Round((Convert.ToDouble(star1) + Convert.ToDouble(star2) + Convert.ToDouble(star3) + Convert.ToDouble(star4) + Convert.ToDouble(star5)) / Convert.ToDouble(_dgService.Getdg().Count));
+            var filter = Builders<sanphamdienthoai>.Filter.Eq("_id", dg._id_sanpham);
+            var update = Builders<sanphamdienthoai>.Update.Combine(
+                   Builders<sanphamdienthoai>.Update.Set("sosao", Convert.ToInt32(sumstar))
+               );
+            _dgService.Update(filter, update);
             return Ok(true);
         }
         catch(Exception e)

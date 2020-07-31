@@ -50,9 +50,9 @@
             </a>
           </ng-container>
         </div>
-        <div *ngIf="(this.itemsphu.length-this.items.length) > 0" class="show-more-list-product"
+        <div *ngIf="(this.itemsphu.length-this.items.length) > 0" id="show-more-list-product_id" class="show-more-list-product"
           style="text-align: center;">
-          <a (click)="show_more_list_product()">Xem thêm {{this.itemsphu.length-this.items.length}} sản phẩm</a>
+          <a id="a_id" (click)="show_more_list_product()">Xem thêm {{this.itemsphu.length-this.items.length}} sản phẩm</a>
         </div>
       </div>
     </div>

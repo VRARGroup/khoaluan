@@ -1,6 +1,6 @@
 <div style="width:100%;  background: #4a90e2;">
   <div class="warpher">
-    <a class="logo" title="Về trang chủ DienmayXanh.com" href="#">
+    <a class="logo" title="Về trang chủ DienmayXanh.com" [routerLink]="['/appmain/products']">
       <img class="icondmx-logo" src="./assets/logo.PNG">
     </a>
     <div class="nav-appmainnhanvien-menu">
@@ -9,7 +9,7 @@
       <button class="nav-appmainnhanvien-itemmenu" [routerLink]="['/appmainnv/quyentk']">Phân Quyền | Tài Khoản</button>
       <button class="nav-appmainnhanvien-itemmenu" [routerLink]="['/appmainnv/thongke']">Thống Kê</button>
     </div>
-    <div class="d-flex justify-content-end" style="width: 100%;">
+    <div class="d-flex justify-content-end" style="width: 30%;">
     <div class="d-flex justify-content-end">
       <button id="btndmk" class="buttonpanel" (click)="doipass()"><span>Đổi mật khẩu</span></button>
       <button id="btndx" class="buttonpanel"><i class="fas fa-sign-out-alt" (click)="dangxuat()"></i></button>

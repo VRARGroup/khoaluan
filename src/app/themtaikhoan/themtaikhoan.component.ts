@@ -57,7 +57,7 @@ export class ThemtaikhoanComponent implements OnInit {
     this.loadgroup();
     if (!isNaN(this.idtk)) {
       this.loadtaikhoan();
-      document.getElementById("delete_tk").style.display = "block";
+      document.getElementById("delete_tk").style.display = "";
     }
     else {
       if (window.localStorage.getItem("themuser") == "newuser") {

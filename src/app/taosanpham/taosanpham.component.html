@@ -42,7 +42,7 @@
                 <br>  <br>
                 <label>Thông số kỹ thuật <span style="color:red;font-weight:bold">(*)</span>: </label>
                 <div class="card-body" >
-                <table  *ngFor="let obj of sp; let i = index">
+                <table *ngFor="let obj of sp; let i = index">
                     
                     <ng-container *ngFor="let c of obj.dactrung , let l=index">
                     
@@ -80,12 +80,14 @@
                         <ng-container>
                         <div class="img-spacedd">
                             <ng-container *ngIf="isImageSaveddd">
-                                <img id="hinhdaidien" [src]="createImgPath(urlimagedd)" class="img1"> <br/>
+                                <img id="hinhdaidien" [src]="createImgPath(nameimagedd)" class="img1"> <br/>
                             </ng-container>
                                 
                         </div>
                         <br>
-                        <button class="btn btn-danger" (click)="Removeurlimagedd()" *ngIf="isImageSaveddd">Xóa</button>
+                        <div class="d-flex justify-content-start">
+                            <button class="btn btn-danger" (click)="Removeurlimagedd()" *ngIf="isImageSaveddd">Xóa</button>
+                        </div>
                         </ng-container>                       
                         <input type='file' #file id="uploadimagedd" (change)="uploadFiledd(file.files)">
                     </div>

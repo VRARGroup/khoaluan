@@ -26,8 +26,12 @@ export class ListproductComponent implements OnInit {
   banner: string = "";
   hang: Array<string> = [];
   gia: Array<any> = [];
+  inch: Array<any> = [];
+  lit: Array<any> = [];
   show_giatdc: boolean = false;
   show_giacdt: boolean = false;
+  show_bcn: boolean = false;
+  tt: boolean = false;
   items_inch: any[] = ["Từ 32 - 43 inch","Từ 44 - 54 inch","Từ 55 - 64 inch","Từ 65 - 74 inch","Trên 75 inch"];
   items_lit: any[] = ["Dưới 150 lít","Từ 150 - 300 lít","Từ 300 - 400 lít","Từ 400 - 550 lít","Trên 550 lít"];
   constructor(private router: Router, private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
@@ -76,9 +80,17 @@ export class ListproductComponent implements OnInit {
     this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
       this.itemsphu = (res) ? res : [];
       this.items = res.slice(0,25);
+      console.log(res);
     });
   }
   show_more_list_product() {
+    if(this.tt==true)
+    {
+      $('#list_1').css("height", "100%");
+      this.tt=false;
+      document.getElementById('a_id').innerText = "Vui lòng click lần 2 để xem sản phẩm chưa lọc";
+      return;
+    }
     if (this.show_giatdc == true) {
       if (this.items.length >= this.itemsphu.length) {
         this.items = this.items.sort((a, b) => a.giaban - b.giaban);
@@ -98,19 +110,33 @@ export class ListproductComponent implements OnInit {
           this.items = this.items.sort((a, b) => b.giaban - a.giaban);
         }
       }
-      else {
-        if(this.items.length<this.itemsphu.length)
+      else
+      {
+        if(this.show_bcn==true)
         {
-          var arritemsphu=this.itemsphu
-          Array.prototype.push.apply(this.items ,arritemsphu.slice(this.items.length, this.items.length+25));
-          if(this.items.length==this.itemsphu.length)
+          if (this.items.length >= this.itemsphu.length) {
+            this.items = this.items.sort((a, b) => b.sosao - a.sosao);
+          }
+          else
+          {
+            this.items = this.itemsphu;
+            this.items = this.items.sort((a, b) => b.sosao - a.sosao);
+          }
+        }
+        else {
+          if(this.items.length<this.itemsphu.length)
+          {
+            var arritemsphu=this.itemsphu
+            Array.prototype.push.apply(this.items ,arritemsphu.slice(this.items.length, this.items.length+25));
+            if(this.items.length==this.itemsphu.length)
+            {
+              $('.show-more-list-product').css("display", "none");
+            }
+          }
+          else
           {
             $('.show-more-list-product').css("display", "none");
           }
-        }
-        else
-        {
-          $('.show-more-list-product').css("display", "none");
         }
       }
     }
@@ -130,264 +156,542 @@ export class ListproductComponent implements OnInit {
   }
 
   suggest_category(value: any){
-    if(value!=null)
+    
+    if(value!=null && value!=undefined)
     {
-      $('.show-more-list-product').css("display", "none");
-      const index = this.hang.indexOf(value, 0);
-      if (index == -1)
+      let index:number=this.hang.indexOf(value,0);
+      if(index==-1)
       {
-        if (this.hang.length == 0 && this.gia.length == 0) {
-          this.items = [];
-        }
-        const index = this.hang.indexOf(value, 0);
-        if (index == -1) {
-          
+        if(value!="dienmayxanh" && value!="loaddienmayxanh")
+        {
           this.hang.push(value);
-          if (this.gia.length > 0) {
-            // for (let j of this.hang) {
-            //   var s=this.itemsphu.filter(x => x.thuonghieu == j);
-              const j = this.hang.indexOf(value, 0);
-              Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.thuonghieu == this.hang[j]));
-            //}
-            let arritems: Array<any> = [];
-            // arritems = this.items;
-            for (let i of this.gia) {
-              //this.items = arritems;
-              const j = this.gia.indexOf(i, 0);
-              var g = this.gia[j].toString().split(' ');
-              var g1 = g[1].toString().split('-');
-              if (g1.length > 1) {
-                Array.prototype.push.apply(arritems,this.items.filter(x => x.giaban > parseInt(g1[0]) && x.giaban < parseInt(g1[1])));
-              }
-              else {
-                if (g[0].toString().toUpperCase() == "DƯỚI") {
-                  Array.prototype.push.apply(arritems,this.items.filter(x => x.giaban < parseInt(g1[0])));
-                }
-                else {
-                  if (g[0].toString().toUpperCase() == "TRÊN") {
-                    Array.prototype.push.apply(arritems,this.items.filter(x => x.giaban > parseInt(g1[0])));
-                  }
-                  else {
-                    Array.prototype.push.apply(arritems,this.items.filter(x => x.giaban == parseInt(g1[0])));
-                  }
-                }
-              }
+        }
+        if(value=="dienmayxanh")
+        {
+          let ic:Array<sp>=[];
+          for(let i=0; i<this.hang.length; i++)
+          {
+            var kh=this.hang[i].trim();
+            Array.prototype.push.apply(ic,this.items.filter(x => x.thuonghieu==kh));
+            if(i==this.hang.length-1)
+            {
+                this.items=ic;
             }
-            this.items=arritems;
           }
-          else {
-            Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.thuonghieu == value));
+          return;
+        }
+        if(value=="loaddienmayxanh")
+        {
+          for(let i=0; i<this.hang.length; i++)
+          {
+            var kh=this.hang[i].trim();
+            Array.prototype.push.apply(this.items,this.itemsphu.filter(x => x.thuonghieu==kh));
+          }
+          return;
+        }
+        if(this.hang.length>1)
+        {
+          if(this.gia.length>0)
+          {
+            this.items=[];
+            this.suggest_price("loaddienmayxanh");
+          }
+          if(this.inch.length>0)
+          {
+            let ig:Array<sp>=[];
+            if(this.gia.length==0)
+            {
+              this.items=[];
+              this.suggest_inch("loaddienmayxanh")
+            }
+            else
+            {
+              this.suggest_inch("dienmayxanh");
+            }
+          }
+          if(this.lit.length>0)
+          {
+            let ig:Array<sp>=[];
+            if(this.gia.length==0)
+            {
+              this.items=[];
+              this.suggest_lit("loaddienmayxanh")
+            }
+            else
+            {
+              this.suggest_lit("dienmayxanh");
+            }
           }
         }
-      }
-      else {
-        this.hang.splice(index, 1);
-        //this.items = [];
-        if(this.hang.length>0)
+        let ic:Array<sp>=[];
+        var k=value.trim();
+        if(this.gia.length>0 || this.inch.length>0 || this.lit.length>0)
         {
-          for (let i of this.hang) {
-            this.items=this.items.filter(x => x.thuonghieu == i);
-          }
+          this.suggest_category("dienmayxanh");
         }
         else
         {
-        
-        let arr: Array<any>=[];
-        if (this.gia.length > 0) {
-          for (let j of this.gia) {
-            const k = this.gia.indexOf(j, 0);
-            var g = this.gia[k].toString().split(' ');
-            var g1 = g[1].toString().split('-');
-            if (g1.length > 1) {
-              Array.prototype.push.apply(arr,this.itemsphu.filter(x => x.giaban > parseInt(g1[0]) && x.giaban < parseInt(g1[1])));
-            }
-            else {
-              if (g[0].toString().toUpperCase() == "DƯỚI") {
-                Array.prototype.push.apply(arr,this.itemsphu.filter(x => x.giaban < parseInt(g1[0])));
-              }
-              else {
-                if (g[0].toString().toUpperCase() == "TRÊN") {
-                  Array.prototype.push.apply(arr,this.itemsphu.filter(x => x.giaban > parseInt(g1[0])));
-                }
-                else {
-                  Array.prototype.push.apply(arr,this.itemsphu.filter(x => x.giaban == parseInt(g1[0])));
-                }
-              }
-            }
-          }
-          this.items=arr;
-        }
-        }
-      }
-      if (this.hang.length == 0 && this.gia.length == 0) {
-        this.items = this.itemsphu;
-        this.items = this.items.slice(0, 20);
-        $('.show-more-list-product').css("display", "block");
-      }
-    }
-  }
-
-  suggest_price(value: any) {
-    if (this.gia.length == 0 && this.hang.length == 0) {
-      this.items = [];
-    }
-    const index = this.gia.indexOf(value, 0);
-    if (index == -1) {
-      this.gia.push(value);
-      const i = this.gia.indexOf(value, 0);
-      var g = this.gia[i].toString().split(' ');
-      var g1 = g[1].toString().split('-');
-      if (this.hang.length == 0) {
-        if (g1.length > 1) {
-          Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.giaban > parseInt(g1[0]) && x.giaban < parseInt(g1[1])));
-        }
-        else {
-          if (g[0].toString().toUpperCase() == "DƯỚI") {
-            Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.giaban < parseInt(g1[0])));
-          }
-          else {
-            if (g[0].toString().toUpperCase() == "TRÊN") {
-              Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.giaban > parseInt(g1[0])));
-            }
-            else {
-              Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.giaban == parseInt(g1[0])));
-            }
-          }
-        }
-      }
-      else {
-        //this.items = [];
-        // for (let i of this.hang) {
-        //   var s= this.itemsphu.filter(x => x.thuonghieu == i);
-        // }
-        if(this.gia.length==1)
-        {
-          let arriitems:Array<any>=[];
-          const i = this.gia.indexOf(value, 0);
-          var g = this.gia[i].toString().split(' ');
-          var g1 = g[1].toString().split('-');
-          if (g1.length > 1) {
-            Array.prototype.push.apply(arriitems,this.items.filter(x => x.giaban > parseInt(g1[0]) && x.giaban < parseInt(g1[1])));
-          }
-          else {
-            if (g[0].toString().toUpperCase() == "DƯỚI") {
-              Array.prototype.push.apply(arriitems,this.items.filter(x => x.giaban < parseInt(g1[0])));
-            }
-            else {
-              if (g[0].toString().toUpperCase() == "TRÊN") {
-                Array.prototype.push.apply(arriitems,this.items.filter(x => x.giaban > parseInt(g1[0])));
-              }
-              else {
-                Array.prototype.push.apply(arriitems,this.items.filter(x => x.giaban == parseInt(g1[0])));
-              }
-            }
-          }
-          this.items=arriitems;
-        }
-        else
-        {
-          for (let i of this.hang) {
-            var s= this.itemsphu.filter(x => x.thuonghieu == i);
-          }
-          let arriitems:Array<any>=[];
-          for(let j of this.gia)
+          if(this.hang.length>1)
           {
-            const i = this.gia.indexOf(j, 0);
-            var g = this.gia[i].toString().split(' ');
-            var g1 = g[1].toString().split('-');
-            if (g1.length > 1) {
-              Array.prototype.push.apply(arriitems,s.filter(x => x.giaban > parseInt(g1[0]) && x.giaban < parseInt(g1[1])));
-            }
-            else {
-              if (g[0].toString().toUpperCase() == "DƯỚI") {
-                Array.prototype.push.apply(arriitems,s.filter(x => x.giaban < parseInt(g1[0])));
-              }
-              else {
-                if (g[0].toString().toUpperCase() == "TRÊN") {
-                  Array.prototype.push.apply(arriitems,s.filter(x => x.giaban > parseInt(g1[0])));
-                }
-                else {
-                  Array.prototype.push.apply(arriitems,s.filter(x => x.giaban == parseInt(g1[0])));
-                }
-              }
-            }
-          }
-          this.items=arriitems;
-        }
-      }
-    }
-    else {
-      this.gia.splice(index, 1);
-      if (this.hang.length == 0) {
-        this.items = [];
-        for (let i of this.gia) {
-          const k = this.gia.indexOf(i, 0);
-          var g = this.gia[k].toString().split(' ');
-          var g1 = g[1].toString().split('-');
-          if(g1.length > 1)
-          {
-            Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.giaban > parseInt(g1[0]) && x.giaban < parseInt(g1[1])));
+            Array.prototype.push.apply(this.items,this.itemsphu.filter(x => x.thuonghieu==k));
           }
           else
           {
-            if (g[0].toString().toUpperCase() == "DƯỚI") {
-              this.items = this.itemsphu.filter(x => x.giaban < parseInt(g1[0]));
-            }
-            else {
-              if (g[0].toString().toUpperCase() == "TRÊN") {
-                this.items = this.itemsphu.filter(x => x.giaban > parseInt(g1[0]));
-              }
-              else {
-                this.items = this.itemsphu.filter(x => x.giaban < parseInt(g1[0]));
-              }
-            }
-          }
-          console.log(this.items);
-        }
-      }
-      else {
-        this.items = [];
-        for (let i of this.hang) {
-          Array.prototype.push.apply(this.items, this.itemsphu.filter(x => x.thuonghieu == i));
-        }
-        let arr = this.items;
-        for (let j of this.gia) {
-          this.items = arr;
-          const k = this.gia.indexOf(j, 0);
-          var g = this.gia[k].toString().split(' ');
-          var g1 = g[1].toString().split('-');
-          if (g1.length > 1) {
-            this.items = this.items.filter(x => x.giaban > parseInt(g1[0]) && x.giaban < parseInt(g1[1]));
-          }
-          else {
-            if (g[0].toString().toUpperCase() == "DƯỚI") {
-              this.items = this.items.filter(x => x.giaban < parseInt(g1[0]));
-            }
-            else {
-              if (g[0].toString().toUpperCase() == "TRÊN") {
-                this.items = this.items.filter(x => x.giaban > parseInt(g1[0]));
-              }
-              else {
-                this.items = this.items.filter(x => x.giaban == parseInt(g1[0]));
-              }
-            }
+            this.items=this.items.filter(x => x.thuonghieu==k);
           }
         }
       }
+      else
+      {
+        this.items=[];
+        this.hang.splice(index,1);
+        if(this.gia.length>0)
+        {
+          this.suggest_price("loaddienmayxanh");
+        }
+        if(this.hang.length>0)
+        {
+          if(this.gia.length==0)
+          {
+            this.suggest_category("loaddienmayxanh");
+          }
+          else
+          {
+            this.suggest_category("dienmayxanh");
+          }
+        }
+        if(this.inch.length>0)
+        {
+          this.suggest_inch("dienmayxanh");
+        }
+        if(this.lit.length>0)
+        {
+          this.suggest_lit("dienmayxanh");
+        }
+        if((this.inch.length==0 || this.lit.length==0) && (this.gia.length==0 && this.hang.length==0))
+        {
+          this.items=this.itemsphu;
+          this.tt=true;
+        }
+      }
+      
     }
-    if (this.hang.length == 0 && this.gia.length == 0) {
-      this.items = this.itemsphu;
-      this.items = this.items.slice(0, 20);
-      $('.show-more-list-product').css("display", "block");
+    if(this.items.length>0)
+    {
+      this.tt=true;
     }
-  }
-
-  suggest_inch(){
-
-  }
-
-  suggest_lit(){
     
+  }
+
+  suggest_price(value: any) {
+    if(value!=null && value!=undefined)
+    {
+      let index:number=this.gia.indexOf(value,0);
+      if(index==-1)
+      {
+        if(value!="dienmayxanh" && value!="loaddienmayxanh")
+        {
+          this.gia.push(value);
+        }
+        if(value=="dienmayxanh")
+        {
+          let ic:Array<sp>=[];
+          for(let i=0; i<this.gia.length; i++)
+          {
+            var gt=this.gia[i].split(" ");
+            var g1=gt[1].split("-");
+            if(gt[0].toString().toUpperCase() == "DƯỚI")
+            {
+              Array.prototype.push.apply(ic, this.items.filter(x=>x.giaban<=parseInt(gt[1])));
+            }
+            if(gt[0].toString().toUpperCase() == "TRÊN")
+            {
+              Array.prototype.push.apply(ic, this.items.filter(x=>x.giaban>=parseInt(gt[1])));
+            }
+            if(gt[0].toString().toUpperCase() == "TỪ")
+            {
+              Array.prototype.push.apply(ic, this.items.filter(x=>x.giaban>=parseInt(g1[0]) && x.giaban<=parseInt(g1[1])));
+            }
+          }
+          this.items=ic;
+          return;
+        }
+        if(value=="loaddienmayxanh")
+        {
+          let ic:Array<sp>=[];
+          for(let i=0; i<this.gia.length; i++)
+          {
+            var gt=this.gia[i].split(" ");
+            var g1=gt[1].split("-");
+            if(gt[0].toString().toUpperCase() == "DƯỚI")
+            {
+              Array.prototype.push.apply(ic, this.itemsphu.filter(x=>x.giaban<=parseInt(gt[1])));
+            }
+            if(gt[0].toString().toUpperCase() == "TRÊN")
+            {
+              Array.prototype.push.apply(ic, this.itemsphu.filter(x=>x.giaban>=parseInt(gt[1])));
+            }
+            if(gt[0].toString().toUpperCase() == "TỪ")
+            {
+              Array.prototype.push.apply(ic, this.itemsphu.filter(x=>x.giaban>=parseInt(g1[0]) && x.giaban<=parseInt(g1[1])));
+            }
+          }
+          this.items=ic;
+          return;
+        }
+        if(this.hang.length>0)
+        {
+          this.items=[];
+          this.suggest_category("loaddienmayxanh");
+        }
+        if(this.inch.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.items=[];
+            this.suggest_inch("loaddienmayxanh");
+          }
+          else
+          {
+            this.suggest_inch("dienmayxanh");
+          }
+        }
+        if(this.lit.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.items=[];
+            this.suggest_lit("loaddienmayxanh");
+          }
+          else
+          {
+            this.suggest_lit("dienmayxanh");
+          }
+        }
+        let ic:Array<sp>=[];
+        var gt=value.split(" ");
+        var g12=gt[1].split("-");
+        if(this.hang.length>0 || this.inch.length>0 || this.lit.length>0)
+        {
+          this.suggest_price("dienmayxanh");
+        }
+        else
+        {
+          if(this.gia.length>=1)
+          {
+            this.suggest_price("loaddienmayxanh");
+          }
+        }
+      }
+      else
+      {
+        this.items=[];
+        this.gia.splice(index,1);
+        if(this.gia.length>0)
+        {
+          this.suggest_price("loaddienmayxanh");
+        }
+        if(this.hang.length>0)
+        {
+          if(this.gia.length>0)
+          {
+            this.suggest_category("dienmayxanh");
+          }
+          else
+          {
+            this.suggest_category("loaddienmayxanh");
+          }
+        }
+        if(this.inch.length>0)
+        {
+          if(this.gia.length>0 || this.hang.length>0)
+          {
+            this.suggest_price("dienmayxanh");
+          }
+          else
+          {
+            this.suggest_price("loaddienmayxanh");
+          }
+        }
+        if(this.lit.length>0)
+        {
+          if(this.gia.length>0 || this.hang.length>0)
+          {
+            this.suggest_lit("dienmayxanh");
+          }
+          else
+          {
+            this.suggest_lit("loaddienmayxanh");
+          }
+        }
+        if((this.inch.length==0 || this.lit.length==0) && (this.gia.length==0 && this.hang.length==0))
+        {
+          this.items=this.itemsphu;
+          this.tt=false;
+        }
+      }
+    }
+    if(this.items.length>0)
+    {
+      this.tt=true
+    }
+  }
+
+  suggest_inch(value: any){
+    if(value!=null && value!=undefined)
+    {
+      let index:number=this.inch.indexOf(value,0);
+      if(index==-1)
+      {
+        if(value!="dienmayxanh" && value!="loaddienmayxanh")
+        {
+          this.inch.push(value);
+        }
+        if(value=="dienmayxanh")
+        {
+          let ic:Array<sp>=[];
+          for(let i=0; i<this.inch.length; i++)
+          {
+            var k=this.inch[i].trim().replace("inch","").replace("Từ","");
+            var s=k.split(" - ");
+            Array.prototype.push.apply(ic,this.items.filter(x => parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].toUpperCase().replace("INCH","").replace(" ",""))>=parseInt(s[0]) && parseInt(x.thongsokythuat[i]["Tổng quan"][1]["Kích cỡ màn hình"].replace("inch","").replace(" ",""))<=parseInt(s[1])));
+            if(i==this.inch.length-1)
+            {
+                this.items=ic;
+            }
+          }
+          return;
+        }
+        if(value=="loaddienmayxanh")
+        {
+          for(let i=0; i<this.inch.length; i++)
+          {
+            var k=this.inch[i].trim().replace("inch","").replace("Từ","");
+            var s=k.split(" - ");
+            Array.prototype.push.apply(this.items,this.itemsphu.filter(x => parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].toUpperCase().replace("INCH","").replace(" ",""))>=parseInt(s[0]) && parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].replace("inch","").replace(" ",""))<=parseInt(s[1])));
+          }
+          return;
+        }
+        if(this.inch.length>1)
+        {
+          if(this.hang.length>0)
+          {
+            this.items=[];
+            this.suggest_category("loaddienmayxanh");
+          }
+          if(this.gia.length>0)
+          {
+            let ig:Array<sp>=[];
+            if(this.hang.length==0)
+            {
+              this.items=[];
+              this.suggest_price("loaddienmayxanh")
+            }
+            else
+            {
+              this.suggest_price("dienmayxanh");
+            }
+            this.items=[];
+            this.items=ig;
+          }
+        }
+        let ic:Array<sp>=[];
+        var k=value.trim().replace("inch","").replace("Từ","");
+        var s=k.split(" - ");
+        if(this.gia.length>0 || this.hang.length>0)
+        {
+          for(let i=0;i<this.inch.length;i++)
+          {
+            var k=this.inch[i].trim().replace("inch","").replace("Từ","");
+            var s=k.split(" - ");
+            Array.prototype.push.apply(ic,this.items.filter(x => parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].toUpperCase().replace("INCH","").replace(" ",""))>=parseInt(s[0]) && parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].replace("inch","").replace(" ",""))<=parseInt(s[1])));
+            if(i==this.inch.length-1)
+            {
+              this.items=ic;
+            }
+          }
+        }
+        else
+        {
+          if(this.inch.length>1)
+          {
+            Array.prototype.push.apply(this.items,this.itemsphu.filter(x => parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].toUpperCase().replace("INCH","").replace(" ",""))>=parseInt(s[0]) && parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].replace("inch","").replace(" ",""))<=parseInt(s[1])));
+          }
+          else
+          {
+            this.items=this.items.filter(x => parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].toUpperCase().replace("INCH","").replace(" ",""))>=parseInt(s[0]) && parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].replace("inch","").replace(" ",""))<=parseInt(s[1]));
+          }
+        }
+      }
+      else
+      {
+        this.items=[];
+        this.inch.splice(index,1);
+        if(this.hang.length>0)
+        {
+          this.suggest_category("loaddienmayxanh");
+        }
+        if(this.gia.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.suggest_price("loaddienmayxanh"); 
+          }
+          else
+          {
+            this.suggest_price("dienmayxanh"); 
+          }
+        }
+        if(this.inch.length>0)
+        {
+          if(this.gia.length>0 || this.hang.length>0)
+          {
+            this.suggest_inch("dienmayxanh");
+          }
+          else
+          {
+            this.suggest_inch("loaddienmayxanh");
+          }
+        }
+        if(this.inch.length==0 && this.gia.length==0 && this.hang.length==0)
+        {
+          this.items=this.itemsphu;
+          this.tt=false;
+        }
+      }
+    }
+    if(this.items.length>0)
+    {
+      this.tt=true
+    }
+  }
+
+  suggest_lit(value: any){
+    if(value!=null && value!=undefined)
+    {
+      let index:number=this.lit.indexOf(value,0);
+      if(index==-1)
+      {
+        if(value!="dienmayxanh" && value!="loaddienmayxanh")
+        {
+          this.lit.push(value);
+        }
+        if(value=="dienmayxanh")
+        {
+          let ic:Array<sp>=[];
+          for(let i=0; i<this.lit.length; i++)
+          {
+            var k=this.lit[i].trim().replace("lít","")
+            var s=k.split(" ");
+            console.log(this.items)
+            if(s[0].toString().toUpperCase()=="TỪ")
+            {
+              Array.prototype.push.apply(ic, this.items.filter(x=>parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))>=parseInt(s[1]) && parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))<=parseInt(s[3])));
+            }
+            if(s[0].toString().toUpperCase()=="TRÊN")
+            {
+              Array.prototype.push.apply(ic, this.items.filter(x=>parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))>=parseInt(s[1])));
+            }
+            if(s[0].toString().toUpperCase()=="DƯỚI")
+            {
+              Array.prototype.push.apply(ic, this.items.filter(x=>parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))<=parseInt(s[1])));
+            }
+            if(i==this.lit.length-1)
+            {
+              this.items=ic;
+            }
+          }
+          return;
+        }
+        if(value=="loaddienmayxanh")
+        {
+          for(let i=0; i<this.lit.length; i++)
+          {
+            var k=this.lit[i].trim().replace("lít","")
+            var s=k.split(" ");
+            console.log(this.items)
+            if(s[0].toString().toUpperCase()=="TỪ")
+            {
+              Array.prototype.push.apply(this.items, this.itemsphu.filter(x=>parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))>=parseInt(s[1]) && parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))<=parseInt(s[3])));
+            }
+            if(s[0].toString().toUpperCase()=="TRÊN")
+            {
+              Array.prototype.push.apply(this.items, this.itemsphu.filter(x=>parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))>=parseInt(s[1])));
+            }
+            if(s[0].toString().toUpperCase()=="DƯỚI")
+            {
+              Array.prototype.push.apply(this.items, this.itemsphu.filter(x=>parseInt(x.thongsokythuat[0]["Đặc điểm sản phẩm"][1]["Dung tích sử dụng"].toUpperCase().replace("LÍT",""))<=parseInt(s[1])));
+            }
+          }
+          return;
+        }
+        if(this.lit.length>1)
+        {
+          if(this.hang.length>0)
+          {
+            this.items=[];
+            this.suggest_category("loaddienmayxanh");
+          }
+          if(this.gia.length>0)
+          {
+            if(this.hang.length==0)
+            {
+              this.items=[];
+              this.suggest_price("loaddienmayxanh");
+            }
+            else
+            {
+              this.suggest_price("dienmayxanh");
+            }
+          }
+        }
+        let ic:Array<sp>=[];
+        var k=value.trim();
+        if(this.gia.length>0 || this.hang.length>0)
+        {
+          
+          this.suggest_lit("dienmayxanh");
+        }
+        else
+        {
+          this.suggest_lit("dienmayxanh");
+        }
+    }
+      else
+      {
+        this.items=[];
+        this.lit.splice(index,1);
+        if(this.gia.length>0)
+        {
+          this.suggest_price("loaddienmayxanh");
+        }
+        if(this.hang.length>0)
+        {
+          if(this.gia.length==0)
+          {
+            this.suggest_category("loaddienmayxanh");
+          }
+          else
+          {
+            this.suggest_category("dienmayxanh");
+          }
+        }
+        if(this.lit.length>0)
+        {
+          this.suggest_lit("loaddienmayxanh");
+        }
+        if(this.lit.length==0 && this.gia.length==0 && this.hang.length==0)
+        {
+          this.items=this.itemsphu;
+          this.tt=false;
+        }
+      }
+      
+    }
+    if(this.items.length>0)
+    {
+      this.tt=true;
+    }
   }
 
   show_giathapdencao() {
@@ -396,13 +700,17 @@ export class ListproductComponent implements OnInit {
     this.items = this.items.sort((a, b) => a.giaban - b.giaban);
   }
 
+  show_banchaynhat() {
+    this.show_giacdt = false;
+    this.show_giatdc = false;
+    this.items = this.items.sort((a, b) => b.sosao - a.sosao);
+  }
+
   show_caothapdenthap() {
     this.show_giatdc = false;
     this.show_giacdt = true;
     this.items = this.items.sort((a, b) => b.giaban - a.giaban);
   }
 
-  show_banchaynhat() {
-    this.get_list_product(this.id_loai_sanpham);
-  }
+  
 }
