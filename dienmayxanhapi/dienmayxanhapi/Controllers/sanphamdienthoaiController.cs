@@ -605,6 +605,13 @@ namespace dienmayxanhapi.Controllers
             return _spdtService.Getfillter_get_thong_ke_sp();
         }
 
+        [Route("get_sp_th_lsp")]
+        [HttpGet]
+        public ActionResult<List<sanphamdienthoai>> Getfillter_get_sp_th_lsp(int idlsp, string thuonghieu)
+        {
+          return _spdtService.Getfillter_list_product(idlsp).Where(x=>x.thuonghieu== thuonghieu).ToList();
+        }
+
         public Boolean checkktid(int id)
         {
           try

@@ -32,11 +32,32 @@ export class ListproductComponent implements OnInit {
   show_giacdt: boolean = false;
   show_bcn: boolean = false;
   tt: boolean = false;
+  thuonghieu: string;
+  price: string;
+  inchstring: string;
   items_inch: any[] = ["Từ 32 - 43 inch","Từ 44 - 54 inch","Từ 55 - 64 inch","Từ 65 - 74 inch","Trên 75 inch"];
   items_lit: any[] = ["Dưới 150 lít","Từ 150 - 300 lít","Từ 300 - 400 lít","Từ 400 - 550 lít","Trên 550 lít"];
   constructor(private router: Router, private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        this.thuonghieu = params.business;
+        console.log("url",this.thuonghieu);
+      }
+    );
+    this.route.queryParams
+      .subscribe(params => {
+        this.price = params.price;
+        console.log("url",this.price);
+      }
+    );
+    this.route.queryParams
+      .subscribe(params => {
+        this.inchstring = params.inch;
+        console.log("url",this.inchstring);
+      }
+    );
     let id_loai_sanpham = this.id_loai_sanpham = this.route.snapshot.params.id;
     if (isNaN(id_loai_sanpham))
       id_loai_sanpham = this.id_loai_sanpham = parseInt(window.localStorage.getItem("loai_sp"));
@@ -80,7 +101,37 @@ export class ListproductComponent implements OnInit {
     this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
       this.itemsphu = (res) ? res : [];
       this.items = res.slice(0,25);
-      console.log(res);
+      if(this.thuonghieu!=null && this.thuonghieu!=undefined)
+      {
+        this.suggest_category(this.thuonghieu);
+      }
+      if(this.price!=null && this.price!=undefined)
+      {
+        
+        this.suggest_price(this.price);
+      }
+      if(this.inchstring!=null && this.inchstring!=undefined)
+      {
+        this.suggest_inch(this.inchstring);
+      }
+    });
+  }
+  get_list_product_thuonghieu(id: number) {
+    this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
+      this.itemsphu = (res) ? res : [];
+      this.items = res.slice(0,25);
+      if(this.thuonghieu!=null && this.thuonghieu!=undefined)
+      {
+        this.suggest_category(this.thuonghieu);
+      }
+      if(this.price!=null && this.price!=undefined)
+      {
+        this.suggest_price(this.price);
+      }
+      if(this.inchstring!=null && this.inchstring!=undefined)
+      {
+        this.suggest_inch(this.inchstring);
+      }
     });
   }
   show_more_list_product() {
@@ -88,7 +139,7 @@ export class ListproductComponent implements OnInit {
     {
       $('#list_1').css("height", "100%");
       this.tt=false;
-      document.getElementById('a_id').innerText = "Vui lòng click lần 2 để xem sản phẩm chưa lọc";
+      document.getElementById('a_id').innerText = "Vui lòng click lần 2 để xem thêm sản phẩm chưa lọc";
       return;
     }
     if (this.show_giatdc == true) {

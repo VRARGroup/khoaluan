@@ -49,12 +49,23 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/appmain/listproduct', id_loai_sanpham]).then(() => {
       window.location.reload();
     });
-    // window.localStorage.removeItem("sp");
-    // window.localStorage.setItem("sp", id_sanpham.toString());
-
-    // // this.router.navigate(["appmain/productdetails"]);
-    // window.location.href = "appmain/productdetails";
   }
+  render_loai_sp_th(id_loai_sanpham: any, th:any): void {
+    this.router.navigate(['/appmain/listproduct', id_loai_sanpham], { queryParams: { business: th } }).then(() => {
+      window.location.reload();
+    });
+  }
+  render_loai_sp_price(id_loai_sanpham: any, th:any): void {
+    this.router.navigate(['/appmain/listproduct', id_loai_sanpham], { queryParams: { price: th } }).then(() => {
+      window.location.reload();
+    });
+  }
+  render_loai_sp_inch(id_loai_sanpham: any, th:any): void {
+    this.router.navigate(['/appmain/listproduct', id_loai_sanpham], { queryParams: { inch: th } }).then(() => {
+      window.location.reload();
+    });
+  }
+
   render_sp(id_sanpham: any): void {
     this.router.navigate(['/appmain/productdetails', id_sanpham]).then(() => {
       window.location.reload();
