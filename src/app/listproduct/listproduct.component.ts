@@ -35,6 +35,7 @@ export class ListproductComponent implements OnInit {
   thuonghieu: string;
   price: string;
   inchstring: string;
+  litstring: string;
   items_inch: any[] = ["Từ 32 - 43 inch","Từ 44 - 54 inch","Từ 55 - 64 inch","Từ 65 - 74 inch","Trên 75 inch"];
   items_lit: any[] = ["Dưới 150 lít","Từ 150 - 300 lít","Từ 300 - 400 lít","Từ 400 - 550 lít","Trên 550 lít"];
   constructor(private router: Router, private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
@@ -43,19 +44,13 @@ export class ListproductComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         this.thuonghieu = params.business;
-        console.log("url",this.thuonghieu);
-      }
-    );
-    this.route.queryParams
-      .subscribe(params => {
         this.price = params.price;
-        console.log("url",this.price);
-      }
-    );
-    this.route.queryParams
-      .subscribe(params => {
         this.inchstring = params.inch;
-        console.log("url",this.inchstring);
+        this.litstring = params.lit;
+        console.log(  this.thuonghieu)
+        console.log(this.price)
+        console.log(this.inchstring)
+        console.log(this.litstring)
       }
     );
     let id_loai_sanpham = this.id_loai_sanpham = this.route.snapshot.params.id;
@@ -103,34 +98,18 @@ export class ListproductComponent implements OnInit {
       this.items = res.slice(0,25);
       if(this.thuonghieu!=null && this.thuonghieu!=undefined)
       {
+        (document.getElementById("category_"+this.thuonghieu) as HTMLInputElement).checked = true
         this.suggest_category(this.thuonghieu);
-      }
-      if(this.price!=null && this.price!=undefined)
-      {
-        
-        this.suggest_price(this.price);
       }
       if(this.inchstring!=null && this.inchstring!=undefined)
       {
+        (document.getElementById("items_inch_"+this.inchstring) as HTMLInputElement).checked = true
         this.suggest_inch(this.inchstring);
-      }
-    });
-  }
-  get_list_product_thuonghieu(id: number) {
-    this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
-      this.itemsphu = (res) ? res : [];
-      this.items = res.slice(0,25);
-      if(this.thuonghieu!=null && this.thuonghieu!=undefined)
+      } 
+      if(this.litstring!=null && this.litstring!=undefined)
       {
-        this.suggest_category(this.thuonghieu);
-      }
-      if(this.price!=null && this.price!=undefined)
-      {
-        this.suggest_price(this.price);
-      }
-      if(this.inchstring!=null && this.inchstring!=undefined)
-      {
-        this.suggest_inch(this.inchstring);
+        (document.getElementById("items_lit_"+this.litstring) as HTMLInputElement).checked = true
+        this.suggest_lit(this.litstring);
       }
     });
   }

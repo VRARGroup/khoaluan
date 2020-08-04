@@ -45,29 +45,19 @@
               <a (click)="render_loai_sp(60000)">Loa Karaoke</a>
             </span>
           <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside>
+              <aside style="text-align: center;">
                 <strong>
                   TIVI
                 </strong>
-                <a href="javascript:void(0)">Tivi trả góp 0-1%</a>
                 <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'Sony')">Sony</a>
                 <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'Samsung')">Samsung</a>
                 <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'LG')">LG</a>
                 <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'TCL')">TCL</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 32-43 inch')">Từ 32-43 inch</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 44-54 inch')">Từ 44-54 inch</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_price(20000,'Dưới 7000000')">Dưới 7 triệu</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_price(20000,'Trên 17000000')">Tivi cao cấp</a>
-              </aside>
-              <aside>
-                <strong>
-                  LOA KARAOKE
-                </strong>
-                <a href="javascript:void(0)">Loa kéo</a>
-                <a href="javascript:void(0)">Loa thanh</a>
-                <a href="javascript:void(0)">Dàn âm thanh</a>
-                <a href="javascript:void(0)">Cáp HDMI ,cáp Tivi</a>
-                <a href="javascript:void(0)">Micro</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 32 - 43 inch')">Từ 32 - 43 inch</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 44 - 54 inch')">Từ 44 - 54 inch</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 55 - 64 inch')">Từ 55 - 64 inch</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 65 - 74 inch')">Từ 65 - 74 inch</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Trên 75 inch')">Trên 75 inch</a>
               </aside>
             </div>
             </li>
@@ -83,20 +73,22 @@
                 <strong>
                   TỦ LẠNH
                 </strong>
-                <a href="javascript:void(0)">Trả góp 0%</a>
-                <a href="javascript:void(0)">Tủ lạnh tử 150-300 lít</a>
-                <a href="javascript:void(0)">Tủ lạnh tử 300-400 lít</a>
-                <a href="javascript:void(0)">Tủ lạnh Slide by side</a>
-                <a href="javascript:void(0)">Tủ lạnh mini</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(30000,'Sony')">Samsung</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(30000,'Samsung')">Panasonic</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(30000,'LG')">Toshiba</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Dưới 150 lít')">Tủ lạnh dưới 150 lít</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Từ 150 - 300 lít')">Tủ lạnh tử 150-300 lít</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Từ 300 - 400 lít')">Tủ lạnh tử 300-400 lít</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Từ 400 - 550 lít')">Tủ lạnh từ 400 - 550 lít</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Trên 550 lít')">Tủ lạnh trên 550 lít</a>
               </aside>
               <aside>
                 <strong>
                   TỦ ĐÔNG
                 </strong>
-                <a href="javascript:void(0)">Panasonic</a>
-                <a href="javascript:void(0)">Samsung</a>
-                <a href="javascript:void(0)">Toshiba</a>
-                <a href="javascript:void(0)">Từ 8-12 triệu</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(70000,'Sanaky')">Sanaky</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(70000,'Kangaroo')">Kangaroo</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(70000,'Sunhouse')">Sunhouse</a>
               </aside>
             </div>
             </li>
@@ -111,25 +103,21 @@
                 <strong>
                   MÁY GIẶT
                 </strong>
-                <a href="javascript:void(0)" class="">Đời mới 2020</a>
-                <a href="javascript:void(0)" class="">Toshiba</a>
-                <a href="javascript:void(0)" class="">LG</a>
-                <a href="javascript:void(0)" class="">Panasonic</a>
-                <a href="javascript:void(0)" class="">Samsung</a>
-                <a href="javascript:void(0)" class="">Electrolux</a>
-                <a href="javascript:void(0)" class="">Aqua</a>
-                <a href="javascript:void(0)" class="">Máy giặt cửa ngang (cửa trước)</a>
-                <a href="javascript:void(0)" class="">Máy giặt sấy</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Toshiba')">Toshiba</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'LG')">LG</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Panasonic')">Panasonic</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Samsung')">Samsung</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Electrolux')">Electrolux</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Aqua')">Aqua</a>
               </aside>
               <aside>
                 <strong>
                   SẤY QUẦN ÁO
                 </strong>
-                <a href="javascript:void(0)" class="">Giá dưới 5 triệu</a>
-                <a href="javascript:void(0)" class="">Giá từ 5 - 10 triệu</a>
-                <a href="javascript:void(0)" class="">Electrolux</a>
-                <a href="javascript:void(0)" class="">Beko</a>
-                <a href="javascript:void(0)" class="">Kangaroo</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Electrolux')">Electrolux</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Beko')">Beko</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Candy')">Candy</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Samsung')">Samsung</a>
               </aside>
             </div>
             </li>
@@ -144,30 +132,20 @@
                 <strong>
                   MÁY LẠNH
                 </strong>
-                <a href="javascript:void(0)" class="">Trả góp 0 - 0.5%</a>
-                <a href="javascript:void(0)" class="">Đời mới 2020</a>
-                <a href="javascript:void(0)" class="">Panasonic</a>
-                <a href="javascript:void(0)" class="">Daikin</a>
-                <a href="javascript:void(0)" class="">Samsung</a>
-                <a href="javascript:void(0)" class="">Máy lạnh 1 HP</a>
-                <a href="javascript:void(0)" class="">Máy lạnh 1.5 HP</a>
-                <a href="javascript:void(0)" class="">Máy lạnh Inverter tiết kiệm điện</a>
-                <a href="javascript:void(0)" class="">Máy lạnh dưới 7 triệu</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'Panasonic')">Panasonic</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'Daikin')">Daikin</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'Toshiba')">Toshiba</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'LG')">LG</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'TCL')">TCL</a>
               </aside>
               <aside>
                 <strong>
                   QUẠT ĐIỀU HÒA
                 </strong>
-                
-                <a href="javascript:void(0)" class="">Kangaroo</a>
-                <a href="javascript:void(0)" class="">Daikiosan</a>
-                <a href="javascript:void(0)" class="">Sunhouse</a>
-                <a href="javascript:void(0)" class="">Midea</a>
-                <a href="javascript:void(0)" class="">Delites</a>
-                <a href="javascript:void(0)" class="">Từ 3 đến 5 triệu</a>
-                <a href="javascript:void(0)" class="">Từ 1 đến 3 triệu</a>
-                <a href="javascript:void(0)" class="">Quạt mát 15-30m²</a>
-                <a href="javascript:void(0)" class="">Quạt mát dưới 15m²</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Kangaroo')">Kangaroo</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Daikiosan')">Daikiosan</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Sunhouse')">Sunhouse</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Midea')">Midea</a>
               </aside>
             </div>
             </li>
@@ -183,42 +161,36 @@
                 <strong>
                   ĐIỆN THOẠI
                 </strong>
-                <a href="javascript:void(0)" class="">iPhone</a>
-                <a href="javascript:void(0)" class="">Samsung</a>
-                <a href="javascript:void(0)" class="">Oppo</a>
-                <a href="javascript:void(0)" class="">Xiaomi</a>
-                <a href="javascript:void(0)" class="">Điện thoại từ 2 - 4 triệu</a> 
-                <a href="javascript:void(0)" class="">Điện thoại từ 4 - 7 triệu</a>
-                <a href="javascript:void(0)" class="">Điện thoại trên 13 triệu</a>
-                <a href="javascript:void(0)" class="">Điện thoại cũ giá rẻ</a> 
-                <a href="javascript:void(0)" class="">Điện thoại trả góp 0-1%</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'iPhone (Apple)')">iPhone</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Samsung')">Samsung</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Oppo')">Oppo</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Xiaomi')">Xiaomi</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Vivo')">Vivo</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Realme')">Realme</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Vsmart')">Vsmart</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Nokia')">Nokia</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Huawei')">Huawei</a>
               </aside>
               <aside>
                 <strong>
                   LAPTOP
                 </strong>
-                <a href="javascript:void(0)" class="">Macbook - iMac</a>
-                <a href="javascript:void(0)" class="">HP</a> <a href="/laptop-dell" class="">Dell</a>
-                <a href="javascript:void(0)" class="">Asus</a>
-                <a href="javascript:void(0)" class="">Acer</a>
-                <a href="javascript:void(0)" class="">Laptop dưới 10 triệu</a>
-                <a href="javascript:void(0)" class="">Laptop từ 10 đến 15 triệu</a>
-                <a href="javascript:void(0)" class="">Laptop cũ giá rẻ</a>
-                <a href="javascript:void(0)" class="">Laptop trả góp 0-1%</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'MacBook')">Macbook - iMac</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'HP')">HP</a> 
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Dell')">Dell</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Asus')">Asus</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Acer')">Acer</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Lenovo')">Lenovo</a>
               </aside>
               <aside>
                 <strong>
                   TABLET
                 </strong>
-                <a href="javascript:void(0)" class="">iPad</a>
-                <a href="javascript:void(0)" class="">Samsung</a>
-                <a href="javascript:void(0)" class="">Huawei</a>
-                <a href="javascript:void(0)" class="">Lenovo</a>
-                <a href="javascript:void(0)" class="">Mobell</a>
-                <a href="javascript:void(0)" class="">Máy tính bảng từ 3 - 10 triệu</a>
-                <a href="javascript:void(0)" class="">Máy tính bảng trên 10 triệu</a>
-                <a href="javascript:void(0)" class="">Máy tính bảng cũ giá rẻ</a>
-                <a href="javascript:void(0)" class="">Máy tính bảng trả góp 0-1%</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'iPad (Apple)')">iPad</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Samsung')">Samsung</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Huawei')">Huawei</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Lenovo')">Lenovo</a>
+                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Mobell')">Mobell</a>
               </aside>
             </div>
             </li>
