@@ -409,34 +409,26 @@ namespace dienmayxanhapi
 
         public List<string> Getfillter_list_product_price(int idlsp)
         {
-            //List<string> vs = new List<string>();
-            //var d1 = (dl * 0.1).ToString();
-            //var d2 = (dl * 0.2).ToString();
-            //var d3 = (dl * 0.3).ToString();
-            //var d5 = (dl * 0.5).ToString();
-            //var d7 = (dl * 0.7).ToString();
-            //var d8 = (dl * 0.8).ToString();
-            //var dl1 = d1.Length > 6 ? d1.Substring(0, d1.Length - 6) + " triệu" : d1;
-            //var dl2 = d2.Length > 6 ? d2.Substring(0, d2.Length - 6) + " triệu" : d2;
-            //var dl3 = d3.Length > 6 ? d3.Substring(0, d3.Length - 6) + " triệu" : d3;
-            //var dl5 = d5.Length > 6 ? d5.Substring(0, d5.Length - 6) + " triệu" : d5;
-            //var dl7 = d7.Length > 6 ? d7.Substring(0, d7.Length - 6) + " triệu" : d7;
-            //var dl8 = d8.Length > 6 ? d8.Substring(0, d8.Length - 6) + " triệu" : d8;
-            //vs.Add("Dưới " + dl1);
-            //vs.Add("Từ " + dl1 + "-" + dl2);
-            //vs.Add("Từ " + dl2 + "-" + dl3);
-            //vs.Add("Từ " + dl3 + "-" + dl5);
-            //vs.Add("Từ " + dl5 + "-" + dl7);
-            //vs.Add("Trên " + dl8);
-            //return vs;
-            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList().Select(x => x.giaban).Max();
+            var dl = collectionspdt.Find(x => x._id_loaisanpham == idlsp).ToList().Select(x => x.giaban).Max();            var d1 = (dl * 0.1).ToString();
+            var d2 = Math.Round((double)(dl * 0.2)).ToString();
+            var d3 = Math.Round((double)(dl * 0.3)).ToString();
+            var d5 = Math.Round((double)(dl * 0.5)).ToString();
+            var d7 = Math.Round((double)(dl * 0.7)).ToString();
+            var d8 = Math.Round((double)(dl * 0.8)).ToString();
+            var dl1 = d1.Length > 5 ? d1.Substring(0, d1.Length - 5) + "00000" : d1;
+            var dl2 = d2.Length > 5 ? d2.Substring(0, d2.Length - 5) + "00000" : d2;
+            var dl3 = d3.Length > 5 ? d3.Substring(0, d3.Length - 5) + "00000" : d3;
+            var dl5 = d5.Length > 5 ? d5.Substring(0, d5.Length - 5) + "00000" : d5;
+            var dl7 = d7.Length > 5 ? d7.Substring(0, d7.Length - 5) + "00000" : d7;
+            var dl8 = d8.Length > 5 ? d8.Substring(0, d8.Length - 5) + "00000" : d8;
+      
             List<string> vs = new List<string>();
-            vs.Add("Dưới " + dl * 0.1);
-            vs.Add("Từ " + dl * 0.1 + "-" + dl * 0.2);
-            vs.Add("Từ " + dl * 0.2 + "-" + dl * 0.3);
-            vs.Add("Từ " + dl * 0.3 + "-" + dl * 0.5);
-            vs.Add("Từ " + dl * 0.5 + "-" + dl * 0.7);
-            vs.Add("Trên " + dl * 0.7);
+            vs.Add("Dưới " + dl1);
+            vs.Add("Từ " + dl1 + "-" + dl2);
+            vs.Add("Từ " + dl2 + "-" + dl3);
+            vs.Add("Từ " + dl3 + "-" + dl5);
+            vs.Add("Từ " + dl5 + "-" + dl7);
+            vs.Add("Trên " + dl7);
             return vs;
         }
 
