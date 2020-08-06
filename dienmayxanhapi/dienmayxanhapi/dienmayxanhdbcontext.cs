@@ -63,6 +63,9 @@ namespace dienmayxanhapi
         public class bangghepsanphamdanhgia_custom
         {
           public int? _id { get; set; }
+          public int? _id_sanpham { get; set; }
+          public string _tensp { get; set; }
+          public string _tenth { get; set; }
           public int? _id_loaisanpham { get; set; }
           public int? _int_tb { get; set; }
         }
@@ -470,14 +473,28 @@ namespace dienmayxanhapi
         public List<bangghepsanphamdanhgia_custom> Getfillter_danhgia_1day()
         {
           var av = DateTime.Today.AddDays(-1);
-          var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-1)).ToList<danhgia>();
-          var dl1 = collectionspdt.Aggregate()
-                               .Lookup<sanphamdienthoai, danhgia, bangghepsanphamdanhgia>(
-                                    collectiondanhgia,
-                                    x => x._id,
-                                    y => y._id_sanpham,
-                                    x => x.Danhgias).ToList().Select(x => new bangghepsanphamdanhgia_custom {_id = x._id, _id_loaisanpham= x._id_loaisanpham, _int_tb=x.Danhgias.Where(p => p.ngaydanhgia >= DateTime.Today.AddDays(-1) && p.danhgiaphu.Where(c=>c.chucdanh==false ).ToList().Count>0 ).ToList().Count}).ToList<bangghepsanphamdanhgia_custom>();
-          return dl1;
+          var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-1)).ToList();
+          
+          //var dl1 = collectionspdt.Aggregate()
+          //                     .Lookup<sanphamdienthoai, danhgia, bangghepsanphamdanhgia>(
+          //                          collectiondanhgia,
+          //                          x => x._id,
+          //                          y => y._id_sanpham,
+          //                          x => x.Danhgias).ToList().Select(x => new bangghepsanphamdanhgia_custom {_id = x._id, _id_loaisanpham= x._id_loaisanpham, _int_tb=x.Danhgias.Where(p => p.ngaydanhgia >= Convert.ToDateTime("17-07-2020") && p.danhgiaphu.Where(c=>c.chucdanh==false ).ToList().Count>0 ).ToList().Count}).ToList<bangghepsanphamdanhgia_custom>();
+          //return dl1;
+          var dl1= Get();
+          var query = (from p in dl.AsQueryable()
+                      join c in dl1.AsQueryable() on p._id_sanpham equals c._id
+                      select new bangghepsanphamdanhgia_custom {
+                        _id = p._id,
+                        _id_sanpham = p._id_sanpham,
+                        _tensp = c.ten,
+                        _tenth = c.thuonghieu,
+                        _id_loaisanpham = c._id_loaisanpham,
+                        _int_tb = p.danhgiaphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                                  p.danhgiaphu.Count==0 ? 1 : 0
+                      }).ToList();
+              return query;
         }
 
         public List<sanphamdienthoai> Getfillter_allsp()
@@ -503,8 +520,7 @@ namespace dienmayxanhapi
         }
         public List<danhgia> Getfillter_danhgia_choseday_theo_idsp(int _id_sp, String d)
         {
-            DateTime v = Convert.ToDateTime(d).Date;
-            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= v && x.ngaydanhgia < v.AddDays(1)).ToList();
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id_sp && x.ngaydanhgia >= Convert.ToDateTime(d) && x.ngaydanhgia < Convert.ToDateTime(d).AddDays(1)).ToList();
             return dl;
         }
         public List<taikhoan> Gettennv_id(int id)
@@ -522,6 +538,25 @@ namespace dienmayxanhapi
                                             y => y._id_sanpham,
                                             x => x.Danhgias).ToList().OrderByDescending(x=>x.Danhgias.Count()).Take(100).ToList<sanphamdienthoai>();
             return dl;
+        }
+
+        public List<bangghepsanphamdanhgia_custom> Getfillter_binhluan_1day()
+        {
+          var av = DateTime.Today.AddDays(-1);
+          var dl = collectionbinhluan.Find(x => x.ngaybinhluan >= DateTime.Today.AddDays(-1)).ToList();
+          var dl1= Get();
+          var query = (from p in dl.AsQueryable()
+                      join c in dl1.AsQueryable() on p._id_sanpham equals c._id
+                      select new bangghepsanphamdanhgia_custom {
+                        _id = p._id,
+                        _id_sanpham = p._id_sanpham,
+                        _tensp = c.ten,
+                        _tenth = c.thuonghieu,
+                        _id_loaisanpham = c._id_loaisanpham,
+                        _int_tb = p.binhluanphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                                  p.binhluanphu.Count==0 ? 1 : 0
+                      }).ToList();
+              return query.ToList();
         }
     }
 

@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from "@angular/router";
 import * as $ from "jquery";
 import { dg, dgphu } from '../model/danhgia';
-import { bangghepdg_sp, bangghepdgphu_sp } from '../model/bangghepdg_sp';
+import { bangghepdg_sp } from '../model/bangghepdg_sp';
 import { HttpClient } from '@angular/common/http';
 import { SanphamService } from '../service/sanpham.service';
 import { DanhgiaService } from '../service/danhgia.service';
@@ -65,6 +65,7 @@ export class RepbinhluanComponent implements OnInit {
   items_binhluan: bl[] = [];
   alllsp_danhgia: number[] = [];
   alllsp_danhgia_1day: bangghepdg_sp[] = [];
+  alllsp_binhluan_1day: bangghepdg_sp[] = [];
   pdg:number=1;
   pbl:number=1;
   tennvdn:string=null;
@@ -75,10 +76,13 @@ export class RepbinhluanComponent implements OnInit {
   dgreal_time: dg;
   dgreal_timearr: dg[]=[];
   thongbaolsp: Array<any>=[];
+  int_tb:number;
   constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService, private signalRService: SignalRService) { 
   }
 
   ngOnInit() {
+    $(".filter_dg").css("display","none");
+    $(".filter_bl").css("display","none");
     $("#btndx").css("display", "block");
     $("#datedanhgia").css('display','none');
     $("#datebinhluan").css('display','none');
@@ -105,6 +109,7 @@ export class RepbinhluanComponent implements OnInit {
       this.loadlsp();
       this.loaddsq();
       this.load_danhgia_1day();
+      this.load_binhluan_1day();
       this.gettennv(parseInt(window.localStorage.getItem("idtk")));
     }
       if(this.checkinsertblp==false)
@@ -152,6 +157,8 @@ export class RepbinhluanComponent implements OnInit {
         }
       });
   }
+
+
 
   quanlytk = false;
   quanlysp = false;
@@ -202,27 +209,66 @@ export class RepbinhluanComponent implements OnInit {
     $("#btn_lsp_" + id + " .button").css("color", "#fff");
   }
 
+  plusbinhluan(value: string)
+  {
+    return this.alllsp_binhluan_1day.filter(x=>x._tenth==value).length;
+  }
+
+  check_bell_id_sp(value: number)
+  {
+    // if(this.alllsp_danhgia_1day.find(x=>x._id_sanpham==value)!=null && this.alllsp_danhgia_1day.find(x=>x._id_sanpham==value)!=undefined)
+    // {
+    //   return true;
+    // }
+    if(this.alllsp_binhluan_1day.find(x=>x._id_sanpham==value)!=null && this.alllsp_binhluan_1day.find(x=>x._id_sanpham==value)!=undefined)
+    {
+      return true;
+    }
+    return false;
+  }
+
   load_danhgia_1day() {
-    this.danhgiaService.get_danhgia_1day().subscribe((res: any[] | null) => {
-      for(let i=0; i<res.length;i++)
+    this.danhgiaService.get_danhgia_1day().subscribe((res: bangghepdg_sp[] | null) => {
+      var alllsp_danhgia_1day_p=res.filter(x=>x._int_tb>0);
+      for(let v of alllsp_danhgia_1day_p)
       {
-        if(res[i]["_int_tb"]>0 )
+        if(this.alllsp_danhgia_1day.find(x=>x._tensp==v._tensp)==undefined)
         {
-          let v:Array<any>=[];
-          v.push(res[i]);
-          Array.prototype.push.apply(this.alllsp_danhgia_1day,v);
-          console.log (this.alllsp_danhgia_1day);
-        }  
-        
+          this.alllsp_danhgia_1day.push(v);
+        }
       }
+      console.log(this.alllsp_danhgia_1day);
     });
   }
 
+  load_binhluan_1day() {
+    this.binhluanService.get_binhluan_1day().subscribe((res: bangghepdg_sp[] | null) => {
+      var alllsp_binhluan_1day_p=res.filter(x=>x._int_tb>0);
+      for(let v of alllsp_binhluan_1day_p)
+      {
+        if(this.alllsp_binhluan_1day.find(x=>x._tensp==v._tensp)==undefined)
+        {
+          this.alllsp_binhluan_1day.push(v);
+        }
+      }
+      console.log(res)
+    });
+  }
+
+  checkclick:boolean=false;
   loadtensp(tensp: string) {
     this.sanphamService.gettensp(tensp).subscribe((res: sp[] | null) => {
       this.tensanpham = (res) ? res : [];
+      if(res.length<this.tensanphamphu.length)
+      {
+        this.checkclick=true;
+      }
+      if(this.checkclick==true)
+      {
+        $(".filter_dg").css("display","block");
+        $(".filter_bl").css("display","block");
+      }
       this.tensanphamphu = this.tensanpham;
-      console.log("tensanpham", res);
     });
     this.p = 1;
     this.active_null_dg = false;
@@ -245,10 +291,35 @@ export class RepbinhluanComponent implements OnInit {
     this.active_null_dg = this.active_null_bl = true;
     $("tbody tr").css('color', '#000');
     $("#tr_" + cv).css('color', 'red');
+    // if(this.focusdgpr==true)
+    // {
+    //   $("#tr_dg_" + cv).css('color', 'red');
+    //   this.focusdgpr=false;
+    //   return;
+    // }
+    // if(this.focusblpr==true)
+    // {
+    //   $("#tr_bl_" + cv).css('color', 'red');
+    //   this.focusblpr=false;
+    //   return;
+    // }
+    
     $("#datedanhgia").css('display','');
     $("#datebinhluan").css('display','');
   };
 
+  
+  focusdgpr:boolean=false;
+  focusblpr:boolean=false;
+  focusdg()
+  {
+    this.focusdgpr=true;
+  }
+
+  focusbl()
+  {
+    this.focusblpr=true;
+  }
   p: number = 1;
 
   gtsp(cv: number): void {
@@ -343,6 +414,8 @@ export class RepbinhluanComponent implements OnInit {
           if(data!=null && data!=undefined)
           {
             this.checkinsertblp=true;
+            this.load_danhgia_1day();
+            this.load_binhluan_1day();
             alert('Thực hiện thành công');
 
           }

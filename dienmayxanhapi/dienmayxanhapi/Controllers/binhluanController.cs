@@ -10,6 +10,7 @@ using MongoDB.Driver;
 using dienmayxanhapi.Hubservice;
 using dienmayxanhapi.SignalRHubs;
 using Microsoft.AspNetCore.SignalR;
+using static dienmayxanhapi.dienmayxanhdbcontext;
 
 namespace dienmayxanhapi.Controllers
 {
@@ -104,6 +105,12 @@ namespace dienmayxanhapi.Controllers
     public ActionResult<List<binhluan>> Getfillter_binhluan_choseday_theo_idsp(int _id_sp, String d)
     {
       return (_blService.Getfillter_binhluan_choseday_theo_idsp(_id_sp,d));
+    }
+
+    [HttpGet("get_binhluan_1day")]
+    public ActionResult<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
+    {
+      return (_blService.Getfillter_binhluan_1day());
     }
 
     public Boolean checkktid(int id)

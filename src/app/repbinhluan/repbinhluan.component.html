@@ -12,8 +12,8 @@
             <ng-container *ngFor="let obj of alllsp">
               <div class="btn-group" id="btn_lsp_{{obj._id}}">
                 <button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">{{obj.tendanhmuc | uppercase}}</button>
-                <ng-container *ngFor="let objtb of alllsp_danhgia_1day">
-                  <div id="lspth_{{obj._id}}" style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">{{this.dgreal_timearr.length+this.blreal_timearr.length}}</div>
+                <ng-container *ngFor="let objtb of alllsp_binhluan_1day">
+                  <div id="lspth_{{obj._id}}" *ngIf="obj._id==objtb._id_loaisanpham" style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;"><i class="fas fa-bell"></i></div>
                 </ng-container>
               </div>
             </ng-container>
@@ -26,11 +26,62 @@
             <ng-container *ngFor="let i of obj.thuonghieu, let j=index">
               <div class="btn-group-vertical" id="btn_sp_thuonghieu_{{obj._id}}{{i.replace(' ','').replace('(','').replace(')','')}}">
                 <button class="buttonth" id="lspth_{{obj._id}}" (click)="loadtensp(obj._id+','+i)">{{i}}</button>
-                <!-- <div id="lspth_{{obj._id}}_{{j}}" style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">0</div> -->
+                <ng-container *ngFor="let objtb of alllsp_binhluan_1day">
+                  <ng-container *ngIf="i==objtb._tenth">
+                    <div id="lspth_{{obj._id}}_{{j}}"  style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">{{plusbinhluan(objtb._tenth)}}</div>
+                  </ng-container>
+                </ng-container>
               </div>
             </ng-container>
           </div>
         </div>
+      </div>
+      <div id="dg_bl_cho" class="d-flex justify-content-center" style="display:inline-flex">
+        <div class="filter_dg">
+          <ng-container *ngIf="alllsp_danhgia_1day.length > 0">
+            <label style="font-size: 16px; font-weight: 500; line-height: 30px;">Danh sách đánh giá chờ KTV hỗ trợ</label>
+            <table class="table table-striped" style="text-align: center">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Thương hiệu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="tr_dg_{{item._id}}" (mouseup)="focusdg()" (click)="loaddanhgia(item._id)" *ngFor="let item of alllsp_danhgia_1day | paginate: {id: 'paginationdg', itemsPerPage: 6, currentPage: p}; let i=index">
+                  <td>{{(i+1)+((p-1)*6)}}</td>
+                  <td>{{item._tensp}}</td>
+                  <td>{{item._tenth}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls id='paginationdg' (pageChange)="p = $event"></pagination-controls>
+          </ng-container>
+        </div>
+        <div class="filter_bl">
+          <ng-container *ngIf="alllsp_binhluan_1day.length > 0">
+            <label style="font-size: 16px; font-weight: 500; line-height: 30px;">Danh sách bình luận chờ KTV hỗ trợ</label>
+            <table class="table table-striped" style="text-align: center">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Thương hiệu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="tr_bl_{{item._id}}" (mouseup)="focusbl()" (click)="loaddanhgia(item._id)" *ngFor="let item of alllsp_binhluan_1day | paginate: {id: 'paginationbl', itemsPerPage: 6, currentPage: p}; let i=index">
+                  <td>{{(i+1)+((p-1)*6)}}</td>
+                  <td>{{item._tensp}}</td>
+                  <td>{{item._tenth}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls id='paginationbl' (pageChange)="p = $event"></pagination-controls>
+          </ng-container>
+        </div>
+
       </div>
       <div class="filter">
         <div>
@@ -47,7 +98,12 @@
               </thead>
               <tbody>
                 <tr id="tr_{{item._id}}" (click)="loaddanhgia(item._id)" *ngFor="let item of tensanpham | paginate: {id: 'pagination2', itemsPerPage: 6, currentPage: p}; let i=index">
-                  <td>{{(i+1)+((p-1)*6)}}</td>
+                  <td>
+                    <div *ngIf="check_bell_id_sp(item._id)" style="position: relative;">
+                      <div style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;"><i class="fas fa-bell"></i></div>
+                    </div>
+                    {{(i+1)+((p-1)*6)}}
+                  </td>
                   <td>{{item.ten}}</td>
                   <td>{{item.thuonghieu}}</td>
                   <td>{{item.giaban}}</td>

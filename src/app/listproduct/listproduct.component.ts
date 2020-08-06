@@ -47,7 +47,7 @@ export class ListproductComponent implements OnInit {
         this.price = params.price;
         this.inchstring = params.inch;
         this.litstring = params.lit;
-        console.log(  this.thuonghieu)
+        console.log(this.thuonghieu)
         console.log(this.price)
         console.log(this.inchstring)
         console.log(this.litstring)
@@ -114,63 +114,41 @@ export class ListproductComponent implements OnInit {
     });
   }
   show_more_list_product() {
+    console.log(this.items)
     if(this.tt==true)
     {
       $('#list_1').css("height", "100%");
       this.tt=false;
-      document.getElementById('a_id').innerText = "Vui lòng click lần 2 để xem thêm sản phẩm chưa lọc";
+      document.getElementById('a_id').innerText = "Vui lòng click lần 2 để xem thêm "+(this.itemsphu.length-this.items.length)+ " sản phẩm chưa lọc";
       return;
     }
-    if (this.show_giatdc == true) {
-      if (this.items.length >= this.itemsphu.length) {
-        this.items = this.items.sort((a, b) => a.giaban - b.giaban);
-      }
-      else {
-        this.items = this.itemsphu;
-        this.items = this.itemsphu.sort((a, b) => a.giaban - b.giaban);
-      }
-    }
-    else {
-      if (this.show_giacdt == true) {
-        if (this.items.length >= this.itemsphu.length) {
-          this.items = this.items.sort((a, b) => b.giaban - a.giaban);
-        }
-        else {
-          this.items = this.itemsphu;
-          this.items = this.items.sort((a, b) => b.giaban - a.giaban);
-        }
-      }
-      else
+    let a1:Array<sp>=[];
+    if(this.items.length>0)
+    {
+      for(let c of this.items)
       {
-        if(this.show_bcn==true)
+        if(a1.length==0)
         {
-          if (this.items.length >= this.itemsphu.length) {
-            this.items = this.items.sort((a, b) => b.sosao - a.sosao);
-          }
-          else
-          {
-            this.items = this.itemsphu;
-            this.items = this.items.sort((a, b) => b.sosao - a.sosao);
-          }
+          a1=this.itemsphu.filter(x=>x._id!=c._id);
         }
-        else {
-          if(this.items.length<this.itemsphu.length)
-          {
-            var arritemsphu=this.itemsphu
-            Array.prototype.push.apply(this.items ,arritemsphu.slice(this.items.length, this.items.length+25));
-            if(this.items.length==this.itemsphu.length)
-            {
-              $('.show-more-list-product').css("display", "none");
-            }
-          }
-          else
-          {
-            $('.show-more-list-product').css("display", "none");
-          }
+        else
+        {
+          a1=a1.filter(x=>x._id!=c._id);
         }
       }
     }
-    
+    if(a1.length<25)
+    {
+      Array.prototype.push.apply(this.items ,a1);
+    }
+    else
+    {
+      Array.prototype.push.apply(this.items ,a1.slice(this.items.length, this.items.length+25));
+    }
+    if(this.tt==false)
+    {
+      document.getElementById('a_id').innerText = "Xem thêm "+(this.itemsphu.length-this.items.length)+" sản phẩm";
+    }
     $('#list_1').css("height", "auto");
   }
   get_list_product_category(id: number) {
@@ -267,7 +245,7 @@ export class ListproductComponent implements OnInit {
           }
           else
           {
-            this.items=this.items.filter(x => x.thuonghieu==k);
+            this.items=this.itemsphu.filter(x => x.thuonghieu==k);
           }
         }
       }
@@ -549,7 +527,7 @@ export class ListproductComponent implements OnInit {
           }
           else
           {
-            this.items=this.items.filter(x => parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].toUpperCase().replace("INCH","").replace(" ",""))>=parseInt(s[0]) && parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].replace("inch","").replace(" ",""))<=parseInt(s[1]));
+            this.items=this.itemsphu.filter(x => parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].toUpperCase().replace("INCH","").replace(" ",""))>=parseInt(s[0]) && parseInt(x.thongsokythuat[0]["Tổng quan"][1]["Kích cỡ màn hình"].replace("inch","").replace(" ",""))<=parseInt(s[1]));
           }
         }
       }
