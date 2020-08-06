@@ -470,10 +470,16 @@ namespace dienmayxanhapi
             return true;
         }
 
-        public List<bangghepsanphamdanhgia_custom> Getfillter_danhgia_1day()
+        public Boolean deletedg(FilterDefinition<danhgia> filter)
         {
-          var av = DateTime.Today.AddDays(-1);
-          var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today.AddDays(-1)).ToList();
+            collectiondanhgia.FindOneAndDelete(filter);
+            return true;
+        }
+
+        public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
+        {
+          await Task.Delay(500);
+          var dl = collectiondanhgia.Find(x => x.ngaydanhgia >= DateTime.Today).ToList();
           
           //var dl1 = collectionspdt.Aggregate()
           //                     .Lookup<sanphamdienthoai, danhgia, bangghepsanphamdanhgia>(
@@ -491,10 +497,11 @@ namespace dienmayxanhapi
                         _tensp = c.ten,
                         _tenth = c.thuonghieu,
                         _id_loaisanpham = c._id_loaisanpham,
-                        _int_tb = p.danhgiaphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                        _int_tb = p.danhgiaphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
+                                  p.danhgiaphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
                                   p.danhgiaphu.Count==0 ? 1 : 0
                       }).ToList();
-              return query;
+              return query.ToList();
         }
 
         public List<sanphamdienthoai> Getfillter_allsp()
@@ -540,10 +547,11 @@ namespace dienmayxanhapi
             return dl;
         }
 
-        public List<bangghepsanphamdanhgia_custom> Getfillter_binhluan_1day()
+        public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_binhluan_1dayAsync()
         {
-          var av = DateTime.Today.AddDays(-1);
-          var dl = collectionbinhluan.Find(x => x.ngaybinhluan >= DateTime.Today.AddDays(-1)).ToList();
+          await Task.Delay(500);
+          
+          var dl = collectionbinhluan.Find(x => x.ngaybinhluan >= DateTime.Today).ToList();
           var dl1= Get();
           var query = (from p in dl.AsQueryable()
                       join c in dl1.AsQueryable() on p._id_sanpham equals c._id
@@ -553,7 +561,8 @@ namespace dienmayxanhapi
                         _tensp = c.ten,
                         _tenth = c.thuonghieu,
                         _id_loaisanpham = c._id_loaisanpham,
-                        _int_tb = p.binhluanphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                        _int_tb = p.binhluanphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
+                                  p.binhluanphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
                                   p.binhluanphu.Count==0 ? 1 : 0
                       }).ToList();
               return query.ToList();

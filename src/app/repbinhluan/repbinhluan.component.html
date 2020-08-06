@@ -71,7 +71,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="tr_bl_{{item._id}}" (mouseup)="focusbl()" (click)="loaddanhgia(item._id)" *ngFor="let item of alllsp_binhluan_1day | paginate: {id: 'paginationbl', itemsPerPage: 6, currentPage: p}; let i=index">
+                <tr id="tr_bl_{{item._id}}" (mouseup)="focusbl()" (click)="loaddanhgia(item._id_sanpham)" *ngFor="let item of alllsp_binhluan_1day | paginate: {id: 'paginationbl', itemsPerPage: 6, currentPage: p}; let i=index">
                   <td>{{(i+1)+((p-1)*6)}}</td>
                   <td>{{item._tensp}}</td>
                   <td>{{item._tenth}}</td>
@@ -129,8 +129,11 @@
             <div class="inline box-danhgia" *ngFor="let item_danhgia of items_danhgia | paginate: {id: 'paginationdg', itemsPerPage: 10, currentPage: pdg}, let i=index">
               <hr>
               <li class="danhgia-list">
-                <div>
+                <div style="display: inline-flex;" class="d-flex justify-content-between">
                   <span class="danhgia-name">{{item_danhgia.ten}} </span>
+                  <div>
+                    <i class="fas fa-times fas_time" (click)="Remove_danhgia(item_danhgia._id)"></i>
+                  </div>
                 </div>
                 <div>
                   <p>
@@ -161,10 +164,13 @@
                 <li>
                   <div *ngFor="let item of show(item_danhgia._id)">
                     <div class="rep-comment-info-dg">
-                      <div>
+                      <div style="display: inline-flex;" class="d-flex justify-content-between">
                         <span>{{item.ten}}
                           <label class="qtv" *ngIf="item.chucdanh==true">QTV</label>
                         </span>
+                        <!-- <div>
+                          <i class="fas fa-times fas_time"></i>
+                        </div> -->
                       </div>
                       <div>
                         <p>
@@ -208,8 +214,11 @@
             <div class="inline box-binhluan" *ngFor="let item_binhluan of items_binhluan | paginate: {id: 'paginationbl', itemsPerPage: 10, currentPage: pbl}, let i=index">
               <hr>
               <li class="binhluan-list">
-                <div>
+                <div style="display: inline-flex;" class="d-flex justify-content-between">
                   <span class="binhluan-name"> {{item_binhluan.ten}} </span>
+                  <div>
+                    <i class="fas fa-times fas_time" (click)="Remove_binhluan(item_binhluan._id)"></i>
+                  </div>
                 </div>
                 <div>
                   <p>
@@ -228,10 +237,13 @@
                 <li>
                   <div *ngFor="let item of show_bl(item_binhluan._id)">
                     <div class="rep-comment-info-bl">
-                      <div>
+                      <div class="d-flex justify-content-between">
                         <span>{{item.ten}}
                           <label class="qtv" *ngIf="item.chucdanh==true">QTV</label>
                         </span>
+                        <!-- <div>
+                          <i class="fas fa-times fas_time"></i>
+                        </div> -->
                       </div>
                       <div>
                         <p>
@@ -271,4 +283,7 @@
       </div>
     </div>
   </div>
+  <button [ngClass]="{'show-scroll': showScroll}" (click)="scrollToTop()" title="Về đầu trang" class="scroll-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 </div>

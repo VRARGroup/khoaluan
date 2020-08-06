@@ -120,9 +120,9 @@ namespace dienmayxanhapi.Controllers
       }
 
       [HttpGet("get_danhgia_1day")] 
-      public ActionResult<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
+      public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
       {
-        return (_dgService.Getfillter_danhgia_1day());
+        return (await _dgService.Getfillter_danhgia_1day());
       }
 
       [HttpGet("get_danhgia_1day_idsp")] 
@@ -153,7 +153,25 @@ namespace dienmayxanhapi.Controllers
         {
           return false;
         }
+      }
 
+      [HttpDelete("{id}")]
+      public IActionResult deletedg(int id)
+      {
+        try
+        {
+          if (checkktid(id) == true)
+          {
+            var deletefilter = Builders<danhgia>.Filter.Eq("_id", id);
+            _dgService.deletedg(deletefilter);
+            return Ok(true);
+          }
+          return NoContent();
+        }
+        catch
+        {
+          return NoContent();
+        }
       }
 
 

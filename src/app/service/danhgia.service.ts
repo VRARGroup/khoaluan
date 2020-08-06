@@ -58,4 +58,9 @@ export class DanhgiaService {
   get_danhgia_choseday_idsp(id:number, d:String): Observable<dg[]> {
 		return this.http.get<dg[]>(this.url+"/get_danhgia_choseday_idsp?_id_sp="+id +"&&"+"d="+d );
   }
+
+  deletedg(iddg: number): Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.delete<number>(this.url + '/'+ iddg, httpOptions);
+	}
 }

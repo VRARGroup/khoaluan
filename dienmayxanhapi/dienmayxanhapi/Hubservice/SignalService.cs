@@ -19,6 +19,7 @@ namespace dienmayxanhapi.Hubservice
     {
       try
       {
+        
         _mainDbContext.binhluan.Add(inputModel);
         return await _mainDbContext.SaveChangesAsync() > 0;
       }
@@ -33,6 +34,7 @@ namespace dienmayxanhapi.Hubservice
     {
       try
       {
+        
         _mainDbContext.danhgia.Add(inputModel);
         return await _mainDbContext.SaveChangesAsync() > 0;
       }

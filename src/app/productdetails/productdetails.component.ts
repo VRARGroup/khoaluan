@@ -124,6 +124,11 @@ export class ProductdetailsComponent implements OnInit {
         console.log(signal);
         let arr:Array<blphu>=[]
         arr.push(signal.binhluanphu[0]);
+        if(signal.ten!=null && signal.ten!=undefined)
+        {
+          var c=this.item_comments.indexOf(signal);
+          this.item_comments.splice(c,1);
+        }
         this.showbinhluanphu(signal._id,this.item_comments).push(arr[0]);
         console.log(this.p);
       }
@@ -135,6 +140,11 @@ export class ProductdetailsComponent implements OnInit {
         console.log(signal);
         let arr:Array<dgphu>=[]
         arr.push(signal.danhgiaphu[0]);
+        if(signal.ten!=null && signal.ten!=undefined)
+        {
+          var c=this.items_danhgia.indexOf(signal);
+          this.items_danhgia.splice(c,1);
+        }
         this.show(signal._id).push(arr[0]);
         console.log(this.p);
       }

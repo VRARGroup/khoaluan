@@ -50,4 +50,9 @@ export class BinhluanService {
 		return this.http.get<any[]>(this.url+"/get_binhluan_1day");
   }
 
+  deletebl(idbl: number): Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.delete<number>(this.url + '/'+ idbl, httpOptions);
+	}
+
 }

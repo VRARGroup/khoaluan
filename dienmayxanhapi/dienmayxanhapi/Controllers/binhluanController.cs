@@ -108,9 +108,9 @@ namespace dienmayxanhapi.Controllers
     }
 
     [HttpGet("get_binhluan_1day")]
-    public ActionResult<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
+    public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
     {
-      return (_blService.Getfillter_binhluan_1day());
+      return (await _blService.Getfillter_binhluan_1dayAsync());
     }
 
     public Boolean checkktid(int id)
@@ -129,7 +129,28 @@ namespace dienmayxanhapi.Controllers
       {
         return false;
       }
+    }
 
+    [HttpDelete("{id}")]
+    public IActionResult deletebl(int id)
+    {
+      try
+      {
+        var b = _blService.Getbinhluan().Where(x=>x._id==id).FirstOrDefault();
+        if (checkktid(id) == true)
+        {
+          var deletefilter = Builders<binhluan>.Filter.Eq("_id", id);
+          _blService.deletebl(deletefilter);
+          var saveResult = _signalService.SaveSignalAsync(b);
+          _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
+          return Ok(true);
+        }
+        return NoContent();
+      }
+      catch
+      {
+        return NoContent();
+      }
     }
   }
 }

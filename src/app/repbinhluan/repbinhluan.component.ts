@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from "@angular/router";
 import * as $ from "jquery";
@@ -29,6 +29,7 @@ import { FormBuilder } from '@angular/forms';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { tk } from '../model/taikhoan';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -77,8 +78,39 @@ export class RepbinhluanComponent implements OnInit {
   dgreal_timearr: dg[]=[];
   thongbaolsp: Array<any>=[];
   int_tb:number;
+  checkinsertblp:boolean=false;
+  checkinsertdgp:boolean=false;
+  showScroll: boolean;
+  showScrollHeight = 300;
+  hideScrollHeight = 10;
   constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService, private signalRService: SignalRService) { 
   }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() 
+    {
+      if (( window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) > this.showScrollHeight) 
+      {
+          this.showScroll = true;
+      } 
+      else if ( this.showScroll && (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) < this.hideScrollHeight) 
+      { 
+        this.showScroll = false; 
+      }
+    }
+
+    scrollToTop() 
+    { 
+      (function smoothscroll() 
+      { var currentScroll = document.documentElement.scrollTop || document.body.scrollTop; 
+        if (currentScroll > 0) 
+        {
+          window.requestAnimationFrame(smoothscroll);
+          window.scrollTo(0, currentScroll - (currentScroll / 5));
+        }
+      })();
+      //$(".comment-3-textarea")[0].scrollIntoView();
+    }
 
   ngOnInit() {
     $(".filter_dg").css("display","none");
@@ -112,53 +144,63 @@ export class RepbinhluanComponent implements OnInit {
       this.load_binhluan_1day();
       this.gettennv(parseInt(window.localStorage.getItem("idtk")));
     }
-      if(this.checkinsertblp==false)
+    
+    this.signalRService.signalReceived.subscribe((signal: bl) => {
+      console.log(signal);
+      if(this.checkinsertblp==true)
       {
-        this.signalRService.signalReceived.subscribe((signal: bl) => {
-          console.log(signal);
-          if(signal!=null && signal!=undefined)
-          {
-            this.blreal_time=signal;
-            this.blreal_timearr.push(signal);
-            if(!isNaN(this.idsp))
-            {
-              if(signal.binhluanphu[0]!=null && signal.binhluanphu[0]!=undefined)
-              {
-                this.show_bl(signal._id).push(signal.binhluanphu[0]);
-              }
-              else
-              {
-                this.items_binhluan.push(signal);
-              }
-            }
-            this.checkinsertblp=true;
-          }
-        });
+        this.checkinsertblp=false;
+        this.load_binhluan_1day();
+        return;
       }
-
-      this.signalRService.signaldgReceived.subscribe((signal: dg) => {
-        if(signal!=null && signal!=undefined)
+      if(signal!=null && signal!=undefined)
+      {
+        this.blreal_time=signal;
+        this.blreal_timearr.push(signal);
+        if(!isNaN(this.idsp))
         {
-          console.log(signal);
-          this.dgreal_time=signal;
-          this.dgreal_timearr.push(signal);
-          if(!isNaN(this.idsp))
+          if(signal.binhluanphu[0]!=null && signal.binhluanphu[0]!=undefined)
           {
-            if(signal.danhgiaphu[0]!=null && signal.danhgiaphu[0]!=undefined)
-            {
-              this.show(signal._id).push(signal.danhgiaphu[0]);
-            }
-            else
-            {
-              this.items_danhgia.push(signal);
-            }
+            this.show_bl(signal._id).push(signal.binhluanphu[0]);
           }
-          this.checkinsertblp=true;
+          else
+          {
+            this.items_binhluan.push(signal);
+          }
         }
-      });
+        //this.checkinsertblp=true;
+        this.load_binhluan_1day();
+      }
+    });
+    
+    this.signalRService.signaldgReceived.subscribe((signal: dg) => {
+      if(signal!=null && signal!=undefined)
+      {
+        console.log(signal);
+        if(this.checkinsertdgp==true)
+        {
+          this.checkinsertdgp=false;
+          this.load_danhgia_1day();
+          return;
+        }
+        this.dgreal_time=signal;
+        this.dgreal_timearr.push(signal);
+        if(!isNaN(this.idsp))
+        {
+          if(signal.danhgiaphu[0]!=null && signal.danhgiaphu[0]!=undefined)
+          {
+            this.show(signal._id).push(signal.danhgiaphu[0]);
+          }
+          else
+          {
+            this.items_danhgia.push(signal);
+          }
+        }
+        //this.checkinsertblp=true;
+        this.load_danhgia_1day();
+      }
+    });
   }
-
-
 
   quanlytk = false;
   quanlysp = false;
@@ -230,6 +272,10 @@ export class RepbinhluanComponent implements OnInit {
   load_danhgia_1day() {
     this.danhgiaService.get_danhgia_1day().subscribe((res: bangghepdg_sp[] | null) => {
       var alllsp_danhgia_1day_p=res.filter(x=>x._int_tb>0);
+      if(alllsp_danhgia_1day_p==undefined || alllsp_danhgia_1day_p==null || alllsp_danhgia_1day_p.length==0)
+      {
+        this.alllsp_danhgia_1day=[];
+      }
       for(let v of alllsp_danhgia_1day_p)
       {
         if(this.alllsp_danhgia_1day.find(x=>x._tensp==v._tensp)==undefined)
@@ -244,6 +290,10 @@ export class RepbinhluanComponent implements OnInit {
   load_binhluan_1day() {
     this.binhluanService.get_binhluan_1day().subscribe((res: bangghepdg_sp[] | null) => {
       var alllsp_binhluan_1day_p=res.filter(x=>x._int_tb>0);
+      if(alllsp_binhluan_1day_p==undefined || alllsp_binhluan_1day_p==null || alllsp_binhluan_1day_p.length==0)
+      {
+        this.alllsp_binhluan_1day=[];
+      }
       for(let v of alllsp_binhluan_1day_p)
       {
         if(this.alllsp_binhluan_1day.find(x=>x._tensp==v._tensp)==undefined)
@@ -388,8 +438,8 @@ export class RepbinhluanComponent implements OnInit {
     });
   }
   
-  checkinsertblp:boolean=false;
   insertblp() {
+    this.checkinsertblp=true;
     if($("#text_binhluanphu"+this.idtextbl).val().toString()!=null && $("#text_binhluanphu"+this.idtextbl).val().toString()!="")
     {
       const bp = new blphu(
@@ -413,11 +463,7 @@ export class RepbinhluanComponent implements OnInit {
         (data) => {         
           if(data!=null && data!=undefined)
           {
-            this.checkinsertblp=true;
-            this.load_danhgia_1day();
-            this.load_binhluan_1day();
             alert('Thực hiện thành công');
-
           }
           else
           {
@@ -429,15 +475,17 @@ export class RepbinhluanComponent implements OnInit {
       $('#reply_box_binhluanphu' + this.idtextbl).css("display","none");
       $('#text_binhluanphu' + this.idtextbl).val("");
       this.show_bl(this.idtextbl).push(bp);
-      
     }
     else
     {
       alert("Vui lòng nhập nội dung bình luận !!!")
     }
+    this.load_binhluan_1day();
   }
 
+  
   insertdphu() {
+    this.checkinsertdgp=true;
     var s=$('#text_danhgiaphu'+ this.iddgp ).val();
     if($('#text_danhgiaphu' + this.iddgp).val()!=null || $('#text_danhgiaphu' + this.iddgp).val().toString().trim()!="")
     {
@@ -467,11 +515,13 @@ export class RepbinhluanComponent implements OnInit {
         this.show(this.iddgp).push(dp);
         $('#reply_box_danhgiaphu' + this.iddgp).css("display","none");
         $('#text_reply_box_danhgiaphu' + this.iddgp).val("");
+        
   }
   else
   {
     alert("Vui lòng nhâp đủ thông tin đánh giá !!!");
   }
+  this.load_danhgia_1day();
 }
 
   modelChangeddanhgia(value){
@@ -483,6 +533,48 @@ export class RepbinhluanComponent implements OnInit {
       this.binhluanService.get_binhluan_choseday_idsp(this.idsp,document.getElementById("dateinputbl")["value"]).subscribe((res: bl[] | null) => {
       this.items_binhluan = (res) ? res : [];
       });
+  }
+
+  Remove_binhluan(value: number)
+  {
+    this.checkinsertblp=true;
+    this.binhluanService.deletebl(value).subscribe(
+      (data) => {
+        if(data!=null && data!=undefined)
+        {
+          let v:bl;
+          v=this.items_binhluan.find(x=>x._id==value);
+          var c=this.items_binhluan.indexOf(v);
+          this.items_binhluan.splice(c,1);
+          alert("Xóa thành công !!!");
+        }
+        else
+        {
+          alert("Xóa thất bại !!!");
+        }
+      }
+    );
+  }
+
+  Remove_danhgia(value: number)
+  {
+    this.checkinsertdgp=true;
+    this.danhgiaService.deletedg(value).subscribe(
+      (data) => {
+        if(data!=null && data!=undefined)
+        {
+          let v:dg;
+          v=this.items_danhgia.find(x=>x._id==value);
+          var c=this.items_danhgia.indexOf(v);
+          this.items_danhgia.splice(c,1);
+          alert("Xóa thành công !!!");
+        }
+        else
+        {
+          alert("Xóa thất bại !!!");
+        }
+      }
+    );
   }
     
 }
