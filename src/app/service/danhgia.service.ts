@@ -62,5 +62,10 @@ export class DanhgiaService {
   deletedg(iddg: number): Observable<number> {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 		return this.http.delete<number>(this.url + '/'+ iddg, httpOptions);
+  }
+  
+  deletedgp(iddg: number, iddgp: number): Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.put<number>(this.url + '/delete_danhgiaphu?id='+ iddg + "&&" + "idex="+iddgp, httpOptions);
 	}
 }

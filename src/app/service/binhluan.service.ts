@@ -53,6 +53,11 @@ export class BinhluanService {
   deletebl(idbl: number): Observable<number> {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 		return this.http.delete<number>(this.url + '/'+ idbl, httpOptions);
+  }
+  
+  deleteblp(idbl: number, idblp: number): Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.put<number>(this.url + '/delete_binhluanphu?id='+ idbl + "&&" + "idex="+idblp, httpOptions);
 	}
 
 }

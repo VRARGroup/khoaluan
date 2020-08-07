@@ -9,7 +9,7 @@ import { SanphamService } from '../service/sanpham.service';
 import { DanhgiaService } from '../service/danhgia.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
-import { Observable, from } from 'rxjs';
+import { Observable, from, interval } from 'rxjs';
 import { LoaisanphamService } from '../service/loaisanpham.service';
 import { SignalRService } from '../service/signal-r.service'
 import { sp } from '../model/sanpham';
@@ -30,6 +30,7 @@ import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/mater
 import { AppDateAdapter, APP_DATE_FORMATS} from './date.adapter';
 import { tk } from '../model/taikhoan';
 import { ThrowStmt } from '@angular/compiler';
+import { AngularMaterialModuleModule } from '../angularmaterialmodule/angular-material-module.module';
 
 
 @Component({
@@ -330,34 +331,62 @@ export class RepbinhluanComponent implements OnInit {
   }
 
   idsp:number;
-  loaddanhgia(cv: number): void {
+  cv_idbl_parent: number;
+  loaddanhgia(cv: number, cv_idbl: number): void {
+    if(cv_idbl!=-1)
+    {
+      this.cv_idbl_parent=cv_idbl;
+    }
     this.idsp=cv;
     this.danhgiaService.get_danhgia_1day_idsp(cv).subscribe((res: dg[] | null) => {
-    this.items_danhgia = (res) ? res : [];
+      this.items_danhgia = res;
     });
-    this.binhluanService.get_binhluan_1day_idspp(cv).subscribe((res: bl[] | null) => {
-      this.items_binhluan = (res) ? res : [];
-    });
+    if(this.items_binhluan.length==0)
+    {
+      this.binhluanService.get_binhluan_1day_idspp(cv).subscribe((res: bl[] | null) => {
+        this.items_binhluan = res;
+        if(this.alllsp_binhluan_1day.length>0 && cv_idbl==-1)
+        {
+          this.cv_idbl_parent=this.alllsp_binhluan_1day.find(x=>x._id_sanpham==cv)._id;
+        }
+      });
+    }
     this.active_null_dg = this.active_null_bl = true;
     $("tbody tr").css('color', '#000');
     $("#tr_" + cv).css('color', 'red');
-    // if(this.focusdgpr==true)
-    // {
-    //   $("#tr_dg_" + cv).css('color', 'red');
-    //   this.focusdgpr=false;
-    //   return;
-    // }
-    // if(this.focusblpr==true)
-    // {
-    //   $("#tr_bl_" + cv).css('color', 'red');
-    //   this.focusblpr=false;
-    //   return;
-    // }
-    
     $("#datedanhgia").css('display','');
     $("#datebinhluan").css('display','');
-  };
+    setTimeout(()=>{$("#in_gt").click(),200});
+  }
 
+  f1(){
+    let ck:boolean=false;
+    if(this.items_binhluan.length==0)
+    {
+      return;
+    }
+    var v=this.items_binhluan.find(x=>x._id==this.cv_idbl_parent);
+    var c=this.items_binhluan.indexOf(v);
+    this.pbl=parseInt((c/2+1).toFixed(0));
+    console.log(this.pbl);
+    if(c>-1)
+    {
+      console.log(c);
+      setTimeout(()=>{ $("#bl_"+ this.cv_idbl_parent)[0].scrollIntoView(),200});    
+      ck=true;
+      return;
+    }
+    else
+    {
+      ck=false;
+    }
+    if(ck==false)
+    {
+      this.pbl=1;
+      $(".binhluan-list")[0].scrollIntoView()
+      return;
+    } 
+  }
   
   focusdgpr:boolean=false;
   focusblpr:boolean=false;
@@ -567,6 +596,42 @@ export class RepbinhluanComponent implements OnInit {
           v=this.items_danhgia.find(x=>x._id==value);
           var c=this.items_danhgia.indexOf(v);
           this.items_danhgia.splice(c,1);
+          alert("Xóa thành công !!!");
+        }
+        else
+        {
+          alert("Xóa thất bại !!!");
+        }
+      }
+    );
+  }
+
+  Remove_danhgiaphu(valuedg: number, valuedgp: number)
+  {
+    this.checkinsertdgp=true;
+    this.danhgiaService.deletedgp(valuedg, valuedgp).subscribe(
+      (data) => {
+        if(data!=null && data!=undefined)
+        {
+          $("#dgp_"+valuedg+"_"+valuedgp).remove();
+          alert("Xóa thành công !!!");
+        }
+        else
+        {
+          alert("Xóa thất bại !!!");
+        }
+      }
+    );
+  }
+
+  Remove_binhluanphu(valuebl: number, valueblp: number)
+  {
+    this.checkinsertblp=true;
+    this.binhluanService.deleteblp(valuebl, valueblp).subscribe(
+      (data) => {
+        if(data!=null && data!=undefined)
+        {
+          $("#blp_"+valuebl+"_"+valueblp).remove();
           alert("Xóa thành công !!!");
         }
         else

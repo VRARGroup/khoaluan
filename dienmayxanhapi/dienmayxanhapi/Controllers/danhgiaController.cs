@@ -174,6 +174,30 @@ namespace dienmayxanhapi.Controllers
         }
       }
 
+    [Route("delete_danhgiaphu")]
+    [HttpPut]
+    public IActionResult deletedgp(int id, int idex)
+    {
+      try
+      {
+        var b = _dgService.Getdg().Where(x => x._id == id).FirstOrDefault();
+        if (checkktid(id) == true)
+        {
+          var filter = Builders<binhluan>.Filter.Eq(x => x._id, id);
+          var update = Builders<binhluan>.Update.Pull("danhgiaphu", b.danhgiaphu[idex]);
+          _dgService.Updatebl(filter, update);
+          var saveResult = _signalService.SaveSignaldgAsync(b);
+          _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
+          return Ok(true);
+        }
+        return NoContent();
+      }
+      catch
+      {
+        return NoContent();
+      }
+    }
+
 
   }
 }

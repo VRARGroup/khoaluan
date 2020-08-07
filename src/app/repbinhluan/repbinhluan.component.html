@@ -49,14 +49,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="tr_dg_{{item._id}}" (mouseup)="focusdg()" (click)="loaddanhgia(item._id)" *ngFor="let item of alllsp_danhgia_1day | paginate: {id: 'paginationdg', itemsPerPage: 6, currentPage: p}; let i=index">
+                <tr id="tr_dg_{{item._id}}" (mouseup)="focusdg()" (click)="loaddanhgia(item._id_sanpham, item._id)" *ngFor="let item of alllsp_danhgia_1day | paginate: {id: 'paginationdgcho', itemsPerPage: 6, currentPage: p}; let i=index">
                   <td>{{(i+1)+((p-1)*6)}}</td>
                   <td>{{item._tensp}}</td>
                   <td>{{item._tenth}}</td>
                 </tr>
               </tbody>
             </table>
-            <pagination-controls id='paginationdg' (pageChange)="p = $event"></pagination-controls>
+            <pagination-controls id='paginationdgcho' (pageChange)="p = $event"></pagination-controls>
           </ng-container>
         </div>
         <div class="filter_bl">
@@ -71,14 +71,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="tr_bl_{{item._id}}" (mouseup)="focusbl()" (click)="loaddanhgia(item._id_sanpham)" *ngFor="let item of alllsp_binhluan_1day | paginate: {id: 'paginationbl', itemsPerPage: 6, currentPage: p}; let i=index">
+                <tr id="tr_bl_{{item._id}}" (click)="loaddanhgia(item._id_sanpham, item._id)" *ngFor="let item of alllsp_binhluan_1day | paginate: {id: 'paginationblcho', itemsPerPage: 6, currentPage: p}; let i=index">
                   <td>{{(i+1)+((p-1)*6)}}</td>
                   <td>{{item._tensp}}</td>
                   <td>{{item._tenth}}</td>
                 </tr>
               </tbody>
             </table>
-            <pagination-controls id='paginationbl' (pageChange)="p = $event"></pagination-controls>
+            <pagination-controls id='paginationblcho' (pageChange)="p = $event"></pagination-controls>
           </ng-container>
         </div>
 
@@ -97,7 +97,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="tr_{{item._id}}" (click)="loaddanhgia(item._id)" *ngFor="let item of tensanpham | paginate: {id: 'pagination2', itemsPerPage: 6, currentPage: p}; let i=index">
+                <tr id="tr_{{item._id}}" (click)="loaddanhgia(item._id, -1)" *ngFor="let item of tensanpham | paginate: {id: 'pagination2', itemsPerPage: 6, currentPage: p}; let i=index">
                   <td>
                     <div *ngIf="check_bell_id_sp(item._id)" style="position: relative;">
                       <div style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;"><i class="fas fa-bell"></i></div>
@@ -115,6 +115,7 @@
           </ng-container>
         </div>
       </div>
+      <input type="button" id="in_gt" (click)="f1()" style="display:none">
       <div class="filter">
         <mat-form-field id="datedanhgia" style="float: right; padding-top: 10px;">
           <input id="dateinput" [(ngModel)]="this.date" (ngModelChange)="modelChangeddanhgia($event)" matInput [matDatepicker]="picker" placeholder="chọn ngày">
@@ -162,15 +163,15 @@
               </li>
               <ng-container *ngIf="show(item_danhgia._id).length>0">
                 <li>
-                  <div *ngFor="let item of show(item_danhgia._id)">
-                    <div class="rep-comment-info-dg">
+                  <div *ngFor="let item of show(item_danhgia._id), let d=index">
+                    <div id="dgp_{{item_danhgia._id}}_{{d}}" class="rep-comment-info-dg">
                       <div style="display: inline-flex;" class="d-flex justify-content-between">
                         <span>{{item.ten}}
                           <label class="qtv" *ngIf="item.chucdanh==true">QTV</label>
                         </span>
-                        <!-- <div>
-                          <i class="fas fa-times fas_time"></i>
-                        </div> -->
+                        <div>
+                          <i class="fas fa-times fas_time" (click)="Remove_danhgiaphu(item_danhgia._id, d)"></i>
+                        </div>
                       </div>
                       <div>
                         <p>
@@ -211,9 +212,9 @@
         <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Danh sách bình luận</label>
         <div class="d-flex justify-content-center">
           <ul>
-            <div class="inline box-binhluan" *ngFor="let item_binhluan of items_binhluan | paginate: {id: 'paginationbl', itemsPerPage: 10, currentPage: pbl}, let i=index">
+            <div class="inline box-binhluan" *ngFor="let item_binhluan of items_binhluan | paginate: {id: 'paginationbl', itemsPerPage: 2, currentPage: pbl}, let i=index">
               <hr>
-              <li class="binhluan-list">
+              <li id="bl_{{item_binhluan._id}}" class="binhluan-list">
                 <div style="display: inline-flex;" class="d-flex justify-content-between">
                   <span class="binhluan-name"> {{item_binhluan.ten}} </span>
                   <div>
@@ -235,15 +236,15 @@
               </li>
               <ng-container *ngIf="show_bl(item_binhluan._id).length>0">
                 <li>
-                  <div *ngFor="let item of show_bl(item_binhluan._id)">
-                    <div class="rep-comment-info-bl">
+                  <div *ngFor="let item of show_bl(item_binhluan._id), let o=index">
+                    <div id="blp_{{item_binhluan._id}}_{{o}}" class="rep-comment-info-bl">
                       <div class="d-flex justify-content-between">
                         <span>{{item.ten}}
                           <label class="qtv" *ngIf="item.chucdanh==true">QTV</label>
                         </span>
-                        <!-- <div>
-                          <i class="fas fa-times fas_time"></i>
-                        </div> -->
+                        <div>
+                          <i class="fas fa-times fas_time" (click)="Remove_binhluanphu(item_binhluan._id, o)"></i>
+                        </div>
                       </div>
                       <div>
                         <p>

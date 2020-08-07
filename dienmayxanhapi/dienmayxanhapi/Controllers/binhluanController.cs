@@ -152,5 +152,29 @@ namespace dienmayxanhapi.Controllers
         return NoContent();
       }
     }
+
+    [Route("delete_binhluanphu")]
+    [HttpPut]
+    public IActionResult deleteblp(int id, int idex)
+    {
+      try
+      {
+        var b = _blService.Getbinhluan().Where(x => x._id == id).FirstOrDefault();
+        if (checkktid(id) == true)
+        {
+          var filter = Builders<binhluan>.Filter.Eq(x => x._id, id);
+          var update = Builders<binhluan>.Update.Pull("binhluanphu",b.binhluanphu[idex]);
+          _blService.Updatebl(filter, update);
+          var saveResult = _signalService.SaveSignalAsync(b);
+          _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
+          return Ok(true);
+        }
+        return NoContent();
+      }
+      catch
+      {
+        return NoContent();
+      }
+    }
   }
 }
