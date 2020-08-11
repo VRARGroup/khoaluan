@@ -147,7 +147,10 @@ export class TaosanphamComponent implements OnInit {
       }
       console.log(sa)
       var s = res[0].hinhdaidien;
+     
       this.urlimagedd = Object(res[0].hinhdaidien);
+    
+      this.nameimagedd = JSON.stringify(this.urlimagedd).replace('"',"").replace('"',"").toString();
       this.isImageSaveddd = true;
       for (let i = 0; i < res[0].hinh.length; i++) {
         this.urls.push(res[0].hinh[i].hinhanh);
@@ -237,7 +240,7 @@ export class TaosanphamComponent implements OnInit {
           console.log(tsp);
           
           this.Createsp(tsp);
-          this.reset();
+          //this.reset();
           if (!isNaN(this.idtaolsp)) {
             this.valueChange(0);
           }
@@ -533,13 +536,13 @@ export class TaosanphamComponent implements OnInit {
           console.log(this.responseimage)
         }
       });
-    setTimeout(() => { this.urls.push(fileToUpload.name) }, 200);
+    setTimeout(() => { this.urls.push(fileToUpload.name)}, 200);
     document.getElementById("uploadCaptureInputFile")["value"] = "";
     console.log("h", this.urls);
   }
 
   createImgPath = (s: string) => {
-    if (s === undefined) {
+    if (s == undefined) {
       this.serverPath = "https://localhost:44309/Resources/Images/" + this.serverPath;
     }
     if (s == "") {
@@ -547,6 +550,9 @@ export class TaosanphamComponent implements OnInit {
     }
     else {
       if (this.idlsp != null) {
+        if (s == undefined) {
+          return false;
+        }
         var s1 = s.toString().startsWith("https://");
         if (s1 == true) {
           this.serverPath = s;

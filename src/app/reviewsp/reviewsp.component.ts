@@ -34,7 +34,7 @@ export class ReviewspComponent implements OnInit {
   // }
 
   addtext: Array<any> = [];
-  urls = [];
+  urls =[];
   valuegt: Array<any> = [];
   idinput: string;
   i: number = 0;
@@ -90,6 +90,12 @@ export class ReviewspComponent implements OnInit {
           console.log(this.responseimage)
         }
       });
+      
+    if(this.addtext.length==1)
+    {
+      setTimeout(() => { this.urls[0]=fileToUpload.name }, 200);
+      return;
+    }
     setTimeout(() => { this.urls.push(fileToUpload.name) }, 200);
     console.log("h", this.urls);
   }
@@ -103,11 +109,22 @@ export class ReviewspComponent implements OnInit {
     }
     else {
       if (!isNaN(this.idlsp)) {
-        if (s != "") {
+        if(s==undefined)
+        {
+          return false;
+        }
+        var s1 = s.toString().startsWith("https://");
+       
+        if (s != "" && s1==true) {
           this.serverPath = s;
         }
         else {
-          this.serverPath = "./assets/upanh.png";
+          if (s != "" && s1==false) {
+            this.serverPath = "https://localhost:44309/Resources/Images/" + s;
+          }
+          else
+          {this.serverPath = "./assets/upanh.png";}
+          
         }
       }
       else {
