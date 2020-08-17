@@ -80,6 +80,7 @@ export class ThemtaikhoanComponent implements OnInit {
       $('#username').val(res[0].username);
       $('#pass').val(res[0].password);
       $('#tennv').val(res[0].tennv);
+      $('#emailnv').val(res[0].email);
       if (res[0].hoatdong == true) {
         this.hdt = true;
       }
@@ -139,6 +140,7 @@ export class ThemtaikhoanComponent implements OnInit {
         document.getElementById("username")["value"],
         document.getElementById("pass")["value"],
         document.getElementById("tennv")["value"],
+        document.getElementById("emailnv")["value"],
         false,
         this.ctk,
         this.selected
@@ -153,6 +155,7 @@ export class ThemtaikhoanComponent implements OnInit {
         document.getElementById("username")["value"],
         document.getElementById("pass")["value"],
         document.getElementById("tennv")["value"],
+        document.getElementById("emailnv")["value"],
         false,
         this.ctk,
         this.selected

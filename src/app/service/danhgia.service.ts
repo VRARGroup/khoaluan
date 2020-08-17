@@ -59,6 +59,10 @@ export class DanhgiaService {
 		return this.http.get<dg[]>(this.url+"/get_danhgia_choseday_idsp?_id_sp="+id +"&&"+"d="+d );
   }
 
+  get_danhgia_choseday_idsp_day(id:number, d:String): Observable<any[]> {
+		return this.http.get<any[]>(this.url+"/get_danhgia_choseday_idsp_day?_id_sp="+id + "&&"+"d="+d );
+  }
+
   deletedg(iddg: number): Observable<number> {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 		return this.http.delete<number>(this.url + '/'+ iddg, httpOptions);
@@ -67,5 +71,15 @@ export class DanhgiaService {
   deletedgp(iddg: number, iddgp: number): Observable<number> {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 		return this.http.put<number>(this.url + '/delete_danhgiaphu?id='+ iddg + "&&" + "idex="+iddgp, httpOptions);
-	}
+  }
+  
+  duyetdanhgia(d:dg):Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.put<number>(this.url + '/duyetdanhgia',d, httpOptions);
+  }
+
+  duyetdanhgiaphu(idex:number, d:dg):Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.put<number>(this.url + '/duyetdanhgiaphu?idex='+idex,d, httpOptions);
+  }
 }

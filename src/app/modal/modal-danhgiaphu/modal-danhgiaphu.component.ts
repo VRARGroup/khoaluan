@@ -35,7 +35,7 @@ export class ModalDanhgiaphuComponent implements OnInit {
           if ($("#danhgia_male").is(":checked")) {
             gt = true;
           }
-          const dp = new dgphu(this.noidungdanhgia, 0, $("#hotendgp").val().toString(), false, gt, $("#emaildgp").val().toString())
+          const dp = new dgphu(this.noidungdanhgia, 0, $("#hotendgp").val().toString(), false, gt, $("#emaildgp").val().toString(), false)
           this.dgp.push(dp);
           const d = new dg(
             this.iddg,
@@ -48,10 +48,11 @@ export class ModalDanhgiaphuComponent implements OnInit {
             null,
             this.dgp,
             null,
-            parseInt(this.idsp.toString())
+            parseInt(this.idsp.toString()),
+            true
           );
           this.danhgiaService.insert_binhluan_danhgia(d).subscribe(() => {
-            alert('Thực hiện thành công');
+            alert('Cảm ơn bạn đã đánh giá, thông tin đánh giá của bạn sẽ được duyệt trong 24h !!!');
           }
           );
           this.dialogRef.close(dp);

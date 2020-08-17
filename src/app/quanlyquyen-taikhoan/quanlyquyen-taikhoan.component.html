@@ -7,7 +7,7 @@
       <div class="filter">
         <div class="d-flex justify-content-center">
           <div class="inline">
-            <button class="buttonth" (click)="getalltaikhoan()">TẤT CẢ TÀI KHOẢN</button>
+            <button id="all" class="buttonth" (click)="getalltaikhoan()">TẤT CẢ TÀI KHOẢN</button>
           </div>
         </div>
       </div>
@@ -55,6 +55,7 @@
                   <th>STT</th>
                   <th>Tên đăng nhập</th>
                   <th>Mật khẩu</th>
+                  <th>Email liên hệ</th>
                   <th>Được phép hoạt động</th>
                 </tr>
               </thead>
@@ -65,6 +66,7 @@
                     <a (click)="detaitk(item._id)" title="chi tiết tài khoản {{item.username}}">{{item.username}}</a>
                   </td>
                   <td>{{item.password}}</td>
+                  <td>{{item.email}}</td>
                   <td>
                     <ng-container *ngIf="item.giayphep==true">
                       <a title="Chặn tài khoãn này" (click)="huycapphep(item._id)">

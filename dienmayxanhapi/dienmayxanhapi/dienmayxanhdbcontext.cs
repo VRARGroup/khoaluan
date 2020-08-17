@@ -22,6 +22,7 @@ namespace dienmayxanhapi
         public virtual DbSet<group> group { get; set; }
         public virtual DbSet<danhgia> danhgia { get; set; }
         public virtual DbSet<binhluan> binhluan { get; set; }
+        public virtual DbSet<idex> idex { get; set; }
         private string ConnectionString = "mongodb://localhost:27017";
         private string DatabaseName = "dienmayxanh";
         private string CollectionNamesp = "sanpham";
@@ -59,6 +60,10 @@ namespace dienmayxanhapi
         {
           public danhgia[] Danhgias { get; set; }
           public danhgiaphu[] Danhgiaphus { get; set; }
+        }
+        public class danhsachthuonghieu
+        {
+          public List<string> listthuonghieu { get; set; }
         }
         public class bangghepsanphamdanhgia_custom
         {
@@ -150,6 +155,19 @@ namespace dienmayxanhapi
         {
             var dl = collectionlsp.Find(x => true).ToList();
             return dl;
+        }
+        public List<string> Getthuonghieu()
+        {
+            List<string> thuonghieulist = new List<string>();
+            var query = (from th in Getlsp().Select(x => x.thuonghieu).ToList().Distinct().ToList().AsQueryable() select new danhsachthuonghieu { listthuonghieu=th }).ToList().Distinct().ToList();
+            var maxthuongheu = query.OrderByDescending(x => x.listthuonghieu.Count).First();
+            for(int i=0;i< query.Count;i++)
+            {
+              var s = query[i].listthuonghieu;
+              thuonghieulist.AddRange(s);
+            }
+            var sth= (from l in thuonghieulist select l).ToList().Distinct().ToList();
+            return sth;
         }
         public List<loaisanpham> Getfillterlsp(int id)
         {
@@ -292,6 +310,13 @@ namespace dienmayxanhapi
             return dl;
         }
 
+        public List<taikhoan> Getemail()
+        {
+          var dl = collectiontk.Find(x => x._id_group==1 || x._id_group == 3 && x.giayphep==true).ToList();
+          dl = dl.Where(x => x.email.Length > 1).ToList();
+          return dl;
+        }
+
         public List<taikhoan> Getgrouptk()
         {
             var dl = collectiontk.Find(x => x._id_group == 9999).ToList();
@@ -362,13 +387,13 @@ namespace dienmayxanhapi
 
         public List<danhgia> Getdetaildg(int _id)
         {
-            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList().Take(50).ToList().OrderByDescending(x => x.ngaydanhgia).ToList();
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id && x.kiemduyet==true).ToList().OrderByDescending(x => x.ngaydanhgia).ToList();
             return dl;
         }
 
         public List<danhgia> Getalldetaildg_idsp(int _id)
         {
-            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id).ToList();
+            var dl = collectiondanhgia.Find(x => x._id_sanpham == _id ).ToList();
             return dl;
         }
 
@@ -449,7 +474,7 @@ namespace dienmayxanhapi
 
         public List<binhluan> Getdetaibinhluan_idsp(int id_sp)
         {
-            var dl = collectionbinhluan.Find(x => x._id_sanpham == id_sp).ToList();
+            var dl = collectionbinhluan.Find(x => x._id_sanpham == id_sp && x.kiemduyet == true).ToList();
             return dl;
         }
 
@@ -497,9 +522,37 @@ namespace dienmayxanhapi
                         _tensp = c.ten,
                         _tenth = c.thuonghieu,
                         _id_loaisanpham = c._id_loaisanpham,
-                        _int_tb = p.danhgiaphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
-                                  p.danhgiaphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
-                                  p.danhgiaphu.Count==0 ? 1 : 0
+                        //_int_tb = p.danhgiaphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
+                        //          p.danhgiaphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                        //          p.danhgiaphu.Count==0 ? 1 : 0
+                        _int_tb = p.kiemduyet == false ? 1 :
+                                  p.danhgiaphu.Where(x => x.kiemduyetphu == true).ToList().Count > 0 ? 0 :
+                                  p.danhgiaphu.Where(x => x.kiemduyetphu == false).ToList().Count > 0 ? 1 :
+                                  p.danhgiaphu.Count == 0 ? 1 : 0
+                      }).ToList();
+            return query.ToList();
+        }
+
+        public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day_idsp(int _id_sp, String d)
+        {
+          await Task.Delay(500);
+          var dl = collectiondanhgia.Find(x => x._id_sanpham==_id_sp && x.ngaydanhgia >= Convert.ToDateTime(d)).ToList();
+          var dl1= Get();
+          var query = (from p in dl.AsQueryable()
+                      join c in dl1.AsQueryable() on p._id_sanpham equals c._id
+                      select new bangghepsanphamdanhgia_custom {
+                        _id = p._id,
+                        _id_sanpham = p._id_sanpham,
+                        _tensp = c.ten,
+                        _tenth = c.thuonghieu,
+                        _id_loaisanpham = c._id_loaisanpham,
+                        //_int_tb = p.danhgiaphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
+                        //          p.danhgiaphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                        //          p.danhgiaphu.Count==0 ? 1 : 0
+                        _int_tb = p.kiemduyet == false ? 1 :
+                                  p.danhgiaphu.Where(x => x.kiemduyetphu == true).ToList().Count > 0 ? 0 :
+                                  p.danhgiaphu.Where(x => x.kiemduyetphu == false).ToList().Count > 0 ? 1 :
+                                  p.danhgiaphu.Count == 0 ? 1 : 0
                       }).ToList();
               return query.ToList();
         }
@@ -524,6 +577,31 @@ namespace dienmayxanhapi
         {
             var dl = collectionbinhluan.Find(x => x._id_sanpham == _id_sp && x.ngaybinhluan >= Convert.ToDateTime(d) && x.ngaybinhluan < Convert.ToDateTime(d).AddDays(1)).ToList();
             return dl;
+        }
+
+        public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_binhluan_idsp_1dayAsync(int _id_sp, String d)
+        {
+          await Task.Delay(500);
+          
+          var dl = collectionbinhluan.Find(x => x._id_sanpham==_id_sp && x.ngaybinhluan >= Convert.ToDateTime(d)).ToList();
+          var dl1= Get();
+          var query = (from p in dl.AsQueryable()
+                      join c in dl1.AsQueryable() on p._id_sanpham equals c._id
+                      select new bangghepsanphamdanhgia_custom {
+                        _id = p._id,
+                        _id_sanpham = p._id_sanpham,
+                        _tensp = c.ten,
+                        _tenth = c.thuonghieu,
+                        _id_loaisanpham = c._id_loaisanpham,
+                        //_int_tb = p.binhluanphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
+                        //          p.binhluanphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                        //          p.binhluanphu.Count==0 ? 1 : 0
+                        _int_tb = p.kiemduyet == false ? 1 :
+                                  p.binhluanphu.Where(x => x.kiemduyetphu == true).ToList().Count > 0 ? 0 :
+                                  p.binhluanphu.Where(x => x.kiemduyetphu == false).ToList().Count > 0 ? 1 :
+                                  p.binhluanphu.Count == 0 ? 1 : 0
+                      }).ToList();
+              return query.ToList();
         }
         public List<danhgia> Getfillter_danhgia_choseday_theo_idsp(int _id_sp, String d)
         {
@@ -561,9 +639,13 @@ namespace dienmayxanhapi
                         _tensp = c.ten,
                         _tenth = c.thuonghieu,
                         _id_loaisanpham = c._id_loaisanpham,
-                        _int_tb = p.binhluanphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
-                                  p.binhluanphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
-                                  p.binhluanphu.Count==0 ? 1 : 0
+                        //_int_tb = p.binhluanphu.Where(x => x.chucdanh == true).ToList().Count > 0 ? 0 :
+                        //          p.binhluanphu.Where(x => x.chucdanh == false).ToList().Count > 0 ? 1 :
+                        //          p.binhluanphu.Count==0 ? 1 : 0
+                        _int_tb = p.kiemduyet == false ? 1 :
+                                  p.binhluanphu.Where(x => x.kiemduyetphu == true).ToList().Count > 0 ? 0 :
+                                  p.binhluanphu.Where(x => x.kiemduyetphu == false).ToList().Count > 0 ? 1 :
+                                  p.binhluanphu.Count == 0 ? 0 : 0
                       }).ToList();
               return query.ToList();
         }

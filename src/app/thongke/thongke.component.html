@@ -9,7 +9,7 @@
       <div class="search-hero">
         <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Thống Kê</label>
       </div>
-      <div class="filter">
+      <!-- <div class="filter">
         <div class="d-flex justify-content-center">
           <div class="inline">
             <button class="buttonth" id="thongke-spnoibat" (click)="load_thong_ke_sp()">SẢN PHẨM NỔI BẬT</button>
@@ -17,8 +17,8 @@
             <label style="color: #fff; font-size: 18px; margin-right: -100px; margin-left: 10px;" *ngIf="tensanpham.length > 0">{{tensanpham.length}} sản phẩm </label>
           </div>
         </div>
-      </div>
-      <div class="filter thongke-loai">
+      </div> -->
+      <!-- <div class="filter thongke-loai">
         <div class="d-flex justify-content-center">
           <div class="inline">
             <ng-container *ngFor="let obj of alllsp">
@@ -42,8 +42,32 @@
             </ng-container>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="filter">
+        <div>
+          <ng-container *ngIf="tensanpham.length > 0">
+            <table class="table table-striped" style="text-align: center">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên loại sản phẩm</th>
+                  <th>Số lượng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of tensanpham | paginate: { itemsPerPage: 8, currentPage: p }; let i=index">
+                  <td>{{(i+1)+((p-1)*8)}}</td>
+                  <td>{{item.ten}}</td>
+                  <td>{{item.thuonghieu}}</td>
+                  <td>{{item.giaban}}</td>
+                  <td>{{item.giamgia}}</td>
+                  <td>{{item.sosao}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </ng-container>
+        </div>
         <div>
           <ng-container *ngIf="tensanpham.length > 0">
             <table class="table table-striped" style="text-align: center">
@@ -54,6 +78,7 @@
                   <th>Thương hiệu</th>
                   <th>Giá bán</th>
                   <th>Giảm giá</th>
+                  <th>Số sao</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,6 +88,7 @@
                   <td>{{item.thuonghieu}}</td>
                   <td>{{item.giaban}}</td>
                   <td>{{item.giamgia}}</td>
+                  <td>{{item.sosao}}</td>
                 </tr>
               </tbody>
             </table>

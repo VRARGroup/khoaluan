@@ -19,7 +19,11 @@ export class LoaisanphamService {
 
   	getlsp(): Observable<lsanpham[]> {
     	return this.http.get<lsanpham[]>(this.url);
-  	}
+	}
+
+	getth(): Observable<string[]> {
+    	return this.http.get<string[]>(this.url+'/thuonghieu');
+  	}  
 
   	getdetaillsp(id: any): Observable<lsanpham[]> {
     	return this.http.get<lsanpham[]>(this.url+ '/' + id);

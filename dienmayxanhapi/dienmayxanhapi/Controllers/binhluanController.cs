@@ -67,6 +67,73 @@ namespace dienmayxanhapi.Controllers
         }
       }
 
+      [Route ("duyetbinhluan")]
+      [HttpPut]
+
+      public ActionResult<List<binhluan>> duyetbinhluan(binhluan bl)
+      {
+        try
+        {
+          if (checkktid(Convert.ToInt32(bl._id)) == true)
+          {
+            bl.kiemduyet = true;
+            var filter = Builders<binhluan>.Filter.Eq("_id", bl._id);
+            var update = Builders<binhluan>.Update.Combine(
+                         Builders<binhluan>.Update.Set("kiemduyet",true)
+                         );
+            if (_blService.Updatebl(filter, update) == true)
+            {
+              var saveResult = _signalService.SaveSignalAsync(bl);
+              _hubContext.Clients.All.SendAsync("SignalMessageReceived", bl);
+              return Ok(true);
+            }
+          }
+          return NoContent();
+        }
+        catch
+        {
+          return NoContent();
+        }
+      }
+
+      [Route ("duyetbinhluanphu")]
+      [HttpPut]
+
+      public ActionResult<List<binhluan>> duyetbinhluanphu(int idex, binhluan bl)
+      {
+        try
+        {
+          try
+          {
+            bl.binhluanphu[idex].kiemduyetphu = true;
+          }
+          catch
+          {
+            return NoContent();
+          }
+          
+          if (checkktid(Convert.ToInt32(bl._id)) == true)
+          {
+            bl.kiemduyet = false;
+            bl.ten = null;
+            var filter = Builders<binhluan>.Filter.Where(x => x._id == bl._id);
+            var update = Builders<binhluan>.Update.Set(x => x.binhluanphu[idex].kiemduyetphu, true);
+            if (_blService.Updatebl(filter, update) == true)
+            {
+              var saveResult = _signalService.SaveSignalAsync(bl);
+              _hubContext.Clients.All.SendAsync("SignalMessageReceived", bl);
+              return Ok(true);
+            }
+        }
+          return NoContent();
+        }
+        catch
+        {
+          return NoContent();
+        }
+
+      }
+
     [HttpPut("{_id}")]
     public ActionResult<List<binhluan>> putbinhluan(int _id, binhluan b)
     {
@@ -107,8 +174,15 @@ namespace dienmayxanhapi.Controllers
       return (_blService.Getfillter_binhluan_choseday_theo_idsp(_id_sp,d));
     }
 
-    [HttpGet("get_binhluan_1day")]
-    public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_danhgia_1day()
+    [HttpGet("get_binhluan_choseday_idsp_day")]
+    public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_binhluan_choseday_theo_idsp_day(int _id_sp, String d)
+    {
+      return (await _blService.Getfillter_binhluan_idsp_1dayAsync(_id_sp, d));
+    }
+
+    [Route("get_binhluan_1day")]
+    [HttpGet]
+    public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_binhluan_1day()
     {
       return (await _blService.Getfillter_binhluan_1dayAsync());
     }
@@ -141,6 +215,7 @@ namespace dienmayxanhapi.Controllers
         {
           var deletefilter = Builders<binhluan>.Filter.Eq("_id", id);
           _blService.deletebl(deletefilter);
+          b.kiemduyet = false;
           var saveResult = _signalService.SaveSignalAsync(b);
           _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
           return Ok(true);
@@ -164,9 +239,16 @@ namespace dienmayxanhapi.Controllers
         {
           var filter = Builders<binhluan>.Filter.Eq(x => x._id, id);
           var update = Builders<binhluan>.Update.Pull("binhluanphu",b.binhluanphu[idex]);
-          _blService.Updatebl(filter, update);
-          var saveResult = _signalService.SaveSignalAsync(b);
-          _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
+          if (_blService.Updatebl(filter, update) == true)
+          {
+            idex myObj = new idex();
+            myObj.x = "xóa bình luận phụ";
+            myObj.id = id;
+            myObj.i = idex;
+
+            var saveResult = _signalService.SaveSignalidexAsync(myObj);
+            _hubContext.Clients.All.SendAsync("SignalMessageReceived", myObj);
+          }
           return Ok(true);
         }
         return NoContent();

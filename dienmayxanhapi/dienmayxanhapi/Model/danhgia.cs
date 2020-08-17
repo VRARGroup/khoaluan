@@ -20,6 +20,7 @@ namespace dienmayxanhapi.Model
     public List<Boolean> tieuchidanhgia { get; set; }
     public int? _id_sanpham { get; set; }
     public DateTime ngaydanhgia { get; set; }
+    public Boolean kiemduyet { get; set; }
 
   }
 
@@ -32,5 +33,6 @@ namespace dienmayxanhapi.Model
     public Boolean gioitinh { get; set; }
     public string email { get; set; }
     public DateTime ngaydanhgiaphu { get; set; }
+    public Boolean kiemduyetphu { get; set; }
   }
 }

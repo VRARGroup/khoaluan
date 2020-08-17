@@ -9,36 +9,45 @@
         <label class="valuend" for="tensp">Tên loại sản phẩm <span style="color:red;font-weight:bold">(*)</span>: </label>
         <input type="text"  value={{tenloaisp}} id="tensp">
         <br>  <br>
-        
-        <!-- <label>Đặc trưng: </label>  <a href="javascript:void(0);" class="add-more-info"><i class="fas fa-plus"></i></a>
-        <div id="field-wrapper">
-            <div>
-                <input  class="value1" type="text"><a href="javascript:void(0);" class="remove_button"><i class="fas fa-minus"></i></a>
-                <br>
-                <textarea class="value2" type="text"></textarea>
-                <br>
-            </div>
+        <div class="filter-item">
+        <div style="width: auto; height: auto;">
+            <label class="valuend">Thương hiệu: </label>
+            <ng-container *ngFor="let itemthdc of allth_dachon, let i=index">
+                <a class="aboder">
+                    <label id="labelthdc_{{i}}" for="thdc_{{i}}"> {{itemthdc}}</label>
+                    <i style="color: red; cursor: pointer;" class="fas fa-times fas_time fas_thdc" (click)=Removeth(i)></i>
+                </a>
+            </ng-container>
         </div>
-        <br>  <br>
-        <label>Hình ảnh: </label> -->
-        <div>
-        <label class="valuend">Thương hiệu: </label> 
-        <div id="field-wrapper" *ngFor="let item of allth,let i=index">
-            <div class="titlediv">
-                <label>Tên thương hiệu {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
-                <input id="inputth{{i}}" class="value1" value={{item}} type="text" #monlun><i class="fas fa-minus" (click)=Removeth(i)></i>
-                <br>
-            </div>
+        <table class="category" id="field-wrapper">
+            <td id="td_{{i}}" *ngFor="let item of allth,let i=index">
+                <a>
+                    <input type="checkbox" id="category_{{i}}" (change)="suggest_category(item)">
+                    <label id="labelth_{{i}}" for="category_{{i}}"> {{item}}</label>
+                    <ng-container *ngIf="i>this.count_allth-1">
+                        <i id="rth_{{i}}" style="float: right; color: red; cursor: pointer;" class="fas fa-times fas_time" (click)="Removeth_them(item)"></i>
+                    </ng-container>
+                    
+                    <br>
+                </a>
+            </td>
+        </table>
+        <i class="fas fa-plus" id="btn_themth" style="cursor: pointer;" (click)=Addth()> Thêm thương hiệu mới</i>
+        <i class="fas fa-times fas_time" id="btn_closeth" style="cursor: pointer; color: red;" (click)=Addth1()> Hoàn tất thêm thương hiệu mới</i>
+        <div id="div_themth" style="margin-top: 22px;">
+            <label class="valuend">Thêm thương hiệu mới: </label>
+            <input id="add-th" class="value1" type="text">
+            <button type="button" class="btn btn-outline-success" (click)="Addth3()">Thêm thương hiệu vào danh sách</button>
         </div>
-        <i class="fas fa-plus" (click)=Addth()> Thêm</i>
-        <br>  <br>
+        <br><br>
         </div>
         <div>
         <label class="valuend">Đặc trưng: </label>  
         <div id="field-wrapper" *ngFor="let item of alldt,let i=index">
+            <i class="fas fa-times fas_time" id="btn_closedt" style="cursor: pointer; color: red;" (click)=Remove(i)></i>
             <div class="titlediv">
                 <label>Tên đăc trưng {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
-                <input id="input{{i}}" value={{keys(item)}} class="value1" type="text" #maRef><i class="fas fa-minus" (click)=Remove(i)></i>
+                <input id="input{{i}}" value={{keys(item)}} class="value1" type="text" #maRef>
                 <br>
                 <label>Danh sách đăc trưng {{i+1}} <span style="color:red;font-weight:bold">(*)</span>:</label>
                 <br>
@@ -65,31 +74,28 @@
                             <span style="background-position: -60px 0px; margin-left: 10px;"><i class="fab fa-acquisitions-incorporated" *ngIf="hiddenwarbutton(1)" (click)="this.ktu=0"></i><i class="fas fa-ban" *ngIf="hiddenwarbutton(0)" (click)="this.ktu=1"></i></span>
                         </li>
                     </ul>
-                        <textarea id="text{{i}}" (keyup)="keydb(i)" value={{item[keys(item)]}} class="value2" type="text" #maRef></textarea>
-                    
+                        <textarea id="text{{i}}" (keyup)="keydb(i)" value={{item[keys(item)]}} class="value2" type="text" #maRef></textarea>      
                 </div>
                 <br>
             </div>
         </div>
-        
         <br>  <br>
         </div>
-        <i class="fas fa-plus" (click)=Add()> Thêm</i>
+        <i class="fas fa-plus" style="cursor: pointer;" (click)=Add()> Thêm</i>
         <br>  <br>
         <div>
             <label class="valuend">Tiêu chí đánh giá: </label>  
             <div id="field-wrapper" *ngFor="let item of alltcdg,let i=index">
+                <i class="fas fa-times fas_time" id="btn_closetcdg" style="cursor: pointer; color: red;" (click)=Removetcdg(i)></i>
                 <div class="titlediv">
                     <label>Tiêu chí đánh giá {{i+1}} :</label>
-                    <input id="inputtcdg{{i}}" class="value1" value="{{item}}" type="text" #tieuchig><i class="fas fa-minus" (click)=Removetcdg(i)></i>
+                    <input id="inputtcdg{{i}}" class="value1" value="{{item}}" type="text" #tieuchig>
                     <br>
                 </div>
             </div>
-            
             <br>  <br>
         </div>
-        <i class="fas fa-plus" (click)=Addtcdg()> Thêm</i>
-        
+        <i class="fas fa-plus" style="cursor: pointer;" (click)=Addtcdg()> Thêm</i>
     </div>
     <div class="container">
         <button class="btn btn-outline-dark" type="button" id="save_tk" (click)="back()"><i class="fas fa-caret-square-left"></i></button>

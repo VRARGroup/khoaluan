@@ -28,6 +28,7 @@ export class ListproductComponent implements OnInit {
   gia: Array<any> = [];
   inch: Array<any> = [];
   lit: Array<any> = [];
+  star: Array<any> = [];
   show_giatdc: boolean = false;
   show_giacdt: boolean = false;
   show_bcn: boolean = false;
@@ -36,6 +37,7 @@ export class ListproductComponent implements OnInit {
   price: string;
   inchstring: string;
   litstring: string;
+  sao: number[] = [5,4,3,2,1];
   items_inch: any[] = ["Từ 32 - 43 inch","Từ 44 - 54 inch","Từ 55 - 64 inch","Từ 65 - 74 inch","Trên 75 inch"];
   items_lit: any[] = ["Dưới 150 lít","Từ 150 - 300 lít","Từ 300 - 400 lít","Từ 400 - 550 lít","Trên 550 lít"];
   constructor(private router: Router, private route: ActivatedRoute, private sanphamService: SanphamService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
@@ -92,10 +94,15 @@ export class ListproductComponent implements OnInit {
       window.scroll(0, 0);
     }
   }
+
+  arrayOne(n: number): any[] {
+    return Array(n);
+  }
+
   get_list_product(id: number) {
     this.sanphamService.get_list_product(id).subscribe((res: sp[] | null) => {
-      this.itemsphu = (res) ? res : [];
-      this.items = res.slice(0,25);
+      this.itemsphu = (res.sort((a,b)=>b._id - a._id)) ? res : [];
+      this.items = res.sort((a,b)=>b._id - a._id).slice(0,25);
       if(this.thuonghieu!=null && this.thuonghieu!=undefined)
       {
         (document.getElementById("category_"+this.thuonghieu) as HTMLInputElement).checked = true
@@ -129,7 +136,7 @@ export class ListproductComponent implements OnInit {
       {
         if(a1.length==0)
         {
-          a1=this.itemsphu.filter(x=>x._id!=c._id);
+          a1=this.itemsphu.filter(x=>x._id!=this.items[0]._id);
         }
         else
         {
@@ -143,7 +150,7 @@ export class ListproductComponent implements OnInit {
     }
     else
     {
-      Array.prototype.push.apply(this.items ,a1.slice(this.items.length, this.items.length+25));
+      Array.prototype.push.apply(this.items ,a1.slice(0, 25));
     }
     if(this.tt==false)
     {
@@ -230,10 +237,23 @@ export class ListproductComponent implements OnInit {
               this.suggest_lit("dienmayxanh");
             }
           }
+          if(this.star.length>0)
+          {
+            let ig:Array<sp>=[];
+            if(this.gia.length==0)
+            {
+              this.items=[];
+              this.suggest_star(-2)
+            }
+            else
+            {
+              this.suggest_star(-1);
+            }
+          }
         }
         let ic:Array<sp>=[];
         var k=value.trim();
-        if(this.gia.length>0 || this.inch.length>0 || this.lit.length>0)
+        if(this.gia.length>0 || this.inch.length>0 || this.lit.length>0 || this.star.length>0)
         {
           this.suggest_category("dienmayxanh");
         }
@@ -268,6 +288,17 @@ export class ListproductComponent implements OnInit {
             this.suggest_category("dienmayxanh");
           }
         }
+        if(this.star.length>0)
+        {
+          if(this.gia.length==0)
+          {
+            this.suggest_star(-2);
+          }
+          else
+          {
+            this.suggest_star(-1);
+          }
+        }
         if(this.inch.length>0)
         {
           this.suggest_inch("dienmayxanh");
@@ -276,7 +307,7 @@ export class ListproductComponent implements OnInit {
         {
           this.suggest_lit("dienmayxanh");
         }
-        if((this.inch.length==0 || this.lit.length==0) && (this.gia.length==0 && this.hang.length==0))
+        if((this.inch.length==0 || this.lit.length==0) && (this.gia.length==0 && this.hang.length==0 && this.star.length==0))
         {
           this.items=this.itemsphu;
           this.tt=true;
@@ -376,10 +407,22 @@ export class ListproductComponent implements OnInit {
             this.suggest_lit("dienmayxanh");
           }
         }
+        if(this.star.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.items=[];
+            this.suggest_star(-2);
+          }
+          else
+          {
+            this.suggest_star(-1);
+          }
+        }
         let ic:Array<sp>=[];
         var gt=value.split(" ");
         var g12=gt[1].split("-");
-        if(this.hang.length>0 || this.inch.length>0 || this.lit.length>0)
+        if(this.hang.length>0 || this.inch.length>0 || this.lit.length>0 || this.star.length>0)
         {
           this.suggest_price("dienmayxanh");
         }
@@ -432,7 +475,19 @@ export class ListproductComponent implements OnInit {
             this.suggest_lit("loaddienmayxanh");
           }
         }
-        if((this.inch.length==0 || this.lit.length==0) && (this.gia.length==0 && this.hang.length==0))
+
+        if(this.star.length>0)
+        {
+          if(this.gia.length>0 || this.hang.length>0)
+          {
+            this.suggest_star(-1);
+          }
+          else
+          {
+            this.suggest_star(-2);
+          }
+        }
+        if((this.inch.length==0 || this.lit.length==0) && (this.gia.length==0 && this.hang.length==0 && this.star.length==0))
         {
           this.items=this.itemsphu;
           this.tt=false;
@@ -502,11 +557,26 @@ export class ListproductComponent implements OnInit {
             this.items=[];
             this.items=ig;
           }
+          if(this.star.length>0)
+          {
+            let ig:Array<sp>=[];
+            if(this.gia.length==0 && this.hang.length==0)
+            {
+              this.items=[];
+              this.suggest_star(-2)
+            }
+            else
+            {
+              this.suggest_star(-1)
+            }
+            this.items=[];
+            this.items=ig;
+          }
         }
         let ic:Array<sp>=[];
         var k=value.trim().replace("inch","").replace("Từ","");
         var s=k.split(" - ");
-        if(this.gia.length>0 || this.hang.length>0)
+        if(this.gia.length>0 || this.hang.length>0 || this.star.length>0)
         {
           for(let i=0;i<this.inch.length;i++)
           {
@@ -561,7 +631,18 @@ export class ListproductComponent implements OnInit {
             this.suggest_inch("loaddienmayxanh");
           }
         }
-        if(this.inch.length==0 && this.gia.length==0 && this.hang.length==0)
+        if(this.star.length>0)
+        {
+          if(this.inch.length>0 || this.hang.length>0)
+          {
+            this.suggest_star(-1);
+          }
+          else
+          {
+            this.suggest_star(-2);
+          }
+        }
+        if(this.inch.length==0 && this.gia.length==0 && this.hang.length==0 && this.star.length==0)
         {
           this.items=this.itemsphu;
           this.tt=false;
@@ -652,10 +733,22 @@ export class ListproductComponent implements OnInit {
               this.suggest_price("dienmayxanh");
             }
           }
+          if(this.star.length>0)
+          {
+            if(this.hang.length==0 && this.gia.length==0)
+            {
+              this.items=[];
+              this.suggest_star(-2);
+            }
+            else
+            {
+              this.suggest_star(-1);
+            }
+          }
         }
         let ic:Array<sp>=[];
         var k=value.trim();
-        if(this.gia.length>0 || this.hang.length>0)
+        if(this.gia.length>0 || this.hang.length>0 || this.star.length>0)
         {
           
           this.suggest_lit("dienmayxanh");
@@ -684,11 +777,22 @@ export class ListproductComponent implements OnInit {
             this.suggest_category("dienmayxanh");
           }
         }
+        if(this.star.length>0)
+        {
+          if(this.gia.length==0 && this.hang.length==0)
+          {
+            this.suggest_star(-2);
+          }
+          else
+          {
+            this.suggest_star(-1);
+          }
+        }
         if(this.lit.length>0)
         {
           this.suggest_lit("loaddienmayxanh");
         }
-        if(this.lit.length==0 && this.gia.length==0 && this.hang.length==0)
+        if(this.lit.length==0 && this.gia.length==0 && this.hang.length==0 && this.star.length==0)
         {
           this.items=this.itemsphu;
           this.tt=false;
@@ -699,6 +803,159 @@ export class ListproductComponent implements OnInit {
     if(this.items.length>0)
     {
       this.tt=true;
+    }
+  }
+
+  suggest_star(value: number)
+  {
+    if(!isNaN(value))
+    {
+      let index:number=this.star.indexOf(value,0);
+      if(index==-1)
+      {
+        if(value!=-1 && value!=-2)
+        {
+          this.star.push(value);
+        }
+        if(value==1)
+        {
+          let ic:Array<sp>=[];
+          for(let i=0; i<this.star.length; i++)
+          {
+            var gt=this.star[i];
+            Array.prototype.push.apply(ic, this.items.filter(x=>x.sosao==gt));
+          }
+          this.items=ic;
+          return;
+        }
+        if(value==-1)
+        {
+          let ic:Array<sp>=[];
+          for(let i=0; i<this.star.length; i++)
+          {
+            var gt=this.star[i];
+            Array.prototype.push.apply(ic, this.itemsphu.filter(x=>x.sosao==gt));
+          }
+          this.items=ic;
+          return;
+        }
+        if(this.hang.length>0)
+        {
+          this.items=[];
+          this.suggest_category("loaddienmayxanh");
+        }
+        if(this.inch.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.items=[];
+            this.suggest_inch("loaddienmayxanh");
+          }
+          else
+          {
+            this.suggest_inch("dienmayxanh");
+          }
+        }
+        if(this.lit.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.items=[];
+            this.suggest_lit("loaddienmayxanh");
+          }
+          else
+          {
+            this.suggest_lit("dienmayxanh");
+          }
+        }
+        if(this.gia.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.items=[];
+            this.suggest_price("loaddienmayxanh");
+          }
+          else
+          {
+            this.suggest_price("dienmayxanh");
+          }
+        }
+        let ic:Array<sp>=[];
+        if(this.hang.length>0 || this.inch.length>0 || this.lit.length>0 || this.gia.length>0)
+        {
+          this.suggest_star(-1);
+        }
+        else
+        {
+          if(this.star.length>=1)
+          {
+            this.suggest_star(-2);
+          }
+        }
+      }
+      else
+      {
+        this.items=[];
+        this.star.splice(index,1);
+        if(this.star.length>0)
+        {
+          this.suggest_star(-2);
+        }
+        if(this.hang.length>0)
+        {
+          if(this.star.length>0)
+          {
+            this.suggest_category("dienmayxanh");
+          }
+          else
+          {
+            this.suggest_category("loaddienmayxanh");
+          }
+        }
+        if(this.inch.length>0)
+        {
+          if(this.star.length>0 || this.hang.length>0)
+          {
+            this.suggest_star(-1);
+          }
+          else
+          {
+            this.suggest_star(-2);
+          }
+        }
+        if(this.lit.length>0)
+        {
+          if(this.star.length>0 || this.hang.length>0)
+          {
+            this.suggest_star(-1);
+          }
+          else
+          {
+            this.suggest_star(-2);
+          }
+        }
+        if(this.star.length>0)
+        {
+          if(this.hang.length==0)
+          {
+            this.items=[];
+            this.suggest_star(-2);
+          }
+          else
+          {
+            this.suggest_star(-1);
+          }
+        }
+        if((this.inch.length==0 || this.lit.length==0) && (this.star.length==0 && this.hang.length==0 && this.gia.length==0))
+        {
+          this.items=this.itemsphu;
+          this.tt=false;
+        }
+      }
+    }
+    if(this.items.length>0)
+    {
+      this.tt=true
     }
   }
 

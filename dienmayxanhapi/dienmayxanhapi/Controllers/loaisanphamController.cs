@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using dienmayxanhapi.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using static dienmayxanhapi.dienmayxanhdbcontext;
 
 namespace dienmayxanhapi.Controllers
 {
@@ -24,6 +26,13 @@ namespace dienmayxanhapi.Controllers
         public ActionResult<List<loaisanpham>> Get()
         {
           return (_lspService.Getlsp());
+        }
+
+        [Route ("thuonghieu")]
+        [HttpGet]
+        public ActionResult<List<string>> Getthuonnghieu()
+        {
+          return (_lspService.Getthuonghieu());
         }
 
         [HttpGet("{id}")]
@@ -176,6 +185,7 @@ namespace dienmayxanhapi.Controllers
         {
             return _lspService.check_tieuchidanhgia(_id);
         }
+
         public Boolean checkktid(int id)
         {
           try

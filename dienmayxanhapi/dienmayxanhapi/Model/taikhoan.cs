@@ -11,6 +11,7 @@ namespace dienmayxanhapi.Model
     public string username { get; set; }
     public string password { get; set; }
     public string tennv { get; set; }
+    public string email { get; set; }
     public Boolean hoatdong { get; set; }
     public Boolean giayphep { get; set; }
     public int? _id_group { get; set; }

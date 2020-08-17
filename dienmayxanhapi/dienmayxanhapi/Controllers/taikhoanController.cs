@@ -149,6 +149,7 @@ namespace dienmayxanhapi.Controllers
                         { "username" , tk.username},
                         { "password" , tk.password},
                         { "tennv" , tk.tennv },
+                        { "email" , tk.email },
                         { "hoatdong" , tk.hoatdong},
                         { "giayphep" , tk.giayphep},
                         { "_id_group" , tk._id_group}
@@ -174,6 +175,7 @@ namespace dienmayxanhapi.Controllers
                             Builders<taikhoan>.Update.Set("username", tk.username),
                             Builders<taikhoan>.Update.Set("password", tk.password),
                             Builders<taikhoan>.Update.Set("tennv", tk.tennv),
+                            Builders<taikhoan>.Update.Set("email", tk.email),
                             Builders<taikhoan>.Update.Set("hoatdong", tk.hoatdong),
                             Builders<taikhoan>.Update.Set("giayphep", tk.giayphep),
                             Builders<taikhoan>.Update.Set("_id_group", tk._id_group)

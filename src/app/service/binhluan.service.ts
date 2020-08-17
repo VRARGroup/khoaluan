@@ -46,6 +46,10 @@ export class BinhluanService {
 		return this.http.get<bl[]>(this.url+"/get_binhluan_choseday_idsp?_id_sp="+id + "&&"+"d="+d );
   }
 
+  get_binhluan_choseday_idsp_day(id:number, d:String): Observable<any[]> {
+		return this.http.get<any[]>(this.url+"/get_binhluan_choseday_idsp_day?_id_sp="+id + "&&"+"d="+d );
+  }
+
   get_binhluan_1day(): Observable<any[]> {
 		return this.http.get<any[]>(this.url+"/get_binhluan_1day");
   }
@@ -58,6 +62,16 @@ export class BinhluanService {
   deleteblp(idbl: number, idblp: number): Observable<number> {
 		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 		return this.http.put<number>(this.url + '/delete_binhluanphu?id='+ idbl + "&&" + "idex="+idblp, httpOptions);
-	}
+  }
+  
+  duyetbinhluan(b:bl):Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.put<number>(this.url + '/duyetbinhluan',b, httpOptions);
+  }
+
+  duyetbinhluanphu(idex:number, b:bl):Observable<number> {
+		const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+		return this.http.put<number>(this.url + '/duyetbinhluanphu?idex='+idex,b, httpOptions);
+  }
 
 }

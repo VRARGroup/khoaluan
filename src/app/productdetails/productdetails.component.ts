@@ -6,6 +6,7 @@ import { LoaisanphamService } from '../service/loaisanpham.service';
 import { DanhgiaService } from '../service/danhgia.service';
 import { BinhluanService } from '../service/binhluan.service';
 import { SignalRService } from "../service/signal-r.service";
+import { EmailService } from '../service/email.service';
 
 import { sp } from '../model/sanpham';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -23,6 +24,7 @@ import { dgphu } from '../model/danhgia';
 import { bl } from '../model/binhluan';
 import { blphu } from '../model/binhluan';
 import { Validators } from '@angular/forms';
+import { email } from '../model/email';
 
 import { ModalThongsokythuatComponent } from '../modal/modal-thongsokythuat/modal-thongsokythuat.component';
 import { ModalDanhgiaComponent } from '../modal/modal-danhgia/modal-danhgia.component';
@@ -65,7 +67,9 @@ export class ProductdetailsComponent implements OnInit {
   showScroll: boolean;
   showScrollHeight = 300;
   hideScrollHeight = 10;
-  constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService, private signalRService: SignalRService) { }
+  checkreal_time:boolean=true;
+  emaill:email[]=[];
+  constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService, private emailService: EmailService,private signalRService: SignalRService) { }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -114,29 +118,72 @@ export class ProductdetailsComponent implements OnInit {
 
     //   }, 800);
     this.signalRService.signalReceived.subscribe((signal: bl) => {
+      if(this.checkreal_time==false)
+      {
+        this.checkreal_time=true;
+        return;
+      }
       if (signal != null && signal != undefined) {
+        if(signal["x"]=="xóa bình luận phụ")
+        {
+          $("#blp_"+signal["id"]+"_"+signal["i"]).remove();          
+          return;
+        }
         console.log(signal);
+        if(signal.kiemduyet==true)
+        {
+          this.item_comments.push(signal);
+          return;
+        }
         let arr: Array<blphu> = []
         arr.push(signal.binhluanphu[0]);
         if (signal.ten != null && signal.ten != undefined) {
+          signal.kiemduyet=true;
           var c = this.item_comments.indexOf(signal);
           this.item_comments.splice(c, 1);
+          return;
         }
-        this.showbinhluanphu(signal._id, this.item_comments).push(arr[0]);
+        if(signal.ten == null && signal.ten == undefined)
+        {
+          this.showbinhluanphu(signal._id, this.item_comments).push(arr[0]);
+          return;
+        }
         console.log(this.p);
       }
     });
 
     this.signalRService.signaldgReceived.subscribe((signal: dg) => {
+      if(this.checkreal_time==false)
+      {
+        this.checkreal_time=true;
+        return;
+      }
       if (signal != null && signal != undefined) {
+        if(signal["x"]=="xóa đánh giá phụ")
+        {
+          $("#dgp_"+signal["id"]+"_"+signal["i"]).remove();          
+          return;
+        }
         console.log(signal);
+        if(signal.kiemduyet==true)
+        {
+          this.items_danhgia.push(signal);
+          return;
+        }
+        
         let arr: Array<dgphu> = []
         arr.push(signal.danhgiaphu[0]);
         if (signal.ten != null && signal.ten != undefined) {
+          signal.kiemduyet=true;
           var c = this.items_danhgia.indexOf(signal);
           this.items_danhgia.splice(c, 1);
+          return;
         }
-        this.show(signal._id).push(arr[0]);
+        if(signal.ten == null && signal.ten == undefined)
+        {
+          this.show(signal._id).push(arr[0]);
+          return;
+        }
         console.log(this.p);
       }
     });
@@ -481,6 +528,7 @@ export class ProductdetailsComponent implements OnInit {
   }
 
   guidanhgiangay() {
+    this.checkreal_time=false;
     if (this.star > 0) {
       if (this.textarea_count >= 15) {
 
@@ -524,20 +572,28 @@ export class ProductdetailsComponent implements OnInit {
               0,
               null,
               tcdg,
-              parseInt(this.idsp.toString())
+              parseInt(this.idsp.toString()),
+              false
             );
             console.log("danhgia", d);
             this.Createdg(d);
+            const e = new email(
+              "vinh",
+              "",
+              $("#hoten").val().toString()+" "+"vừa đánh giá sản phẩm"+" "+this.items[0].ten,
+              ""
+            )
+            this.sendemail(e);
             this.hinhthuctesp = [];
             $("#hoten").val("").toString();
             $('#sdt').val("").toString();
             $('#email').val("").toString();
             $('#textarea_danhgiasosao').val("").toString(),
-              this.star = 0;
+            this.star = 0;
             this.urls = [];
             this.show_hide_danhgiasosao();
             this.get_product_details(this.idsp);
-            setTimeout(() => { this.loaddanhgia() }, 200);
+            //setTimeout(() => { this.loaddanhgia() }, 200);
 
           }
           else {
@@ -571,13 +627,27 @@ export class ProductdetailsComponent implements OnInit {
     try {
       this.danhgiaService.creatdg(d).subscribe(
         () => {
-          alert('Cảm ơn bạn đã đánh giá.');
+          alert('Cảm ơn bạn đã đánh giá. Thông tin đánh giá của bạn sẽ được kiểm duyệt trong 24h.');
         }
       );
     }
     catch
     {
       this.router.navigate(['appmain']);
+    }
+  }
+
+  sendemail(e: email) {
+    try {
+      this.emailService.sendmail(e).subscribe(
+        () => {
+          return;
+        }
+      );
+    }
+    catch
+    {
+      return;
     }
   }
 
@@ -589,9 +659,10 @@ export class ProductdetailsComponent implements OnInit {
     this.iddg = id;
   }
 
-  items_danhgiaphu_dl: dgphu[]
+  items_danhgiaphu_dl: dgphu[];
   show(id: number) {
-    this.items_danhgiaphu_dl = (this.items_danhgia.find(x => x._id == id).danhgiaphu);
+    let s:dgphu[] = (this.items_danhgia.find(x => x._id == id).danhgiaphu);
+    this.items_danhgiaphu_dl = s;
     return this.items_danhgiaphu_dl;
   }
 
@@ -612,7 +683,7 @@ export class ProductdetailsComponent implements OnInit {
     this.danhgiaService.getdg_idsp(this.idsp).subscribe((res: dg[] | null) => {
       this.items_danhgia = (res) ? res : [];
       var j = res.find(x => true);
-      if (res != null) {
+      if (res != null && res.length>0) {
         if (j.sosao != null && !isNaN(j.sosao) && j.tieuchidanhgia.length != null && !isNaN(j.tieuchidanhgia.length)) {
           this.countstar = res.length;
           this.countstar1 = res.filter(x => x.sosao == 1).length;
@@ -621,7 +692,6 @@ export class ProductdetailsComponent implements OnInit {
           this.countstar4 = res.filter(x => x.sosao == 4).length;
           this.countstar5 = res.filter(x => x.sosao == 5).length;
           this.numberstar = Math.round(((this.countstar1 + this.countstar2 + this.countstar3 + this.countstar4 + this.countstar5) / this.countstar) * 10) / 10;
-
           for (let i of res[0].tieuchidanhgia) {
             this.counttcdg.push(0);
 
@@ -666,10 +736,10 @@ export class ProductdetailsComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe((submit) => {
         if (submit) {
-          let a: dgphu[] = [];
-          a.push(submit);
-          this.show(this.iddg).push(a[0]);
-          $('#input' + id).val("").toString()
+          // let a: dgphu[] = [];
+          // a.push(submit);
+          // this.show(this.iddg).push(a[0]);
+          // $('#input' + id).val("").toString()
         } else {
           console.log("null")
         }
@@ -689,7 +759,7 @@ export class ProductdetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((submit) => {
       if (submit) {
-        this.loadbinhluan();
+        //this.loadbinhluan();
       } else {
         console.log("null")
       }
@@ -703,7 +773,7 @@ export class ProductdetailsComponent implements OnInit {
       this.binhluanService.creatbl(b).subscribe(
         (data) => {
           if (data != null && data != undefined) {
-            alert("Cảm ơn bạn đã bình luận.");
+            alert("Cảm ơn bạn đã bình luận. Thông tin bình luận của bạn sẽ được kiểm duyệt trong 24h.");
           }
         }
       );
@@ -770,6 +840,7 @@ export class ProductdetailsComponent implements OnInit {
   }
 
   insertbl() {
+    this.checkreal_time=false;
     if ($('.textarea_danhgia').val().toString().length <= 1000) {
       if ($('.textarea_danhgia').val().toString().trim() != "" && $('.textarea_danhgia').val().toString() != null) {
         if ($('#ht').val().toString().trim() != "" && $('#emailbl').val().toString().trim() != "") {
@@ -793,10 +864,18 @@ export class ProductdetailsComponent implements OnInit {
               this.hinhthuctesp_bl,
               0,
               null,
-              parseInt(this.idsp.toString())
+              parseInt(this.idsp.toString()),
+              false
             );
             console.log("binhluan", b);
             this.Createbl(b);
+            const e = new email(
+              "vinh",
+              "",
+              $("#ht").val().toString()+" "+"vừa bình luận sản phẩm"+" "+this.items[0].ten,
+              ""
+            )
+            this.sendemail(e);
             this.hinhthuctesp_bl;
             $("#ht").val("").toString();
             gt;
@@ -805,9 +884,7 @@ export class ProductdetailsComponent implements OnInit {
 
 
             this.hinhthuctesp_bl = [];
-            this.urls_bl = [];
-            this.item_comments = [];
-            setTimeout(() => { this.loadbinhluan() }, 200);
+            //setTimeout(() => { this.loadbinhluan() }, 200);
 
           }
           else {

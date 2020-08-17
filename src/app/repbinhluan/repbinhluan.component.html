@@ -12,7 +12,10 @@
             <ng-container *ngFor="let obj of alllsp">
               <div class="btn-group" id="btn_lsp_{{obj._id}}">
                 <button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">{{obj.tendanhmuc | uppercase}}</button>
-                <ng-container *ngFor="let objtb of alllsp_binhluan_1day">
+                <ng-container *ngFor="let objtb of alllsp_danhgia_1day_p">
+                  <div id="lspth1_{{obj._id}}" *ngIf="obj._id==objtb._id_loaisanpham" style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;"><i class="fas fa-bell"></i></div>
+                </ng-container>
+                <ng-container *ngFor="let objtb of alllsp_binhluan_1day_p">
                   <div id="lspth_{{obj._id}}" *ngIf="obj._id==objtb._id_loaisanpham" style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;"><i class="fas fa-bell"></i></div>
                 </ng-container>
               </div>
@@ -28,7 +31,12 @@
                 <button class="buttonth" id="lspth_{{obj._id}}" (click)="loadtensp(obj._id+','+i)">{{i}}</button>
                 <ng-container *ngFor="let objtb of alllsp_binhluan_1day">
                   <ng-container *ngIf="i==objtb._tenth">
-                    <div id="lspth_{{obj._id}}_{{j}}"  style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">{{plusbinhluan(objtb._tenth)}}</div>
+                    <div id="lspth_{{obj._id}}_{{j}}"  style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 34px;">{{plusbinhluan(objtb._tenth)}}</div>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngFor="let objtb of alllsp_danhgia_1day">
+                  <ng-container *ngIf="i==objtb._tenth">
+                    <div id="lspth1_{{obj._id}}_{{j}}"  style="background-color: red;color: #fff;border-radius: 10px;width: 22px;height: 22px;padding: 1px;position: absolute;z-index: 10;top: -8px;right: 5px;">{{plusdanhgia(objtb._tenth)}}</div>
                   </ng-container>
                 </ng-container>
               </div>
@@ -71,7 +79,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="tr_bl_{{item._id}}" (click)="loaddanhgia(item._id_sanpham, item._id)" *ngFor="let item of alllsp_binhluan_1day | paginate: {id: 'paginationblcho', itemsPerPage: 6, currentPage: p}; let i=index">
+                <tr id="tr_bl_{{item._id}}" (click)="loaddanhgia(item._id_sanpham, -2)" *ngFor="let item of alllsp_binhluan_1day | paginate: {id: 'paginationblcho', itemsPerPage: 6, currentPage: p}; let i=index">
                   <td>{{(i+1)+((p-1)*6)}}</td>
                   <td>{{item._tensp}}</td>
                   <td>{{item._tenth}}</td>
@@ -81,8 +89,8 @@
             <pagination-controls id='paginationblcho' (pageChange)="p = $event"></pagination-controls>
           </ng-container>
         </div>
-
       </div>
+      <input type="button" id="in_dg" (click)="f2()" style="display:none">
       <div class="filter">
         <div>
           <ng-container *ngIf="tensanpham.length > 0">
@@ -129,7 +137,7 @@
           <ul>
             <div class="inline box-danhgia" *ngFor="let item_danhgia of items_danhgia | paginate: {id: 'paginationdg', itemsPerPage: 10, currentPage: pdg}, let i=index">
               <hr>
-              <li class="danhgia-list">
+              <li id="dg_{{item_danhgia._id}}" class="danhgia-list">
                 <div style="display: inline-flex;" class="d-flex justify-content-between">
                   <span class="danhgia-name">{{item_danhgia.ten}} </span>
                   <div>
@@ -149,9 +157,10 @@
                         <p></p>
                       </div>
                     </span>
-                    <i ><p style="margin-left: 10px;">{{item_danhgia.noidung}}</p>
-                    </i>
+                    <i ><p style="margin-left: 10px;">{{item_danhgia.noidung}}</p></i>
+                    <span id="duyetdanhgia_{{i}}" class="spandate" *ngIf="item_danhgia.kiemduyet==false">nội dung chưa được duyệt</span>
                   </p>
+                  <button id="btn_duyetdanhgia_{{i}}" type="button" *ngIf="item_danhgia.kiemduyet==false" class="btn btn-outline-success" (click)="duyetdanhgia(item_danhgia, i)">Duyệt tin này</button>
                 </div>
                 <div class="d-flex justify-content-start">
                   <ng-container *ngIf="item_danhgia.hinh!=null && item_danhgia.hinh.length>0" >
@@ -176,7 +185,9 @@
                       <div>
                         <p>
                           <i>{{item.noidung}}</i>
+                          <span id="duyetdanhgiaphu_{{i}}_{{d}}" class="spandate" *ngIf="item.kiemduyetphu==false">nội dung chưa được duyệt</span>
                         </p>
+                        <button id="btn_duyetdanhgiaphu_{{i}}_{{d}}" type="button" *ngIf="item.kiemduyetphu==false" class="btn btn-outline-success" (click)="duyetdanhgiaphu(item_danhgia,d,i)">Duyệt tin này</button>
                       </div>
                     </div>
                   </div>
@@ -212,7 +223,7 @@
         <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Danh sách bình luận</label>
         <div class="d-flex justify-content-center">
           <ul>
-            <div class="inline box-binhluan" *ngFor="let item_binhluan of items_binhluan | paginate: {id: 'paginationbl', itemsPerPage: 2, currentPage: pbl}, let i=index">
+            <div class="inline box-binhluan" *ngFor="let item_binhluan of items_binhluan | paginate: {id: 'paginationbl', itemsPerPage: 10, currentPage: pbl}, let i=index">
               <hr>
               <li id="bl_{{item_binhluan._id}}" class="binhluan-list">
                 <div style="display: inline-flex;" class="d-flex justify-content-between">
@@ -225,7 +236,9 @@
                   <p>
                     <i style="margin-left: 10px;">{{item_binhluan.noidung}}</i>
                   </p>
+                  <span id="duyetbinhluan_{{i}}" style="margin-left: 10px;" class="spandate" *ngIf="item_binhluan.kiemduyet==false">nội dung chưa được duyệt</span>
                 </div>
+                <button id="btn_duyetbinhluan_{{i}}" type="button" *ngIf="item_binhluan.kiemduyet==false" class="btn btn-outline-success" (click)="duyetbinhluan(item_binhluan,i)">Duyệt tin này</button>
                 <div class="d-flex justify-content-start">
                   <ng-container *ngIf="item_binhluan.hinh!=null && item_binhluan.hinh.length>0" >
                     <div *ngFor="let i of item_binhluan.hinh" class="rat">
@@ -249,8 +262,10 @@
                       <div>
                         <p>
                           <i>{{item.noidung}}</i>
+                          <span id="duyetbinhluanphu_{{i}}_{{o}}" class="spandate" *ngIf="item.kiemduyetphu==false">nội dung chưa được duyệt</span>
                         </p>
                       </div>
+                      <button id="btn_duyetbinhluanphu_{{i}}_{{o}}" type="button" *ngIf="item.kiemduyetphu==false" class="btn btn-outline-success" (click)="duyetbinhluanphu(item_binhluan,i,o)">Duyệt tin này</button>
                       <div class="d-flex justify-content-start">
                         <ng-container *ngIf="item.hinh!=null && item.hinh.length>0" >
                           <div *ngFor="let i of item.hinh" class="rat">

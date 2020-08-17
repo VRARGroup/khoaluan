@@ -102,6 +102,8 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
     $(".btn-group .button").css("color", "#000");
     $("#btn_lsp_" + id + " .button").css("background-color", "#ec314d");
     $("#btn_lsp_" + id + " .button").css("color", "#fff");
+    $("#all").css("background-color", "#fff");
+    $("#all").css("color", "#000");
   }
 
   loaddsq() {
@@ -161,6 +163,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
       null,
       null,
       null,
+      null,
       false,
       false,
       0
@@ -178,6 +181,7 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
   capphep(id: number) {
     const tkh1 = new tk(
       id,
+      null,
       null,
       null,
       null,
@@ -251,5 +255,10 @@ export class QuanlyquyenTaikhoanComponent implements OnInit {
     }, 500);
     this.alltk = [];
     setTimeout(() => { this.loadtaikhoan() }, 500);
+    $("#all").css("background-color", "#ec314d");
+    $("#all").css("color", "#fff");
+    $(".btn-group .button").css("background-color", "#fff");
+    $(".btn-group .button").css("color", "#000");
   }
+  
 }

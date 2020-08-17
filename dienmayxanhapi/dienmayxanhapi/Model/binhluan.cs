@@ -19,6 +19,7 @@ namespace dienmayxanhapi.Model
     public IList<binhluanphu> binhluanphu { get; set; }
     public int? _id_sanpham { get; set; }
     public DateTime ngaybinhluan { get; set; }
+    public Boolean kiemduyet { get; set; }
   }
 
   public class binhluanphu
@@ -31,5 +32,6 @@ namespace dienmayxanhapi.Model
     public Boolean gioitinh { get; set; }
     public string email { get; set; }
     public DateTime ngaybinhluanphu { get; set; }
+    public Boolean kiemduyetphu { get; set; }
   }
 }

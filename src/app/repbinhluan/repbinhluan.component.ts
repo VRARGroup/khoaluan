@@ -17,8 +17,10 @@ import { hinh } from '../model/sanpham';
 import { Subscription } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material';
 import { dsq } from '../model/danhsachquyen';
+import { email } from '../model/email';
 import { bl,blphu } from '../model/binhluan';
 import { DanhsachquyenService } from '../service/danhsachquyen.service';
+import { EmailService } from '../service/email.service';
 import { BinhluanService } from '../service/binhluan.service';
 import { GroupService } from '../service/group.service';
 import { TaikhoanService } from '../service/taikhoan.service';
@@ -84,7 +86,7 @@ export class RepbinhluanComponent implements OnInit {
   showScroll: boolean;
   showScrollHeight = 300;
   hideScrollHeight = 10;
-  constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService, private signalRService: SignalRService) { 
+  constructor(private location: Location, private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private binhluanService: BinhluanService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService, private taikhoanService: TaikhoanService, private signalRService: SignalRService, private emailService: EmailService) { 
   }
 
   @HostListener('window:scroll', [])
@@ -254,7 +256,12 @@ export class RepbinhluanComponent implements OnInit {
 
   plusbinhluan(value: string)
   {
-    return this.alllsp_binhluan_1day.filter(x=>x._tenth==value).length;
+    return this.alllsp_binhluan_1day_p.filter(x=>x._tenth==value).length;
+  }
+
+  plusdanhgia(value: string)
+  {
+    return this.alllsp_danhgia_1day_p.filter(x=>x._tenth==value).length;
   }
 
   check_bell_id_sp(value: number)
@@ -270,14 +277,15 @@ export class RepbinhluanComponent implements OnInit {
     return false;
   }
 
+  alllsp_danhgia_1day_p: bangghepdg_sp[] = [];
   load_danhgia_1day() {
     this.danhgiaService.get_danhgia_1day().subscribe((res: bangghepdg_sp[] | null) => {
-      var alllsp_danhgia_1day_p=res.filter(x=>x._int_tb>0);
-      if(alllsp_danhgia_1day_p==undefined || alllsp_danhgia_1day_p==null || alllsp_danhgia_1day_p.length==0)
+      this.alllsp_danhgia_1day_p=res.filter(x=>x._int_tb>0);
+      if(this.alllsp_danhgia_1day_p==undefined || this.alllsp_danhgia_1day_p==null || this.alllsp_danhgia_1day_p.length==0)
       {
         this.alllsp_danhgia_1day=[];
       }
-      for(let v of alllsp_danhgia_1day_p)
+      for(let v of this.alllsp_danhgia_1day_p)
       {
         if(this.alllsp_danhgia_1day.find(x=>x._tensp==v._tensp)==undefined)
         {
@@ -288,8 +296,28 @@ export class RepbinhluanComponent implements OnInit {
     });
   }
 
+  alllsp_binhluan_1day_p: bangghepdg_sp[] = [];
   load_binhluan_1day() {
     this.binhluanService.get_binhluan_1day().subscribe((res: bangghepdg_sp[] | null) => {
+      this.alllsp_binhluan_1day_p=res.filter(x=>x._int_tb>0);
+     
+      if(this.alllsp_binhluan_1day_p==undefined || this.alllsp_binhluan_1day_p==null || this.alllsp_binhluan_1day_p.length==0)
+      {
+        this.alllsp_binhluan_1day=[];
+      }
+      for(let v of this.alllsp_binhluan_1day_p)
+      {
+        if(this.alllsp_binhluan_1day.find(x=>x._tensp==v._tensp)==undefined)
+        {
+          this.alllsp_binhluan_1day.push(v);
+        }
+      }
+      console.log(res)
+    });
+  }
+
+  load_binhluan_1day_idsp(value: string) {
+    this.binhluanService.get_binhluan_choseday_idsp_day(this.idsp,value).subscribe((res: bangghepdg_sp[] | null) => {
       var alllsp_binhluan_1day_p=res.filter(x=>x._int_tb>0);
       if(alllsp_binhluan_1day_p==undefined || alllsp_binhluan_1day_p==null || alllsp_binhluan_1day_p.length==0)
       {
@@ -302,6 +330,24 @@ export class RepbinhluanComponent implements OnInit {
           this.alllsp_binhluan_1day.push(v);
         }
       }
+      console.log("bl",res)
+    });
+  }
+
+  load_danhgia_1day_idsp(value: string) {
+    this.danhgiaService.get_danhgia_choseday_idsp_day(this.idsp,value).subscribe((res: bangghepdg_sp[] | null) => {
+      this.alllsp_danhgia_1day_p=res.filter(x=>x._int_tb>0);
+      if(this.alllsp_danhgia_1day_p==undefined || this.alllsp_danhgia_1day_p==null || this.alllsp_danhgia_1day_p.length==0)
+      {
+        this.alllsp_binhluan_1day=[];
+      }
+      for(let v of this.alllsp_danhgia_1day_p)
+      {
+        if(this.alllsp_danhgia_1day.find(x=>x._tensp==v._tensp)==undefined)
+        {
+          this.alllsp_danhgia_1day.push(v);
+        }
+      }
       console.log(res)
     });
   }
@@ -309,7 +355,7 @@ export class RepbinhluanComponent implements OnInit {
   checkclick:boolean=false;
   loadtensp(tensp: string) {
     this.sanphamService.gettensp(tensp).subscribe((res: sp[] | null) => {
-      this.tensanpham = (res) ? res : [];
+      this.tensanpham = (res.sort((a, b) => b._id - a._id)) ? res : [];
       if(res.length<this.tensanphamphu.length)
       {
         this.checkclick=true;
@@ -337,14 +383,25 @@ export class RepbinhluanComponent implements OnInit {
     {
       this.cv_idbl_parent=cv_idbl;
     }
+    if(cv_idbl!=-2)
+    {
+      this.cv_idbl_parent=cv_idbl;
+    }
     this.idsp=cv;
-    this.danhgiaService.get_danhgia_1day_idsp(cv).subscribe((res: dg[] | null) => {
-      this.items_danhgia = res;
-    });
+    if(this.items_binhluan.length==0)
+    {
+      this.danhgiaService.get_danhgia_1day_idsp(cv).subscribe((res: dg[] | null) => {
+        this.items_danhgia = res.sort((a, b) => b._id - a._id);
+        if(this.alllsp_danhgia_1day.length>0 && cv_idbl==-2)
+        {
+          this.cv_idbl_parent=this.alllsp_danhgia_1day.find(x=>x._id_sanpham==cv)._id;
+        }
+      });
+    }
     if(this.items_binhluan.length==0)
     {
       this.binhluanService.get_binhluan_1day_idspp(cv).subscribe((res: bl[] | null) => {
-        this.items_binhluan = res;
+        this.items_binhluan = res.sort((a, b) => b._id - a._id);
         if(this.alllsp_binhluan_1day.length>0 && cv_idbl==-1)
         {
           this.cv_idbl_parent=this.alllsp_binhluan_1day.find(x=>x._id_sanpham==cv)._id;
@@ -356,7 +413,14 @@ export class RepbinhluanComponent implements OnInit {
     $("#tr_" + cv).css('color', 'red');
     $("#datedanhgia").css('display','');
     $("#datebinhluan").css('display','');
-    setTimeout(()=>{$("#in_gt").click(),200});
+    if(cv_idbl!=-1)
+    {
+      setTimeout(()=>{$("#in_gt").click(),200});
+    }
+    if(cv_idbl!=-2)
+    {
+      setTimeout(()=>{$("#in_dg").click(),200});
+    }
   }
 
   f1(){
@@ -367,7 +431,7 @@ export class RepbinhluanComponent implements OnInit {
     }
     var v=this.items_binhluan.find(x=>x._id==this.cv_idbl_parent);
     var c=this.items_binhluan.indexOf(v);
-    this.pbl=parseInt((c/2+1).toFixed(0));
+    this.pbl=parseInt((c/10+1).toFixed(0));
     console.log(this.pbl);
     if(c>-1)
     {
@@ -384,6 +448,35 @@ export class RepbinhluanComponent implements OnInit {
     {
       this.pbl=1;
       $(".binhluan-list")[0].scrollIntoView()
+      return;
+    } 
+  }
+
+  f2(){
+    let ck:boolean=false;
+    if(this.items_danhgia.length==0)
+    {
+      return;
+    }
+    var v=this.items_danhgia.find(x=>x._id==this.cv_idbl_parent);
+    var c=this.items_danhgia.indexOf(v);
+    this.pdg=parseInt((c/10+1).toFixed(0));
+    console.log(this.pbl);
+    if(c>-1)
+    {
+      console.log(c);
+      setTimeout(()=>{ $("#dg_"+ this.cv_idbl_parent)[0].scrollIntoView(),200});    
+      ck=true;
+      return;
+    }
+    else
+    {
+      ck=false;
+    }
+    if(ck==false)
+    {
+      this.pbl=1;
+      $(".danhgia-list")[0].scrollIntoView()
       return;
     } 
   }
@@ -473,7 +566,7 @@ export class RepbinhluanComponent implements OnInit {
     {
       const bp = new blphu(
         $('#text_binhluanphu'+this.idtextbl).val().toString().trim(), 0, 
-        this.tennvdn, true, true , "dienmayxanh"+this.username+"@gmail.com")
+        this.tennvdn, true, true , "dienmayxanh"+this.username+"@gmail.com", true)
         let blp:Array<any>=[];
         blp.push(bp);
 
@@ -486,7 +579,8 @@ export class RepbinhluanComponent implements OnInit {
         null,
         null,
         blp,
-        parseInt(this.idsp.toString())
+        parseInt(this.idsp.toString()),
+        true
       );
       this.binhluanService.insert_binhluan_phu(b).subscribe(
         (data) => {         
@@ -519,7 +613,7 @@ export class RepbinhluanComponent implements OnInit {
     if($('#text_danhgiaphu' + this.iddgp).val()!=null || $('#text_danhgiaphu' + this.iddgp).val().toString().trim()!="")
     {
       var s=$('#text_danhgiaphu'+ this.iddgp ).val();
-        const dp = new dgphu($('#text_danhgiaphu' + this.iddgp ).val().toString().trim(), 0, this.tennvdn, true, true,  "dienmayxanh"+this.username+"@gmail.com")
+        const dp = new dgphu($('#text_danhgiaphu' + this.iddgp ).val().toString().trim(), 0, this.tennvdn, true, true,  "dienmayxanh"+this.username+"@gmail.com", true)
         let dgp:Array<any>=[];
         dgp.push(dp);
 
@@ -534,7 +628,8 @@ export class RepbinhluanComponent implements OnInit {
           null,
           dgp,
           null,
-          parseInt(this.idsp.toString())
+          parseInt(this.idsp.toString()),
+          true
         );
         this.danhgiaService.insert_binhluan_danhgia(d).subscribe(
           () => {
@@ -557,16 +652,19 @@ export class RepbinhluanComponent implements OnInit {
     this.danhgiaService.get_danhgia_choseday_idsp(this.idsp,document.getElementById("dateinput")["value"]).subscribe((res: dg[] | null) => {
       this.items_danhgia = (res) ? res : [];
       });
+      this.load_danhgia_1day_idsp(document.getElementById("dateinput")["value"]);
   }
   modelChangedbinhluan(value){
       this.binhluanService.get_binhluan_choseday_idsp(this.idsp,document.getElementById("dateinputbl")["value"]).subscribe((res: bl[] | null) => {
       this.items_binhluan = (res) ? res : [];
       });
+      this.load_binhluan_1day_idsp(document.getElementById("dateinputbl")["value"]);
   }
 
   Remove_binhluan(value: number)
   {
     this.checkinsertblp=true;
+    this.checkinsertdgp=true;
     this.binhluanService.deletebl(value).subscribe(
       (data) => {
         if(data!=null && data!=undefined)
@@ -583,10 +681,12 @@ export class RepbinhluanComponent implements OnInit {
         }
       }
     );
+    this.load_binhluan_1day_idsp(document.getElementById("dateinputbl")["value"]);
   }
 
   Remove_danhgia(value: number)
   {
+    this.checkinsertblp=true;
     this.checkinsertdgp=true;
     this.danhgiaService.deletedg(value).subscribe(
       (data) => {
@@ -604,11 +704,13 @@ export class RepbinhluanComponent implements OnInit {
         }
       }
     );
+    this.load_danhgia_1day_idsp(document.getElementById("dateinput")["value"]);
   }
 
   Remove_danhgiaphu(valuedg: number, valuedgp: number)
   {
     this.checkinsertdgp=true;
+    this.checkinsertblp=true;
     this.danhgiaService.deletedgp(valuedg, valuedgp).subscribe(
       (data) => {
         if(data!=null && data!=undefined)
@@ -622,11 +724,13 @@ export class RepbinhluanComponent implements OnInit {
         }
       }
     );
+    this.load_danhgia_1day_idsp(document.getElementById("dateinput")["value"]);
   }
 
   Remove_binhluanphu(valuebl: number, valueblp: number)
   {
     this.checkinsertblp=true;
+    this.checkinsertdgp=true;
     this.binhluanService.deleteblp(valuebl, valueblp).subscribe(
       (data) => {
         if(data!=null && data!=undefined)
@@ -640,6 +744,95 @@ export class RepbinhluanComponent implements OnInit {
         }
       }
     );
+    this.load_binhluan_1day_idsp(document.getElementById("dateinputbl")["value"]);
+  }
+
+  duyetdanhgia(d:dg, i:number)
+  {
+    this.checkinsertblp=true;
+    this.checkinsertdgp=true;
+    this.danhgiaService.duyetdanhgia(d).subscribe(
+      (data) => {
+        if(data!=undefined && data!=null)
+        {
+          $("#duyetdanhgia_"+i).css("display","none");
+          $("#btn_duyetdanhgia_"+i).css("display","none");
+          alert('Thực hiện thành công');
+        }
+        else
+        {
+          alert('Xảy ra lỗi');
+        }
+        
+      }
+    );
+   
+  }
+
+  duyetdanhgiaphu(g:dg, d:number, i:number)
+  {
+    this.checkinsertblp=true;
+    this.checkinsertdgp=true;
+    this.danhgiaService.duyetdanhgiaphu(d, g).subscribe(
+      (data) => {
+        if(data!=undefined && data!=null)
+        {
+          $("#duyetdanhgiaphu_"+i+"_"+d).css("display","none");
+          $("#btn_duyetdanhgiaphu_"+i+"_"+d).css("display","none");
+          alert('Thực hiện thành công');
+        }
+        else
+        {
+          alert('Xảy ra lỗi');
+        }
+        
+      }
+    );
+   
+  }
+
+  duyetbinhluan(b:bl, i:number)
+  {
+    this.checkinsertblp=true;
+    this.checkinsertdgp=true;
+    this.binhluanService.duyetbinhluan(b).subscribe(
+      (data) => {
+        if(data!=undefined && data!=null)
+        {
+          $("#duyetbinhluan_"+i).css("display","none");
+          $("#btn_duyetbinhluan_"+i).css("display","none");
+          alert('Thực hiện thành công');
+        }
+        else
+        {
+          alert('Xảy ra lỗi');
+        }
+        
+      }
+    );
+   
+  }
+
+  duyetbinhluanphu(b:bl, i:number, o:number)
+  {
+    this.checkinsertblp=true;
+    this.checkinsertdgp=true;
+    this.binhluanService.duyetbinhluanphu(o, b).subscribe(
+      (data) => {
+        if(data!=undefined && data!=null)
+        {
+          $("#duyetbinhluanphu_"+i+"_"+o).css("display","none");
+          $("#btn_duyetbinhluanphu_"+i+"_"+o).css("display","none");
+          alert('Thực hiện thành công');
+        }
+        else
+        {
+          alert('Xảy ra lỗi');
+        }
+        
+      }
+    );
+   
   }
     
 }

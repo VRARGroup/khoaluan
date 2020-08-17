@@ -21,7 +21,8 @@
             </ng-container>
           </div>
           <br>
-          <button class="btn btn-danger" (click)="Remove(urls)" *ngIf="isImageSaved">Xóa</button>
+          <button id="img_remove{{i}}" class="btn btn-danger" (click)="Remove(urls)" *ngIf="isImageSaved">Xóa</button>
+          <ng-container *ngIf="checkimg(i)"></ng-container>
         </ng-container>
         <br>
         <input style="margin-top:10px " type='file' #fileh *ngIf="ktsavedhinhsanpham" id="uploadCaptureInputFile" (change)="uploadFileimage(fileh.files)" multiple>

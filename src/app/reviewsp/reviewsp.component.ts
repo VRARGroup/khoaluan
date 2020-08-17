@@ -6,6 +6,8 @@ import { sp } from '../model/sanpham';
 import { SanphamService } from '../service/sanpham.service';
 import { Router } from "@angular/router";
 import { Location } from '@angular/common';
+import * as $ from "jquery";
+import { truncateSync } from 'fs';
 @Component({
   selector: 'app-reviewsp',
   templateUrl: './reviewsp.component.html',
@@ -100,6 +102,17 @@ export class ReviewspComponent implements OnInit {
     console.log("h", this.urls);
   }
 
+  public checkimg(value: number)
+  {
+    if(($('#img'+value).prop('src')=="http://localhost:4200/assets/upanh.png") || ($('#img'+value).prop('src')=="./assets/upanh.png"))
+    {
+      $('#img_remove'+value).css("display","none");
+      return false;
+    }
+    $('#img_remove'+value).css("display","block");
+    return true;
+  }
+
   public createImgPath = (s: string) => {
     if (s == null) {
       this.serverPath = null;
@@ -168,10 +181,15 @@ export class ReviewspComponent implements OnInit {
         document.getElementById(maRef.nativeElement.id)["id"],
       );
     });
+    let img:string="";
     for (let i = 0; i < this.valuegt.length; i = i + 2) {
       if (i < this.valuegt.length - 1) {
+        if(document.getElementById(this.valuegt[i + 1])["src"]!="http://localhost:4200/assets/upanh.png")
+        {
+          img=document.getElementById(this.valuegt[i + 1])["src"];
+        }
         const gt = new hinh(
-          document.getElementById(this.valuegt[i + 1])["src"],
+          img,
           document.getElementById(this.valuegt[i])["value"] 
         );
         this.gt.push(gt);

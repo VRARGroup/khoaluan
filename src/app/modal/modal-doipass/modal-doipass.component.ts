@@ -47,6 +47,7 @@ export class ModalDoipassComponent implements OnInit {
         null,
         $("#pass").val().toString(),
         null,
+        null,
         false,
         true,
         null

@@ -18,7 +18,7 @@
     <div class="left-panel">
       <div class="radio-filter">
         <label style="margin-top: 8px; height: 24px;">
-          <input type="checkbox" checked="checked">Mới 2020
+          <input id="check_new" type="checkbox" (change)="suggest_star(0)">Mới 2020
         </label>
         <span>
           <label><input type="radio" name="select" /><span class="span-radio-filter" (click)="show_banchaynhat()">Bán
@@ -58,7 +58,19 @@
     </div>
     <div class="right-panel">
       <div class="filter-item">
-        <h2>Hãng</h2>
+        <h2>Số Sao</h2>   
+        <div class="category" *ngFor="let star of sao, let i=index">
+          <a>
+            <input type="checkbox" id="star_{{star}}" (change)="suggest_star(star)">
+            <label id="label_{{star}}" for="star_{{star}}"> {{star}}</label>
+            <a style="display: inline-block;" *ngFor="let s of arrayOne(star)">
+              <div ><i style="font-size: 20px; color: #fc9639" class="fa fa-star" aria-hidden="true" id="star_4"></i></div>
+            </a>
+          </a>
+        </div>
+      </div>
+      <div class="filter-item">
+        <h2>Hãng</h2>   
         <div class="category" *ngFor="let category of categories, let i=index">
           <a>
             <input type="checkbox" id="category_{{category}}" (change)="suggest_category(category)">

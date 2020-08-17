@@ -45,18 +45,21 @@ export class ModalthemuseComponent implements OnInit {
     });
   }
 
+  ck:boolean=false;
   addquyen(item: tk) {
     const t = new tk(
       item._id,
       item.username,
       item.password,
       item.tennv,
+      item.email,
       item.hoatdong,
       item.giayphep,
       this.data.id,
     );
     this.Updatetk(t);
     setTimeout(() => { this.loadtkgroup(); }, 100);
+    this.ck=true;
   }
 
   Updatetk(t: tk) {
@@ -83,7 +86,16 @@ export class ModalthemuseComponent implements OnInit {
   }
 
   closemodal() {
-    this.dialogRef.close(this.data.id);
+    if(this.ck==false)
+    {
+      this.dialogRef.close();
+      return;
+    }
+    else
+    {
+      this.dialogRef.close(this.data.id);
+      return;
+    }
   }
 
 }

@@ -9,6 +9,7 @@
                 <th>STT</th>
                 <th>Tên đăng nhập</th>
                 <th>Mật khẩu</th>
+                <th>Email liên hệ</th>
                 <th>Được phép hoạt động</th>
               </tr>
             </thead>
@@ -17,6 +18,7 @@
                 <td>{{(i+1)+((p-1)*8)}}</td>
                 <td>{{item.username}}</td>
                 <td>{{item.password}}</td>
+                <td>{{item.email}}</td>
                 <td>
                   <ng-container *ngIf="item.giayphep==true">
                     <a class="spanfar"><span>Được phép đăng nhập</span></a>

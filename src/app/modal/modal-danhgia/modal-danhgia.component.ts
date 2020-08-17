@@ -246,7 +246,8 @@ export class ModalDanhgiaComponent implements OnInit {
                 0,
                 null,
                 this.tieuchidanhgia,
-                parseInt(this.idsp.toString())
+                parseInt(this.idsp.toString()),
+                false
               );
               console.log("danhgia", d);
               this.Createdg(d);
@@ -277,7 +278,7 @@ export class ModalDanhgiaComponent implements OnInit {
     try {
       this.danhgiaService.creatdg(d).subscribe(
         () => {
-          alert("Cảm ơn bạn đã đánh giá");
+          alert('Cảm ơn bạn đã đánh giá, thông tin đánh giá của bạn sẽ được duyệt trong 24h !!!');
         }
       );
     }

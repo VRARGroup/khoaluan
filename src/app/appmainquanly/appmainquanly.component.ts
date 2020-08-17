@@ -108,9 +108,9 @@ export class AppmainquanlyComponent implements OnInit {
 
   loadtensp(tensp: string) {
     this.sanphamService.gettensp(tensp).subscribe((res: sp[] | null) => {
-      this.tensanpham = (res) ? res : [];
+      this.tensanpham = (res.sort((a, b) => b._id - a._id)) ? res : [];
       this.tensanphamphu = this.tensanpham;
-      console.log("tensanpham", res);
+      
     });
     this.searchText = null;
     this.p = 1;

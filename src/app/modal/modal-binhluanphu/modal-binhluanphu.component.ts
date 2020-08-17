@@ -44,7 +44,7 @@ export class ModalBinhluanphuComponent implements OnInit {
       }
       const bp = new blphu(
         $('#textarea_binhluanphu_modal').val().toString(), 0,
-        $(".cfm-UserName").val().toString(), false, gt, $(".cfm-UserEmail").val().toString())
+        $(".cfm-UserName").val().toString(), false, gt, $(".cfm-UserEmail").val().toString(), false)
       this.blphu.push(bp);
       const b = new bl(
         this.idbl,
@@ -55,13 +55,14 @@ export class ModalBinhluanphuComponent implements OnInit {
         null,
         null,
         this.blphu,
-        parseInt(this.idsp.toString())
+        parseInt(this.idsp.toString()),
+        true
       );
       this.binhluanService.insert_binhluan_phu(b).subscribe(
         (data) => {
           if(data!=null && data!=undefined)
           {
-            alert('Thực hiện thành công');
+            alert('Cảm ơn bạn đã bình luận, thông tin bình luận của bạn sẽ được duyệt trong 24h !!!');
           }
           else
           {
