@@ -35,6 +35,13 @@ namespace dienmayxanhapi.Controllers
           return (_lspService.Getthuonghieu());
         }
 
+        [Route ("nav")]
+        [HttpGet]
+        public async Task<List<nav_lsp>> Getnav_lsp()
+        {
+          return (await _lspService.Getloaisp_nav());
+        }
+
         [HttpGet("{id}")]
         public ActionResult<List<loaisanpham>> Getdetail(int id)
         {

@@ -36,9 +36,47 @@
               <!-- <a class="d-inline fontVariant nav-link moreCate">Xem tất cả</a> -->
             </div>
           </div>
-          <div id="dropdown-menu" class="dropdown-menu dropdown dropdown-primary active" role="menu">
+          <div (mouseleave)="hoverof()" id="dropdown-menu" class="dropdown-menu dropdown dropdown-primary active" role="menu">
+            <ng-container *ngFor="let item of nav.slice(0,11), let i=index">
             
             <li class="active" >
+              <span class="span dropdown-item" >
+                <a style="margin-left: 29px;" (click)="render_loai_sp(item.id_lsp)" (mouseenter)="hover(i)" >{{item.tenlsp}}</a>
+              </span>
+             
+              <div id={{i}} class="subcate family-nav" style="width:450px; height:100%;">
+                <ng-container *ngFor="let t of arrayOne((thuonghieu.length)) let k=index">              
+                <ng-container *ngFor="let i of dc(k)"></ng-container>
+                <aside (mouseleave)="hoverof()" style="text-align: center;">
+                  <strong>
+                    {{this.namedm}}
+                  </strong>
+                  <ng-container *ngFor="let i of thuonghieuphu">
+                    <a href="javascript:void(0)" (click)="render_loai_sp_th(id_lsp,i)">{{i}}</a>
+                  </ng-container>
+                </aside>
+              </ng-container>
+              </div>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="this.nav.length>11">
+            <li class="active" >
+              <span class="span dropdown-item" >
+                <a style="margin-left: 29px;">Khác</a>
+              </span>             
+              <div id="sub_khac" class="subcate family-nav" style="width:450px; height:100%;">
+                <aside (mouseleave)="hoverof()" style="text-align: center;">
+                  <strong>
+                    
+                  </strong>
+                  <ng-container *ngFor="let ik of nav.slice(11,this.nav.length)">
+                    <a href="javascript:void(0)" (click)="render_loai_sp(ik.id_lsp)">{{ik.tenlsp}}</a>
+                  </ng-container>
+                </aside>
+              </div>
+            </li>
+          </ng-container>
+            <!-- <li class="active" >
             <span class="span dropdown-item">
               <img src="../assets/ic_tivi.png">
               <a style="margin-left: 29px;" (click)="render_loai_sp(20000)">Tivi</a>,
@@ -148,7 +186,7 @@
                 <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Midea')">Midea</a>
               </aside>
             </div>
-            </li>
+            </li> 
             <li class="active">
             <span class="span dropdown-item" >
               <img src="../assets/ic_dienthoai.png">
@@ -221,7 +259,7 @@
             <li class="active">
               <span class="dropdown-item" >
               </span> 
-            </li>
+            </li>-->
           </div>
         </li>
       </ul>

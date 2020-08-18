@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { lsanpham } from '../model/loaisanpham';
+import { nav } from '../model/navbar';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class LoaisanphamService {
 
 	getth(): Observable<string[]> {
     	return this.http.get<string[]>(this.url+'/thuonghieu');
+	}
+	  
+	getnav(): Observable<nav[]> {
+    	return this.http.get<nav[]>(this.url+'/nav');
   	}  
 
   	getdetaillsp(id: any): Observable<lsanpham[]> {

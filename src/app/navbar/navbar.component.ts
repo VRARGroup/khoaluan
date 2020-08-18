@@ -2,7 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular
 import { MatSidenav } from '@angular/material'
 import { Router } from '@angular/router';
 import { SanphamService } from '../service/sanpham.service';
+import { LoaisanphamService } from '../service/loaisanpham.service';
 import { sp } from '../model/sanpham';
+import { nav } from '../model/navbar';
 declare var $: any;
 
 @Component({
@@ -11,26 +13,9 @@ declare var $: any;
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  Danhmuc: any = {
-    items: [
-      {
-        tendm: "Tivi",
-        tendm1: "Loa Karaoke"
-      },
-      {
-        tendm: "Tủ lạnh",
-        tendm1: "Tủ đông"
-      },
-      {
-        tendm: "Máy giặt",
-        tendm1: "Sấy quần áo"
-      },
-
-    ]
-  };
   allsp: sp[] = [];
-  constructor(private router: Router, private sanphamService: SanphamService) {
+  nav: nav[] = [];
+  constructor(private router: Router, private sanphamService: SanphamService, private loasanphamService: LoaisanphamService) {
     Window["myComponent"] = this;
   }
 
@@ -39,6 +24,11 @@ export class NavbarComponent implements OnInit {
       $(this).find('.subcate').stop(true, true).delay(0).fadeIn(0);
     }, function () {
       $(this).find('.subcate').stop(true, true).delay(0).fadeOut(0);
+    });
+
+    this.loasanphamService.getnav().subscribe((res: nav[] | null) => {
+      this.nav = (res) ? res : [];
+      console.log(res[0].listthuonghieu[0])
     });
 
     this.sanphamService.get_allsp().subscribe((res: sp[] | null) => {
@@ -141,5 +131,91 @@ export class NavbarComponent implements OnInit {
       this.render_loai_sp(matches ? matches._id_loaisanpham : 0);
     }
   }
+
+  namedm:string=null;
+  thuonghieu:string[]=[];
+  id_lsp:number=0;
+  hover(i:number)
+  {
+    this.numberth=0;
+    this.numberth1=0;
+    this.thuonghieu=[];
+    $(".subcate").css("display","block")
+    $("#sub_khac").css("display","none")
+    if(this.nav[i].tenlsp!=null && this.nav[i].tenlsp!=undefined)
+    {
+      this.namedm=this.nav[i].tenlsp;
+    }
+    if(this.nav[i].listthuonghieu.length>0)
+    {
+      this.thuonghieu=this.nav[i].listthuonghieu;
+    }
+    this.id_lsp=this.nav[i].id_lsp;
+  }
+
+  hoverof()
+  {
+    this.numberth=0;
+    this.numberth1=0;
+    this.numberth=5;
+    setTimeout(()=>{},1000)
+    $(".subcate").css("display","none")
+  }
+
+  numberth:number=0;
+  numberth1:number=0;
+  numberth1phu:number=0;
+  thuonghieuphu:string[]=[];
+  n:number
+  arrayOne(n: number): any[] {
+    this.n=n;
+    var k=n%7
+    if(k==0)
+    {
+      let h:number=parseInt((n/7).toString())+1;
+      this.numberth1phu=this.thuonghieu.length/h;
+      this.numberth1=7;
+      this.thuonghieuphu=this.thuonghieu.slice(0,7);
+      return Array(n/7);
+    }
+    else
+    {
+      let h:number=parseInt((n/7).toString())+1;
+      this.n=h;
+      if(this.thuonghieu.length%h==0)
+      {
+        this.numberth1phu=this.thuonghieu.length/h;
+        this.numberth1=7;
+      }
+      else
+      {
+        this.numberth1phu=parseInt((this.thuonghieu.length/h).toString())+1;
+        this.numberth1=7;
+      }
+      this.thuonghieuphu=this.thuonghieu.slice(0,7);
+      return Array(h);
+    }
+  }
+  dc(value:number)
+  {
+    if(value==0 || this.n<2)
+    {
+      return;
+    }
+    this.numberth=this.numberth1;
+    this.numberth1=this.numberth1+7;
+    if(this.thuonghieu.length<this.numberth1)
+    {
+      this.numberth1=this.numberth+(this.thuonghieu.length-(this.numberth1-this.thuonghieu.length));
+    }
+    if(this.thuonghieu.length==this.numberth1)
+    {
+      this.numberth1=this.thuonghieu.length;
+    }
+    this.thuonghieuphu=this.thuonghieu.slice(this.numberth,this.numberth1);
+    
+  }
+  
+  
 }
 
