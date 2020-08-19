@@ -32,7 +32,7 @@ export class SanphamService {
 	get_sp_noi_bat(): Observable<sp[]> {
 		return this.http.get<sp[]>(this.url + '/' + 'get_sp_noi_bat');
 	}
-	
+
 	gettensp(tensp: string): Observable<sp[]> {
 		return this.http.get<sp[]>(this.url + '/' + 'getsp_idloaisp?tensp=' + tensp);
 	}
@@ -94,11 +94,27 @@ export class SanphamService {
 	// }
 
 	get_allsp(): Observable<sp[]> {
-		return this.http.get<sp[]>(this.url + '/'+ 'allsp');
+		return this.http.get<sp[]>(this.url + '/' + 'allsp');
 	}
-	
-	get_thong_ke_sp(): Observable<sp[]> {
-		return this.http.get<sp[]>(this.url + '/' + 'get_thong_ke_sp');
+
+	get_thong_ke_sp(): Observable<any[]> {
+		return this.http.get<any[]>(this.url + '/' + 'get_thong_ke_sp');
+	}
+
+	get_thong_ke_lsp(): Observable<any[]> {
+		return this.http.get<any[]>(this.url + '/' + 'thong_ke_lsp');
+	}
+
+	export_sanpham(): Observable<Boolean> {
+		return this.http.get<Boolean>(this.url + '/' + 'export_sanpham');
+	}
+
+	import_sanpham(file: string): Observable<Boolean> {
+		return this.http.get<Boolean>(this.url + '/' + 'import_sanpham?file=' + file);
+	}
+
+	load_thong_ke_sosao(): Observable<any[]> {
+		return this.http.get<any[]>(this.url + '/' + 'thong_ke_sosao');
 	}
 
 }

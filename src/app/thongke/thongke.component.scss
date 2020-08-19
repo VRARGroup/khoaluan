@@ -86,7 +86,25 @@
 
 .buttontl:hover {
   background-color: green;
-  color: white;i {
+  color: white;
+
+  i {
     color: white !important;
+  }
+}
+
+.thongke-sosao, .thongke-sp, .thongke-lsp  {
+
+  td,
+  th {
+    font-size: 18px;
+    border: 1px solid #000;
+    width: 350px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
   }
 }

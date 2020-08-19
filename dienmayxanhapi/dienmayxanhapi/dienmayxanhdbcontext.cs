@@ -1,13 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using dienmayxanhapi.Model;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
+using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace dienmayxanhapi
@@ -50,16 +56,35 @@ namespace dienmayxanhapi
             collectiongroup = database.GetCollection<group>(CollectionNametgroup);
             collectiondanhgia = database.GetCollection<danhgia>(CollectionNamedanhgia);
             collectionbinhluan = database.GetCollection<binhluan>(CollectionNamebinhluan);
+            _ = CreateIndexSP(ConnectionString,DatabaseName, CollectionNamesp);
+            _ = CreateIndexNameSP(ConnectionString,DatabaseName, CollectionNamesp);
         }
         public class bangghepsanphamdanhgia : sanphamdienthoai
         {
-          public danhgia[] Danhgias { get; set; }
-          public danhgiaphu[] Danhgiaphus { get; set; }
+            public danhgia[] Danhgias { get; set; }
+            public danhgiaphu[] Danhgiaphus { get; set; }
         }
         public class bangghepsanphamdanhgia1 : danhgia
         {
-          public danhgia[] Danhgias { get; set; }
-          public danhgiaphu[] Danhgiaphus { get; set; }
+            public danhgia[] Danhgias { get; set; }
+            public danhgiaphu[] Danhgiaphus { get; set; }
+        }
+        public class banggheploaisanphamsanpham : loaisanpham
+        {
+            public sanphamdienthoai[] Sanphams { get; set; }
+        }
+        public class thongke
+        {
+            public string _id { get; set; }
+            public int? count { get; set; }
+            public int? sum { get; set; }
+        }
+
+        public class thongke5sao
+        {
+            public int? _id { get; set; }
+            public int? count { get; set; }
+
         }
         public class danhsachthuonghieu
         {
@@ -73,12 +98,12 @@ namespace dienmayxanhapi
         }
     public class bangghepsanphamdanhgia_custom
         {
-          public int? _id { get; set; }
-          public int? _id_sanpham { get; set; }
-          public string _tensp { get; set; }
-          public string _tenth { get; set; }
-          public int? _id_loaisanpham { get; set; }
-          public int? _int_tb { get; set; }
+            public int? _id { get; set; }
+            public int? _id_sanpham { get; set; }
+            public string _tensp { get; set; }
+            public string _tenth { get; set; }
+            public int? _id_loaisanpham { get; set; }
+            public int? _int_tb { get; set; }
         }
         public List<sanphamdienthoai> Get()
         {
@@ -626,16 +651,33 @@ namespace dienmayxanhapi
             var dl = collectiontk.Find(x => x._id == id).ToList().Take(1).ToList();
             return dl;
         }
-       
-        public List<sanphamdienthoai> Getfillter_get_thong_ke_sp()
+
+        public List<thongke> Getfillter_get_thong_ke_sp()
         {
-            var dl = collectionspdt.Aggregate()
-                                       .Lookup<sanphamdienthoai, danhgia, bangghepsanphamdanhgia>(
-                                            collectiondanhgia,
-                                            x => x._id,
-                                            y => y._id_sanpham,
-                                            x => x.Danhgias).ToList().OrderByDescending(x=>x.Danhgias.Count()).Take(100).ToList<sanphamdienthoai>();
-            return dl;
+            try
+            {
+                var dl = collectionspdt.Aggregate()
+                                                .Lookup(
+                                                    foreignCollection: collectiondanhgia,
+                                                    localField: e => e._id,
+                                                    foreignField: f => f._id_sanpham,
+                                                    @as: (bangghepsanphamdanhgia eo) => eo.Danhgias
+                                                )
+                                                .Project(new BsonDocument()
+                                                {
+                                                    { "_id", "$ten" },
+                                                    { "count", new BsonDocument() { { "$size", "$Danhgias" } } },
+                                                    { "sum", new BsonDocument() { { "$sum", "$Danhgias.sosao" } } },
+                                                })
+                                                .Sort(new BsonDocument() { { "count", -1 } })
+                                                .Match(new BsonDocument() { { "count", new BsonDocument() { { "$gte", 1 } } } })
+                                                .ToList();
+
+                List<thongke> returnValue = new List<thongke>();
+                returnValue.AddRange(dl.Select(x => BsonSerializer.Deserialize<thongke>(x)));
+                return returnValue;
+            }
+            catch { return null; }
         }
 
         public async Task<List<bangghepsanphamdanhgia_custom>> Getfillter_binhluan_1dayAsync()
@@ -668,6 +710,108 @@ namespace dienmayxanhapi
           var nav = (from p in Getlsp().AsQueryable() select new nav_lsp { id_lsp=p._id, tenlsp = p.tendanhmuc, listthuonghieu = p.thuonghieu}).ToList();
           return nav;
         }
-    }
+    
 
+        public List<thongke5sao> thong_ke_sosao()
+        {
+            try
+            {
+                var dl = collectionspdt.Aggregate()
+                                        .Group(new BsonDocument()
+                                        {
+                                            { "_id", "$sosao" },
+                                            { "count", new BsonDocument("$sum",1)},
+                                        })
+                                        .Sort(new BsonDocument() { { "_id", 1 } })
+                                        .ToList();
+
+                List<thongke5sao> returnValue = new List<thongke5sao>();
+                returnValue.AddRange(dl.Select(x => BsonSerializer.Deserialize<thongke5sao>(x)));
+                return returnValue;
+            }
+            catch { return null; }
+        }
+        public List<thongke> thong_ke_loaisp()
+        {
+            try
+            {
+                var dl = collectionlsp.Aggregate()
+                                         .Lookup(
+                                              foreignCollection: collectionspdt,
+                                              localField: e => e._id,
+                                              foreignField: f => f._id_loaisanpham,
+                                              @as: (banggheploaisanphamsanpham eo) => eo.Sanphams
+                                          )
+                                          .Project(new BsonDocument()
+                                          {
+                                              { "_id", "$tendanhmuc" },
+                                              { "count", new BsonDocument() { { "$size", "$Sanphams" } } },
+                                              { "sum", new BsonDocument() { { "$size", "$thuonghieu" } } },
+                                          })
+                                          .Sort(new BsonDocument() { { "count", -1 } })
+                                          .Match(new BsonDocument() { { "count", new BsonDocument() { { "$gte", 1 } } } })
+                                          .ToList();
+
+                List<thongke> returnValue = new List<thongke>();
+                returnValue.AddRange(dl.Select(x => BsonSerializer.Deserialize<thongke>(x)));
+                return returnValue;
+            }
+            catch { return null; }
+        }
+
+        //         var results = memberCollection.Aggregate()
+        // .Match(query)
+        // .Group(new BsonDocument()
+        // {
+        // { "_id", "$_Ten" },
+        // { "administrators",
+        // new BsonDocument(
+        // "$sum",
+        // new BsonDocument("$cond", BsonSerializer.Deserialize<BsonArray>("[{ $eq: [ 
+        // \"$role\", \"Administrator\"]}, 1, 0]") ))},
+        // { "contributors",
+        // new BsonDocument(
+        // "$sum",
+        // new BsonDocument("$cond", BsonSerializer.Deserialize<BsonArray>("[{ $eq: [ 
+        // \"$role\", \"Contributor\"]}, 1, 0]") ))},
+        // { "visitors",
+        // new BsonDocument(
+        // "$sum",
+        // new BsonDocument("$cond", BsonSerializer.Deserialize<BsonArray>("[{ $eq: [ 
+        // \"$role\", \"Visitor\"]}, 1, 0]") ))}
+        // }).ToList();
+
+
+
+
+        //var listNames = new[] { "A", "B" };
+
+        //var query = entities.Aggregate()
+        //    .Match(p => listNames.Contains(p.name))
+        //    .Lookup(
+        //      foreignCollection: others,
+        //      localField: e => e.id,
+        //      foreignField: f => f.entity,
+        //      @as: (EntityWithOthers eo) => eo.others
+        //    )
+        //    .Project(p => new { p.id, p.name, other = p.others.First() })
+        //    .Sort(new BsonDocument("other.name", -1))
+        //    .ToList();
+
+        static async Task CreateIndexSP(string connectionstring,string databasename, string collectionnamne)
+        {
+            var client = new MongoClient(connectionstring);
+            var database = client.GetDatabase(databasename);
+            var collection = database.GetCollection<sanphamdienthoai>(collectionnamne);
+            await collection.Indexes.CreateOneAsync(Builders<sanphamdienthoai>.IndexKeys.Ascending(_ => _._id));
+        }
+        static async Task CreateIndexNameSP(string connectionstring, string databasename, string collectionnamne)
+        {
+            var client = new MongoClient(connectionstring);
+            var database = client.GetDatabase(databasename);
+            var collection = database.GetCollection<sanphamdienthoai>(collectionnamne);
+            await collection.Indexes.CreateOneAsync(Builders<sanphamdienthoai>.IndexKeys.Ascending(_ => _.ten));
+        }
+    }
+  
 }

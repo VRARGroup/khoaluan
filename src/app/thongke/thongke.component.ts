@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ViewChild, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, ViewChild, ElementRef, QueryList, ChangeDetectorRef } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Observable, from } from 'rxjs';
@@ -42,7 +42,12 @@ export class ThongkeComponent implements OnInit {
   quanlysp = false;
   quanlylsp = false;
   searchText: string = null;
-  constructor(private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService, private danhsachquyenService: DanhsachquyenService, private groupService: GroupService) { }
+  sosao: any[] = [];
+  index: string = "";
+  thongke_sp: any[] = [];
+  thongke_lsp: any[] = [];
+  constructor(private formBuilder: FormBuilder, private router: Router, private loaisanphamService: LoaisanphamService, private sanphamService: SanphamService,
+    private danhsachquyenService: DanhsachquyenService, private groupService: GroupService) {   }
 
   ngOnInit() {
     document.getElementById("btndx").style.display = "block";
@@ -138,34 +143,75 @@ export class ThongkeComponent implements OnInit {
   }
 
   load_thong_ke_sp() {
-    $(".thongke-loai").css("display", "none");
     this.sanphamService.get_thong_ke_sp().subscribe((res: any[] | null) => {
-      this.tensanpham = (res) ? res : [];
-      // this.tensanphamphu = this.tensanpham;
+      this.thongke_sp = (res) ? res : [];
     });
-    
-    $("#thongke-sp").css("background-color", "#fff");
-    $("#thongke-sp").css("color", "#000");
-    $("#thongke-spnoibat").css("background-color", "#ec314d");
-    $("#thongke-spnoibat").css("color", "#fff");
+
+    $(".thongke-lsp").css("display", "none");
+    $(".thongke-sp").css("display", "block");
+    $(".thongke-loai").css("display", "none");
+    $(".thongke-sosao").css("display", "none");
+    $("#thongke_sp").css("background-color", "#fff");
+    $("#thongke_sp").css("color", "#000");
+    $("#thongke_spnoibat").css("background-color", "#ec314d");
+    $("#thongke_spnoibat").css("color", "#fff");
+    $("#thongke_sosao").css("background-color", "#fff");
+    $("#thongke_sosao").css("color", "#000");
+    this.index = "_SanPham_DanhGia";
   }
 
   load_thong_ke_loai_sp() {
-    $(".thongke-loai").css("display", "block");
-    $("#thongke-spnoibat").css("background-color", "#fff");
-    $("#thongke-spnoibat").css("color", "#000");
-    $("#thongke-sp").css("background-color", "#ec314d");
-    $("#thongke-sp").css("color", "#fff");
+    this.sanphamService.get_thong_ke_lsp().subscribe((res: any[] | null) => {
+      this.thongke_lsp = (res) ? res : [];
+    });
+
+    $(".thongke-lsp").css("display", "block");
+    $(".thongke-sp").css("display", "none");
+    // $(".thongke-loai").css("display", "block");
+    $(".thongke-sosao").css("display", "none");
+    $("#thongke_spnoibat").css("background-color", "#fff");
+    $("#thongke_spnoibat").css("color", "#000");
+    $("#thongke_sp").css("background-color", "#ec314d");
+    $("#thongke_sp").css("color", "#fff");
+    $("#thongke_sosao").css("background-color", "#fff");
+    $("#thongke_sosao").css("color", "#000");
+    this.index = "_Loai_San_Pham";
   }
 
-  xuat_excel() {
-
+  load_thong_ke_sao() {
+    $(".thongke-lsp").css("display", "none");
+    $(".thongke-sp").css("display", "none");
+    $(".thongke-loai").css("display", "none");
+    $(".thongke-sosao").css("display", "block");
+    $("#thongke_spnoibat").css("background-color", "#fff");
+    $("#thongke_spnoibat").css("color", "#000");
+    $("#thongke_sp").css("background-color", "#fff");
+    $("#thongke_sp").css("color", "#000");
+    $("#thongke_sosao").css("background-color", "#ec314d");
+    $("#thongke_sosao").css("color", "#fff");
+    this.sanphamService.load_thong_ke_sosao().subscribe((res: any[] | null) => {
+      this.sosao = (res) ? res : [];
+    });
+    this.index = "_SoSao";
   }
 
   download() {
-    var csvData = this.ConvertToCSV(this.tensanpham);
-    var blob = new Blob(["\ufeff"+csvData], { type: 'text/csv;' });
-    if (navigator.msSaveBlob) { // IE 10+
+    var csvData;
+    var name = "";
+    if (this.index == "") {
+      csvData = this.ConvertToCSV(this.tensanpham);
+    }
+    else if (this.index == "_SoSao") {
+      csvData = this.ConvertToCSV(this.sosao);
+    }
+    else if (this.index == "_SanPham_DanhGia") {
+      csvData = this.ConvertToCSV(this.thongke_sp);
+    }
+    else if (this.index == "_Loai_San_Pham") {
+      csvData = this.ConvertToCSV(this.thongke_lsp);
+    }
+    var blob = new Blob(["\ufeff" + csvData], { type: 'text/csv;' });
+    if (navigator.msSaveBlob) {
       navigator.msSaveBlob(blob, "Thong_Ke.csv");
     } else {
       var a = document.createElement("a");
@@ -173,7 +219,7 @@ export class ThongkeComponent implements OnInit {
       document.body.appendChild(a);
       var url = window.URL.createObjectURL(blob);
       a.href = url;
-      a.download = 'Thong_Ke.csv';
+      a.download = 'Thong_Ke' + this.index + '.csv';
       a.click();
       return 'success';
     }
@@ -183,15 +229,31 @@ export class ThongkeComponent implements OnInit {
     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     var str = '';
     var row = "";
+
     for (var index in objArray[0]) {
       row += index + ',';
+    }
+    if (this.index == "_SoSao") {
+      str += "BẢNG THỐNG KÊ SỐ LƯỢNG SẢN PHẨM THEO SỐ SAO" + '\r\n \r\n';
+      str += "Số Sao,Số Lượng Sản Phẩm" + '\r\n';
+      row = "";
+    }
+    else if (this.index == "_SanPham_DanhGia") {
+      str += "BẢNG THỐNG KÊ SỐ LƯỢNG ĐÁNH GIÁ CỦA SẢN PHẨM" + '\r\n \r\n';
+      str += "Tên Sản Phẩm,Số Lượng Đánh Giá,Tổng Số Sao Đánh Giá" + '\r\n';
+      row = "";
+    }
+    else if (this.index == "_Loai_San_Pham") {
+      str += "BẢNG THỐNG KÊ SỐ LƯỢNG SẢN PHẨM CỦA LOẠI SẢN PHẨM" + '\r\n \r\n';
+      str += "Tên Loại Sản Phẩm,Số Lượng Sản Phẩm,Tổng Số Thương Hiệu" + '\r\n';
+      row = "";
     }
     row = row.slice(0, -1);
     str += row + '\r\n';
     for (var i = 0; i < array.length; i++) {
       var line = '';
       for (var index in array[i]) {
-        line += '"' + JSON.stringify(array[i][index]).replace(/"/g, '""').replace(/,/g,'\,') + '",';
+        line += typeof array[i][index] == 'object' || index == "dacdiemnoibat" ? '"' + JSON.stringify(array[i][index]).replace(/"/g, '""').replace(/,/g, '\,') + '",' : array[i][index].toString() + ',';
       }
       str += line + '\r\n';
     }

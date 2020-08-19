@@ -3,24 +3,27 @@
     <div class="container-fluid">
       <div style="width: auto; float: right;">
         <div class="btnright">
-          <button class="buttontl" (click)="download()"><i class="fa fa-file-excel-o" aria-hidden="true" style="color: green;"></i>  Xuất Excel</button>
+          <button class="buttontl" (click)="download()"><i class="fa fa-file-excel-o" aria-hidden="true"
+              style="color: green; font-size:18px;"></i> Xuất Excel</button>
         </div>
       </div>
       <div class="search-hero">
         <label style="font-size: 26px; font-weight: 600; line-height: 53px;">Thống Kê</label>
       </div>
-      <!-- <div class="filter">
+     <div class="filter">
         <div class="d-flex justify-content-center">
           <div class="inline">
-            <button class="buttonth" id="thongke-spnoibat" (click)="load_thong_ke_sp()">SẢN PHẨM NỔI BẬT</button>
-            <button class="buttonth" id="thongke-sp" (click)="load_thong_ke_loai_sp()">LOẠI SẢN PHẨM</button>
-            <label style="color: #fff; font-size: 18px; margin-right: -100px; margin-left: 10px;" *ngIf="tensanpham.length > 0">{{tensanpham.length}} sản phẩm </label>
+            <button class="buttonth" id="thongke_spnoibat" (click)="load_thong_ke_sp()">SẢN PHẨM NỔI BẬT</button>
+            <button class="buttonth" id="thongke_sp" (click)="load_thong_ke_loai_sp()">LOẠI SẢN PHẨM</button>
+            <button class="buttonth" id="thongke_sosao" (click)="load_thong_ke_sao()">SỐ SAO SẢN PHẨM</button>
+            <!-- <label style="color: #000; font-size: 20px;font-weight: 600; margin-right: -100px; margin-left: 10px;"
+              *ngIf="tensanpham.length > 0">{{tensanpham.length}} sản phẩm </label> -->
           </div>
         </div>
-      </div> -->
+      </div>
       <!-- <div class="filter thongke-loai">
         <div class="d-flex justify-content-center">
-          <div class="inline">
+          <div>
             <ng-container *ngFor="let obj of alllsp">
               <div class="btn-group" id="btn_lsp_{{obj._id}}">
                 <button class="button" (click)="loaddetaillsp(obj._id, obj.tendanhmuc)">
@@ -42,8 +45,8 @@
             </ng-container>
           </div>
         </div>
-      </div> -->
-      <div class="filter">
+      </div>
+      <div class="filter thongke-loai">
         <div>
           <ng-container *ngIf="tensanpham.length > 0">
             <table class="table table-striped" style="text-align: center">
@@ -94,6 +97,96 @@
             </table>
             <pagination-controls (pageChange)="p = $event"></pagination-controls>
           </ng-container>
+        </div>
+      </div>     -->
+      <div class="filter thongke-lsp" style="padding: 10px;" *ngIf="thongke_lsp.length > 0">
+        <div class="d-flex justify-content-center">
+          <table>
+            <thead>
+              <tr style="font-weight: 600; background-color: #ffd504;">
+                <td>
+                  Tên Loại Sản Phẩm
+                </td>
+                <td>
+                  Số Lượng Sản Phẩm
+                </td>
+                <td>
+                  Tổng Số Thương Hiệu
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item_sp of thongke_lsp, let i=index">
+                <td>
+                  {{item_sp._id}}
+                </td>
+                <td>
+                  {{item_sp.count}}
+                </td>
+                <td>
+                  {{item_sp.sum}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="filter thongke-sp" style="padding: 10px;" *ngIf="thongke_sp.length > 0">
+        <div class="d-flex justify-content-center">
+          <table>
+            <thead>
+              <tr style="font-weight: 600; background-color: #ffd504;">
+                <td style="width: 600px;">
+                  Tên Sản Phẩm
+                </td>
+                <td>
+                  Số Lượng Đánh Giá
+                </td>
+                <td>
+                  Tổng Số Sao Đánh Giá
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item_sp of thongke_sp, let i=index">
+                <td style="width: 600px;">
+                  {{item_sp._id}}
+                </td>
+                <td>
+                  {{item_sp.count}}
+                </td>
+                <td>
+                  {{item_sp.sum}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="filter thongke-sosao" style="padding: 10px;" *ngIf="sosao.length > 0">
+        <div class="d-flex justify-content-center">
+          <table>
+            <thead>
+              <tr style="font-weight: 600; background-color: #ffd504;">
+                <td>
+                  Số Sao
+                </td>
+                <td>
+                  Số Lượng Sản Phẩm
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item_sosao of sosao, let i=index">
+                <td>
+                  {{item_sosao._id}}
+                </td>
+                <td>
+                  {{item_sosao.count}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -1,11 +1,18 @@
 <div class="header">
-  <div style="width:100%;  background: #4a90e2;" >
+  <div style="width:100%;  background: #4a90e2;">
     <div class="warpher">
       <a routerLink="/appmain/products" class="logo" title="Về trang chủ DienmayXanh.com">
         <img class="icondmx-logo" src="./assets/logo.PNG">
       </a>
       <div style="display: inline-table;">
-        <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()" (keyup.enter)="on_key_enter()">
+        <!-- <input type="text" (keyup)="search($event)" placeholder="enter address" class="input">
+
+        <div *ngFor="let sanpham_item of sanpham_elastic" style="margin-top:20px">
+           <customer-details [customer]='sanpham_elastic'></customer-details>
+          {{sanpham_item}}
+        </div> -->
+        <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()"
+          (keyup.enter)="on_key_enter()">
         <div id="match_list"></div>
       </div>
       <i style="margin-left: -20px;" class="fas fa-search" aria-hidden="true"></i>
@@ -26,26 +33,26 @@
   </div>
   <div class="main-navigation">
     <div class="mainbox">
-    <mdb-navbar SideClass=" navbar-expand-sm">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown" dropdown>
-          <div class="mainmenu">
-            <div style="margin:0px 8px; width:100%; text-align: center;">
-              <a dropdownToggle type="button" class="dropdown-toggle">
-              <span class="fontWeightBold"><i class="fa fa-bars"></i> Danh mục</span></a>
-              <!-- <a class="d-inline fontVariant nav-link moreCate">Xem tất cả</a> -->
+      <mdb-navbar SideClass=" navbar-expand-sm">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown" dropdown>
+            <div class="mainmenu">
+              <div style="margin:0px 8px; width:100%; text-align: center;">
+                <a dropdownToggle type="button" class="dropdown-toggle">
+                  <span class="fontWeightBold"><i class="fa fa-bars"></i> Danh mục</span></a>
+                <!-- <a class="d-inline fontVariant nav-link moreCate">Xem tất cả</a> -->
+              </div>
             </div>
-          </div>
-          <div (mouseleave)="hoverof()" id="dropdown-menu" class="dropdown-menu dropdown dropdown-primary active" role="menu">
-            <ng-container *ngFor="let item of nav.slice(0,11), let i=index">
-            
-            <li class="active" >
-              <span class="span dropdown-item" >
-                <a style="margin-left: 29px;" (click)="render_loai_sp(item.id_lsp)" (mouseenter)="hover(i)" >{{item.tenlsp}}</a>
-              </span>
-             
-              <div id={{i}} class="subcate family-nav" style="width:450px; height:100%;">
-                <ng-container *ngFor="let t of arrayOne((thuonghieu.length)) let k=index">              
+            <div (mouseleave)="hoverof()" id="dropdown-menu" class="dropdown-menu dropdown dropdown-primary active"
+              role="menu">
+              <ng-container *ngFor="let item of nav.slice(0,11), let i=index">
+          <li class="active">
+            <span class="span dropdown-item">
+              <a style="margin-left: 29px;" (click)="render_loai_sp(item.id_lsp)"
+                (mouseenter)="hover(i)">{{item.tenlsp}}</a>
+            </span>
+            <div id={{i}} class="subcate family-nav" style="width:450px; height:100%;">
+              <ng-container *ngFor="let t of arrayOne((thuonghieu.length)) let k=index">
                 <ng-container *ngFor="let i of dc(k)"></ng-container>
                 <aside (mouseleave)="hoverof()" style="text-align: center;">
                   <strong>
@@ -56,18 +63,19 @@
                   </ng-container>
                 </aside>
               </ng-container>
-              </div>
-            </li>
+            </div>
+          </li>
           </ng-container>
+
           <ng-container *ngIf="this.nav.length>11">
-            <li class="active" >
-              <span class="span dropdown-item" >
+            <li class="active">
+              <span class="span dropdown-item">
                 <a style="margin-left: 29px;">Khác</a>
-              </span>             
+              </span>
               <div id="sub_khac" class="subcate family-nav" style="width:450px; height:100%;">
                 <aside (mouseleave)="hoverof()" style="text-align: center;">
                   <strong>
-                    
+
                   </strong>
                   <ng-container *ngFor="let ik of nav.slice(11,this.nav.length)">
                     <a href="javascript:void(0)" (click)="render_loai_sp(ik.id_lsp)">{{ik.tenlsp}}</a>
@@ -76,202 +84,14 @@
               </div>
             </li>
           </ng-container>
-            <!-- <li class="active" >
-            <span class="span dropdown-item">
-              <img src="../assets/ic_tivi.png">
-              <a style="margin-left: 29px;" (click)="render_loai_sp(20000)">Tivi</a>,
-              <a (click)="render_loai_sp(60000)">Loa Karaoke</a>
-            </span>
-          <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside style="text-align: center;">
-                <strong>
-                  TIVI
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'Sony')">Sony</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'Samsung')">Samsung</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'LG')">LG</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(20000,'TCL')">TCL</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 32 - 43 inch')">Từ 32 - 43 inch</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 44 - 54 inch')">Từ 44 - 54 inch</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 55 - 64 inch')">Từ 55 - 64 inch</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Từ 65 - 74 inch')">Từ 65 - 74 inch</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_inch(20000,'Trên 75 inch')">Trên 75 inch</a>
-              </aside>
-            </div>
-            </li>
-
-            <li class="active">
-            <span class="span dropdown-item">
-              <img src="../assets/ic_tulanh.png">
-              <a style="margin-left: 29px;" (click)="render_loai_sp(30000)">Tủ lạnh</a>,
-              <a  (click)="render_loai_sp(70000)">Tủ đông</a>
-            </span>
-            <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside>
-                <strong>
-                  TỦ LẠNH
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(30000,'Sony')">Samsung</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(30000,'Samsung')">Panasonic</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(30000,'LG')">Toshiba</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Dưới 150 lít')">Tủ lạnh dưới 150 lít</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Từ 150 - 300 lít')">Tủ lạnh tử 150-300 lít</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Từ 300 - 400 lít')">Tủ lạnh tử 300-400 lít</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Từ 400 - 550 lít')">Tủ lạnh từ 400 - 550 lít</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_lit(30000,'Trên 550 lít')">Tủ lạnh trên 550 lít</a>
-              </aside>
-              <aside>
-                <strong>
-                  TỦ ĐÔNG
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(70000,'Sanaky')">Sanaky</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(70000,'Kangaroo')">Kangaroo</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(70000,'Sunhouse')">Sunhouse</a>
-              </aside>
-            </div>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
-              <img src="../assets/ic_maygiat.png">
-              <a style="margin-left: 29px;"  (click)="render_loai_sp(40000)">Máy giặt</a>,
-              <a (click)="render_loai_sp(100000)">Sấy quần áo</a>
-            </span>
-            <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside>
-                <strong>
-                  MÁY GIẶT
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Toshiba')">Toshiba</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'LG')">LG</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Panasonic')">Panasonic</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Samsung')">Samsung</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Electrolux')">Electrolux</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(40000,'Aqua')">Aqua</a>
-              </aside>
-              <aside>
-                <strong>
-                  SẤY QUẦN ÁO
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Electrolux')">Electrolux</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Beko')">Beko</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Candy')">Candy</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(100000,'Samsung')">Samsung</a>
-              </aside>
-            </div>
-            </li>
-            <li class="active">
-            <span class="span dropdown-item" >
-              <label style="color: #d0021b; margin-right: 5px; font-weight: 900; font-size: 10px;">HOT</label>
-              <a (click)="render_loai_sp(50000)">Máy lạnh</a>,
-              <a (click)="render_loai_sp(110000)">Quạt điều hòa</a>
-            </span>
-            <div class="subcate family-nav" style="width:450px; height:100%;">
-              <aside>
-                <strong>
-                  MÁY LẠNH
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'Panasonic')">Panasonic</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'Daikin')">Daikin</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'Toshiba')">Toshiba</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'LG')">LG</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(50000,'TCL')">TCL</a>
-              </aside>
-              <aside>
-                <strong>
-                  QUẠT ĐIỀU HÒA
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Kangaroo')">Kangaroo</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Daikiosan')">Daikiosan</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Sunhouse')">Sunhouse</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(110000,'Midea')">Midea</a>
-              </aside>
-            </div>
-            </li> 
-            <li class="active">
-            <span class="span dropdown-item" >
-              <img src="../assets/ic_dienthoai.png">
-              <a style="margin-left: 29px;" (click)="render_loai_sp(10000)">Điện thoại</a>,
-              <a (click)="render_loai_sp(80000)">Laptop</a>,
-              <a (click)="render_loai_sp(90000)">Tablet</a>
-            </span>
-            <div class="subcate family-nav" style="width:670px; height:100%;">
-              <aside>
-                <strong>
-                  ĐIỆN THOẠI
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'iPhone (Apple)')">iPhone</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Samsung')">Samsung</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Oppo')">Oppo</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Xiaomi')">Xiaomi</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Vivo')">Vivo</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Realme')">Realme</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Vsmart')">Vsmart</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Nokia')">Nokia</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(10000,'Huawei')">Huawei</a>
-              </aside>
-              <aside>
-                <strong>
-                  LAPTOP
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'MacBook')">Macbook - iMac</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'HP')">HP</a> 
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Dell')">Dell</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Asus')">Asus</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Acer')">Acer</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(80000,'Lenovo')">Lenovo</a>
-              </aside>
-              <aside>
-                <strong>
-                  TABLET
-                </strong>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'iPad (Apple)')">iPad</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Samsung')">Samsung</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Huawei')">Huawei</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Lenovo')">Lenovo</a>
-                <a href="javascript:void(0)" (click)="render_loai_sp_th(90000,'Mobell')">Mobell</a>
-              </aside>
-            </div>
-            </li>
-            <li class="active">
-              <span class=" dropdown-item" >
-              </span> 
-            </li>
-            <li class="active">
-              <span class=" dropdown-item" >
-              </span> 
-            </li>
-            <li class="active">
-              <span class=" dropdown-item" >
-              </span> 
-            </li>
-            <li class="active">
-              <span class=" dropdown-item" >
-              </span> 
-            </li>
-            <li class="active">
-              <span class=" dropdown-item" >
-              </span> 
-            </li>
-            <li class="active">
-              <span class=" dropdown-item" >
-              </span> 
-            </li>
-            <li class="active">
-              <span class="dropdown-item" >
-              </span> 
-            </li>-->
-          </div>
-        </li>
-      </ul>
-      <router-outlet></router-outlet>
+    </div>
+    </li>
+    </ul>
+    <router-outlet></router-outlet>
     </mdb-navbar>
     <div>
       <app-footer></app-footer>
     </div>
-    </div>
   </div>
 </div>
-
-
-
-
+</div>
