@@ -388,26 +388,20 @@ export class RepbinhluanComponent implements OnInit {
       this.cv_idbl_parent=cv_idbl;
     }
     this.idsp=cv;
-    if(this.items_binhluan.length==0)
-    {
-      this.danhgiaService.get_danhgia_1day_idsp(cv).subscribe((res: dg[] | null) => {
-        this.items_danhgia = res.sort((a, b) => b._id - a._id);
-        if(this.alllsp_danhgia_1day.length>0 && cv_idbl==-2)
-        {
-          this.cv_idbl_parent=this.alllsp_danhgia_1day.find(x=>x._id_sanpham==cv)._id;
-        }
-      });
-    }
-    if(this.items_binhluan.length==0)
-    {
-      this.binhluanService.get_binhluan_1day_idspp(cv).subscribe((res: bl[] | null) => {
-        this.items_binhluan = res.sort((a, b) => b._id - a._id);
-        if(this.alllsp_binhluan_1day.length>0 && cv_idbl==-1)
-        {
-          this.cv_idbl_parent=this.alllsp_binhluan_1day.find(x=>x._id_sanpham==cv)._id;
-        }
-      });
-    }
+    this.danhgiaService.get_danhgia_1day_idsp(cv).subscribe((res: dg[] | null) => {
+      this.items_danhgia = res.sort((a, b) => b._id - a._id);
+      if(this.alllsp_danhgia_1day.length>0 && cv_idbl==-2)
+      {
+        this.cv_idbl_parent=this.alllsp_danhgia_1day.find(x=>x._id_sanpham==cv)._id;
+      }
+    });
+    this.binhluanService.get_binhluan_1day_idspp(cv).subscribe((res: bl[] | null) => {
+      this.items_binhluan = res.sort((a, b) => b._id - a._id);
+      if(this.alllsp_binhluan_1day.length>0 && cv_idbl==-1)
+      {
+        this.cv_idbl_parent=this.alllsp_binhluan_1day.find(x=>x._id_sanpham==cv)._id;
+      }
+    });
     this.active_null_dg = this.active_null_bl = true;
     $("tbody tr").css('color', '#000');
     $("#tr_" + cv).css('color', 'red');
@@ -711,11 +705,14 @@ export class RepbinhluanComponent implements OnInit {
   {
     this.checkinsertdgp=true;
     this.checkinsertblp=true;
+    
     this.danhgiaService.deletedgp(valuedg, valuedgp).subscribe(
       (data) => {
         if(data!=null && data!=undefined)
         {
+          document.getElementById("dgp_"+valuedg+"_"+valuedgp)["value"]="";
           $("#dgp_"+valuedg+"_"+valuedgp).remove();
+          this.show(valuedg).splice(valuedgp,1);
           alert("Xóa thành công !!!");
         }
         else
@@ -731,11 +728,14 @@ export class RepbinhluanComponent implements OnInit {
   {
     this.checkinsertblp=true;
     this.checkinsertdgp=true;
+    
     this.binhluanService.deleteblp(valuebl, valueblp).subscribe(
       (data) => {
         if(data!=null && data!=undefined)
         {
+          document.getElementById("blp_"+valuebl+"_"+valueblp)["value"]="";
           $("#blp_"+valuebl+"_"+valueblp).remove();
+          this.show_bl(valuebl).splice(valueblp,1);
           alert("Xóa thành công !!!");
         }
         else

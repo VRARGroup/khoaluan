@@ -145,6 +145,7 @@ namespace dienmayxanhapi.Controllers
           var filter = Builders<binhluan>.Filter.Eq("_id", _id);
           BsonArray arraydsq = new BsonArray();
           var update = Builders<binhluan>.Update.Push(x => x.binhluanphu, b.binhluanphu[0]);
+          b.kiemduyet = false;
           var saveResult = _signalService.SaveSignalAsync(b);
           _hubContext.Clients.All.SendAsync("SignalMessageReceived", b);
 

@@ -11,12 +11,8 @@
            <customer-details [customer]='sanpham_elastic'></customer-details>
           {{sanpham_item}}
         </div> -->
-        <<<<<<< Updated upstream <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()"
+      <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()"
           (keyup.enter)="on_key_enter()">
-          =======
-          <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()"
-            (keyup.enter)="on_key_enter()">
-          >>>>>>> Stashed changes
           <div id="match_list"></div>
       </div>
       <i style="margin-left: -20px;" class="fas fa-search" aria-hidden="true"></i>
@@ -55,10 +51,10 @@
               <a style="margin-left: 29px;" (click)="render_loai_sp(item.id_lsp)"
                 (mouseenter)="hover(i)">{{item.tenlsp}}</a>
             </span>
-            <div id={{i}} class="subcate family-nav" style="width:450px; height:100%;">
+            <div (mouseleave)="hoverof()" id={{i}} class="subcate family-nav" style="width:450px; height:100%;">
               <ng-container *ngFor="let t of arrayOne((thuonghieu.length)) let k=index">
                 <ng-container *ngFor="let i of dc(k)"></ng-container>
-                <aside (mouseleave)="hoverof()" style="text-align: center;">
+                <aside style="text-align: center;">
                   <strong>
                     {{this.namedm}}
                   </strong>
@@ -74,12 +70,12 @@
           <ng-container *ngIf="this.nav.length>11">
             <li class="active">
               <span class="span dropdown-item">
-                <a style="margin-left: 29px;">Khác</a>
+                <a style="margin-left: 29px;" (mouseenter)="hoverkhac()">Khác</a>
               </span>
               <div id="sub_khac" class="subcate family-nav" style="width:450px; height:100%;">
-                <aside (mouseleave)="hoverof()" style="text-align: center;">
+                <aside style="text-align: center;">
                   <strong>
-
+                    Khác
                   </strong>
                   <ng-container *ngFor="let ik of nav.slice(11,this.nav.length)">
                     <a href="javascript:void(0)" (click)="render_loai_sp(ik.id_lsp)">{{ik.tenlsp}}</a>

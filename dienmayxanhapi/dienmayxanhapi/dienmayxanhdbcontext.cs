@@ -567,7 +567,7 @@ namespace dienmayxanhapi
                         _int_tb = p.kiemduyet == false ? 1 :
                                   p.danhgiaphu.Where(x => x.kiemduyetphu == true).ToList().Count > 0 ? 0 :
                                   p.danhgiaphu.Where(x => x.kiemduyetphu == false).ToList().Count > 0 ? 1 :
-                                  p.danhgiaphu.Count == 0 ? 1 : 0
+                                  p.danhgiaphu.Count == 0 ? 0 : 0
                       }).ToList();
             return query.ToList();
         }
@@ -591,7 +591,7 @@ namespace dienmayxanhapi
                         _int_tb = p.kiemduyet == false ? 1 :
                                   p.danhgiaphu.Where(x => x.kiemduyetphu == true).ToList().Count > 0 ? 0 :
                                   p.danhgiaphu.Where(x => x.kiemduyetphu == false).ToList().Count > 0 ? 1 :
-                                  p.danhgiaphu.Count == 0 ? 1 : 0
+                                  p.danhgiaphu.Count == 0 ? 0 : 0
                       }).ToList();
               return query.ToList();
         }
@@ -638,7 +638,7 @@ namespace dienmayxanhapi
                         _int_tb = p.kiemduyet == false ? 1 :
                                   p.binhluanphu.Where(x => x.kiemduyetphu == true).ToList().Count > 0 ? 0 :
                                   p.binhluanphu.Where(x => x.kiemduyetphu == false).ToList().Count > 0 ? 1 :
-                                  p.binhluanphu.Count == 0 ? 1 : 0
+                                  p.binhluanphu.Count == 0 ? 0 : 0
                       }).ToList();
               return query.ToList();
         }

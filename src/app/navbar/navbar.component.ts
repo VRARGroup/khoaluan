@@ -196,6 +196,11 @@ export class NavbarComponent implements OnInit {
     this.id_lsp = this.nav[i].id_lsp;
   }
 
+  hoverkhac() {
+    $("#sub_khac").css("display", "block")
+    $(".subcate").css("display", "block")
+  }
+
   hoverof() {
     this.numberth = 0;
     this.numberth1 = 0;

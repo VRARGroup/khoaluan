@@ -176,6 +176,7 @@ namespace dienmayxanhapi.Controllers
             var update = Builders<danhgia>.Update.Push(x => x.danhgiaphu, g.danhgiaphu[0]);
             if (_dgService.Updatedanhgia(filter, update) == true)
             {
+              g.kiemduyet = false;
               var saveResult = _signalService.SaveSignaldgAsync(g);
               _hubContext.Clients.All.SendAsync("Signaldg", g);
               return Ok(true);

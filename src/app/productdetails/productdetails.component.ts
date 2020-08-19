@@ -68,6 +68,7 @@ export class ProductdetailsComponent implements OnInit {
   showScrollHeight = 300;
   hideScrollHeight = 10;
   checkreal_time:boolean=true;
+  checkreal_time_loaddanhgia:boolean=true;
   emaill:email[]=[];
   constructor(public route: ActivatedRoute, private location: Location, private http: HttpClient, private router: Router, private sanphamService: SanphamService, private danhgiaService: DanhgiaService, private _sanitizer: DomSanitizer, public dialog: MatDialog, private loaisanphamService: LoaisanphamService, private binhluanService: BinhluanService, private emailService: EmailService,private signalRService: SignalRService) { }
 
@@ -124,9 +125,12 @@ export class ProductdetailsComponent implements OnInit {
         return;
       }
       if (signal != null && signal != undefined) {
+        
         if(signal["x"]=="xóa bình luận phụ")
         {
-          $("#blp_"+signal["id"]+"_"+signal["i"]).remove();          
+          $("#blp_"+signal["id"]+"_"+signal["i"]).remove();
+          
+          this.showbinhluanphu(parseInt(signal["id"]),this.item_comments).splice(parseInt(signal["i"]),1);          
           return;
         }
         console.log(signal);
@@ -141,10 +145,12 @@ export class ProductdetailsComponent implements OnInit {
           signal.kiemduyet=true;
           var c = this.item_comments.indexOf(signal);
           this.item_comments.splice(c, 1);
+          
           return;
         }
         if(signal.ten == null && signal.ten == undefined)
         {
+          signal.kiemduyet=true;
           this.showbinhluanphu(signal._id, this.item_comments).push(arr[0]);
           return;
         }
@@ -161,13 +167,16 @@ export class ProductdetailsComponent implements OnInit {
       if (signal != null && signal != undefined) {
         if(signal["x"]=="xóa đánh giá phụ")
         {
-          $("#dgp_"+signal["id"]+"_"+signal["i"]).remove();          
+          $("#dgp_"+signal["id"]+"_"+signal["i"]).remove();
+          this.show(parseInt(signal["id"])).splice(parseInt(signal["i"]),1);
           return;
         }
         console.log(signal);
         if(signal.kiemduyet==true)
         {
           this.items_danhgia.push(signal);
+          this.checkreal_time_loaddanhgia=false;
+          this.loaddanhgia();
           return;
         }
         
@@ -181,6 +190,7 @@ export class ProductdetailsComponent implements OnInit {
         }
         if(signal.ten == null && signal.ten == undefined)
         {
+          signal.kiemduyet=true
           this.show(signal._id).push(arr[0]);
           return;
         }
@@ -681,7 +691,10 @@ export class ProductdetailsComponent implements OnInit {
   counttcdg: Array<number> = [];
   loaddanhgia() {
     this.danhgiaService.getdg_idsp(this.idsp).subscribe((res: dg[] | null) => {
-      this.items_danhgia = (res) ? res : [];
+      if(this.checkreal_time_loaddanhgia==true)
+      {
+        this.items_danhgia = (res) ? res : [];
+      }
       var j = res.find(x => true);
       if (res != null && res.length>0) {
         if (j.sosao != null && !isNaN(j.sosao) && j.tieuchidanhgia.length != null && !isNaN(j.tieuchidanhgia.length)) {
