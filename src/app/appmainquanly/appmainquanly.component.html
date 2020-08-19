@@ -5,6 +5,12 @@
         <div class="btnright">
           <button class="buttontl" *ngIf="quanlysp" (click)="taolsp()">Thêm loại sản phẩm</button>
           <button class="buttontsp" *ngIf="quanlylsp" (click)="taosp()">Thêm sản phẩm</button>
+          <input type="file" style="display: none;" id="change_export_sanpham"
+              (change)="change_export_sanpham($event)" webkitdirectory directory>
+            <input type="file" style="display: none;" id="change_import_sanpham"
+            (change)="change_import_sanpham($event)">
+            <button *ngIf="quanlysp" class="buttontsp" id="import_sanpham" (click)="import_sanpham()">Import Sản Phẩm</button>
+            <button *ngIf="quanlysp" class="buttontsp" id="export_sanpham" (click)="export_sanpham()">Export Sản Phẩm</button>
         </div>
       </div>
       <div class="search-hero">

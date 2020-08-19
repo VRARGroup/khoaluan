@@ -189,4 +189,29 @@ export class AppmainquanlyComponent implements OnInit {
       this.tensanpham = this.tensanphamphu;
     }
   }
+
+  export_sanpham() {
+    this.sanphamService.export_sanpham().subscribe((res: boolean | null) => {
+      if (res)
+        alert("Export thành công");
+    });
+  }
+
+  change_export_sanpham(event) {
+
+  }
+
+  import_sanpham() {
+    $('#change_import_sanpham').click();
+  }
+
+  change_import_sanpham(event) {
+    this.sanphamService.import_sanpham(event.target.files[0].name).subscribe((res: boolean | null) => {
+      if (res)
+        alert("Import thành công");
+      else
+        alert("Import thất bại. Vui lòng kiểm tra lại đường dẩn. VD:'C:\Users\Hoan\Documents\export_data\file.json'");
+    });
+  }
+
 }
