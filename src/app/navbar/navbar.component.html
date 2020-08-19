@@ -11,9 +11,13 @@
            <customer-details [customer]='sanpham_elastic'></customer-details>
           {{sanpham_item}}
         </div> -->
-        <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()"
+        <<<<<<< Updated upstream <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()"
           (keyup.enter)="on_key_enter()">
-        <div id="match_list"></div>
+          =======
+          <input type="text" id="search_bar" (keyup)="on_key($event)" (blur)="blur_method()"
+            (keyup.enter)="on_key_enter()">
+          >>>>>>> Stashed changes
+          <div id="match_list"></div>
       </div>
       <i style="margin-left: -20px;" class="fas fa-search" aria-hidden="true"></i>
       <a style="margin-left: 50px;vertical-align: middle;">

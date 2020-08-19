@@ -6,8 +6,6 @@ import { LoaisanphamService } from '../service/loaisanpham.service';
 import { sp } from '../model/sanpham';
 import { nav } from '../model/navbar';
 import { HubConnection, HubConnectionState, HubConnectionBuilder } from '@aspnet/signalr'
-import { ElasticsearchService } from '../service/elasticsearch.service';
-import { Console } from 'console';
 declare var $: any;
 
 @Component({
@@ -104,7 +102,6 @@ export class NavbarComponent implements OnInit {
       //           if (item2 == item1)
       //             isCheck++
       //         })
-
       //       })
       //       if (isCheck === search.trim().match(regex)[0].split(' ').length)
       //       return matches.push(`<div onclick="Window.myComponent.render_sp(${item.value})" class="card card-body" onmouseover="this.style.backgroundColor='#ebfffc'" onmouseout="this.style.backgroundColor=''" style="padding: 12px;">
@@ -113,12 +110,10 @@ export class NavbarComponent implements OnInit {
       //       <span style="display: inline; padding-right: 16px;"> ${item.value} </span>
       //     </h4>
       //   </div>`)
-
       //   })
       //   const html = matches.map(match => match).join('');
       //   macth_list.innerHTML = html;
       // }
-
       const macth_list = document.getElementById("match_list");
       if (search.length > 0) {
         let regex = new RegExp(`.{0,50}${search}.{0,50}`, 'gi');

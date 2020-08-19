@@ -86,6 +86,7 @@ namespace dienmayxanhapi
             public int? count { get; set; }
 
         }
+       
         public class danhsachthuonghieu
         {
           public List<string> listthuonghieu { get; set; }
@@ -710,7 +711,102 @@ namespace dienmayxanhapi
           var nav = (from p in Getlsp().AsQueryable() select new nav_lsp { id_lsp=p._id, tenlsp = p.tendanhmuc, listthuonghieu = p.thuonghieu}).ToList();
           return nav;
         }
-    
+        
+        public Boolean export_sanpham()
+        {
+            try
+            {
+                // --fields _id,ten,thuonghieu,hinh,dacdiemnoibat,giaban,giamgia,sosao,gioithieu,hinhdaidien,_id_loaisanpham,thongsokythuat
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = @"C:\Program Files\MongoDB\Server\4.2\bin\mongoexport.exe";
+                startInfo.Arguments = @"-d dienmayxanh -c sanpham --out " + Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\export_data\sanpham.json";
+                startInfo.UseShellExecute = false;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.RedirectStandardError = true;
+                startInfo.RedirectStandardInput = true;
+                startInfo.RedirectStandardError = true;
+                startInfo.StandardOutputEncoding = Encoding.UTF8;
+                startInfo.StandardErrorEncoding = Encoding.UTF8;
+                startInfo.StandardInputEncoding = Encoding.UTF8;
+                startInfo.WindowStyle = ProcessWindowStyle.Normal;
+
+                Process proc = new Process();
+                proc.StartInfo = startInfo;
+                proc.Start();
+                proc.WaitForExit();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public Boolean import_sanpham(string filepath)
+        {
+            try
+            {
+                //filepath = @".\export_data\sanpham1.json";
+                //FileInfo f = new FileInfo(filepath);
+                //string fullname = f.FullName;
+                //string file1 = Path.GetFullPath(filepath);
+                //string file2 = Path.Combine(Directory.GetCurrentDirectory(), filepath);
+
+                //string filePath = AppDomain.CurrentDomain.BaseDirectory + filepath;
+                //string file3 = filePath;
+
+
+                //string basePath = Environment.CurrentDirectory;
+                //string relativePath = "" + filepath;
+                //string fullPath = Path.GetFullPath(relativePath, basePath);
+
+                string docPath1 = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + filepath;
+                string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\export_data\" + filepath.Replace("/", @"\");
+                //List<string> dirs = new List<string>(Directory.EnumerateDirectories(docPath));
+
+                //string currentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                //string[] fullFilePath = Directory.GetFiles(currentDirectory, "sanpham1.json", SearchOption.AllDirectories);
+
+                //string exeFile = new System.Uri(Assembly.GetEntryAssembly().CodeBase).AbsolutePath;
+                //string Dir = Path.GetDirectoryName(exeFile);
+                //string path = Path.GetFullPath(Path.Combine(Dir, @"..\export_data\sanpham1.json"));
+
+
+                //string file11 = Path.GetFullPath("C:export_data");
+                //string file12 = Path.GetFullPath(@"export_data");
+                //string file13 = Path.GetFullPath("sanpham1.json");
+
+                //string AssemblyPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString();
+                //System.Diagnostics.Process.Start(path);
+                string result = "";
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = @"C:\Program Files\MongoDB\Server\4.2\bin\mongoimport.exe";
+                startInfo.Arguments = @"-d dienmayxanh -c sanpham --file " + docPath;
+
+                Process proc = new Process();
+                proc.StartInfo = startInfo;
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
+                {
+                    if (!String.IsNullOrEmpty(e.Data))
+                    {
+                        result += e.Data;
+                    }
+                });
+                proc.Start();
+                proc.BeginOutputReadLine();
+                proc.WaitForExit();
+                proc.Close();
+                //string command = ""; //enter any command you want
+                //System.Diagnostics.Process process = new System.Diagnostics.Process();
+                //System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                //startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                //startInfo.FileName = "cmd.exe";
+                //startInfo.Arguments = "/C " + command;
+                //process.StartInfo = startInfo;
+                //process.Start();
+                return true;
+            }
+            catch { return false; }
+        }
 
         public List<thongke5sao> thong_ke_sosao()
         {
